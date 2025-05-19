@@ -1,0 +1,78 @@
+@charset "UTF-8";
+
+input[type="number"]::-webkit-outer-spin-button,
+input[type="number"]::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+/* 페이지 타이틀 */
+.title {
+	font-size: var(--text-title);
+	margin-top: 135px;
+	text-align: center
+}
+/* 검색 영역 */
+.input_area {
+	text-align: center;
+	position: relative;
+	margin-top: 30px;
+}
+.input_sear {
+	width: 412px;
+	height: 55px;
+	border-radius: 30px;
+	border: 0.5px solid rgba(0, 0, 0, 0.25);;
+	padding: 30px;
+	font-size: 19px;
+	outline: none;
+}
+.input_sear::placeholder {
+	color: var(--place-hol);
+}
+.search_icon {
+ 	position: absolute;
+    right: 41%;
+    top: 24%;
+    cursor: pointer;
+}
+/* 검색창 아래 텍스트 */
+.input_area + p {
+	color: #024CAA;
+	text-align: center;
+	margin-top: 30px;
+	font-size: 19px; 
+}
+/* 가운데 작은 컨테이너 */
+.sm_container {
+	width: 617px;
+	background-color: white;
+	margin: 56px auto 0;
+	border-radius: 25px;
+	padding-bottom: 50px;
+}
+.sm_container .img_area {
+	text-align: center;
+	padding: 45px 0;
+}
+.sm_container p {
+	text-align: center;
+	font-size: 21px;
+	color: var(--place-hol);
+}
+.sm_container .btn_area {
+	margin-top: 90px;
+	display: flex;
+	justify-content: center;
+}
+.sm_container .btn_area a {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	width: 150px;
+	height: 45px;
+	background-color: var(--sub-color3);
+	border-radius: 45px;
+	font-size: 19px;
+	color: #fff;
+}

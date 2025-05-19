@@ -8,13 +8,14 @@ footer
 	margin: 0 auto;
 }
 .wrapper {
-	width: var(--wrapper-size)
+	width: var(--wrapper-size);
+	margin: auto;
 }
 section {
 	margin: 100px auto;
 	min-height: 300px;
 }
-
 .text-title {
 	font-size: 32px;
 }
+
