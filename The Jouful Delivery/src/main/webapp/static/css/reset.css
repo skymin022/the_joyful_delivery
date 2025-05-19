@@ -1,5 +1,4 @@
 @charset "UTF-8";
-@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR&display=swap');
 /*reset*/
 * {margin: 0; padding: 0; box-sizing: border-box; }
 html, body, div, span, applet, object, iframe, h1, h2, h3, h4, h5, h6, p, blockquote, pre, a, abbr, acronym, address, big, cite, code, del, dfn, em, font, img, ins, kbd, q, s, samp, small, strike, strong, sub, sup, tt, var, b, u, i, center, dl, dt, dd, ol, ul, li, fieldset, form, label, legend, table, tbody, tfoot, thead, tr, th, td{margin:0;padding:0;}
@@ -10,8 +9,15 @@ img {vertical-align: middle;}
 a img {border: none;}
 a:focus {outline: none}
 button:focus {outline: none}
-body { 
-    font-family: 'Noto Sans KR', sans-serif;
+/* 폰트 스타일 */
+@font-face {
+    font-family: 'No2';
+    src: url("../font/NotoSerifKR-VariableFont_wght.ttf");
+    font-weight: 400;
+    font-style: normal;
+}
+body {
+    font-family: 'No2', serif;
 }
 /* 글씨 드래그 시, 상태를 지정하는 선택자 */
 ::selection {
@@ -26,13 +32,22 @@ body {
 /* html 최상위 요소 선택 (html 선택보다 높은 우선순위 */
 :root {
     /* 👩‍🎨 메인 컬러 */
-    --main-color : #DCE6FF;
+    --main-color : #EFF6FF;
     /* 👩‍🎨 서브 컬러 */
-    --sub-color: #89B1FF;
+    --sub-color1: #D3E5FD;
+    --sub-color2: #FFC251;
+    --sub-color3: #024CAA;
+    /* 푸터 컬러 */
+    --footer-color: #F5F6FF;
     /* 👩‍🎨 폰트 사이즈 */
-    --text-title: 32px;
-    --text-normal: 16px;
+    /* 유동적으로 다른 크기로 해도 됨 */
+    --text-title: 50px;
+    --text-big: 32px;
+    --text-normal: 25px;
+    --text-samll: 15px;
     /* 👩‍🎨 컨테이너 사이즈 */
+    --wrapper-size: 1920px;
     --container-size: 1200px;
     --container-lg-size: 1400px;
 }
+
