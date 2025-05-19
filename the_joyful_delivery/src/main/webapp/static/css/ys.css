@@ -18,10 +18,6 @@ section {
 	font-size: 32px;
 }
 
-.wrapper {
-	display: flex;
-	justify-content: space-between;
-}
 
 .header_wrap {
 	display : flex;
