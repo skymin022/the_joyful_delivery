@@ -22,8 +22,8 @@ body {
 }
 /* 글씨 드래그 시, 상태를 지정하는 선택자 */
 ::selection {
-    background-color: var(--main-color);
-    color: white;
+    background-color: var(--sub-color2);
+    color: #fff;
 }
 
 /* ⭐ CSS 변수 선언 */
