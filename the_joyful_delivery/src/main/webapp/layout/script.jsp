@@ -4,3 +4,7 @@
 <%-- 라이브러리 --%>
 <%-- jQuery --%>
 <script src="<%= root %>/static/js/script.js"></script>
+
+
+
+<script src="<%= root %>/static/js/jy.js"></script>

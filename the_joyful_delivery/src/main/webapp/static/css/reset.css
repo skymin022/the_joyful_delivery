@@ -18,6 +18,7 @@ button:focus {outline: none}
 }
 body {
     font-family: 'No2', serif;
+    background-color: #EFF6FF;
 }
 /* 글씨 드래그 시, 상태를 지정하는 선택자 */
 ::selection {
@@ -39,12 +40,14 @@ body {
     --sub-color3: #024CAA;
     /* 푸터 컬러 */
     --footer-color: #F5F6FF;
+    /* placeholder 컬러 */
+    --place-hol: #B9B9B9;
     /* 👩‍🎨 폰트 사이즈 */
     /* 유동적으로 다른 크기로 해도 됨 */
     --text-title: 50px;
     --text-big: 32px;
     --text-normal: 25px;
-    --text-samll: 15px;
+    --text-small: 15px;
     /* 👩‍🎨 컨테이너 사이즈 */
     --wrapper-size: 1920px;
 }
