@@ -10,13 +10,17 @@
 	<jsp:include page="/layout/link.jsp" />
 </head>
 <body>
-	<jsp:include page="/layout/header.jsp" />
-	<%-- [Contents] ######################################################### --%>
-	
-	
-	
-	<%-- [Contents] ######################################################### --%>
-	<jsp:include page="/layout/footer.jsp" />
-	<jsp:include page="/layout/script.jsp" />
+	<div class="wrapper">
+		<jsp:include page="/layout/header.jsp" />
+		<%-- [Contents] ######################################################### --%>
+		<div class="container">
+		
+		</div>
+		
+		
+		<%-- [Contents] ######################################################### --%>
+		<jsp:include page="/layout/footer.jsp" />
+		<jsp:include page="/layout/script.jsp" />
+	</div>
 </body>
 </html>
