@@ -9,3 +9,6 @@
 
 
 <link href="<%= root %>/static/css/jy.css" rel="stylesheet" />
+
+<link href="<%= root %>/static/css/ys.css" rel="stylesheet" />
+
