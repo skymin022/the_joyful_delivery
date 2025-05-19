@@ -3,7 +3,7 @@
 <%@ include file="/layout/common.jsp" %>
 <head>
 	<style type="text/css" >
-		.wrapper {
+		nav {
 			display: flex;
 			justify-content: space-between;
 		}
@@ -12,7 +12,6 @@
 <header>
 	
 	<nav>
-		<div class="wrapper">
 			<img src="<%= root %>/static/img/logo.png" width="380" height="153" >
 			<div class="header_wrap">
 				<div>
