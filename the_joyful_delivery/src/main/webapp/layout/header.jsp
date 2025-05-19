@@ -1,6 +1,14 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ include file="/layout/common.jsp" %>
+<head>
+	<style type="text/css" >
+		.wrapper {
+			display: flex;
+			justify-content: space-between;
+		}
+	</style>
+</head>
 <header>
 	
 	<nav>
