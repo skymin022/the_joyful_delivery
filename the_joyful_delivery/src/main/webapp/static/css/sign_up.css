@@ -6,7 +6,6 @@
    justify-content: center;
    align-items: center;
    height: 1100px;
-
 }
 .sign-up-box  {
     display: flex;
@@ -35,18 +34,7 @@
     border-radius: 15px;
     gap: 10px;
 }
-.box {
-    width: 360px;
-    height: 50px;
-    font-size: var(--text-samll);
-    display: flex;
-    justify-content: space-between;
-    justify-items: center;
-    align-items: center;
-    background-color: var(--main-color);
-    border-radius: 15px;
-}
-.id-box #username {
+.id-box #id {
     color: black;
     border: 1px solid white;
     width: auto;
@@ -103,7 +91,6 @@
     width: 260px;
     height: 30px;
 }
-
 .btn1 {
     width: 150px;
     height: 50px;
@@ -116,8 +103,8 @@
     box-shadow: 5px 5px 5px rgba(0,0,0,0.1);
 }
 .btn2 {
-    width: 80px;
-    height: 30px;
+    width: 60px;
+    height: 35px;
     align-content: center;
     font-size: var(--text-samll );
     border: 1px solid black;
@@ -145,6 +132,48 @@
     font-size:  var(--text-samll);
 }
 .box {
+    width: 200px;
+    font-size: var(--text-small);
+
+    border-radius: 15px;
     padding: 10px;
     box-shadow: 5px 5px 5px rgba(0,0,0,0.1);
+    border: none;
+    box-sizing: border-box;
+}
+ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+ul li {
+    display: flex;
+    height: 45px;
+    align-items: center;  /* 세로 가운데 정렬 */
+    gap: 10px;            /* 글자, input, button 사이 간격 */
+    font-size: 16px;
+    white-space: nowrap;
+    background-color: var(--main-color);
+    border-radius: 15px;
+    padding-right: 3px;
+}
+.input {
+    height: 30px;
+}
+
+.phone {
+    width: 70px;
+}
+.box.email {
+  width: 110px;
+}
+.tname {
+    width: 100px;
+}
+.dash {
+    font-size: var(--text-normal);
 }
