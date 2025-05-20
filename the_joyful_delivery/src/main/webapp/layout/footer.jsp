@@ -62,6 +62,7 @@
 		</div>
 	</div>
 	<div class="footer_bottom">
-	
+		<a href="<%= root %>/logo"><img src="<%= root %>/static/img/logo.png" width="360" height="120" ></a>
+		<p>Copyright ⓒ BGFNetworks ALL RIGHTS RESERVED.</p>
 	</div>
 </footer>
