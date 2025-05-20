@@ -15,6 +15,7 @@
 		<%-- [Contents] ######################################################### --%>
 		<div class="container">
 			<h2 class="title">배송조회</h2>
+			<!-- TODO: form태그 만들기 -->
 			<div class="input_area">
 				<input class="input_sear" name="deliveryNo" type="number" placeholder="운송장번호" title="운송장번호를 입력해주세요.">
 				<span class="search_icon"><img src="<%=root%>/static/img/search.png" alt="돋보기 이미지"/></span>
@@ -32,7 +33,7 @@
 		</div>
 		<%-- [Contents] ######################################################### --%>
 		<jsp:include page="/layout/footer.jsp" />
-		<jsp:include page="/layout/script.jsp" />
 	</div>
+	<jsp:include page="/layout/script.jsp" />
 </body>
 </html>
