@@ -52,6 +52,7 @@ input[type="number"]::-webkit-inner-spin-button {
 	margin: 56px auto 0;
 	border-radius: 25px;
 	padding-bottom: 50px;
+	position: relative;
 }
 .sm_container .img_area {
 	text-align: center;
@@ -181,6 +182,10 @@ input[type="number"]::-webkit-inner-spin-button {
 	color: #000;
 	border-radius: 5px;
 	border: none;
+	pointer-events: none;
+}
+.input_list .values button.on {
+	pointer-events: auto;
 }
 #keyword {
 	font-size: 18px;
@@ -195,11 +200,29 @@ input[type="number"]::-webkit-inner-spin-button {
 	font-size: 16px;
 	text-align: left;
 	margin-top: 24px;
+	letter-spacing: -2px;
+	padding-left: 130px;
 }
 .input_list .value_txt {
 	top: 20px;
     right: 45px;
 	position: absolute;
 	font-size: 18px;
+}
+.title + h3 {
+	margin-top: 21px;
+	font-size: 26px;
+	text-align: center;
+}
+#next_btn {
+	width: 150px; height: 46px;
+	font-size: 19px;
+	background-color: var(--sub-color2);
+	border-radius: 45px;
+	color: #fff;
+	border: none;
+    position: absolute;
+    right: 0;
+    bottom: -78px;
 }
 
