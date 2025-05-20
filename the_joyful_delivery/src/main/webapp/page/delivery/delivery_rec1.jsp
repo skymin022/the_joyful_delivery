@@ -34,7 +34,7 @@
 							</select>				
 						</li>
 						<li>
-						 	<label for="value"  for="keyword">물품가액</label>
+						 	<label for="value">물품가액</label>
 					  	 	<input id="value" name="value" type="text" title="물품가액을 입력해주세요." placeholder="물품가액">
 					  	 	<span class="value_txt">만원</span>
 					  	 	<div class="values">

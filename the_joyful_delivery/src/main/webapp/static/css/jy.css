@@ -37,6 +37,8 @@ input[type="number"]::-webkit-inner-spin-button {
     right: 5%;
     top: 24%;
     cursor: pointer;
+    background-color: inherit;
+    border: none;
 }
 /* 검색창 아래 텍스트 */
 .input_area + p {
@@ -166,7 +168,9 @@ input[type="number"]::-webkit-inner-spin-button {
 	border: 1px solid #D9D9D9;
 	border-radius: 10px;
 	padding-left: 20px;
-	outline: none;
+}
+.input_list input:focus {
+	outline: 1px solid var(--sub-color2);
 }
 .input_list input::placeholder {
 	font-size: 18px;
@@ -178,14 +182,16 @@ input[type="number"]::-webkit-inner-spin-button {
 }
 .input_list .values button {
 	width: 65px; height: 30px;
-	background-color: #FFC251;
 	color: #000;
 	border-radius: 5px;
 	border: none;
 	pointer-events: none;
+	transition: all 0.3s;
+	background-color: var(--place-hol);
 }
 .input_list .values button.on {
 	pointer-events: auto;
+	background-color: #FFC251;
 }
 #keyword {
 	font-size: 18px;
@@ -214,7 +220,7 @@ input[type="number"]::-webkit-inner-spin-button {
 	font-size: 26px;
 	text-align: center;
 }
-#next_btn {
+#next_btn, #prev_btn, #next_btn2 {
 	width: 150px; height: 46px;
 	font-size: 19px;
 	background-color: var(--sub-color2);
@@ -225,4 +231,37 @@ input[type="number"]::-webkit-inner-spin-button {
     right: 0;
     bottom: -78px;
 }
+#prev_btn {
+	background-color: var(--place-hol);
+	left: 0;	
+}
+
+/* delivery_rec2 */
+.input_list .btn_ph {
+	position: absolute;
+    right: 40px; top: 20px;
+    color: white;
+    background-color: var(--place-hol);
+    border: 1px solid var(--place-hol);
+    border-radius: 5px;
+    font-size: 10px;
+    font-weight: 500;
+    padding: 5px;
+    transition: all 0.3s;
+    pointer-events: none; 
+}
+.input_list .btn_ph.on {background-color: inherit; pointer-events: auto; color: #000;}
+#certi_num {
+	margin-left: auto;
+	margin-right: 25px;
+	display: none;
+}
+#certi_num.on {
+	display: block;
+}
+#s_address2 {
+	margin-top: 20px;
+}
+
+
 
