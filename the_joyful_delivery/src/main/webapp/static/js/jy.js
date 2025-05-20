@@ -58,7 +58,7 @@ document.addEventListener("DOMContentLoaded", function() {
 		});
 	}
 	
-	// 다음 버튼 이벤트 막기
+	// delivery_rec1 다음 버튼 검사
 	const nextBtn = document.getElementById("next_btn")
 	if(nextBtn) {
 		nextBtn.addEventListener("click", function(e) {
@@ -82,29 +82,63 @@ document.addEventListener("DOMContentLoaded", function() {
 		});
 	}
 	
-	// 다음 버튼 이벤트 막기2
-		const nextBtn2 = document.getElementById("next_btn2")
-		if(nextBtn2) {
-			nextBtn2.addEventListener("click", function(e) {
+	// delivery_rec2 다음 버튼 검사
+	const nextBtn2 = document.getElementById("next_btn2")
+	if(nextBtn2) {
+		nextBtn2.addEventListener("click", function(e) {
+			e.preventDefault()
+			if(document.getElementById("s_name").value === '') {
+				alert("이름을 입력해주세요.")
+				document.getElementById("s_name").focus()
+				return;
+			}
+			if(!certiCheck) {
+				alert("휴대폰번호 인증을 진행해주세요.")
+				document.getElementById("s_phone").focus()
+				return false;
+			}
+			if(document.getElementById("s_address").value === '') {
+				alert("주소를 입력해주세요.")
+				document.getElementById("s_address").focus()
+				return false;
+			}
+			if(document.getElementById("s_address2").value === '') {
+				alert("상세주소를 입력해주세요.")				
+				document.getElementById("s_address2").focus()
+				return false;
+			}			
+			document.getElementById("form").submit()
+		});
+	}
+	
+	// delivery_rec3 다음 버튼 검사
+		const nextBtn3 = document.getElementById("next_btn3")
+		if(nextBtn3) {
+			nextBtn3.addEventListener("click", function(e) {
 				e.preventDefault()
-				if(document.getElementById("s_name").value === '') {
+				if(document.getElementById("r_name").value === '') {
 					alert("이름을 입력해주세요.")
-					document.getElementById("s_name").focus()
+					document.getElementById("r_name").focus()
 					return;
 				}
-				if(!certiCheck) {
-					alert("휴대폰번호 인증을 진행해주세요.")
-					document.getElementById("s_phone").focus()
+				if(document.getElementById("r_number").value === '') {
+					alert("휴대폰번호를 입력해주세요.")
+					document.getElementById("r_number").focus()
 					return false;
 				}
-				if(document.getElementById("s_address").value === '') {
+				if(document.getElementById("r_address").value === '') {
 					alert("주소를 입력해주세요.")
-					document.getElementById("s_address").focus()
+					document.getElementById("r_address").focus()
 					return false;
 				}
-				if(document.getElementById("s_address2").value === '') {
+				if(document.getElementById("r_address2").value === '') {
 					alert("상세주소를 입력해주세요.")				
-					document.getElementById("s_address2").focus()
+					document.getElementById("r_address2").focus()
+					return false;
+				}	
+				if(document.getElementById("pre_pos").value === '지불 방법 선택') {
+					alert("지불방법을 선택해주세요.")				
+					document.getElementById("pre_pos").focus()
 					return false;
 				}			
 				document.getElementById("form").submit()
@@ -154,8 +188,10 @@ document.addEventListener("DOMContentLoaded", function() {
 	}
 	
 	// 이름에서 공백 제거
-	const inputName = document.getElementById("s_name")
-	inputName.addEventListener("keyup", function() {
-		this.value = this.value.replace(/[^a-zA-Z가-힣]+/g, '');
-	})
+	const checkTrim = document.querySelector(".check_trim")
+	if(checkTrim) {
+		checkTrim.addEventListener("keyup", function() {
+			this.value = this.value.replace(/[^a-zA-Z가-힣]+/g, '');
+		})
+	}
 })
