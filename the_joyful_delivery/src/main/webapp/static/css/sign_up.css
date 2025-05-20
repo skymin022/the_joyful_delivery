@@ -141,7 +141,7 @@
     border: none;
     box-sizing: border-box;
 }
-ul {
+.right-box > ul {
     list-style: none;
     padding: 0;
     margin: 0;
@@ -150,7 +150,7 @@ ul {
     gap: 15px;
 }
 
-ul li {
+.right-box > ul li {
     display: flex;
     height: 45px;
     align-items: center;  /* 세로 가운데 정렬 */
@@ -165,15 +165,9 @@ ul li {
     height: 30px;
 }
 
-.phone {
-    width: 70px;
-}
 .box.email {
   width: 110px;
 }
 .tname {
     width: 100px;
-}
-.dash {
-    font-size: var(--text-normal);
 }
