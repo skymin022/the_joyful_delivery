@@ -54,7 +54,17 @@
     background-color: var(--main-color);
     border-radius: 15px;
 }
-
+.password-box {
+        width: 360px;
+    height: 50px;
+    font-size: var(--text-samll);
+    display: flex;
+    justify-content: space-around;
+    justify-items: center;
+    align-items: center;
+    background-color: var(--main-color);
+    border-radius: 15px;
+}
 
 .btn {
     width: 150px;
@@ -85,4 +95,16 @@
 }
 .right-box h3 {
     font-size:  var(--text-samll);
+}
+#id {
+    width: 260px;
+    height: 30px;
+    border-radius: 5px;
+    border: 1px solid white;
+}
+#password {
+    width: 260px;
+    height: 30px;
+    border-radius: 5px;
+    border: 1px solid white;
 }
