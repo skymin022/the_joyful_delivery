@@ -25,7 +25,7 @@
 			        <span><img src="<%= root %>/static/img/box_white.png" alt="택배박스" ></span>
 			      </div>
 			      <div class="info_how">
-			        <div><p>택배<br>예약하기</p></div>
+			        <div><p>이용안내</p></div>
 			        <span><img src="<%= root %>/static/img/box_white.png" alt="택배박스" ></span>
 			      </div>
 		        </div>
@@ -64,8 +64,8 @@
 				          <li>
 				          	<a href="">
 				          		<span>
-							  		<img src="<%= root %>/static/img/headphone.png" alt="" >
-							  		<p>자주하는 질문<br>(FAQ)</p>
+							  		<img src="<%= root %>/static/img/contact.png" alt="" >
+							  		<p>1:1 문의</p>
 							  	</span>
 				          	</a>
 			          	  </li>
@@ -73,8 +73,8 @@
 				          <li>
 					          <a href="">
 						          <span>
-								  	  <img src="<%= root %>/static/img/headphone.png" alt="" >
-								  	  <p>자주하는 질문<br>(FAQ)</p>
+								  	  <img src="<%= root %>/static/img/cashbill.png" alt="" >
+								  	  <p>현금영수증<br>조회</p>
 						  		  </span>
 					          </a>
 				          </li>
@@ -82,8 +82,8 @@
 				          <li>
 					          <a href="">
 					          	<span>
-							  		<img src="<%= root %>/static/img/headphone.png" alt="" >
-							  		<p>자주하는 질문<br>(FAQ)</p>
+							  		<img src="<%= root %>/static/img/nobox.png" alt="" >
+							  		<p>이용불가<br>상품</p>
 							  	</span>
 					          </a>
 				          </li>
