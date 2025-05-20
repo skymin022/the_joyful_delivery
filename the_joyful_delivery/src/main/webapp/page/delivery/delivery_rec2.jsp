@@ -31,9 +31,9 @@
 						</li>
 						<li>
 						 	<label for="s_address">주소</label>
-						 	<input id="s_address" name="s_address" type="text" placeholder="기본주소">
+						 	<input id="s_address" name="s_address" type="text" placeholder="기본주소" title="주소를 입력해주세요.">
 						 	<label for="s_address"> </label>
-						 	<input id="s_address2" name="s_address2" type="text" placeholder="상세주소">
+						 	<input id="s_address2" name="s_address2" type="text" placeholder="상세주소" title="상세주소를 입력해주세요.">
 						</li>
 					</ul>
 					<button id="prev_btn" type="button" onclick="history.back()">이전</button>

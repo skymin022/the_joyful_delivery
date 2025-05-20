@@ -21,21 +21,21 @@
 					<ul class="input_list">
 						<li>
 						 	<label for="r_name">이름</label>
-					  	 	<input class="check_trim" id="r_name" name="r_name" type="text" title="보내는분의 이름을 입력해주세요." placeholder="이름">
+					  	 	<input class="check_trim" id="r_name" name="r_name" type="text" title="받는분의 이름을 입력해주세요." placeholder="이름">
 						</li>
 						<li>
 						 	<label for="r_number">휴대폰 번호</label>
-					  	 	<input id="r_number" name="r_number" type="text" title="보내는분의 번호를 입력해주세요." placeholder="하이픈 '-' 없이 입력해주세요." maxlength="11">
+					  	 	<input id="r_number" name="r_number" type="text" title="받는분의 번호를 입력해주세요." placeholder="하이픈 '-' 없이 입력해주세요." maxlength="11">
 						</li>
 						<li>
 						 	<label for="r_address">주소</label>
-						 	<input id="r_address" name="r_address" type="text" placeholder="기본주소">
+						 	<input id="r_address" name="r_address" type="text" placeholder="기본주소" title="주소를 입력해주세요.">
 						 	<label for="r_address"> </label>
-						 	<input id="r_address2" name="r_address2" type="text" placeholder="상세주소">
+						 	<input id="r_address2" name="r_address2" type="text" placeholder="상세주소" title="상세주소를 입력해주세요.">
 						</li>
 						<li>
 						 	<label for="r_number">요청사항</label>
-					  	 	<input id="r_number" name="r_req" type="text" title="보내는분의 번호를 입력해주세요." placeholder="하이픈 '-' 없이 입력해주세요." maxlength="11">
+					  	 	<input id="r_number" name="r_req" type="text" title="요청사항을 입력해주세요." placeholder="하이픈 '-' 없이 입력해주세요." maxlength="11">
 						</li>
 						<li>
 						 	<label for="pre_pos">지불방법</label>
