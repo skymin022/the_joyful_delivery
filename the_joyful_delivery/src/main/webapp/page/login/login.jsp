@@ -17,7 +17,7 @@
         <%-- [Contents] ######################################################### --%>
         <main>
 			<div class="container">
-				<form action="<%=root %>/page/login" method="post">
+				<form id="form" action="" >
 		            <div class="login-box">
 		                <div class="left-box">
 		                    <div class="sign-up">sign-in</div>
@@ -29,11 +29,11 @@
 		                    <div class="sm-content">or use your account</div>
 		                    <div class="id-box">
 		                        <span>아이디</span>
-		                        <input type="text" name="username" id="username" placeholder="아이디를 입력해주세요">
+		                        <input type="text" name="id" id="id" placeholder="아이디를 입력해주세요">
 		                    </div>
 		                    <div class="password-box">
 		                        <span>비밀번호</span>
-		                        <input type="text" name="password" id="password" placeholder="비밀번호를 입력해주세요">
+		                        <input type="password" name="password" id="password" placeholder="비밀번호를 입력해주세요">
 		                    </div>
 		                    <div class="checkbox">
 		                        <input type="checkbox" name="rememberId" id="rememberId">
@@ -42,7 +42,7 @@
 		                        <label for="autologin">자동 로그인</label>
 		                    </div>
 		                    <div>
-		                        <button type="submit" class="btn" >로그인</button>
+		                        <button type="submit" class="btn" id="login_btn" >로그인</button>
 		                    </div>
 		                </div>
 		                <div class="right-box">

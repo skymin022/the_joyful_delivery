@@ -23,42 +23,53 @@
 		                <div class="sign-up-box">
 		                    <div class="left-box">
 		                        <div class="sign-up">sign-up</div>
-		                        <div class="id-box box">
-		                            <span>아이디</span>
-		                            <input type="text" name="id" id="id" maxlength="20" placeholder="아이디를 입력해주세요" required>
-		                            <button type="submit" onclick="clickIdCheck()" class="btn2">확인</button>
-		                        </div>
-		                        <div class="password-box box">
-		                            <span>비밀번호</span>
-		                            <input type="password" name="password" id="password" placeholder="비밀번호를 입력해주세요" required>
-		                        </div>
-		                        <div class="password-box passwordcheck box">
-		                            <span>비밀번호 확인</span>
-		                            <input type="password" name="passwordcheck" id="passwordcheck" placeholder="한번 더 비밀번호를 입력해주세요" required>
-		                        </div>
-		                        <div class="name box">
-		                            <span>이름</span>
-		                            <input type="text" name="name" id="name" placeholder="이름를 입력해주세요" required>
-		                        </div>
-		                        <div class="email box">
-		                            <span>이메일</span>
-		                            <div class="email-box">
-		                                <input type="email" name="email" id="email">@<input type="email" name="email" id="email" required>
-		                            </div>
-		                        </div>
-		                        <div class="address box">
-		                            <span>주소</span>
-		                            <input type="text" name="address" id="address" placeholder="주소를 입력해주세요" required>
-		                        </div>
-		                        <div class="birth box">
-		                            <span>생년월일</span>
-		                            <input type="text" name="birth" id="birth" placeholder="생년월일을 입력해주세요" required>
-		                        </div>
-		                    </div>
-		                    <div class="right-box">
 		                        <h2>wellcome, customer</h2>
 		                        <h3>Enter your personal details and start <br> FAST delivery Service with us</h3>
 		                        <input type="button" class="btn1" value="회원가입" onclick="checkUser()" />
+		                    </div>
+		                    <div class="right-box">
+								<ul>
+		                            <li>
+		                                <span class="tname">아이디</span>
+		                                <input class="box" type="text" name="id" id="id" placeholder="아이디를 입력해주세요">
+		                                <button type="submit" class="btn2">확인</button>
+		                            </li>
+		                            <li>
+		                                <span class="tname">비밀번호</span>
+		                                <input class="box" type="password" name="password" id="password" placeholder="비밀번호를 입력해주세요">
+		                            </li>
+		                            <li>
+		                                <span class="tname">
+		                                    비밀번호 <br>확인
+		                                </span>
+		                                <input class="box" type="password" name="passwordcheck" id="passwordcheck" placeholder="한번 더 비밀번호를 입력해주세요">
+		                            </li>
+		                            <li>
+		                                <span class="tname">이름</span>
+		                                <input class="box" type="text" name="name" id="name" placeholder="이름를 입력해주세요">
+		                            </li>
+		                            <li>
+		                                <span class="tname">이메일</span>
+		                                <input class="box email" type="email" name="email1" id="email1">
+		                                <span>@</span>
+		                                <input class="box email" type="email" name="email2" id="email2">
+		                            </li>
+		                            <li>
+		                                <span class="tname">주소</span>
+		                                <input class="box" type="text" name="address" id="address" placeholder="주소를 입력해주세요">
+		                            </li>
+		                            <li>
+		                                <span class="tname">생년월일</span>
+		                                <input class="box" type="text" name="birth" id="birth" placeholder="생년월일을 입력해주세요">
+		                            </li>
+		                            <li>
+		                                <span class="tname"> 연락처</span>
+		                                <input class="box phone" type="text" name="phone_number1" id="phone_number1" /><span class="dash">-</span>
+		                                <input class="box phone" type="text" name="phone_number2" id="phone_number2" /><span class="dash">-</span>
+		                                <input class="box phone" type="text" name="phone_number3" id="phone_number3" />
+		                            </li>
+		                        </ul>
+
 		                    </div>
 		                </div>
 		            </div>
