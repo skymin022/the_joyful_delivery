@@ -46,7 +46,7 @@
     background-color: var(--main-color);
     border-radius: 15px;
 }
-.id-box #username {
+.id-box #id {
     color: black;
     border: 1px solid white;
     width: auto;

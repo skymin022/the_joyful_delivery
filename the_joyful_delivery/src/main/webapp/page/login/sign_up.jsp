@@ -18,15 +18,15 @@
         <main>
 
 			<div class="container">
-				<form action="<%=root %>/page/login" method="post">
+				<form action="<%=root %>/page/login" onsubmit="return checkForm()" name="sign_up" method="post">
 		            <div class="login-box">
 		                <div class="sign-up-box">
 		                    <div class="left-box">
 		                        <div class="sign-up">sign-up</div>
 		                        <div class="id-box box">
 		                            <span>아이디</span>
-		                            <input type="text" name="username" id="username" placeholder="아이디를 입력해주세요" required>
-		                            <button type="submit" onclick="clickIdCheck()" class="btn2">중복 확인</button>
+		                            <input type="text" name="id" id="id" maxlength="20" placeholder="아이디를 입력해주세요" required>
+		                            <button type="submit" onclick="clickIdCheck()" class="btn2">확인</button>
 		                        </div>
 		                        <div class="password-box box">
 		                            <span>비밀번호</span>
@@ -70,17 +70,5 @@
         <jsp:include page="/layout/footer.jsp" />
         <jsp:include page="/layout/script.jsp" />
     </div>
-    
-   		<script>
-		async function clickIdCheck() {
-			let check = await idCheck()
-			if( check ) {
-				alert('중복된 아이디 입니다.')
-			} else {
-				alert('사용 가능한 아이디 입니다.')
-			}
-		}
-		</script>
-    
 </body>
 </html>
