@@ -1,0 +1,150 @@
+.wrapper {
+    width: var(--wrapper-size);
+}
+.container {
+   display: flex;
+   justify-content: center;
+   align-items: center;
+   height: 1100px;
+
+}
+.sign-up-box  {
+    display: flex;
+    width: 800px;
+    height: 550px;
+    justify-content: center;
+    justify-items: center;
+    border-radius: 15px;
+    box-shadow: 5px 5px 5px rgba(0,0,0,0.5);
+}
+.sign-up {
+    font-size: var(--text-title);
+    font: bold;
+}
+.sm-content {
+    font-size: var(--text-samll);
+}
+.left-box {
+    width: 50%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    background-color: var(--sub-color2);
+    border-radius: 15px;
+    gap: 10px;
+}
+.box {
+    width: 360px;
+    height: 50px;
+    font-size: var(--text-samll);
+    display: flex;
+    justify-content: space-between;
+    justify-items: center;
+    align-items: center;
+    background-color: var(--main-color);
+    border-radius: 15px;
+}
+.id-box #username {
+    color: black;
+    border: 1px solid white;
+    width: auto;
+    height: 30px;
+}
+.password-box {
+    width: 360px;
+    height: 50px;
+    font-size: var(--text-samll);
+    display: flex;
+    justify-content: space-between;
+    justify-items: center;
+    align-items: center;
+    background-color: var(--main-color);
+    border-radius: 15px;
+}
+.password-box #password {
+    color: black;
+    border: 1px solid white;
+    width: 260px;
+    height: 30px;
+}
+.password-box #passwordcheck {
+    color: black;
+    border: 1px solid white;
+    width: 260px;
+    height: 30px;
+}
+.name #name {
+    color: black;
+    border: 1px solid white;
+    width: 260px;
+    height: 30px;
+}
+.email #email {
+    color: black;
+    border: 1px solid white;
+    width: 120px;
+    height: 30px;
+}
+.email-box {
+    display: flex;
+    justify-content: space-between;
+}
+.address #address {
+    color: black;
+    border: 1px solid white;
+    width: 260px;
+    height: 30px;
+}
+.birth #birth {
+    color: black;
+    border: 1px solid white;
+    width: 260px;
+    height: 30px;
+}
+
+.btn1 {
+    width: 150px;
+    height: 50px;
+    align-content: center;
+    font-size: var(--text-normal );
+    border: 1px solid black;
+    border-radius: 45px;
+    background-color: var(--sub-color3);
+    color: white;
+    box-shadow: 5px 5px 5px rgba(0,0,0,0.1);
+}
+.btn2 {
+    width: 80px;
+    height: 30px;
+    align-content: center;
+    font-size: var(--text-samll );
+    border: 1px solid black;
+    border-radius: 45px;
+    background-color: var(--sub-color3);
+    color: white;
+    box-shadow: 5px 5px 5px rgba(0,0,0,0.1);
+}
+
+.right-box {
+    width: 50%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    background-color: white;
+    border-radius: 15px;
+    gap: 30px;
+}
+.right-box h2 {
+    font-size: var(--text-big);
+}
+.right-box h3 {
+    font-size:  var(--text-samll);
+}
+.box {
+    padding: 10px;
+    box-shadow: 5px 5px 5px rgba(0,0,0,0.1);
+}

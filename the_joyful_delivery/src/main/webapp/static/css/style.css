@@ -1,0 +1,25 @@
+@charset "UTF-8";
+
+.container,
+header,
+footer
+{
+	width: 100%;
+	margin: 0 auto;
+}
+.wrapper {
+	width: var(--wrapper-size);
+	margin: auto;
+}
+.container {
+	/* 푸터랑 일정 간격 떨어지게 */
+	padding-bottom: 200px;
+}
+section {
+	margin: 100px auto;
+	min-height: 300px;
+}
+.text-title {
+	font-size: 32px;
+}
+
