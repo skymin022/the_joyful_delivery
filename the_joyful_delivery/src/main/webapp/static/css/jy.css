@@ -259,8 +259,8 @@ input[type="number"]::-webkit-inner-spin-button {
 #certi_num.on {
 	display: block;
 }
-#s_address2 {
-	margin-top: 20px;
+#s_address2, #r_address2 {
+	margin-top: 10px;
 }
 
 
