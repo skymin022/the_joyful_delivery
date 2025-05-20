@@ -11,6 +11,10 @@ footer
 	width: var(--wrapper-size);
 	margin: auto;
 }
+.container {
+	/* 푸터랑 일정 간격 떨어지게 */
+	padding-bottom: 200px;
+}
 section {
 	margin: 100px auto;
 	min-height: 300px;

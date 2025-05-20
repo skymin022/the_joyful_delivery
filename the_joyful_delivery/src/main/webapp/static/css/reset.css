@@ -8,7 +8,8 @@ li {list-style: none;}
 img {vertical-align: middle;}
 a img {border: none;}
 a:focus {outline: none}
-button:focus {outline: none}
+button {cursor: pointer;}
+button:focus {outline: none;}
 /* 폰트 스타일 */
 @font-face {
     font-family: 'No2';
