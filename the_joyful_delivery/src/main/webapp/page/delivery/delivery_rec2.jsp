@@ -21,7 +21,7 @@
 					<ul class="input_list">
 						<li>
 						 	<label for="s_name">이름</label>
-					  	 	<input id="s_name" name="s_name" type="text" title="보내는분의 이름을 입력해주세요." placeholder="이름">
+					  	 	<input class="check_trim" id="s_name" name="s_name" type="text" title="보내는분의 이름을 입력해주세요." placeholder="이름">
 						</li>
 						<li>
 						 	<label for="s_number">휴대폰 번호</label>
@@ -37,7 +37,7 @@
 						</li>
 					</ul>
 					<button id="prev_btn" type="button" onclick="history.back()">이전</button>
-					<button id="next_btn2" type="submit">다음으로</button>
+					<button id="next_btn2" type="submit">다음</button>
 				</form>
 			</div> <!-- sm_container -->
 		</div> <!-- container -->
