@@ -11,7 +11,7 @@
 </head>
 <header>
 	<nav>
-		<a href="<%= root %>/logo"><img src="<%= root %>/static/img/logo.png" width="380" height="153" ></a>
+		<a href="<%= root %>/index.jsp"><img src="<%= root %>/static/img/logo.png" width="380" height="153" ></a>
 		<div class="header_wrap">
 			<div>
 				<ul class="header_top">
@@ -22,8 +22,8 @@
 			</div>    
 			<div class="header_down">
 				<ul class="header_down_1">
-					<li><a href="<%= root %>/login.jsp">배송 조회</a></li>
-					<li><a href="<%= root %>/login.jsp">고객센터</a></li>
+					<li><a href="<%= root %>/page/delivery/delivery_main.jsp">배송 조회</a></li>
+					<li><a href="<%= root %>">고객센터</a></li>
 				</ul>
 				<ul class="header_down_2">
 					<li><a href="<%= root%>/search"><img src="<%= root %>/static/img/ico_social_instagram.png" width="35" height="35"></a></li>

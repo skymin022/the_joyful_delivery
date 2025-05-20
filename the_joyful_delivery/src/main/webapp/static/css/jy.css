@@ -25,7 +25,7 @@ input[type="number"]::-webkit-inner-spin-button {
 	height: 55px;
 	border-radius: 30px;
 	border: 0.5px solid rgba(0, 0, 0, 0.25);;
-	padding: 30px;
+	padding-left: 30px;
 	font-size: 19px;
 	outline: none;
 }
@@ -263,5 +263,46 @@ input[type="number"]::-webkit-inner-spin-button {
 	margin-top: 10px;
 }
 
-
+/* customer_sc */
+.bg_container {
+	width: 1020px;
+	background-color: white;
+	margin: 56px auto 0;
+	border-radius: 25px;
+	position: relative;
+}
+.bg_container p {color: #000; font-size: 18px;}
+.bg_container > ul > li {
+	display: flex;
+	align-items: center;
+	padding: 20px 35px;
+	gap: 30px;
+	border-bottom: 1px solid var(--place-hol);
+}
+.bg_container > ul > li .bor_txt {
+	background-color: var(--sub-color1);
+	border-radius: 10px;
+	padding: 0 10px;
+}
+.bg_container button {
+	border: none;
+	background-color: inherit;
+	margin-left: auto;
+	transition: all 0.3s;
+}
+.bg_container button.on {
+	transform: rotate(180deg);
+}
+.bg_container ul li.answer {
+	padding: 50px 150px;
+	border-bottom: none;
+	display: none;
+}
+.bottom_page ul {
+	display: flex;
+	height: 80px;
+	column-gap: 15px;
+	justify-content: center;
+	align-items: center;
+}
 
