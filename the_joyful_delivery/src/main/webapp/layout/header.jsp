@@ -16,8 +16,8 @@
 			<div>
 				<ul class="header_top">
 					<li><a href="<%= root %>/search"><img src="<%= root %>/static/img/btn_search.png" width="30" height="30"></a></li>
-					<li><a href="<%= root %>/login.jsp">로그인</a></li>
-					<li><a href="<%= root %>/signup.jsp">회원가입</a></li>
+					<li><a href="<%= root %>/page/login/login.jsp">로그인</a></li>
+					<li><a href="<%= root %>/page/login//sign_up.jsp">회원가입</a></li>
 				</ul>
 			</div>    
 			<div class="header_down">
