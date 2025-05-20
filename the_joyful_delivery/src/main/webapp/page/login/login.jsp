@@ -17,7 +17,7 @@
         <%-- [Contents] ######################################################### --%>
         <main>
 			<div class="container">
-				<form action="<%=root %>/users/login" method="post">
+				<form action="<%=root %>/page/login" method="post">
 		            <div class="login-box">
 		                <div class="left-box">
 		                    <div class="sign-up">sign-in</div>
@@ -48,7 +48,7 @@
 		                <div class="right-box">
 		                    <h2>wellcome, customer</h2>
 		                    <h3>Enter your personal details and start <br> FAST delivery Service with us</h3>
-		                    <a href="${ root }/sign_up.jsp" class="btn" >회원가입</a>
+		                    <a href="<%= root %>/page/login//sign_up.jsp" class="btn" >회원가입</a>
 		                </div>
 		            </div>
 	            </form>
