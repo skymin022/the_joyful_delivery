@@ -59,13 +59,6 @@ CREATE TABLE `user_roles` (
     PRIMARY KEY (`idx`)
 );
 
-CREATE TABLE `companies` (
-    `idx` BIGINT NOT NULL AUTO_INCREMENT,
-    `name` VARCHAR(50) NOT NULL,
-    `number` VARCHAR(50) NOT NULL,
-    PRIMARY KEY (`idx`)
-);
-
 CREATE TABLE `users` (
     `idx` BIGINT NOT NULL AUTO_INCREMENT COMMENT 'index',
     `role_idx` BIGINT NOT NULL DEFAULT 1,

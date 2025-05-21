@@ -28,20 +28,6 @@ VALUES
 (1, 'user09', 'pass09', '최무선', 'user09@example.com', '천안시 동남구', '1994-09-09', '01011110009'),
 (1, 'user10', 'pass10', '허준', 'user10@example.com', '수원시 권선구', '1986-10-10', '01011110010');
 
-INSERT INTO companies (name, number)
-VALUES
-('대한통운', 'C001'),
-('한진택배', 'C002'),
-('롯데택배', 'C003'),
-('로젠택배', 'C004'),
-('CU택배', 'C005'),
-('GS택배', 'C006'),
-('우체국택배', 'C007'),
-('이마트배송', 'C008'),
-('쿠팡로지스틱스', 'C009'),
-('SSG배송', 'C010');
-
-
 INSERT INTO drivers (company_idx, name, number)
 VALUES
 (1, '김기사', 'D001'),
