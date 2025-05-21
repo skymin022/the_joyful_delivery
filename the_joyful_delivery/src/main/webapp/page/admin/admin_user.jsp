@@ -39,11 +39,13 @@
 				</div>
 				<div class="line"></div>
 				<ul>     
-					<li><input name="where" id="invoiceNo"   value="invoiceNo"   type="radio"/><label for="userNo">송장번호</label></li>
-					<li><input name="where" id="userId" value="userId" type="radio"/><label for="userName">회원번호</label></li>
-					<li><input name="where" id="invoiceDate"   value="invoiceDate"   type="radio"/><label for="userId">송장발행일</label></li>
-					<li><input name="where" id="current_locate"  value="current_locate"  type="radio"/><label for="userEma">현재위치</label></li>
-					<li><input name="where" id="deli_stat"  value="deli_stat"  type="radio"/><label for="userPho">배송상태</label></li>
+					<li><input name="where" id="userNo"   value="userNo"   type="radio"/><label for="userNo">회원번호</label></li>
+					<li><input name="where" id="userName" value="userName" type="radio"/><label for="userName">이름</label></li>
+					<li><input name="where" id="userId"   value="userId"   type="radio"/><label for="userId">아이디</label></li>
+					<li><input name="where" id="userEma"  value="userEma"  type="radio"/><label for="userEma">이메일</label></li>
+					<li><input name="where" id="userPho"  value="userPho"  type="radio"/><label for="userPho">전화번호</label></li>
+					<li><input name="where" id="userAdd"  value="userAdd"  type="radio"/><label for="userAdd">주소</label></li>
+					<li><input name="where" id="userBir"  value="userBir"  type="radio"/><label for="userBir">생년월일</label></li>
 				</ul>
 			</div>		
 		</form>
