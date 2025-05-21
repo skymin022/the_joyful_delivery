@@ -372,11 +372,18 @@ td {
 .u_table {
 	width: 80%;
 	border-radius: 20px;
-	border-collapse: collapse;
+	border-collapse: separate;
+	border-spacing: 0 15px;
 }
 .user_th_wrap {
-	border-bottom: 1px solid black;
+/* 	border-bottom: 1px solid black; */
 }
 .user_tbody tr {
-	border-top: 1px solid rgba(0,0,0,0.2);
+	/* TODO: border-bottom으로 선을 그으면
+			 맨 아랫쪽에서 border-radius로
+			 깎인 모서리를 선이 튀어나감
+			 그래서 border-top으로 하면
+			 맨 위 헤드라인의 밑줄을 덮어서 검은색이 회색으로바뀜
+	 */
+/* 	border-top: 10px solid rgba(0,0,0,0.2); */
 }
