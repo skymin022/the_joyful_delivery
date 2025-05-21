@@ -39,16 +39,121 @@
 				</div>
 				<div class="line"></div>
 				<ul>     
-					<li><input name="where" id="userNo"   value="userNo"   type="radio"/><label for="userNo">회원번호</label></li>
-					<li><input name="where" id="userName" value="userName" type="radio"/><label for="userName">이름</label></li>
-					<li><input name="where" id="userId"   value="userId"   type="radio"/><label for="userId">아이디</label></li>
-					<li><input name="where" id="userEma"  value="userEma"  type="radio"/><label for="userEma">이메일</label></li>
-					<li><input name="where" id="userPho"  value="userPho"  type="radio"/><label for="userPho">전화번호</label></li>
-					<li><input name="where" id="userAdd"  value="userAdd"  type="radio"/><label for="userAdd">주소</label></li>
-					<li><input name="where" id="userBir"  value="userBir"  type="radio"/><label for="userBir">생년월일</label></li>
+					<li><input name="where" id="invoiceNo"   value="invoiceNo"   type="radio"/><label for="userNo">송장번호</label></li>
+					<li><input name="where" id="userId" value="userId" type="radio"/><label for="userName">회원번호</label></li>
+					<li><input name="where" id="invoiceDate"   value="invoiceDate"   type="radio"/><label for="userId">송장발행일</label></li>
+					<li><input name="where" id="current_locate"  value="current_locate"  type="radio"/><label for="userEma">현재위치</label></li>
+					<li><input name="where" id="deli_stat"  value="deli_stat"  type="radio"/><label for="userPho">배송상태</label></li>
 				</ul>
 			</div>		
 		</form>
+		<div class="user_table">
+			<table class="u_table">
+				<thead class="user_th_wrap">
+					<tr class="user_th_tr">
+						<th>회원번호</th>
+						<th>이름</th>
+						<th>아이디</th>
+						<th>이메일</th>
+						<th>전화번호</th>
+						<th>주소</th>
+						<th>생년월일</th>
+						<th>예약건수</th>
+						<th>탈퇴여부</th>
+					</tr>
+				</thead>
+				<tbody class="user_tbody">
+					<tr class="user_tbody_tr">
+						<td>1</td>
+						<td>김조은</td>
+						<td>joeun123</td>
+						<td>joeun123@naver.com</td>
+						<td>010-1234-5678</td>
+						<td>인천광역시 부평구 어디동 123-21 301호</td>
+						<td>920202</td>
+						<td>3</td>
+						<td>N</td>
+					</tr>
+					<tr>
+						<td>1</td>
+						<td>김조은</td>
+						<td>joeun123</td>
+						<td>joeun123@naver.com</td>
+						<td>010-1234-5678</td>
+						<td>인천광역시 부평구 어디동 123-21 301호</td>
+						<td>920202</td>
+						<td>3</td>
+						<td>N</td>
+					</tr>
+					<tr>
+						<td>1</td>
+						<td>김조은</td>
+						<td>joeun123</td>
+						<td>joeun123@naver.com</td>
+						<td>010-1234-5678</td>
+						<td>인천광역시 부평구 어디동 123-21 301호</td>
+						<td>920202</td>
+						<td>3</td>
+						<td>N</td>
+					</tr>
+					<tr>
+						<td>1</td>
+						<td>김조은</td>
+						<td>joeun123</td>
+						<td>joeun123@naver.com</td>
+						<td>010-1234-5678</td>
+						<td>인천광역시 부평구 어디동 123-21 301호</td>
+						<td>920202</td>
+						<td>3</td>
+						<td>N</td>
+					</tr>
+					<tr>
+						<td>1</td>
+						<td>김조은</td>
+						<td>joeun123</td>
+						<td>joeun123@naver.com</td>
+						<td>010-1234-5678</td>
+						<td>인천광역시 부평구 어디동 123-21 301호</td>
+						<td>920202</td>
+						<td>3</td>
+						<td>N</td>
+					</tr>
+					<tr>
+						<td>1</td>
+						<td>김조은</td>
+						<td>joeun123</td>
+						<td>joeun123@naver.com</td>
+						<td>010-1234-5678</td>
+						<td>인천광역시 부평구 어디동 123-21 301호</td>
+						<td>920202</td>
+						<td>3</td>
+						<td>N</td>
+					</tr>
+					<tr>
+						<td>1</td>
+						<td>김조은</td>
+						<td>joeun123</td>
+						<td>joeun123@naver.com</td>
+						<td>010-1234-5678</td>
+						<td>인천광역시 부평구 어디동 123-21 301호</td>
+						<td>920202</td>
+						<td>3</td>
+						<td>N</td>
+					</tr>
+					<tr>
+						<td>1</td>
+						<td>김조은</td>
+						<td>joeun123</td>
+						<td>joeun123@naver.com</td>
+						<td>010-1234-5678</td>
+						<td>인천광역시 부평구 어디동 123-21 301호</td>
+						<td>920202</td>
+						<td>3</td>
+						<td>N</td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
 		<%-- [Contents] ######################################################### --%>
 		<jsp:include page="/layout/script.jsp" />
 	</div>
