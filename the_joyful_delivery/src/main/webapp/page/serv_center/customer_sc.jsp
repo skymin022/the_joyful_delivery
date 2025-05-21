@@ -14,24 +14,17 @@
 	<%-- [Contents] ######################################################### --%>
 		<jsp:include page="/layout/header.jsp" />
 		<div class="container">
-<<<<<<< HEAD
-			<h2 class="title">내 문의 내역</h2>
-			<!-- TODO: form태그 만들기 -->
-=======
 			<h2 class="title">고객센터</h2>
-			<h3>자주 묻는 질문</h3>
-			<form action="">
-				<div class="input_area">
-					<input class="input_sear" name="keyword" type="text" placeholder="검색어" title="검색 키워드를 입력해주세요."/>
-					<button class="search_icon"><img src="<%=root%>/static/img/search.png" alt="돋보기 이미지"/></button>
-				</div>
-			</form>
->>>>>>> refs/heads/main
+			<!-- TODO: form태그 만들기 -->
+			<div class="input_area">
+				<input class="input_sear" name="keyword" type="text" placeholder="검색어" title="검색 키워드를 입력해주세요."/>
+				<button class="search_icon"><img src="<%=root%>/static/img/search.png" alt="돋보기 이미지"/></button>
+			</div>
 			<div class="bg_container">
 				<ul>
 					<li>
-						<img alt="사람이미지" src="<%=root%>/static/img/person.png">
-						<p class="bor_txt">문의</p>
+						<img alt="깃발이미지" src="<%=root%>/static/img/flags.png">
+						<p class="bor_txt">택배서비스</p>
 						<p>택배를 취소하고 싶어요</p>
 						<button type="button" class="dropdown">
 							<img alt="드랍다운 화살표" src="<%=root%>/static/img/downarrow.png">
@@ -44,8 +37,8 @@
 						</p>
 					</li>
 					<li>
-						<img alt="사람이미지" src="<%=root%>/static/img/person.png">
-						<p class="bor_txt">문의</p>
+						<img alt="깃발이미지" src="<%=root%>/static/img/flags.png">
+						<p class="bor_txt">택배서비스</p>
 						<p>택배를 취소하고 싶어요</p>
 						<button type="button" class="dropdown">
 							<img alt="드랍다운 화살표" src="<%=root%>/static/img/downarrow.png">
@@ -58,8 +51,8 @@
 						</p>
 					</li>
 					<li>
-						<img alt="사람이미지" src="<%=root%>/static/img/person.png">
-						<p class="bor_txt">문의</p>
+						<img alt="깃발이미지" src="<%=root%>/static/img/flags.png">
+						<p class="bor_txt">택배서비스</p>
 						<p>택배를 취소하고 싶어요</p>
 						<button type="button" class="dropdown">
 							<img alt="드랍다운 화살표" src="<%=root%>/static/img/downarrow.png">
@@ -72,50 +65,8 @@
 						</p>
 					</li>
 					<li>
-						<img alt="사람이미지" src="<%=root%>/static/img/person.png">
-						<p class="bor_txt">문의</p>
-						<p>택배를 취소하고 싶어요</p>
-						<button type="button" class="dropdown">
-							<img alt="드랍다운 화살표" src="<%=root%>/static/img/downarrow.png">
-						</button>
-					</li>
-					<li class="answer">
-						<p>
-						택배 취소는 기사님께서 수거해가지 않으셨을 경우에만 취소가 가능해요! <br> 접수 하신 후 2일이 되지 않으셨다면 접수하신 점포에서 근무자를 통해 취소가 가능하시며, <br>
-						2일이 경과하신 경우에는 당사 고객센터(1234-5678)로 문의 주시면 됩니다.
-						</p>
-					</li>
-					<li>
-						<img alt="사람이미지" src="<%=root%>/static/img/person.png">
-						<p class="bor_txt">문의</p>
-						<p>택배를 취소하고 싶어요</p>
-						<button type="button" class="dropdown">
-							<img alt="드랍다운 화살표" src="<%=root%>/static/img/downarrow.png">
-						</button>
-					</li>
-					<li class="answer">
-						<p>
-						택배 취소는 기사님께서 수거해가지 않으셨을 경우에만 취소가 가능해요! <br> 접수 하신 후 2일이 되지 않으셨다면 접수하신 점포에서 근무자를 통해 취소가 가능하시며, <br>
-						2일이 경과하신 경우에는 당사 고객센터(1234-5678)로 문의 주시면 됩니다.
-						</p>
-					</li>
-					<li>
-						<img alt="사람이미지" src="<%=root%>/static/img/person.png">
-						<p class="bor_txt">문의</p>
-						<p>택배를 취소하고 싶어요</p>
-						<button type="button" class="dropdown">
-							<img alt="드랍다운 화살표" src="<%=root%>/static/img/downarrow.png">
-						</button>
-					</li>
-					<li class="answer">
-						<p>
-						택배 취소는 기사님께서 수거해가지 않으셨을 경우에만 취소가 가능해요! <br> 접수 하신 후 2일이 되지 않으셨다면 접수하신 점포에서 근무자를 통해 취소가 가능하시며, <br>
-						2일이 경과하신 경우에는 당사 고객센터(1234-5678)로 문의 주시면 됩니다.
-						</p>
-					</li>
-					<li>
-						<img alt="사람이미지" src="<%=root%>/static/img/person.png">
-						<p class="bor_txt">문의</p>
+						<img alt="깃발이미지" src="<%=root%>/static/img/flags.png">
+						<p class="bor_txt">택배서비스</p>
 						<p>택배를 취소하고 싶어요</p>
 						<button type="button" class="dropdown">
 							<img alt="드랍다운 화살표" src="<%=root%>/static/img/downarrow.png">
