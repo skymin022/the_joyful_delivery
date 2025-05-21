@@ -16,6 +16,22 @@
 -- 19행 부터 끝까지 복사 후 workbench 에 붙여넣기 후 ctrl + shift + enter 
 
 -- 테이블 생성
+
+-- DROP TABLES IF EXISTS
+DROP TABLE IF EXISTS copy_of_inquiries;
+DROP TABLE IF EXISTS inquiries;
+DROP TABLE IF EXISTS region_name;
+DROP TABLE IF EXISTS deliveries;
+DROP TABLE IF EXISTS payment;
+DROP TABLE IF EXISTS reimbursement;
+DROP TABLE IF EXISTS charge;
+DROP TABLE IF EXISTS announcement;
+DROP TABLE IF EXISTS users;
+DROP TABLE IF EXISTS user_roles;
+DROP TABLE IF EXISTS sending_and_receiving;
+DROP TABLE IF EXISTS drivers;
+DROP TABLE IF EXISTS companies;
+
 CREATE TABLE `inquiries` (
     `idx` BIGINT NOT NULL AUTO_INCREMENT,
     `user_no` BIGINT NOT NULL COMMENT 'index',
@@ -43,13 +59,6 @@ CREATE TABLE `user_roles` (
     PRIMARY KEY (`idx`)
 );
 
-CREATE TABLE `companies` (
-    `idx` BIGINT NOT NULL AUTO_INCREMENT,
-    `name` VARCHAR(50) NOT NULL,
-    `number` VARCHAR(50) NOT NULL,
-    PRIMARY KEY (`idx`)
-);
-
 CREATE TABLE `users` (
     `idx` BIGINT NOT NULL AUTO_INCREMENT COMMENT 'index',
     `role_idx` BIGINT NOT NULL DEFAULT 1,
@@ -61,7 +70,7 @@ CREATE TABLE `users` (
     `birth` VARCHAR(100) NOT NULL,
     `sign_up_date` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
     `withdrawal` BOOLEAN NOT NULL DEFAULT FALSE,
-    `p_number` INT NOT NULL,
+    `p_number` VARCHAR(50) NOT NULL,
     PRIMARY KEY (`idx`)
 );
 
@@ -130,7 +139,6 @@ CREATE TABLE `announcement` (
 
 CREATE TABLE `drivers` (
     `idx` BIGINT NOT NULL AUTO_INCREMENT,
-    `company_idx` BIGINT NOT NULL,
     `name` VARCHAR(50) NOT NULL,
     `number` VARCHAR(50) NOT NULL,
     PRIMARY KEY (`idx`)
@@ -173,9 +181,4 @@ ALTER TABLE `deliveries`
 ALTER TABLE `payment`
     ADD CONSTRAINT `FK_payment_d_idx`
     FOREIGN KEY (`d_idx`) REFERENCES `deliveries`(`idx`)
-    ON DELETE CASCADE ON UPDATE CASCADE;
-
-ALTER TABLE `drivers`
-    ADD CONSTRAINT `FK_drivers_company_idx`
-    FOREIGN KEY (`company_idx`) REFERENCES `companies`(`idx`)
     ON DELETE CASCADE ON UPDATE CASCADE;
