@@ -139,7 +139,6 @@ CREATE TABLE `announcement` (
 
 CREATE TABLE `drivers` (
     `idx` BIGINT NOT NULL AUTO_INCREMENT,
-    `company_idx` BIGINT NOT NULL,
     `name` VARCHAR(50) NOT NULL,
     `number` VARCHAR(50) NOT NULL,
     PRIMARY KEY (`idx`)
@@ -182,9 +181,4 @@ ALTER TABLE `deliveries`
 ALTER TABLE `payment`
     ADD CONSTRAINT `FK_payment_d_idx`
     FOREIGN KEY (`d_idx`) REFERENCES `deliveries`(`idx`)
-    ON DELETE CASCADE ON UPDATE CASCADE;
-
-ALTER TABLE `drivers`
-    ADD CONSTRAINT `FK_drivers_company_idx`
-    FOREIGN KEY (`company_idx`) REFERENCES `companies`(`idx`)
     ON DELETE CASCADE ON UPDATE CASCADE;
