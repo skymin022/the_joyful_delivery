@@ -1,16 +1,21 @@
-DROP TABLE IF EXISTS copy_of_inquiries;
-DROP TABLE IF EXISTS inquiries;
-DROP TABLE IF EXISTS region_name;
-DROP TABLE IF EXISTS deliveries;
-DROP TABLE IF EXISTS payment;
-DROP TABLE IF EXISTS reimbursement;
-DROP TABLE IF EXISTS charge;
-DROP TABLE IF EXISTS announcement;
-DROP TABLE IF EXISTS users;
-DROP TABLE IF EXISTS user_roles;
-DROP TABLE IF EXISTS sending_and_receiving;
-DROP TABLE IF EXISTS drivers;
-DROP TABLE IF EXISTS companies;
+SET FOREIGN_KEY_CHECKS = 0;
+
+TRUNCATE TABLE reimbursement;
+TRUNCATE TABLE announcement;
+TRUNCATE TABLE charge;
+TRUNCATE TABLE copy_of_inquiries;
+TRUNCATE TABLE inquiries;
+TRUNCATE TABLE payment;
+TRUNCATE TABLE region_name;
+TRUNCATE TABLE deliveries;
+TRUNCATE TABLE sending_and_receiving;
+TRUNCATE TABLE drivers;
+TRUNCATE TABLE users;
+TRUNCATE TABLE user_roles;
+
+SET FOREIGN_KEY_CHECKS = 1;
+
+
 
 INSERT INTO user_roles (role) VALUES
 ('USER'), ('ADMIN');
@@ -29,18 +34,18 @@ VALUES
 (1, 'user10', 'pass10', '허준', 'user10@example.com', '수원시 권선구', '1986-10-10', '01011110010'),
 (2, 'admin', 'pass11', '구본걸', 'admin11@example.com', '인천광역시 부평구', '1997-10-10', '01011110011');
 
-INSERT INTO drivers (company_idx, name, number)
+INSERT INTO drivers (name, number)
 VALUES
-(1, '김기사', 'D001'),
-(2, '이기사', 'D002'),
-(3, '박기사', 'D003'),
-(4, '최기사', 'D004'),
-(5, '정기사', 'D005'),
-(6, '조기사', 'D006'),
-(7, '오기사', 'D007'),
-(8, '배기사', 'D008'),
-(9, '윤기사', 'D009'),
-(10, '임기사', 'D010');
+('김기사', 'D001'),
+('이기사', 'D002'),
+('박기사', 'D003'),
+('최기사', 'D004'),
+('정기사', 'D005'),
+('조기사', 'D006'),
+('오기사', 'D007'),
+('배기사', 'D008'),
+('윤기사', 'D009'),
+('임기사', 'D010');
 
 INSERT INTO sending_and_receiving (s_name, s_number, s_address, r_name, r_number, r_address)
 VALUES
@@ -158,7 +163,6 @@ VALUES
 (3, 12000),
 (2, 9000),
 (1, 6000);
-
 
 
 
