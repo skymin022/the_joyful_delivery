@@ -1,3 +1,5 @@
+<%@page import="java.util.List"%>
+<%@page import="DTO.Users"%>
 <%@ include file="/layout/jstl.jsp" %>
 <%@ include file="/layout/common.jsp" %>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
@@ -12,7 +14,17 @@
 <body>
 	<jsp:include page="/layout/header.jsp" />
 	<%-- [Contents] ######################################################### --%>
-	
+	<%List<Users> list = (List)request.getAttribute("users"); %>
+	<ul>
+		<%for(Users user : list) {%>
+		<li>
+			<p><%=user.getUsername() %></p>
+			<p><%=user.getId() %></p>
+			<p><%=user.getPassword() %></p>
+			<br>
+		</li>
+		<%} %>
+	</ul>
 	
 	
 	<%-- [Contents] ######################################################### --%>
