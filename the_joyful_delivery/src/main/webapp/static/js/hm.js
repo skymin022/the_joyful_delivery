@@ -277,4 +277,90 @@ document.addEventListener("DOMContentLoaded", function () {
         });
     });
 
+	const tabPart1 = document.querySelector(".tab.part1");
+	const tabPart2 = document.querySelector(".tab.part2");
+	const rows = document.querySelectorAll(".row-box");
+	const searchInput = document.getElementById("searchInput");
+	const sendOption = document.getElementById("sendOption");
+
+	if (tabPart1 && tabPart2 && rows.length > 0 && searchInput && sendOption) {
+
+	    let currentTabFilter = status => status === "배송 전" || status === "배송 중"; // 기본 필터
+
+	    function activateTab(selectedTab) {
+	        document.querySelectorAll(".tab").forEach(tab => tab.classList.remove("active"));
+	        selectedTab.classList.add("active");
+
+	        if (selectedTab === tabPart1) {
+	            currentTabFilter = status => status === "배송 전" || status === "배송 중";
+	        } else if (selectedTab === tabPart2) {
+	            currentTabFilter = status => status === "배송 완료";
+	        }
+
+	        filterRows();
+	    }
+
+	    function filterRows() {
+	        const keyword = searchInput.value.trim().toLowerCase();
+	        const option = sendOption.value;
+
+	        rows.forEach(row => {
+	            const cells = row.querySelectorAll(".row-content > div");
+	            const status = cells[5].textContent.trim();
+	            if (!currentTabFilter(status)) {
+	                row.style.display = "none";
+	                return;
+	            }
+
+	            let textToCheck = "";
+
+				switch(option) {
+				    case "delivery":
+				        textToCheck = cells[1].textContent.trim().toLowerCase();
+				        break;
+				    case "sender":
+				        // 보내는 사람 / 주소 (cells[2])
+				        textToCheck = cells[2].textContent.trim().toLowerCase();
+				        break;
+				    case "receiver":
+				        // 받는 사람 / 주소 (cells[3])
+				        textToCheck = cells[3].textContent.trim().toLowerCase();
+				        break;
+				    case "address":
+				        // 전체 주소 (보내는 사람 / 주소 + 받는 사람 / 주소)
+				        textToCheck = cells[2].textContent.trim().toLowerCase() + " " + cells[3].textContent.trim().toLowerCase();
+				        break;
+				    default:
+				        textToCheck = "";
+				}
+
+
+	            if (keyword === "" || textToCheck.includes(keyword)) {
+	                row.style.display = "";
+	            } else {
+	                row.style.display = "none";
+	            }
+	        });
+	    }
+
+	    // 이벤트 등록
+	    tabPart1.addEventListener("click", () => activateTab(tabPart1));
+	    tabPart2.addEventListener("click", () => activateTab(tabPart2));
+	    searchInput.addEventListener("input", filterRows);
+	    sendOption.addEventListener("change", filterRows);
+
+	    // 초기 활성 탭 및 필터 적용
+	    activateTab(tabPart1);
+
+	}
+
+	
+	
+	
+	
+	
+	
+	
+	
+	
 });

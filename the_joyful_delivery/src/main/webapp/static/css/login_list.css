@@ -14,6 +14,7 @@
     width: 1080px;
     height: 60px;
     gap: 10px;
+    margin-top: 10px;
 }
 .top {
     display: flex;
@@ -25,6 +26,12 @@
     padding-left: 10px;
     padding-right: 10px;
     border-radius: 15px;
+}
+.searchInput {
+	border: 1px white;
+	width: 600px;
+	height: 30px;
+	font-size: var(--text-small);
 }
 .left {
     display: flex;
@@ -41,10 +48,11 @@
     justify-content: space-between;
     align-items: center;
 }
-.right img {
-    width: 30px;
-    height: 30px;
-    opacity: 0.5;
+.box {
+    width: 140px;
+    padding: 8px;
+    border: 1px solid rgba(0,0,0,0.4);
+    border-radius: 4px;
 }
 .right .list {
     display: flex;
@@ -98,6 +106,7 @@
     display: inline-block;
     width: 150px;
     height: 40px;
+    opacity: 0.5;
     text-align: center;
 }
 .tap .tab.active {
@@ -122,18 +131,28 @@
 }
 .row-content {
     display: grid;
-    grid-template-columns: 5% 10% 28% 28% 10% 10%;
-    gap: 8px;
+    grid-template-columns: 5% 10% 32% 32% 10% 10%;
     align-items: center;
     font-size: var(--text-small);
 }
+.row-content > div { 
+ 	display: flex;
+    align-items: center;     
+    justify-content: center;  
+}
 .table-header {
     display: grid;
-    grid-template-columns: 5% 10% 28% 28% 10% 10%;
+    grid-template-columns: 5% 10% 32% 32% 10% 10%;
     background: #f8af3c;
     color: #000;
     font-weight: bold;
     padding: 12px 16px;
     border-radius: 8px;
     margin-bottom: 10px;
+    text-align: center;
+}
+.table-header > div {
+    display: flex;
+    align-items: center;     
+    justify-content: center;  
 }
