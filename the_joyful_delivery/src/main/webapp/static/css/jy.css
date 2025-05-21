@@ -32,7 +32,7 @@ input[type="number"]::-webkit-inner-spin-button {
 .input_sear::placeholder {
 	color: var(--place-hol);
 }
-.search_icon {
+.search_icon, .ad_search_icon {
  	position: absolute;
     right: 5%;
     top: 24%;
@@ -305,4 +305,57 @@ input[type="number"]::-webkit-inner-spin-button {
 	justify-content: center;
 	align-items: center;
 }
+
+/* admin 페이지 */
+.ad_search {
+	background-color: #fff;
+	width: 1500px; height: 100px;
+	border-radius: 20px;
+	margin: 90px auto 0;
+	display: flex;
+	align-items: center;
+	padding: 0 40px;
+}
+.ad_search input[type="text"] {
+	width: 670px; height: 60px;
+	border: 1px solid var(--place-hol);
+	border-radius: 20px;
+	padding-left: 20px;
+	font-size: 20px;
+}
+.ad_search .line {
+	width: 2px;
+	height: 100px;
+	background-color: #D9D9D9;
+	margin: 0 40px;
+}
+.ad_search ul {
+	display: flex;
+	gap: 20px;
+}
+.ad_search ul li label {
+	margin-left: 10px;
+}
+/* admin_header */
+.admin_header {
+    width: 100%;
+	display: flex;
+	gap: 130px;
+}
+.admin_header nav ul {
+	display: flex;
+	align-items: center;
+	gap: 85px;
+	height: 100%;
+}
+.admin_header nav ul li a {
+	padding: 20px;
+	cursor: pointer;
+	font-size: 20px;
+}
+.admin_header nav ul li a:hover, .admin_header nav ul li.on a {
+	color: var(--sub-color3);
+}
+/* admin_user */
+
 
