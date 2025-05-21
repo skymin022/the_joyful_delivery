@@ -370,13 +370,14 @@ td {
 	text-align: center;
 }
 .u_table {
-	width: 80%;
+	width: 1500px;
 	border-radius: 20px;
-	border-collapse: separate;
+	border-collapse: collapse;
 	border-spacing: 0 15px;
+	margin-top: 15px;
 }
 .user_th_wrap {
-/* 	border-bottom: 1px solid black; */
+	border-bottom: 1px solid black;
 }
 .user_tbody tr {
 	/* TODO: border-bottom으로 선을 그으면
@@ -385,5 +386,17 @@ td {
 			 그래서 border-top으로 하면
 			 맨 위 헤드라인의 밑줄을 덮어서 검은색이 회색으로바뀜
 	 */
-/* 	border-top: 10px solid rgba(0,0,0,0.2); */
+	border-bottom: 1px solid rgba(0,0,0,0.2);
+}
+.user_tbody tr:last-child {
+	border-bottom: none;
+	
+}
+.user_th_wrap th {
+	padding: 10px 0;
+	
+}
+.user_tbody td {
+	padding: 10px 0;
+	
 }
