@@ -15,11 +15,13 @@
 		<jsp:include page="/layout/header.jsp" />
 		<div class="container">
 			<h2 class="title">고객센터</h2>
-			<!-- TODO: form태그 만들기 -->
-			<div class="input_area">
-				<input class="input_sear" name="keyword" type="text" placeholder="검색어" title="검색 키워드를 입력해주세요."/>
-				<button class="search_icon"><img src="<%=root%>/static/img/search.png" alt="돋보기 이미지"/></button>
-			</div>
+			<h3>자주 묻는 질문</h3>
+			<form action="">
+				<div class="input_area">
+					<input class="input_sear" name="keyword" type="text" placeholder="검색어" title="검색 키워드를 입력해주세요."/>
+					<button class="search_icon"><img src="<%=root%>/static/img/search.png" alt="돋보기 이미지"/></button>
+				</div>
+			</form>
 			<div class="bg_container">
 				<ul>
 					<li>
