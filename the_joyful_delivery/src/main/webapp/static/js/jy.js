@@ -7,7 +7,7 @@ document.addEventListener("DOMContentLoaded", function() {
 	const icon = document.querySelector(".search_icon")
 	if(icon) {
 		icon.addEventListener("click", () => {
-			const input = document.querySelector(".input_sear")
+			const input = document.querySelector(".input_sear.d")
 			if (isNaN(input.value) || input.value.trim() === "") {
 				alert("운송장번호(숫자)를 입력해주세요.")
 			} else {
@@ -194,4 +194,16 @@ document.addEventListener("DOMContentLoaded", function() {
 			this.value = this.value.replace(/[^a-zA-Z가-힣]+/g, '');
 		})
 	}
+})
+
+$(function() {
+	/* customer_sc 드랍다운 */
+	$('.dropdown').on('click', function() {
+		$(this).toggleClass('on')
+		if($(this).hasClass('on')) {
+			$(this).closest('li').next('li.answer').stop().slideDown()
+		} else {
+			$(this).closest('li').next('li.answer').stop().slideUp()
+		}
+	})
 })
