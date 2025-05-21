@@ -37,9 +37,9 @@
 			</div>		
 		</form>
 		<div class="user_table">
-			<table border="1">
-				<thead>
-					<tr>
+			<table class="u_table">
+				<thead class="user_th_wrap">
+					<tr class="user_th_tr">
 						<th>회원번호</th>
 						<th>이름</th>
 						<th>아이디</th>
@@ -51,8 +51,8 @@
 						<th>탈퇴여부</th>
 					</tr>
 				</thead>
-				<tbody>
-					<tr>
+				<tbody class="user_tbody">
+					<tr class="user_tbody_tr">
 						<td>1</td>
 						<td>김조은</td>
 						<td>joeun123</td>

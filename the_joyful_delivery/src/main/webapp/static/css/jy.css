@@ -358,4 +358,26 @@ input[type="number"]::-webkit-inner-spin-button {
 }
 /* admin_user */
 
-
+.user_table {
+	display: flex;
+	justify-content: center;
+	margin-top: 10px;
+}
+table {
+	background-color: white;
+	
+}
+td {
+	text-align: center;
+}
+.u_table {
+	width: 80%;
+	border-radius: 20px;
+	border-collapse: collapse;
+}
+.user_th_wrap {
+	border-bottom: 1px solid black;
+}
+.user_tbody tr {
+	border-top: 1px solid rgba(0,0,0,0.2);
+}
