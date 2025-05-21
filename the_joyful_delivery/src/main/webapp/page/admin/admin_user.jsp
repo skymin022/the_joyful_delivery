@@ -36,6 +36,113 @@
 				</ul>
 			</div>		
 		</form>
+		<div class="user_table">
+			<table border="1">
+				<thead>
+					<tr>
+						<th>회원번호</th>
+						<th>이름</th>
+						<th>아이디</th>
+						<th>이메일</th>
+						<th>전화번호</th>
+						<th>주소</th>
+						<th>생년월일</th>
+						<th>예약건수</th>
+						<th>탈퇴여부</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr>
+						<td>1</td>
+						<td>김조은</td>
+						<td>joeun123</td>
+						<td>joeun123@naver.com</td>
+						<td>010-1234-5678</td>
+						<td>인천광역시 부평구 어디동 123-21 301호</td>
+						<td>920202</td>
+						<td>3</td>
+						<td>N</td>
+					</tr>
+					<tr>
+						<td>1</td>
+						<td>김조은</td>
+						<td>joeun123</td>
+						<td>joeun123@naver.com</td>
+						<td>010-1234-5678</td>
+						<td>인천광역시 부평구 어디동 123-21 301호</td>
+						<td>920202</td>
+						<td>3</td>
+						<td>N</td>
+					</tr>
+					<tr>
+						<td>1</td>
+						<td>김조은</td>
+						<td>joeun123</td>
+						<td>joeun123@naver.com</td>
+						<td>010-1234-5678</td>
+						<td>인천광역시 부평구 어디동 123-21 301호</td>
+						<td>920202</td>
+						<td>3</td>
+						<td>N</td>
+					</tr>
+					<tr>
+						<td>1</td>
+						<td>김조은</td>
+						<td>joeun123</td>
+						<td>joeun123@naver.com</td>
+						<td>010-1234-5678</td>
+						<td>인천광역시 부평구 어디동 123-21 301호</td>
+						<td>920202</td>
+						<td>3</td>
+						<td>N</td>
+					</tr>
+					<tr>
+						<td>1</td>
+						<td>김조은</td>
+						<td>joeun123</td>
+						<td>joeun123@naver.com</td>
+						<td>010-1234-5678</td>
+						<td>인천광역시 부평구 어디동 123-21 301호</td>
+						<td>920202</td>
+						<td>3</td>
+						<td>N</td>
+					</tr>
+					<tr>
+						<td>1</td>
+						<td>김조은</td>
+						<td>joeun123</td>
+						<td>joeun123@naver.com</td>
+						<td>010-1234-5678</td>
+						<td>인천광역시 부평구 어디동 123-21 301호</td>
+						<td>920202</td>
+						<td>3</td>
+						<td>N</td>
+					</tr>
+					<tr>
+						<td>1</td>
+						<td>김조은</td>
+						<td>joeun123</td>
+						<td>joeun123@naver.com</td>
+						<td>010-1234-5678</td>
+						<td>인천광역시 부평구 어디동 123-21 301호</td>
+						<td>920202</td>
+						<td>3</td>
+						<td>N</td>
+					</tr>
+					<tr>
+						<td>1</td>
+						<td>김조은</td>
+						<td>joeun123</td>
+						<td>joeun123@naver.com</td>
+						<td>010-1234-5678</td>
+						<td>인천광역시 부평구 어디동 123-21 301호</td>
+						<td>920202</td>
+						<td>3</td>
+						<td>N</td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
 		<%-- [Contents] ######################################################### --%>
 		<jsp:include page="/layout/script.jsp" />
 	</div>
