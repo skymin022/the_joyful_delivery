@@ -1,8 +1,8 @@
 /**
- * 
+ *
  */
 document.addEventListener("DOMContentLoaded", function() {
-	
+
 	// 운송장 번호 유효성 검사
 	const icon = document.querySelector(".search_icon")
 	if(icon) {
@@ -15,12 +15,12 @@ document.addEventListener("DOMContentLoaded", function() {
 			}
 		});
 	}
-	
+
 	// 물품가액 유효성 검사
 	const btns = document.querySelectorAll(".values button")
 	const input_val = document.getElementById("value")
 	if(btns && input_val) {
-		
+
 		// 버튼으로 99만원 못 넘기게
 		btns.forEach(e => {
 			e.addEventListener("click", () => {
@@ -28,11 +28,11 @@ document.addEventListener("DOMContentLoaded", function() {
 				if(result > 99) {
 					alert("물품 가액은 99만원을 초과할 수 없습니다.")
 					return false;
-				}  
+				}
 				input_val.value = result;
 			});
 		});
-		
+
 		// 키보드로 99만원 못 넘기게
 		let prevValue = ''
 		input_val.addEventListener("keyup", function() {
@@ -45,7 +45,7 @@ document.addEventListener("DOMContentLoaded", function() {
 			}
 		})
 	}
-	
+
 	// 물품가액 버튼 on/off
 	const select = document.getElementById("keyword")
 	if(select) {
@@ -57,7 +57,7 @@ document.addEventListener("DOMContentLoaded", function() {
 			}
 		});
 	}
-	
+
 	// delivery_rec1 다음 버튼 검사
 	const nextBtn = document.getElementById("next_btn")
 	if(nextBtn) {
@@ -81,7 +81,7 @@ document.addEventListener("DOMContentLoaded", function() {
 			document.getElementById("form").submit()
 		});
 	}
-	
+
 	// delivery_rec2 다음 버튼 검사
 	const nextBtn2 = document.getElementById("next_btn2")
 	if(nextBtn2) {
@@ -103,14 +103,14 @@ document.addEventListener("DOMContentLoaded", function() {
 				return false;
 			}
 			if(document.getElementById("s_address2").value === '') {
-				alert("상세주소를 입력해주세요.")				
+				alert("상세주소를 입력해주세요.")
 				document.getElementById("s_address2").focus()
 				return false;
-			}			
+			}
 			document.getElementById("form").submit()
 		});
 	}
-	
+
 	// delivery_rec3 다음 버튼 검사
 		const nextBtn3 = document.getElementById("next_btn3")
 		if(nextBtn3) {
@@ -132,24 +132,24 @@ document.addEventListener("DOMContentLoaded", function() {
 					return false;
 				}
 				if(document.getElementById("r_address2").value === '') {
-					alert("상세주소를 입력해주세요.")				
+					alert("상세주소를 입력해주세요.")
 					document.getElementById("r_address2").focus()
 					return false;
-				}	
+				}
 				if(document.getElementById("pre_pos").value === '지불 방법 선택') {
-					alert("지불방법을 선택해주세요.")				
+					alert("지불방법을 선택해주세요.")
 					document.getElementById("pre_pos").focus()
 					return false;
-				}			
+				}
 				document.getElementById("form").submit()
 			});
 		}
-	
+
 	const btnPhone = document.querySelector(".input_list .btn_ph")
 	const inputCerti = document.getElementById("certi_num")
 	let certiCheck = false
 
-	// 인증번호 받기 버튼 활성화 조건	
+	// 인증번호 받기 버튼 활성화 조건
 	const inputPhone = document.getElementById("s_number")
 	if(inputPhone) {
 		inputPhone.addEventListener("keyup", function() {
@@ -160,14 +160,14 @@ document.addEventListener("DOMContentLoaded", function() {
 			}
 		});
 	}
-	
+
 	// 휴대폰 인증번호 받기
 	if(btnPhone) {
 		btnPhone.addEventListener("click", function() {
 			let certiNum = Math.floor(Math.random() *900000)
 			alert("임시 인증번호 : " + certiNum)
 			inputCerti.classList.add("on")
-			
+
 			inputCerti.addEventListener("change", function() {
 				if(this.value == certiNum) {
 					alert("인증되었습니다.")
@@ -179,14 +179,14 @@ document.addEventListener("DOMContentLoaded", function() {
 			});
 		});
 	}
-	
+
 	// 인증번호 input focus 시 값 초기화
 	if(inputCerti) {
 		inputCerti.addEventListener("focus", function() {
 			this.value = ""
 		});
 	}
-	
+
 	// 이름에서 공백 제거
 	const checkTrim = document.querySelector(".check_trim")
 	if(checkTrim) {

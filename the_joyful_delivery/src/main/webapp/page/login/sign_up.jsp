@@ -30,7 +30,7 @@
 									<ul>
 										<li>
 											<span class="tname">아이디</span>
-											<input class="box" type="text" name="id" id="id" placeholder="아이디를 입력해주세요">
+											<input class="box1" type="text" name="id" id="id" placeholder="아이디를 입력해주세요">
 											<button type="button" class="btn2" onclick="checkDuplicateId()">확인</button>
 										</li>
 
@@ -40,15 +40,17 @@
 										</li>
 										<li>
 											<span class="tname">비밀번호<br>확인</span>
-											<input class="box" type="password" name="passwordcheck" id="passwordcheck" placeholder="한번 더 비밀번호를 입력해주세요">
+											<span id="pwCheckMessage" class="check-message"></span>
+											<input class="box" type="password" name ="passwordcheck" id="passwordcheck" placeholder="한번 더 비밀번호를 입력해주세요">
 										</li>
 										<li>
 											<span class="tname">연락처</span>
-											<input class="box phone" type="text" name="phone_number1" id="phone_number1" placeholder="예: 01012345678">
+											<input class="box1" type="text" id="s_number" name="phone_number1" placeholder="01012345678" />
+											<button type="button" id="btnPhone" class="btn2">확인</button>
 										</li>
 										<li>
 											<span class="tname">인증번호</span>
-											<input class="box" type="text" name="check_number" id="check_number" placeholder="인증번호를 입력해주세요">
+											<input class="box" type="text" id="check_number" placeholder="인증번호 입력" />
 										</li>
 										<li>
 											<span class="tname">이름</span>
@@ -58,11 +60,16 @@
 											<span class="tname">이메일</span>
 											<input class="box email" type="text" name="email1" id="email1" placeholder="이메일 아이디">
 											<span>@</span>
-											<input class="box email" type="text" name="email2" id="email2" placeholder="도메인 (예: gmail.com)">
+											<input class="box email" type="text" name="email2" id="email2" placeholder="gmail.com" list="emailDomains">
+											<datalist id="emailDomains">
+												<option value="gmail.com">
+												<option value="naver.com">
+											</datalist>
 										</li>
 										<li>
 											<span class="tname">주소</span>
-											<input class="box" type="text" name="address" id="address" placeholder="주소를 입력해주세요">
+											<input class="box1" type="text" name="address" id="address" placeholder="주소를 입력해주세요" readonly>
+											<button type="button" id="btnPhone" class="btn2" onclick="searchAddress()">주소찾기</button>
 										</li>
 										<li>
 											<span class="tname">생년월일</span>
@@ -79,5 +86,16 @@
         <jsp:include page="/layout/footer.jsp" />
         <jsp:include page="/layout/script.jsp" />
     </div>
+    <script src="https://t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+	<script>
+	function searchAddress() {
+	    new daum.Postcode({
+	        oncomplete: function(data) {
+	            // 사용자가 선택한 주소를 address input에 입력
+	            document.getElementById("address").value = data.address;
+	        }
+	    }).open();
+	}
+	</script>
 </body>
 </html>
