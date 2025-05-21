@@ -24,6 +24,8 @@
 				<ul class="header_down_1">
 					<li><a href="<%= root %>/page/delivery/delivery_main.jsp">배송 조회</a></li>
 					<li><a href="<%= root %>/page/serv_center/customer_sc.jsp">고객센터</a></li>
+					<li><a href="<%= root %>/page/serv_center/contact.jsp">문의하기</a></li>
+					<li><a href="<%= root %>/page/serv_center/myqna.jsp">내문의사항</a></li>
 				</ul>
 				<ul class="header_down_2">
 					<li><a href="<%= root%>/search"><img src="<%= root %>/static/img/ico_social_instagram.png" width="35" height="35"></a></li>

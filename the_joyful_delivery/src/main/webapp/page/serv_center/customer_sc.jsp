@@ -12,7 +12,7 @@
 <body>
 	<div class="wrapper">
 	<%-- [Contents] ######################################################### --%>
-		<jsp:include page="/layout/header.jsp" />
+		<jsp:include page="/layout/serv_header.jsp" />
 		<div class="container">
 			<h2 class="title">고객센터</h2>
 			<!-- TODO: form태그 만들기 -->
