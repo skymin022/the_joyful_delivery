@@ -193,68 +193,80 @@ document.addEventListener("DOMContentLoaded", function () {
     };
 
 	// 비밀번호 확인 - 일치 여부 판단
-		const password = document.getElementById("password");
-		const passwordCheck = document.getElementById("passwordcheck");
-		const pwCheckMessage = document.getElementById("pwCheckMessage");
+	const password = document.getElementById("password");
+	const passwordCheck = document.getElementById("passwordcheck");
+	const pwCheckMessage = document.getElementById("pwCheckMessage");
 
-		function checkPasswordMatch() {
-			if (!password.value || !passwordCheck.value) {
-				pwCheckMessage.textContent = "";
-				pwCheckMessage.className = "check-message";
-				return;
-			}
+	if (password && passwordCheck && pwCheckMessage) {
+	    function checkPasswordMatch() {
+	        if (!password.value || !passwordCheck.value) {
+	            pwCheckMessage.textContent = "";
+	            pwCheckMessage.className = "check-message";
+	            return;
+	        }
 
-			if (password.value === passwordCheck.value) {
-				pwCheckMessage.textContent = "✔";
-				pwCheckMessage.className = "check-message success";
-			} else {
-				pwCheckMessage.textContent = "❌";
-				pwCheckMessage.className = "check-message error";
-			}
+	        if (password.value === passwordCheck.value) {
+	            pwCheckMessage.textContent = "✔";
+	            pwCheckMessage.className = "check-message success";
+	        } else {
+	            pwCheckMessage.textContent = "❌";
+	            pwCheckMessage.className = "check-message error";
+	        }
+	    }
+
+	    password.addEventListener("input", checkPasswordMatch);
+	    passwordCheck.addEventListener("input", checkPasswordMatch);
+	}
+		
+		
+		// 인증번호 확인
+		const inputPhone = document.getElementById("s_number");
+		const btnPhone = document.getElementById("btnPhone");
+		const inputCerti = document.getElementById("check_number");
+
+		if (inputPhone && btnPhone && inputCerti) {
+		    let certiCheck = false;
+		    let certiNum = null;
+
+		    // 초기 버튼 상태 비활성화
+		    btnPhone.disabled = inputPhone.value.length < 10;
+
+		    // 연락처 입력 10자리 이상일 때 버튼 활성화
+		    inputPhone.addEventListener("keyup", function () {
+		        btnPhone.disabled = this.value.length < 10;
+		    });
+
+		    // 인증번호 발급
+		    btnPhone.addEventListener("click", function () {
+		        if (btnPhone.disabled) return; // 버튼 비활성 시 동작하지 않도록 안전장치
+
+		        certiNum = Math.floor(100000 + Math.random() * 900000); // 6자리 숫자
+		        alert("임시 인증번호: " + certiNum);
+		        inputCerti.classList.add("on");
+
+		        // 기존 이벤트 제거 후 다시 등록 (중복 방지)
+		        inputCerti.removeEventListener("change", checkCerti);
+		        inputCerti.addEventListener("change", checkCerti);
+		    });
+
+		    // 인증번호 확인 함수
+		    function checkCerti() {
+		        if (inputCerti.value == certiNum) {
+		            alert("인증되었습니다.");
+		            certiCheck = true;
+		        } else {
+		            alert("인증번호가 다릅니다.");
+		            certiCheck = false;
+		        }
+		        console.log("인증 여부:", certiCheck);
+		    }
+
+		    // 인증번호 입력 시 포커스되면 값 초기화
+		    inputCerti.addEventListener("focus", function () {
+		        this.value = "";
+		    });
 		}
 
-		password.addEventListener("input", checkPasswordMatch);
-		passwordCheck.addEventListener("input", checkPasswordMatch);
-
-
-
-	// 인증번호 받기 버튼 활성화 조건
-		const inputPhone = document.getElementById("s_number")
-		if(inputPhone) {
-			inputPhone.addEventListener("keyup", function() {
-				if(this.value.length >= 10) {
-					btnPhone.classList.add("on")
-				} else {
-					btnPhone.classList.remove("on")
-				}
-			});
-		}
-
-		// 휴대폰 인증번호 받기
-		if(btnPhone) {
-			btnPhone.addEventListener("click", function() {
-				let certiNum = Math.floor(Math.random() *900000)
-				alert("임시 인증번호 : " + certiNum)
-				inputCerti.classList.add("on")
-
-				inputCerti.addEventListener("change", function() {
-					if(this.value == certiNum) {
-						alert("인증되었습니다.")
-						certiCheck = true
-					} else {
-						alert("인증번호가 다릅니다.")
-					}
-					console.log(certiCheck)
-				});
-			});
-		}
-
-		// 인증번호 input focus 시 값 초기화
-		if(inputCerti) {
-			inputCerti.addEventListener("focus", function() {
-				this.value = ""
-			});
-		}
 
 
         // 로그인 후 목록 확인 ----------------------------------------------------------------------------------
