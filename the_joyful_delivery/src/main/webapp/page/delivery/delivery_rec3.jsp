@@ -17,7 +17,7 @@
 			<h2 class="title">택배접수</h2>
 			<h3>받는 분</h3>
 			<div class="sm_container il">
-				<form id="form" action="">
+				<form id="form" action="" method="post">
 					<ul class="input_list">
 						<li>
 						 	<label for="r_name">이름</label>
@@ -35,7 +35,7 @@
 						</li>
 						<li>
 						 	<label for="r_number">요청사항</label>
-					  	 	<input id="r_number" name="r_req" type="text" title="요청사항을 입력해주세요." placeholder="하이픈 '-' 없이 입력해주세요." maxlength="11">
+					  	 	<input id="r_number" name="r_req" type="text" title="요청사항을 입력해주세요." placeholder="배송 요청사항" maxlength="11">
 						</li>
 						<li>
 						 	<label for="pre_pos">지불방법</label>
