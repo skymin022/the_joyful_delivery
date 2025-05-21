@@ -12,7 +12,8 @@
 --announcement 			- 공지사항 테이블
 --drivers 				- 운전자 정보 테이블
 
--- 계정 : mini_team1		비번 : 123456		스키마 : delivery
+-- 계정 : mini_team1		비번 : 123456	    스키마 : delivery
+-- 19행 부터 끝까지 복사 후 workbench 에 붙여넣기 후 ctrl + shift + enter 
 
 -- 테이블 생성
 CREATE TABLE `inquiries` (
