@@ -217,8 +217,8 @@ document.addEventListener("DOMContentLoaded", function () {
 	    password.addEventListener("input", checkPasswordMatch);
 	    passwordCheck.addEventListener("input", checkPasswordMatch);
 	}
-		
-		
+
+
 		// 인증번호 확인
 		const inputPhone = document.getElementById("s_number");
 		const btnPhone = document.getElementById("btnPhone");
@@ -385,13 +385,5 @@ document.addEventListener("DOMContentLoaded", function () {
 	}
 
 
-	
-	
-	
-	
-	
-	
-	
-	
-	
+
 });
