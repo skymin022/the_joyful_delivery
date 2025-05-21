@@ -61,7 +61,7 @@ CREATE TABLE `users` (
     `birth` VARCHAR(100) NOT NULL,
     `sign_up_date` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
     `withdrawal` BOOLEAN NOT NULL DEFAULT FALSE,
-    `p_number` INT NOT NULL,
+    `p_number` VARCHAR(50) NOT NULL,
     PRIMARY KEY (`idx`)
 );
 
