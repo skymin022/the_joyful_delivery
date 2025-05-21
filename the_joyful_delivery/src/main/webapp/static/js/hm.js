@@ -1,6 +1,7 @@
 /**
  *  로그인
  * 	회원가입
+ *  로그인 후 목록 확인
  */
 document.addEventListener("DOMContentLoaded", function () {
 	// 로그인 페이지
@@ -104,7 +105,7 @@ document.addEventListener("DOMContentLoaded", function () {
             });
     };
     // sign_up : 전역 페이지 변수
-    // 회원가입 페이지
+    // 회원가입 페이지 --------------------------------------------------------------------------------------------
     sign_up.validateSignUpForm = function () {
         const id = document.getElementById("id");
         const password = document.getElementById("password");
@@ -190,8 +191,8 @@ document.addEventListener("DOMContentLoaded", function () {
         }
         return true;
     };
-	
-	// 비밀번호 확인 - 일치 여부 판단 
+
+	// 비밀번호 확인 - 일치 여부 판단
 		const password = document.getElementById("password");
 		const passwordCheck = document.getElementById("passwordcheck");
 		const pwCheckMessage = document.getElementById("pwCheckMessage");
@@ -214,9 +215,9 @@ document.addEventListener("DOMContentLoaded", function () {
 
 		password.addEventListener("input", checkPasswordMatch);
 		passwordCheck.addEventListener("input", checkPasswordMatch);
-	
-	
-	
+
+
+
 	// 인증번호 받기 버튼 활성화 조건
 		const inputPhone = document.getElementById("s_number")
 		if(inputPhone) {
@@ -254,6 +255,14 @@ document.addEventListener("DOMContentLoaded", function () {
 				this.value = ""
 			});
 		}
-		
+
+
+        // 로그인 후 목록 확인 ----------------------------------------------------------------------------------
+    document.querySelectorAll('.tap .tab').forEach(tab => {
+        tab.addEventListener('click', function () {     // 클릭 시
+        document.querySelectorAll('.tap .tab').forEach(t => t.classList.remove('active')); // active 부여, 다른 하나 active 제거
+        this.classList.add('active');
+        });
+    });
 
 });

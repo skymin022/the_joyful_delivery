@@ -13,7 +13,7 @@
     flex-direction: column;
     width: 1080px;
     height: 60px;
-    margin: 10px;
+    gap: 10px;
 }
 .top {
     display: flex;
@@ -51,6 +51,100 @@
     align-items: center;
     gap: 10px;
 }
-.mid > ul {
+.mid ul li h2 {
+    width: 70px;
+    height: 30px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
     background-color: white;
+    border: 1px solid rgba(0,0,0,0.4);
+    border-radius: 15px;
+}
+.mid ul li h3 {
+    width: 100px;
+    height: 30px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: white;
+    border: 1px solid rgba(0,0,0,0.4);
+    border-radius: 15px;
+}
+.mid ul li {
+    height: 60px;
+    display: flex;
+    align-content: center;
+    gap: 10px;
+    margin-left: 10px;
+}
+.main-content {
+    width: 1080px;
+    display: flex;
+    flex-direction: column ;
+    gap: 10px;
+}
+.tap {
+    display: flex;
+    align-items: center;
+    height: 70px;
+    justify-content: space-around;
+    font-size: var(--text-normal);
+    border: 1px solid rgba(0,0,0,0.4);
+    border-radius: 20px;
+    margin-top: 30px;
+}
+.tap .tab {
+    display: inline-block;
+    width: 150px;
+    height: 40px;
+    text-align: center;
+}
+.tap .tab.active {
+    font-weight: bold;
+    opacity: 1;
+    border-bottom: 2px solid black;
+}
+.table {
+    border: 1px solid black;
+    border-radius: 20px;
+    border: 1px solid rgba(0,0,0,0.4);
+    padding: 10px;
+    gap: 10px;
+    border-collapse: collapse;
+}
+table th, table td {
+    border:  1px solid black;
+    padding: 10px;
+}
+table thead tr {
+    background-color: white;
+}
+.column {
+    border: 1px solid black;
+    border-radius: 15px;
+}
+.column-column {
+    width: 100%;
+    table-layout: fixed;
+    border-collapse: collapse;
+    text-align: center;
+}
+.column-column th:nth-child(1) {
+    width: 5%;
+}
+.column-column th:nth-child(2) {
+    width: 10%;
+}
+.column-column th:nth-child(3) {
+    width: 32%;
+}
+.column-column th:nth-child(4) {
+    width: 32%;
+}
+.column-column th:nth-child(5) {
+    width: 10%;
+}
+.column-column th:nth-child(6) {
+    width: 10%;
 }
