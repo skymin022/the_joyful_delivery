@@ -6,12 +6,14 @@ document.addEventListener("DOMContentLoaded", function() {
 	// 운송장 번호 유효성 검사
 	const icon = document.querySelector(".search_icon")
 	if(icon) {
-		icon.addEventListener("click", () => {
+		icon.addEventListener("click", (e) => {
+			e.preventDefault()	
 			const input = document.querySelector(".input_sear.d")
 			if (isNaN(input.value) || input.value.trim() === "") {
 				alert("운송장번호(숫자)를 입력해주세요.")
+				return false;
 			} else {
-				location.href = "/the_joyful_delivery/page/delivery/delivery_status.jsp"
+				document.getElementById("form").submit()
 			}
 		});
 	}
