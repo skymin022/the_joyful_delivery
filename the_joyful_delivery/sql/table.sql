@@ -16,6 +16,22 @@
 -- 19행 부터 끝까지 복사 후 workbench 에 붙여넣기 후 ctrl + shift + enter 
 
 -- 테이블 생성
+
+-- DROP TABLES IF EXISTS
+DROP TABLE IF EXISTS copy_of_inquiries;
+DROP TABLE IF EXISTS inquiries;
+DROP TABLE IF EXISTS region_name;
+DROP TABLE IF EXISTS deliveries;
+DROP TABLE IF EXISTS payment;
+DROP TABLE IF EXISTS reimbursement;
+DROP TABLE IF EXISTS charge;
+DROP TABLE IF EXISTS announcement;
+DROP TABLE IF EXISTS users;
+DROP TABLE IF EXISTS user_roles;
+DROP TABLE IF EXISTS sending_and_receiving;
+DROP TABLE IF EXISTS drivers;
+DROP TABLE IF EXISTS companies;
+
 CREATE TABLE `inquiries` (
     `idx` BIGINT NOT NULL AUTO_INCREMENT,
     `user_no` BIGINT NOT NULL COMMENT 'index',
