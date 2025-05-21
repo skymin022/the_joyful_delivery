@@ -40,9 +40,8 @@
 	                <div class="mid">
 	                    <ul>
 	                        <li>
-	                            <h2>선불</h2>
-	                            <h2>후불</h2>
-	                            <h3>배송 완료</h3>
+								<button class="h2" type="button">선불</button>
+					            <button class="h2" type="button">후불</button>
 	                        </li>
 	                    </ul>
 	                </div>
