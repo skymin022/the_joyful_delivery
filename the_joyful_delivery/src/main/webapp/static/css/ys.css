@@ -14,6 +14,8 @@ section {
 	min-height: 300px;
 }
 
+/* =============================    header    =============== */
+
 header {
 	background: white;
 }
@@ -65,6 +67,7 @@ header {
 
 /* =============================    header    =============== */
 
+/* =============================    footer    =============== */
 footer {
 	background: var(--footer-color);
 }
@@ -156,6 +159,7 @@ footer .line {
 
 /* =============================    footer    =============== */
 
+/* =============================    main    =============== */
 .main_back{
 	background: var(--main-color);
 }
@@ -369,11 +373,137 @@ footer .line {
 
 /* =============================    main    =============== */
 
+/* =============================    contact    =============== */
+
+.contact_container {
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+/* 	height: 2000px; */
+	margin-bottom: 140px;
+}
+.contact_container .il {
+	width: 686px;
+	background-color: white;
+	margin: 56px auto 0;
+	border-radius: 25px;
+	padding-top: 50px;
+	padding-bottom: 130px;
+	position: relative;
+}
+.contact_title {
+	font-size: var(--text-title);
+	margin-top: 135px;
+	text-align: center
+}
+.contact_container label {
+	width: 120px;
+	color: #000;
+	font-size: 20px;
+}
+.contact_input_list li {
+	display: flex;
+	flex-wrap: wrap;
+	align-items: center;
+	column-gap: 50px;
+	position: relative;
+}
+.contact_input_list li + li {margin-top: 40px;}
+
+.contact_input_list input {
+	font-size: 18px;
+	width: 450px; height: 60px;
+	border: 1px solid #D9D9D9;
+	border-radius: 10px;
+	padding-left: 20px;
+}
+.contact_input_list textarea {
+	font-size: 18px;
+	width: 450px;
+	border: 1px solid #D9D9D9;
+	border-radius: 10px;
+	padding-top : 20px;
+	padding-left: 20px;
+}
+.contact_input_list input:focus,
+.contact_input_list textarea:focus {
+	outline: 1px solid var(--sub-color2);
+}
+
+.contact_input_list input::placeholder,
+.contact_input_list textarea::placeholder {
+	font-size: 18px;
+	color: var(--place-hol);
+}
+.contact_container .il .values{
+	margin-top: 15px;
+	margin-bottom: 15px;
+	margin-left: 170px;
+}
+.contact_container .il .values button {
+	width: 65px; height: 30px;
+	color: #000;
+	border-radius: 5px;
+	border: none;
+	pointer-events: none;
+	transition: all 0.3s;
+	background-color: var(--place-hol);
+}
+.contact_container .il .values button.on {
+	pointer-events: auto;
+	background-color: #FFC251;
+}
+.contact_upload {
+	display:flex;
+}
+.input_upload {
+	font-size: 15px;
+	width: 360px; height: 30px;
+	border: 1px solid #D9D9D9;
+	border-radius: 10px;
+	padding-left: 20px;
+	margin-left: 50px;
+	margin-right: 20px;
+	pointer-events: none;
+	user-select: none;
+}
+.contact_btn_find {
+	width: 65px; height: 30px;
+	color: #000;
+	border-radius: 5px;
+	border: none;
+	pointer-events: none;
+	transition: all 0.3s;
+	background-color: var(--place-hol);
+}
+.contact_prev_btn {
+	width: 150px; height: 46px;
+	font-size: 19px;
+	background-color: var(--place-hol);
+	border-radius: 45px;
+	color: #fff;
+	border: none;
+    position: absolute;
+    left: 30px;
+    bottom: 50px;
+}
+.contact_submit_btn {
+	width: 150px; height: 46px;
+	font-size: 19px;
+	background-color: var(--sub-color2);
+	border-radius: 45px;
+	color: #fff;
+	border: none;
+    position: absolute;
+    right: 30px;
+    bottom: 50px;
+}
+
+/* =============================    contact    =============== */
+
+/* =============================    myqna    =============== */
 
 
 
-
-
-
-
-
+/* =============================    myqna    =============== */
