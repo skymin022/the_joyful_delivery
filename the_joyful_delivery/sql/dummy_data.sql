@@ -26,7 +26,8 @@ VALUES
 (1, 'user07', 'pass07', '장영실', 'user07@example.com', '전주시 완산구', '1989-07-07', '01011110007'),
 (1, 'user08', 'pass08', '정약용', 'user08@example.com', '청주시 흥덕구', '1993-08-08', '01011110008'),
 (1, 'user09', 'pass09', '최무선', 'user09@example.com', '천안시 동남구', '1994-09-09', '01011110009'),
-(1, 'user10', 'pass10', '허준', 'user10@example.com', '수원시 권선구', '1986-10-10', '01011110010');
+(1, 'user10', 'pass10', '허준', 'user10@example.com', '수원시 권선구', '1986-10-10', '01011110010'),
+(2, 'admin', 'pass11', '구본걸', 'admin11@example.com', '인천광역시 부평구', '1997-10-10', '01011110011');
 
 INSERT INTO drivers (company_idx, name, number)
 VALUES
