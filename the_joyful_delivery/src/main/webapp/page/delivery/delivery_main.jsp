@@ -15,7 +15,7 @@
 		<%-- [Contents] ######################################################### --%>
 		<div class="container">
 			<h2 class="title">배송조회</h2>
-			<form id="form" action="">
+			<form id="form" action="<%=root%>">
 				<div class="input_area">
 					<input class="input_sear d" name="delivery_no" type="number" placeholder="운송장번호" title="운송장번호를 입력해주세요.">
 					<button class="search_icon"><img src="<%=root%>/static/img/search.png" alt="돋보기 이미지"/></button>

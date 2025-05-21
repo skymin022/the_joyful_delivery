@@ -45,7 +45,6 @@ input[type="number"]::-webkit-inner-spin-button {
 	color: #024CAA;
 	text-align: center;
 	margin-top: 30px;
-	font-size: 19px; 
 }
 /* 가운데 작은 컨테이너 */
 .sm_container {
