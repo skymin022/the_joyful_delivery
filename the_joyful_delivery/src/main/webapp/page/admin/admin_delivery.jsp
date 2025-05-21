@@ -16,7 +16,20 @@
 </head>
 <body>
 	<div class="wrapper">
-		<jsp:include page="/layout/admin_header.jsp" />
+		<header>
+			<div class="admin_header">
+				<a href="<%= root %>/index.jsp"><img src="<%= root %>/static/img/logo.png" width="380" height="153" ></a>
+				<nav>
+					<ul>
+						<li><a href="<%=root%>/page/admin/admin_user.jsp">회원관리</a></li>
+						<li class="on"><a href="<%=root%>/page/admin/admin_delivery.jsp">택배관리</a></li>
+						<li><a href="<%=root%>/page/admin/admin_inq.jsp">문의</a></li>
+						<li><a href="<%=root%>/page/admin/admin_com.jsp">택배사</a></li>
+						<li><a href="<%=root%>/page/admin/admin_driver.jsp">기사관리</a></li>
+					</ul>
+				</nav>
+			</div>
+		</header>
 		<%-- [Contents] ######################################################### --%>
 		<form action="">
 			<div class="ad_search">
@@ -26,13 +39,11 @@
 				</div>
 				<div class="line"></div>
 				<ul>     
-					<li><input name="where" id="userNo"   value="userNo"   type="radio"/><label for="userNo">회원번호</label></li>
-					<li><input name="where" id="userName" value="userName" type="radio"/><label for="userName">이름</label></li>
-					<li><input name="where" id="userId"   value="userId"   type="radio"/><label for="userId">아이디</label></li>
-					<li><input name="where" id="userEma"  value="userEma"  type="radio"/><label for="userEma">이메일</label></li>
-					<li><input name="where" id="userPho"  value="userPho"  type="radio"/><label for="userPho">전화번호</label></li>
-					<li><input name="where" id="userAdd"  value="userAdd"  type="radio"/><label for="userAdd">주소</label></li>
-					<li><input name="where" id="userBir"  value="userBir"  type="radio"/><label for="userBir">생년월일</label></li>
+					<li><input name="where" id="delNo"     value="delNo"     type="radio"/><label for="delNo">송장번호</label></li>
+					<li><input name="where" id="userNo"    value="userNo"    type="radio"/><label for="userNo">회원번호</label></li>
+					<li><input name="where" id="createdAt" value="createdAt" type="radio"/><label for="createdAt">송장발행일</label></li>
+					<li><input name="where" id="currLoc"   value="currLoc"   type="radio"/><label for="currLoc">현재위치</label></li>
+					<li><input name="where" id="status"    value="status"    type="radio"/><label for="status">배송상태</label></li>
 				</ul>
 			</div>		
 		</form>

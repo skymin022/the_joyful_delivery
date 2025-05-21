@@ -9,7 +9,7 @@ input[type="number"]::-webkit-inner-spin-button {
 /* delivery_main */
 /* 페이지 타이틀 */
 .title {
-	font-size: var(--text-title);
+	font-size: var(--text-big);
 	margin-top: 135px;
 	text-align: center
 }
