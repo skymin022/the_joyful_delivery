@@ -14,6 +14,8 @@ section {
 	min-height: 300px;
 }
 
+/* =============================    header    =============== */
+
 header {
 	background: white;
 }
@@ -65,6 +67,7 @@ header {
 
 /* =============================    header    =============== */
 
+/* =============================    footer    =============== */
 footer {
 	background: var(--footer-color);
 }
@@ -156,6 +159,7 @@ footer .line {
 
 /* =============================    footer    =============== */
 
+/* =============================    main    =============== */
 .main_back{
 	background: var(--main-color);
 }
@@ -369,11 +373,24 @@ footer .line {
 
 /* =============================    main    =============== */
 
+/* =============================    contact    =============== */
 
+.contact_container {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	height: 2000px;
+}
 
+.contact_title {
+	margin-top: 21px;
+	font-size: 26px;
+	text-align: center;
+}
 
-
-
-
-
+.contact_input_list label {
+	width: 80px;
+	color: #000;
+	font-size: 20px;
+}
 
