@@ -20,5 +20,5 @@ public interface UserService {
 	
 	// 로그인 
 	boolean login(User user);
-    User selectByUsername(String username);
+	User selectUserById(String id);
 }

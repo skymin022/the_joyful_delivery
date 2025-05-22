@@ -6,6 +6,7 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
+import service.DeliveryServiceImpl;
 import service.UserService;
 import service.UserServiceImpl;
 
@@ -13,7 +14,7 @@ import java.io.IOException;
 
 import DTO.User;
 
-@WebServlet("/login/*")
+@WebServlet("/login")
 public class UserServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
@@ -37,9 +38,10 @@ public class UserServlet extends HttpServlet {
                             .build();
 
             boolean result = userService.login(user);
+            User loginUser = userService.selectUserById(user.getId());
+            System.out.println(result);
 
             if (result) {
-                User loginUser = userService.select(userId);
                 loginUser.setPassword(null);
 
                 HttpSession session = request.getSession();

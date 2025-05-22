@@ -9,7 +9,7 @@ import DTO.User;
 
 public class UserServiceImpl implements UserService {
 	
-	UserDAO userDAO = new UserDAO();
+	private UserDAO userDAO = new UserDAO();
 
 	@Override
 	public List<User> list() {
@@ -77,27 +77,27 @@ public class UserServiceImpl implements UserService {
 	}
 
 
-    @Override
+	@Override
     public boolean login(User user) {
-        User dbUser;
-		try {
-			dbUser = userDAO.select(user.getId());
-		} catch (Exception e) {
-			System.err.println("로그인 시 오류 발생 ");
-			e.printStackTrace();
-		}
-        if (dbUser != null && dbUser.getPassword().equals(user.getPassword())) {
-            return true;
+        User dbUser = null;
+        try {
+            dbUser = selectUserById(user.getId());
+            System.out.println("입력 아이디: " + user.getId());
+            System.out.println("DB 조회 결과: " + dbUser);
+            System.out.println("입력 비밀번호: " + user.getPassword());
+            System.out.println("DB 비밀번호: " + (dbUser != null ? dbUser.getPassword() : "null"));
+        } catch (Exception e) {
+            System.err.println("로그인 시 오류 발생");
+            e.printStackTrace();
         }
-        return false;
+
+        return dbUser != null && dbUser.getPassword().equals(user.getPassword());
     }
 
-
-    @Override
-    public User selectByUsername(String username) {
-        return userDAO.selectByUsername(username);
-    }
-
+	   @Override
+	    public User selectUserById(String id) {
+	        return userDAO.select(id);
+	    }
 
 
 }
