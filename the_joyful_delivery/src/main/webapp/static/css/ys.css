@@ -213,7 +213,7 @@ a { text-decoration: none; color: black; }
 
 -----------------------------------------------------/* 오버레이 */
 
-/* ✅ 체크되었을 때 스타일 변경 */
+/* ✅ 체크되었을 때 스타일 변경 ????여기 지우면 오버레이 안됨... 왜??????????*/
 #offcanvas-toggle:checked + .bars .top {
   transform: rotate(45deg) translate(5px, 5px);
 }
