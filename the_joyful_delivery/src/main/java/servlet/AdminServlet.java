@@ -5,7 +5,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import DTO.Users;
+import DTO.User;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
@@ -14,7 +14,7 @@ import jakarta.servlet.http.HttpServletResponse;
 import service.UserService;
 import service.UserServiceImpl;
 
-@WebServlet("/admin/user")
+@WebServlet("/admin/*")
 public class AdminServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
     private UserService userService = new UserServiceImpl();
@@ -31,7 +31,7 @@ public class AdminServlet extends HttpServlet {
 				page = "/page/admin/admin_user.jsp";
 				Map<String, Object> key = new HashMap<>();
 				key.put("role_idx", 1);
-				List<Users> users = userService.listBy(key);
+				List<User> users = userService.listBy(key);
 				System.out.println("servlet 실행");
 				request.setAttribute("users", users);
 				request.getRequestDispatcher(page).forward(request, response);
