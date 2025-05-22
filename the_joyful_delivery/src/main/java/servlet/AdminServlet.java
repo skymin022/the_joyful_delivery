@@ -48,20 +48,29 @@ public class AdminServlet extends HttpServlet {
 			// 어드민 택배관리 페이지
 			case "/delivery":
 				page = "/page/admin/admin_delivery.jsp";
-				List<Delivery> deliveries = delService.regJoinList();
+				String whereTxt = request.getParameter("where_txt");
+				String column = request.getParameter("where");
+				List<Delivery> deliveries = null;
+				
+				if(whereTxt != null || column != null) {
+					// TODO: like 절 처리
+				} else {
+					deliveries = delService.regJoinList();
+				}
+				
 				
 				request.setAttribute("deliveries", deliveries);
 				request.getRequestDispatcher(page).forward(request, response);
 				break;
 				
 			// 어드민 문의 페이지
-				case "/inquiry":
-					page = "/page/admin/admin_inq.jsp";
-					List<Inquiry> inquiries = inqService.list();
-					
-					request.setAttribute("inquiries", inquiries);
-					request.getRequestDispatcher(page).forward(request, response);
-					break;
+			case "/inquiry":
+				page = "/page/admin/admin_inq.jsp";
+				List<Inquiry> inquiries = inqService.list();
+				
+				request.setAttribute("inquiries", inquiries);
+				request.getRequestDispatcher(page).forward(request, response);
+				break;
 				
 			default: break;
 		} 
