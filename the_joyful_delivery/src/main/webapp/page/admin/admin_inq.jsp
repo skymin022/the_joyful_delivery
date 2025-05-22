@@ -1,3 +1,6 @@
+<%@page import="org.apache.jasper.tagplugins.jstl.core.If"%>
+<%@page import="java.util.List"%>
+<%@page import="DTO.Inquiry"%>
 <%@ include file="/layout/jstl.jsp" %>
 <%@ include file="/layout/common.jsp" %>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
@@ -59,61 +62,22 @@
 					</tr>
 				</thead>
 				<tbody class="adm_tbody">
-				<% for(Inquiry inquiry : list) %>
+				<% for(Inquiry inquiry : list) { %>
 					<tr class="adm_tbody_tr">
 					<tr>
-						<td>124214</td>
-						<td>1</td>
-						<td>택배접수를 했는데 어쩌구 저쩌구 123123123..</td>
-						<td>2025-05-21 11:21:35</td>
-						<td>N</td>
+						<td><%= inquiry.getIdx() %></td>
+						<td><%= inquiry.getUserNo() %></td>
+						<td><%= inquiry.getContent() %></td>
+						<td><%= inquiry.getCreatedAt() %></td>
+						<td><%= inquiry.isCheckAnswer() ? "Y" : "N" %></td>
 					</tr>
-					<tr>
-						<td>124214</td>
-						<td>1</td>
-						<td>택배접수를 했는데 어쩌구 저쩌구 123123123..</td>
-						<td>2025-05-21 11:21:35</td>
-						<td>N</td>
-					</tr>
-					<tr>
-						<td>124214</td>
-						<td>1</td>
-						<td>택배접수를 했는데 어쩌구 저쩌구 123123123..</td>
-						<td>2025-05-21 11:21:35</td>
-						<td>N</td>
-					</tr>
-					<tr>
-						<td>124214</td>
-						<td>1</td>
-						<td>택배접수를 했는데 어쩌구 저쩌구 123123123..</td>
-						<td>2025-05-21 11:21:35</td>
-						<td>N</td>
-					</tr>
-					<tr>
-						<td>124214</td>
-						<td>1</td>
-						<td>택배접수를 했는데 어쩌구 저쩌구 123123123..</td>
-						<td>2025-05-21 11:21:35</td>
-						<td>N</td>
-					</tr>
-					<tr>
-						<td>124214</td>
-						<td>1</td>
-						<td>택배접수를 했는데 어쩌구 저쩌구 123123123..</td>
-						<td>2025-05-21 11:21:35</td>
-						<td>N</td>
-					</tr>
-					<tr>
-						<td>124214</td>
-						<td>1</td>
-						<td>택배접수를 했는데 어쩌구 저쩌구 123123123..</td>
-						<td>2025-05-21 11:21:35</td>
-						<td>N</td>
-					</tr>
+					<% } %>
+					
 				</tbody>
 			</table>
 		<%-- [Contents] ######################################################### --%>
 		<jsp:include page="/layout/script.jsp" />
 	</div>
+ </div>
 </body>
 </html>
