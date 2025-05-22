@@ -26,7 +26,7 @@
 				<nav>
 					<ul>
 						<li class="on"><a href="<%=root%>/admin/user">회원관리</a></li>
-						<li><a href="<%=root%>/page/admin/admin_delivery.jsp">택배관리</a></li>
+						<li><a href="<%=root%>/admin/delivery">택배관리</a></li>
 						<li><a href="<%=root%>/page/admin/admin_inq.jsp">문의</a></li>
 						<li><a href="<%=root%>/page/admin/admin_driver.jsp">기사관리</a></li>
 					</ul>
