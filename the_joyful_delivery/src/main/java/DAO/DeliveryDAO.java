@@ -30,6 +30,7 @@ public class DeliveryDAO extends BaseDAOImpl<Delivery> {
 				delivery.setValue(rs.getInt("value"));
 				delivery.setPrePos(rs.getString("pre_pos"));
 				delivery.setCreatedAt(rs.getDate("created_at"));
+				delivery.setStatus(rs.getString("status"));
 				delivery.setRegStatus(rs.getString("r_status"));
 				
 				list.add(delivery);
