@@ -357,7 +357,7 @@ input[type="number"]::-webkit-inner-spin-button {
 }
 /* admin_user */
 
-.user_table {
+.adm_table {
 	display: flex;
 	justify-content: center;
 	margin-top: 10px;
@@ -369,17 +369,17 @@ table {
 td {
 	text-align: center;
 }
-.u_table {
+.admin_table {
 	width: 1500px;
 	border-radius: 20px;
 	border-collapse: collapse;
 	border-spacing: 0 15px;
 	margin-top: 15px;
 }
-.user_th_wrap {
+.adm_th_wrap {
 	border-bottom: 1px solid black;
 }
-.user_tbody tr {
+.adm_tbody tr {
 	/* TODO: border-bottom으로 선을 그으면
 			 맨 아랫쪽에서 border-radius로
 			 깎인 모서리를 선이 튀어나감
@@ -388,15 +388,15 @@ td {
 	 */
 	border-bottom: 1px solid rgba(0,0,0,0.2);
 }
-.user_tbody tr:last-child {
+.adm_tbody tr:last-child {
 	border-bottom: none;
 	
 }
-.user_th_wrap th {
+.adm_th_wrap th {
 	padding: 10px 0;
 	
 }
-.user_tbody td {
+.adm_tbody td {
 	padding: 10px 0;
 	
 }

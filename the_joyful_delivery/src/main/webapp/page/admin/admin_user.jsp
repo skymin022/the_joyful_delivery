@@ -24,7 +24,6 @@
 						<li class="on"><a href="<%=root%>/page/admin/admin_user.jsp">회원관리</a></li>
 						<li><a href="<%=root%>/page/admin/admin_delivery.jsp">택배관리</a></li>
 						<li><a href="<%=root%>/page/admin/admin_inq.jsp">문의</a></li>
-						<li><a href="<%=root%>/page/admin/admin_com.jsp">택배사</a></li>
 						<li><a href="<%=root%>/page/admin/admin_driver.jsp">기사관리</a></li>
 					</ul>
 				</nav>
@@ -49,10 +48,10 @@
 				</ul>
 			</div>		
 		</form>
-		<div class="user_table">
-			<table class="u_table">
-				<thead class="user_th_wrap">
-					<tr class="user_th_tr">
+		<div class="adm_table">
+			<table class="admin_table">
+				<thead class="adm_th_wrap">
+					<tr class="adm_th_tr">
 						<th>회원번호</th>
 						<th>이름</th>
 						<th>아이디</th>
@@ -64,8 +63,8 @@
 						<th>탈퇴여부</th>
 					</tr>
 				</thead>
-				<tbody class="user_tbody">
-					<tr class="user_tbody_tr">
+				<tbody class="adm_tbody">
+					<tr class="adm_tbody_tr">
 						<td>1</td>
 						<td>김조은</td>
 						<td>joeun123</td>
