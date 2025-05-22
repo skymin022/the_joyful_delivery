@@ -38,7 +38,7 @@ body {
     /* 👩‍🎨 서브 컬러 */
     --sub-color1: #D3E5FD;
     --sub-color2: #FFC251;
-    --sub-color3: #024CAA;
+    --sub-color3: #024CAA; /*rgba(2, 76, 170, 0)*/
     /* 푸터 컬러 */
     --footer-color: #F5F6FF;
     /* placeholder 컬러 */

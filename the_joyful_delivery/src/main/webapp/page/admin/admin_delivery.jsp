@@ -1,7 +1,14 @@
+<%@page import="service.RegionServiceImpl"%>
+<%@page import="java.sql.Timestamp"%>
+<%@page import="java.time.ZoneId"%>
+<%@page import="java.time.LocalDateTime"%>
+<%@page import="java.util.List"%>
+<%@page import="DTO.Delivery"%>
 <%@ include file="/layout/jstl.jsp" %>
 <%@ include file="/layout/common.jsp" %>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<% List<Delivery> list = (List) request.getAttribute("deliveries"); %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -22,7 +29,7 @@
 				<nav>
 					<ul>
 						<li><a href="<%=root%>/admin/user">회원관리</a></li>
-						<li class="on"><a href="<%=root%>/page/admin/admin_delivery.jsp">택배관리</a></li>
+						<li class="on"><a href="<%=root%>/admin/delivery">택배관리</a></li>
 						<li><a href="<%=root%>/page/admin/admin_inq.jsp">문의</a></li>
 						<li><a href="<%=root%>/page/admin/admin_driver.jsp">기사관리</a></li>
 					</ul>
@@ -61,67 +68,22 @@
 					</tr>
 				</thead>
 				<tbody class="adm_tbody">
-					<tr class="adm_tbody_tr">
+					<%
+						for(Delivery del : list) {
+							Timestamp addTime = new Timestamp(del.getCreatedAt().getTime());
+							// TODO: ORDER BY 로 가장 최근에 위치를 가져와야 함.
+					%>
 					<tr>
-						<td>1234567891012</td>
-						<td>1</td>
-						<td>박광철</td>
-						<td>2025-05-21 11:21:35</td>
-						<td>동인천 도착</td>
-						<td>30만원</td>
-						<td>선불</td>
-						<td>배송중</td>
+						<td><%=del.getIdx() %></td>
+						<td><%=del.getUserIdx() %></td>
+						<td><%=del.getDriverIdx() %></td>
+						<td><%=addTime %></td>
+						<td><%=del.getRegStatus() %></td>
+						<td><%=del.getValue() %>만원</td>
+						<td><%=del.getPrePos() %></td>
+						<td><%=del.getStatus() %></td>
 					</tr>
-					<tr>
-						<td>1234567891012</td>
-						<td>1</td>
-						<td>박광철</td>
-						<td>2025-05-21 11:21:35</td>
-						<td>동인천 도착</td>
-						<td>30만원</td>
-						<td>착불</td>
-						<td>배송중</td>
-					</tr>
-					<tr>
-						<td>1234567891012</td>
-						<td>1</td>
-						<td>박광철</td>
-						<td>2025-05-21 11:21:35</td>
-						<td>동인천 도착</td>
-						<td>30만원</td>
-						<td>선불</td>
-						<td>배송중</td>
-					</tr>
-					<tr>
-						<td>1234567891012</td>
-						<td>1</td>
-						<td>박광철</td>
-						<td>2025-05-21 11:21:35</td>
-						<td>동인천 도착</td>
-						<td>30만원</td>
-						<td>선불</td>
-						<td>배송중</td>
-					</tr>
-					<tr>
-						<td>1234567891012</td>
-						<td>1</td>
-						<td>박광철</td>
-						<td>2025-05-21 11:21:35</td>
-						<td>동인천 도착</td>
-						<td>30만원</td>
-						<td>선불</td>
-						<td>배송중</td>
-					</tr>
-					<tr>
-						<td>1234567891012</td>
-						<td>1</td>
-						<td>박광철</td>
-						<td>2025-05-21 11:21:35</td>
-						<td>동인천 도착</td>
-						<td>30만원</td>
-						<td>선불</td>
-						<td>배송중</td>
-					</tr>
+					<%} %>
 				</tbody>
 			</table>
 		</div>

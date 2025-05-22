@@ -5,19 +5,25 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import DTO.Delivery;
 import DTO.User;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import service.DeliveryService;
+import service.DeliveryServiceImpl;
 import service.UserService;
 import service.UserServiceImpl;
 
 @WebServlet("/admin/*")
 public class AdminServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
+	
     private UserService userService = new UserServiceImpl();
+    // 직접 만든 DAO 메서드 쓰려고 Impl 타입으로 선언
+    private DeliveryServiceImpl delService = new DeliveryServiceImpl();
     
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String path = request.getPathInfo();
@@ -29,11 +35,20 @@ public class AdminServlet extends HttpServlet {
 			// 어드민 유저관리 페이지
 			case "/user":
 				page = "/page/admin/admin_user.jsp";
-				Map<String, Object> key = new HashMap<>();
-				key.put("role_idx", 1);
-				List<User> users = userService.listBy(key);
-				System.out.println("servlet 실행");
+				Map<String, Object> where = new HashMap<>();
+				where.put("role_idx", 1);
+				List<User> users = userService.listBy(where);
+				
 				request.setAttribute("users", users);
+				request.getRequestDispatcher(page).forward(request, response);
+				break;
+				
+			// 어드민 택배관리 페이지
+			case "/delivery":
+				page = "/page/admin/admin_delivery.jsp";
+				List<Delivery> deliveries = delService.regJoinList();
+				
+				request.setAttribute("deliveries", deliveries);
 				request.getRequestDispatcher(page).forward(request, response);
 				break;
 				

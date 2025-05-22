@@ -12,27 +12,19 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-@Table("deliveries")
+@Table("inquiries")
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class Delivery {
+public class Inquiry {
 	
 	@Pk
 	private int idx;
-	private int userIdx;
-	private int driverIdx;
-	private int srIdx;
-	private String keyword;
-	private String status;
-	private int value;
-	private String prePos;
+	private int userNo;
+	private String title;
+	private String content;
 	private Date createdAt;
-	private String reserName;	// 예약명
-	private boolean success;
+	private boolean checkAnswer;
 	
-	// 조인해서 가져올 컬럼 원래는 이렇게 하면 안됨.
-	@Column(exist = false)
-	private String regStatus;
 }
