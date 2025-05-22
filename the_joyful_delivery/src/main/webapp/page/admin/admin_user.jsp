@@ -1,7 +1,11 @@
+<%@page import="java.util.List"%>
+<%@page import="DTO.User"%>
 <%@ include file="/layout/jstl.jsp" %>
 <%@ include file="/layout/common.jsp" %>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%-- 유저 목록 가져오기 --%>
+<%List<User> list = (List)request.getAttribute("users"); %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -21,7 +25,7 @@
 				<a href="<%= root %>/index.jsp"><img src="<%= root %>/static/img/logo.png" width="380" height="153" ></a>
 				<nav>
 					<ul>
-						<li class="on"><a href="<%=root%>/page/admin/admin_user.jsp">회원관리</a></li>
+						<li class="on"><a href="<%=root%>/admin/user">회원관리</a></li>
 						<li><a href="<%=root%>/page/admin/admin_delivery.jsp">택배관리</a></li>
 						<li><a href="<%=root%>/page/admin/admin_inq.jsp">문의</a></li>
 						<li><a href="<%=root%>/page/admin/admin_driver.jsp">기사관리</a></li>
@@ -64,94 +68,20 @@
 					</tr>
 				</thead>
 				<tbody class="adm_tbody">
+					<%for(User user : list) { %>
 					<tr class="adm_tbody_tr">
-						<td>1</td>
-						<td>김조은</td>
-						<td>joeun123</td>
-						<td>joeun123@naver.com</td>
-						<td>010-1234-5678</td>
-						<td>인천광역시 부평구 어디동 123-21 301호</td>
-						<td>920202</td>
+						<td><%=user.getIdx() %></td>
+						<td><%=user.getUsername() %></td>
+						<td><%=user.getId() %></td>
+						<td><%=user.getEmail() %></td>
+						<td><%=user.getPNumber() %></td>
+						<td><%=user.getAddress() %></td>
+						<td><%=user.getBirth()%></td>
 						<td>3</td>
-						<td>N</td>
+						<% String YorN = user.isWithdrawal() ? "Y" : "N";%>
+						<td><%=YorN %></td>
 					</tr>
-					<tr>
-						<td>1</td>
-						<td>김조은</td>
-						<td>joeun123</td>
-						<td>joeun123@naver.com</td>
-						<td>010-1234-5678</td>
-						<td>인천광역시 부평구 어디동 123-21 301호</td>
-						<td>920202</td>
-						<td>3</td>
-						<td>N</td>
-					</tr>
-					<tr>
-						<td>1</td>
-						<td>김조은</td>
-						<td>joeun123</td>
-						<td>joeun123@naver.com</td>
-						<td>010-1234-5678</td>
-						<td>인천광역시 부평구 어디동 123-21 301호</td>
-						<td>920202</td>
-						<td>3</td>
-						<td>N</td>
-					</tr>
-					<tr>
-						<td>1</td>
-						<td>김조은</td>
-						<td>joeun123</td>
-						<td>joeun123@naver.com</td>
-						<td>010-1234-5678</td>
-						<td>인천광역시 부평구 어디동 123-21 301호</td>
-						<td>920202</td>
-						<td>3</td>
-						<td>N</td>
-					</tr>
-					<tr>
-						<td>1</td>
-						<td>김조은</td>
-						<td>joeun123</td>
-						<td>joeun123@naver.com</td>
-						<td>010-1234-5678</td>
-						<td>인천광역시 부평구 어디동 123-21 301호</td>
-						<td>920202</td>
-						<td>3</td>
-						<td>N</td>
-					</tr>
-					<tr>
-						<td>1</td>
-						<td>김조은</td>
-						<td>joeun123</td>
-						<td>joeun123@naver.com</td>
-						<td>010-1234-5678</td>
-						<td>인천광역시 부평구 어디동 123-21 301호</td>
-						<td>920202</td>
-						<td>3</td>
-						<td>N</td>
-					</tr>
-					<tr>
-						<td>1</td>
-						<td>김조은</td>
-						<td>joeun123</td>
-						<td>joeun123@naver.com</td>
-						<td>010-1234-5678</td>
-						<td>인천광역시 부평구 어디동 123-21 301호</td>
-						<td>920202</td>
-						<td>3</td>
-						<td>N</td>
-					</tr>
-					<tr>
-						<td>1</td>
-						<td>김조은</td>
-						<td>joeun123</td>
-						<td>joeun123@naver.com</td>
-						<td>010-1234-5678</td>
-						<td>인천광역시 부평구 어디동 123-21 301호</td>
-						<td>920202</td>
-						<td>3</td>
-						<td>N</td>
-					</tr>
+					<%}%>
 				</tbody>
 			</table>
 		</div>

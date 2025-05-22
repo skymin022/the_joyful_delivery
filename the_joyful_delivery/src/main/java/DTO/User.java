@@ -10,12 +10,12 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-@Table("users")
+@Table("deliveries")
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class Users {
+public class User {
 	
 	@Pk
 	private Long idx;
@@ -26,6 +26,7 @@ public class Users {
 	private String email;
 	private String address;
 	private String birth;
+	private String pNumber;
 	private Date signUpDate;
 	private boolean withdrawal;
 }
