@@ -17,7 +17,7 @@
         <%-- [Contents] ######################################################### --%>
         <main>
 			<div class="container">
-				<form id="form" action="" >
+				<form id="form" action="login" method="post">
 		            <div class="login-box">
 		                <div class="left-box">
 		                    <div class="sign-up">sign-in</div>
