@@ -53,7 +53,7 @@
 			    	<div class="service_wrap">
 						<ul class="service_list">
 						  <li>
-						  	<a href="">
+						  	<a href="<%=root%>/page/serv_center/customer_sc.jsp">
 							  	<span>
 							  		<img src="<%= root %>/static/img/headphone.png" alt="" >
 							  		<p>자주하는 질문<br>(FAQ)</p>
@@ -62,7 +62,7 @@
 					  	  </li>
 				          <li><span class="line"></span></li>
 				          <li>
-				          	<a href="">
+				          	<a href="<%=root%>/page/serv_center/contact.jsp">
 				          		<span>
 							  		<img src="<%= root %>/static/img/contact.png" alt="" >
 							  		<p>1:1 문의</p>
@@ -74,7 +74,7 @@
 					          <a href="">
 						          <span>
 								  	  <img src="<%= root %>/static/img/cashbill.png" alt="" >
-								  	  <p>현금영수증<br>조회</p>
+								  	  <p>결제내역<br>조회</p>
 						  		  </span>
 					          </a>
 				          </li>

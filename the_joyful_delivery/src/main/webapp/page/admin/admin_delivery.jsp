@@ -21,10 +21,9 @@
 				<a href="<%= root %>/index.jsp"><img src="<%= root %>/static/img/logo.png" width="380" height="153" ></a>
 				<nav>
 					<ul>
-						<li><a href="<%=root%>/page/admin/admin_user.jsp">회원관리</a></li>
+						<li><a href="<%=root%>/admin/user">회원관리</a></li>
 						<li class="on"><a href="<%=root%>/page/admin/admin_delivery.jsp">택배관리</a></li>
 						<li><a href="<%=root%>/page/admin/admin_inq.jsp">문의</a></li>
-						<li><a href="<%=root%>/page/admin/admin_com.jsp">택배사</a></li>
 						<li><a href="<%=root%>/page/admin/admin_driver.jsp">기사관리</a></li>
 					</ul>
 				</nav>
@@ -47,6 +46,85 @@
 				</ul>
 			</div>		
 		</form>
+		<div class="adm_table">
+			<table class="admin_table">
+				<thead class="adm_th_wrap">
+					<tr class="adm_th_tr">
+						<th>송장번호</th>
+						<th>회원번호</th>
+						<th>담당기사</th>
+						<th>송장발행일</th>
+						<th>현재위치</th>
+						<th>물품가액</th>
+						<th>선불착불</th>
+						<th>배송상태</th>
+					</tr>
+				</thead>
+				<tbody class="adm_tbody">
+					<tr class="adm_tbody_tr">
+					<tr>
+						<td>1234567891012</td>
+						<td>1</td>
+						<td>박광철</td>
+						<td>2025-05-21 11:21:35</td>
+						<td>동인천 도착</td>
+						<td>30만원</td>
+						<td>선불</td>
+						<td>배송중</td>
+					</tr>
+					<tr>
+						<td>1234567891012</td>
+						<td>1</td>
+						<td>박광철</td>
+						<td>2025-05-21 11:21:35</td>
+						<td>동인천 도착</td>
+						<td>30만원</td>
+						<td>착불</td>
+						<td>배송중</td>
+					</tr>
+					<tr>
+						<td>1234567891012</td>
+						<td>1</td>
+						<td>박광철</td>
+						<td>2025-05-21 11:21:35</td>
+						<td>동인천 도착</td>
+						<td>30만원</td>
+						<td>선불</td>
+						<td>배송중</td>
+					</tr>
+					<tr>
+						<td>1234567891012</td>
+						<td>1</td>
+						<td>박광철</td>
+						<td>2025-05-21 11:21:35</td>
+						<td>동인천 도착</td>
+						<td>30만원</td>
+						<td>선불</td>
+						<td>배송중</td>
+					</tr>
+					<tr>
+						<td>1234567891012</td>
+						<td>1</td>
+						<td>박광철</td>
+						<td>2025-05-21 11:21:35</td>
+						<td>동인천 도착</td>
+						<td>30만원</td>
+						<td>선불</td>
+						<td>배송중</td>
+					</tr>
+					<tr>
+						<td>1234567891012</td>
+						<td>1</td>
+						<td>박광철</td>
+						<td>2025-05-21 11:21:35</td>
+						<td>동인천 도착</td>
+						<td>30만원</td>
+						<td>선불</td>
+						<td>배송중</td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
 		<%-- [Contents] ######################################################### --%>
 		<jsp:include page="/layout/script.jsp" />
 	</div>

@@ -1,18 +1,19 @@
 package service;
 
 import java.util.List;
+import java.util.Map;
 
 import com.alohaclass.jdbc.dto.PageInfo;
 import DAO.UserDAO;
-import DTO.Users;
+import DTO.User;
 
 public class UserServiceImpl implements UserService {
 	
 	UserDAO userDAO = new UserDAO();
 
 	@Override
-	public List<Users> list() {
-		List<Users> list = null;
+	public List<User> list() {
+		List<User> list = null;
 		try {
 			list = userDAO.list();
 		} catch (Exception e) {
@@ -21,33 +22,45 @@ public class UserServiceImpl implements UserService {
 		}
 		return list;
 	}
+	
+	@Override
+	public List<User> listBy(Map<String, Object> fields) {
+		List<User> list = null;
+		try {
+			list = userDAO.listBy(fields);
+		} catch (Exception e) {
+			System.err.println("특정 유저 조회");
+			e.printStackTrace();
+		}
+		return list;
+	}
 
 	@Override
-	public PageInfo<Users> page() {
+	public PageInfo<User> page() {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public Users select(int no) {
+	public User select(int no) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public int insert(Users user) {
+	public int insert(User user) {
 		// TODO Auto-generated method stub
 		return 0;
 	}
 
 	@Override
-	public Users insertKey(Users user) {
+	public User insertKey(User user) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public int update(Users user) {
+	public int update(User user) {
 		// TODO Auto-generated method stub
 		return 0;
 	}
@@ -57,5 +70,7 @@ public class UserServiceImpl implements UserService {
 		// TODO Auto-generated method stub
 		return 0;
 	}
+
+
 
 }

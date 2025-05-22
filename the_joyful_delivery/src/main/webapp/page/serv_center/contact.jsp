@@ -11,7 +11,7 @@
 </head>
 <body>
 	<div class="wrapper main_back">
-		<jsp:include page="/layout/header.jsp" />
+		<jsp:include page="/layout/serv_header.jsp" />
 		<%-- [Contents] ######################################################### --%>
 		<div class="contact_container">
 			<h2 class="contact_title">문의하기</h2>
