@@ -14,8 +14,8 @@ import jakarta.servlet.http.HttpServletResponse;
 import service.UserService;
 import service.UserServiceImpl;
 
-@WebServlet("/user/*")
-public class UserServlet extends HttpServlet {
+@WebServlet("/admin/user")
+public class AdminServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
     private UserService userService = new UserServiceImpl();
     
@@ -27,7 +27,7 @@ public class UserServlet extends HttpServlet {
 		// 요청별 로직 처리
 		switch(path) {
 			// 어드민 유저관리 페이지
-			case "/admin_user":
+			case "/user":
 				page = "/page/admin/admin_user.jsp";
 				Map<String, Object> key = new HashMap<>();
 				key.put("role_idx", 1);
@@ -36,7 +36,6 @@ public class UserServlet extends HttpServlet {
 				request.setAttribute("users", users);
 				request.getRequestDispatcher(page).forward(request, response);
 				break;
-				
 				
 			default: break;
 		} 
