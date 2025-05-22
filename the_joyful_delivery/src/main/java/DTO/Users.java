@@ -26,6 +26,7 @@ public class Users {
 	private String email;
 	private String address;
 	private String birth;
+	private String pNumber;
 	private Date signUpDate;
 	private boolean withdrawal;
 }
