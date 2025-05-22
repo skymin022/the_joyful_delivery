@@ -10,23 +10,16 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-@Table("users")
+@Table("region_name")
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class User {
+public class RegionName {
 	
 	@Pk
-	private Long idx;
-	private int roleIdx;
-	private String id;
-	private String password;
-	private String username;
-	private String email;
-	private String address;
-	private String birth;
-	private String pNumber;
-	private Date signUpDate;
-	private boolean withdrawal;
+	private long idx;
+	private long delIdx;
+	private Date createdAt;
+	private String status;
 }

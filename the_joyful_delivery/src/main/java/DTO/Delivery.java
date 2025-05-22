@@ -1,7 +1,9 @@
 package DTO;
 
+
 import java.util.Date;
 
+import com.alohaclass.jdbc.annotation.Column;
 import com.alohaclass.jdbc.annotation.Pk;
 import com.alohaclass.jdbc.annotation.Table;
 
@@ -10,7 +12,7 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-@Table("users")
+@Table("deliveries")
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
@@ -18,15 +20,19 @@ import lombok.NoArgsConstructor;
 public class Delivery {
 	
 	@Pk
-	private Long idx;
-	private int roleIdx;
-	private String id;
-	private String password;
-	private String username;
-	private String email;
-	private String address;
-	private String birth;
-	private String pNumber;
-	private Date signUpDate;
-	private boolean withdrawal;
+	private int idx;
+	private int userIdx;
+	private int driverIdx;
+	private int srIdx;
+	private String keyword;
+	private String status;
+	private int value;
+	private String prePos;
+	private Date createdAt;
+	private String reserName;	// 예약명
+	private boolean success;
+	
+	// 조인해서 가져올 컬럼 원래는 이렇게 하면 안됨.
+	@Column(exist = false)
+	private String regStatus;
 }
