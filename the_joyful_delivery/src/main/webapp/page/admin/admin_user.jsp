@@ -68,7 +68,7 @@
 					</tr>
 				</thead>
 				<tbody class="adm_tbody">
-					<%for(User user : list) { %>
+					<% for(User user : list) { %>
 					<tr class="adm_tbody_tr">
 						<td><%=user.getIdx() %></td>
 						<td><%=user.getUsername() %></td>

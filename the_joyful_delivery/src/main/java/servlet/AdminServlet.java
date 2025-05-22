@@ -6,14 +6,15 @@ import java.util.List;
 import java.util.Map;
 
 import DTO.Delivery;
+import DTO.Inquiry;
 import DTO.User;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import service.DeliveryService;
 import service.DeliveryServiceImpl;
+import service.InquiryServiceImpl;
 import service.UserService;
 import service.UserServiceImpl;
 
@@ -24,6 +25,7 @@ public class AdminServlet extends HttpServlet {
     private UserService userService = new UserServiceImpl();
     // 직접 만든 DAO 메서드 쓰려고 Impl 타입으로 선언
     private DeliveryServiceImpl delService = new DeliveryServiceImpl();
+    private InquiryServiceImpl inqService = new InquiryServiceImpl();
     
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String path = request.getPathInfo();
@@ -51,6 +53,15 @@ public class AdminServlet extends HttpServlet {
 				request.setAttribute("deliveries", deliveries);
 				request.getRequestDispatcher(page).forward(request, response);
 				break;
+				
+			// 어드민 문의 페이지
+				case "/inquiry":
+					page = "/page/admin/admin_inq.jsp";
+					List<Inquiry> inquiries = inqService.list();
+					
+					request.setAttribute("inquiries", inquiries);
+					request.getRequestDispatcher(page).forward(request, response);
+					break;
 				
 			default: break;
 		} 
