@@ -2,6 +2,7 @@
 <%@ include file="/layout/common.jsp" %>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<% List<Inquiry> list = (List)request.getAttribute("inquiries"); %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -58,6 +59,7 @@
 					</tr>
 				</thead>
 				<tbody class="adm_tbody">
+				<% for(Inquiry inquiry : list) %>
 					<tr class="adm_tbody_tr">
 					<tr>
 						<td>124214</td>
