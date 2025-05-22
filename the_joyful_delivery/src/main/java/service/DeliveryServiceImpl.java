@@ -22,6 +22,16 @@ public class DeliveryServiceImpl implements DeliveryService {
 		return list;
 	}
 	
+	public List<Delivery> regJoinList(String column, String value) {
+		List<Delivery> list = null;
+		try {
+			list = delDao.regJoinList(column, value);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return list;
+	}
+	
 	
 	@Override
 	public List<Delivery> list() {

@@ -37,7 +37,7 @@
 			</div>
 		</header>
 		<%-- [Contents] ######################################################### --%>
-		<form action="<%=root%>/admin/filter">
+		<form action="<%=root%>/admin/delivery">
 			<div class="ad_search">
 				<div style="position: relative;">
 					<input type="text" name="where_txt">
@@ -48,7 +48,7 @@
 					<li><input name="where" id="delNo"     value="idx"     type="radio"/><label for="delNo">송장번호</label></li>
 					<li><input name="where" id="userNo"    value="user_idx"    type="radio"/><label for="userNo">회원번호</label></li>
 					<li><input name="where" id="createdAt" value="created_at" type="radio"/><label for="createdAt">송장발행일</label></li>
-					<li><input name="where" id="currLoc"   value="r.status"   type="radio"/><label for="currLoc">현재위치</label></li>
+					<li><input name="where" id="currLoc"   value="r_status"   type="radio"/><label for="currLoc">현재위치</label></li>
 					<li><input name="where" id="status"    value="status"    type="radio"/><label for="status">배송상태</label></li>
 				</ul>
 			</div>		
