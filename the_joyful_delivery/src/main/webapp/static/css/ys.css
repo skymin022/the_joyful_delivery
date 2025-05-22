@@ -65,6 +65,138 @@ header {
 	gap: 20px;
 }
 
+/* -----------------------------------------메뉴 아이콘 */
+.side a {
+  display: inline-block;
+  width: 35px;
+  height: 35px;
+  line-height: 80px;
+  text-align: center;
+/*   background-color: #666ef6; */
+  color: white;
+  font-size: 30px;
+}
+.bars {
+  display: inline-block;
+  position: relative;
+  width: 32px;
+  height: 24px;
+  border: -1px solid black;
+  cursor: pointer;
+  top: -22px;
+  left: 0px;
+}
+.bar {
+  display: inline-block;
+/*   width: 100%; */
+/*   height: 3px; */
+  background-color: black;
+  position: absolute;
+  transition: all 0.4s;
+  opacity: 1;
+}
+
+.bar.top { 
+	top: 4px; left: 0; 
+	width: 100%;
+	height: 3px;
+}
+/* .bar.mid { top: 50%; left: 0; transform: translateY(-50%); } */
+.bar.bottom {
+	bottom: 5px; right: 0; 
+	width: 50%;
+	height: 2px;
+}
+
+/* ---------------------------------메뉴 체크 - 햄버거 작대기 X로 변형 */
+#bars:checked ~ .bars .top {
+  transform: rotate(45deg) translate(3px, -2px);
+  transform-origin: top left;
+}
+/* #bars:checked ~ header .bars .mid { */
+/*   opacity: 0; */
+/*   transition: all 0.4s; */
+/* } */
+#bars:checked ~ .bars .bottom {
+  transform: rotate(-45deg) translate(-1px, 3px);
+  transform-origin: top left;
+}
+/* --------------------------------------------------offcanvas */
+#offcanvas-toggle {display: none;}
+
+/* 오프캔버스 */
+.offcanvas {
+    width: 300px;
+    height: 100vh;
+    background-color: #ddd;
+    position: fixed;
+    top: 153px;
+    right: -300px;
+    transition: all 0.8s ease-in-out;
+    padding: 20px 40px;
+}
+
+#offcanvas-toggle:checked ~ .offcanvas {
+    right: 0;
+}
+
+ul { list-style-type: none; }
+a { text-decoration: none; color: black; }
+
+.offcanvas_nav ul {
+    min-height: 600px;
+    display: flex;
+    flex-direction: column;
+    row-gap: 50px;
+}
+
+.offcanvas_nav .offcanvas_ul li {
+    /* padding: 20px 0; */
+}
+
+.offcanvas_nav .offcanvas_ul li:hover {
+    background-color: #ccc;
+    color: white;
+}
+
+.offcanvas_nav .offcanvas_ul li a {
+    display: inline-block;
+    width: 100%;
+    height: 100%;
+    padding: 20px 10px;
+}
+
+/* close 버튼 */
+.btn-close {
+    position: absolute;
+    top: 20px;
+    right: 25px;
+    cursor: pointer;
+}
+
+.btn-close span {
+    font-size: 40px;
+}
+
+/* 오버레이 */
+
+.overlay {
+    position: fixed;
+    top: 153px;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    /* cursor: pointer; */
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.5s ease-in-out;
+}
+#offcanvas-toggle:checked ~ .overlay {
+    opacity: 1;
+    visibility: visible;
+}
+
 /* =============================    header    =============== */
 
 /* =============================    footer    =============== */

@@ -12,6 +12,10 @@
 <header>
 	<nav>
 		<a href="<%= root %>/index.jsp"><img src="<%= root %>/static/img/logo.png" width="380" height="153" ></a>
+		<!-- checkbox -->
+	    <input type="checkbox" id="offcanvas-toggle">
+	    <!-- 오버레이 -->
+        <label for="offcanvas-toggle" class="overlay"></label>
 		<div class="header_wrap">
 			<div>
 				<ul class="header_top">
@@ -29,9 +33,34 @@
 					<li><a href="<%= root%>/search"><img src="<%= root %>/static/img/ico_social_instagram.png" width="35" height="35"></a></li>
 					<li><a href="<%= root%>/search"><img src="<%= root %>/static/img/ico_social_youtube.png" width="35" height="35"></a></li>
 					<li><a href="<%= root%>/search"><img src="<%= root %>/static/img/ico_social_kakaotalk.png" width="35" height="35"></a></li>
-					<li><a href="<%= root%>/search"><img src="<%= root %>/static/img/btn_menu.png" width=35 height="35"></a></li>
+<%-- 					<a href="<%= root%>/search"><img src="<%= root %>/static/img/btn_menu.png" width=35 height="35"></a> --%>
+					<li>
+						<div class="side">
+					       <!-- a href="javascript ;"  : a 태그 링크 이동 막기 -->
+					        <a href="javascript: ;">
+					         <label for="offcanvas-toggle" class="bars">
+					           <span class="bar top"></span>
+<!-- 					           <span class="bar mid"></span> -->
+					           <span class="bar bottom"></span>
+					         </label>
+					        </a>
+				        </div>
+					</li>
 				</ul>
 			</div>
 		</div>
+		<div class="offcanvas">
+        <div>
+            <img src="https://placehold.co/200x80" alt="logo">
+        </div>
+        <nav class="offcanvas_nav">
+            <ul class="offcanvas_ul">
+                <li><a href="">로그인</a></li>
+                <li><a href="">회원가입</a></li>
+                <li><a href="">About</a></li>
+                <li><a href="">Contact</a></li>
+            </ul>
+        </nav>
+    </div>
 	</nav>
 </header>
