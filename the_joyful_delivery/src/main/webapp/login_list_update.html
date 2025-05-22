@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>login</title>
+    <link rel="stylesheet" href="static/css/reset.css">
+    <link rel="stylesheet" href="static/css/login_list_update.css">
+</head>
+<body>
+    <div class="wrapper">
+        <div class="container">
+            <div class="main-content">
+                <div class="tap">
+                    <span class="tab part1">배송 상태</span>
+                    <span class="tab part2 active">회원정보 수정</span>
+                </div>
+                <div class="update-container">
+                    <div class="title-box">
+                        <h2>회원 정보</h2>
+                    </div>
+                    <form class="form-box">
+                        <div class="form-row">
+                            <label>아이디</label>
+                            <input type="text" disabled>
+                        </div>
+                        <div class="form-row">
+                            <label>이름</label>
+                            <input type="text" disabled>
+                        </div>
+                        <div class="form-row">
+                            <label>생년월일</label>
+                            <input type="date" disabled>
+                        </div>
+
+                        <fieldset class="group-box">
+                            <legend>비밀번호</legend>
+                            <div class="form-row">
+                                <label>변경할 비밀번호</label>
+                                <input type="password">
+                                <button type="button">확인</button>
+                            </div>
+                            <div class="form-row">
+                                <label>비밀번호 확인</label>
+                                <input type="password">
+                            </div>
+                            <div class="fieldset-footer">
+                                <button class="btn-update" type="button">수정</button>
+                            </div>
+                        </fieldset>
+
+                        <fieldset class="group-box">
+                            <legend>연락처</legend>
+                            <div class="form-row">
+                                <label>전화번호</label>
+                                <input type="text">
+                                <button type="button">확인</button>
+                            </div>
+                            <div class="form-row">
+                                <label>인증번호</label>
+                                <input type="text" placeholder="인증번호">
+                                <button type="button">확인</button>
+                            </div>
+                            <div class="fieldset-footer">
+                                <button class="btn-update" type="button">수정</button>
+                            </div>
+                        </fieldset>
+
+                        <fieldset class="group-box">
+                            <legend>이메일</legend>
+                            <div class="form-row">
+                                <label>이메일</label>
+                                <input type="email">
+                                <button type="button">확인</button>
+                            </div>
+                            <div class="form-row">
+                                <label>이메일</label>
+                                <input type="text" placeholder="인증번호">
+                                <button type="button">확인</button>
+                            </div>
+                            <div class="fieldset-footer">
+                                <button class="btn-update" type="button">수정</button>
+                            </div>
+                        </fieldset>
+
+                        <fieldset class="group-box">
+                            <legend>주소</legend>
+                            <div class="form-row">
+                                <label>주소</label>
+                                <input type="text" placeholder="우편번호">
+                                <button type="button">주소찾기</button>
+                            </div>
+                            <div class="form-row">
+                                <label>상세주소</label>
+                                <input type="text" style="flex: 1;">
+                            </div>
+                            <div class="fieldset-footer">
+                                <button class="btn-update" type="button">수정</button>
+                            </div>
+                        </fieldset>
+
+                        <div class="submit-box">
+                            <button class="btn-update" type="submit" class="submit-btn">수정완료</button>
+                        </div>
+                    </form>
+                </div>
+
+            </div>
+        </div>
+    </div>
+    <script src="/src/main/webapp/static/js/hm.js"></script>
+</body>
+</html>

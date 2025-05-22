@@ -1,0 +1,135 @@
+.wrapper {
+    width: var(--wrapper-size);
+}
+.container {
+   display: flex;
+   flex-direction: column;
+   justify-content: center;
+   align-items: center;
+}
+
+.main-content {
+    display: flex;
+    flex-direction: column ;
+    gap: 10px;
+    align-items: center;
+}
+.tap {
+    display: flex;
+    align-items: center;
+    width: 1080px;
+    height: 70px;
+    justify-content: space-around;
+    font-size: var(--text-normal);
+    border: 1px solid rgba(0,0,0,0.4);
+    border-radius: 20px;
+    margin-top: 30px;
+}
+.tap .tab {
+    display: inline-block;
+    width: 200px;
+    height: 40px;
+    opacity: 0.5;
+    text-align: center;
+}
+.tap .tab.active {
+    font-weight: bold;
+    opacity: 1;
+    border-bottom: 2px solid black;
+}
+
+
+.update-container {
+    background: white;
+    width: 600px;
+    border-radius: 12px;
+    box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    overflow: hidden;
+}
+
+.title-box {
+    background-color: var(--sub-color2);
+    text-align: center;
+    padding: 16px;
+}
+
+.title-box h2 {
+    margin: 0;
+    font-size: var(--text-normal);
+}
+
+.form-box {
+    padding: 20px;
+}
+
+.form-row {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 12px;
+}
+
+.form-row label {
+    width: 120px;
+    font-size: var(--text-small);
+    color: rgba(0,0,0,0.5);
+}
+
+.form-row input[type="text"],
+.form-row input[type="password"],
+.form-row input[type="email"],
+.form-row input[type="date"] {
+    flex: 1;
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+}
+.btn-update {
+    background-color: var(--sub-color2);
+}
+button {
+    padding: 8px 12px;
+    border: none;
+    background-color: var(--sub-color3);
+    color: white;
+    font-size: 0.85rem;
+    border-radius: 6px;
+    cursor: pointer;
+    white-space: nowrap;
+}
+
+fieldset.group-box {
+    border: 1px solid rgba(0,0,0,0.5);
+    border-radius: 6px;
+    padding: 12px;
+    margin-bottom: 16px;
+}
+
+legend {
+    padding: 0 6px;
+    font-weight: bold;
+    font-size: var(--text-small);
+}
+
+.fieldset-footer {
+    display: flex;
+    justify-content: flex-end;
+    margin-top: 8px;
+}
+
+.submit-box {
+    text-align: center;
+    margin-top: 20px;
+}
+
+.submit-btn {
+    color: #fff;
+    width: 80%;
+    padding: 10px;
+    font-weight: bold;
+    border-radius: 8px;
+    border: none;
+}
+.submit-box .btn-update {
+    width: 100%;
+}
