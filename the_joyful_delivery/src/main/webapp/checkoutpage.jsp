@@ -8,6 +8,7 @@
 	<title>project💻 - ALOHA CLASS🌴</title>
 	<jsp:include page="/layout/meta.jsp" />
 	<jsp:include page="/layout/link.jsp" />
+	<link rel="stylesheet" href="./static/css/checkout.css" />
 </head>
 <body>
 	<jsp:include page="/layout/header.jsp" />

@@ -1,3 +1,4 @@
+<%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <!DOCTYPE html>
 <html lang="ko">
 <head>
@@ -6,6 +7,7 @@
   <title>결제 페이지</title>
   <link rel="stylesheet" href="./static/css/reset.css" />
   <link rel="stylesheet" href="./static/css/checkout.css" />
+
   <style>
     body {
       font-family: 'Arial', sans-serif;
@@ -35,11 +37,11 @@
     .logo-area img {
       height: 40px;
     }
-
-    .nav-links {
+     .nav-links {
       font-size: 14px;
       color: #333;
     }
+
 
     .nav-links a {
       margin: 0 10px;
@@ -47,7 +49,7 @@
       color: #333;
     }
 
-    .header-right {
+     .header-right {
       display: flex;
       align-items: center;
       gap: 15px;
@@ -212,24 +214,19 @@
 
     footer {
       background-color: #F5F6FF;
-      width: 100vw;
-      position: relative;
-      left: 50%;
-      right: 50%;
-      margin-left: -50vw;
-      margin-right: -50vw;
-      padding: 20px 0;
+      width: 100%;
+      padding: 8px 30px;
       box-sizing: border-box;
       text-align: center;
       font-size: 14px;
       color: #666;
       border-top: 1px solid #ddd;
-      flex-shrink: 0;
+      height: 80px;
     }
 
     .footer-content {
-      max-width: 1200px;
-      margin: 0 auto;
+      max-width: 100%;
+      overflow: hidden;
     }
 
     .footer-logo {
@@ -238,11 +235,12 @@
       display: block;
       margin: 0 auto;
     }
+    
   </style>
 </head>
 <body>
 
-  <!-- 헤더 -->
+  <!-- 상단 헤더 -->
   <header>
     <div class="logo-area">
       <img src="./static/img/logo.png" alt="로고" />
@@ -260,17 +258,17 @@
     </div>
   </header>
 
-  <!-- 본문 카드 -->
+  <!-- 카드들 -->
   <div class="card-container">
-    <!-- 주문/송장 카드 -->
+    <!-- 물품 목록 카드 -->
     <div class="card item-card">
       <div class="form-group">
         <label for="order-number">주문 번호</label>
-        <input type="text" id="order-number" />
+        <input type="text" id="order-number" placeholder="">
       </div>
       <div class="form-group">
         <label for="tracking-number">송장 번호</label>
-        <input type="text" id="tracking-number" />
+        <input type="text" id="tracking-number" placeholder="">
       </div>
       <h4 class="item-title">물품 목록</h4>
       <div class="item-image"></div>
@@ -308,7 +306,7 @@
       </div>
       <div class="divider"></div>
       <div class="button-row">
-        <button class="button cancel" id="cancel-button">결제 취소</button>
+        <button class="button cancel">결제 취소</button>
         <button class="button confirm">결제 하기</button>
       </div>
     </div>
@@ -351,17 +349,10 @@
   </div>
 
   <!-- 푸터 -->
-  <footer>
-    <div class="footer-content">
-      <img src="./static/img/footer.png" alt="푸터 로고" class="footer-logo" />
-    </div>
-  </footer>
-
-  <!-- 스크립트: 결제 취소 동작 추가 -->
-  <script>
-    document.getElementById("cancel-button").addEventListener("click", function () {
-      window.location.href = "http://127.0.0.1:5500/the_joyful_delivery/src/main/webapp/CheckoutPage.html?type=direct#여기";
-    });
-  </script>
+ <footer>
+  <div class="footer-content">
+    <img src="./static/img/footer.png" alt="푸터 로고" class="footer-logo" />
+  </div>
+</footer>
 </body>
 </html>
