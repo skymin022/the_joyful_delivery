@@ -18,7 +18,7 @@ import lombok.NoArgsConstructor;
 public class Users {
 	
 	@Pk
-	private int idx;
+	private Long idx;
 	private int roleIdx;
 	private String id;
 	private String password;
@@ -28,5 +28,4 @@ public class Users {
 	private String birth;
 	private Date signUpDate;
 	private boolean withdrawal;
-	
 }
