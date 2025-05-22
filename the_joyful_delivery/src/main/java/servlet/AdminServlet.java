@@ -52,10 +52,10 @@ public class AdminServlet extends HttpServlet {
 				String column = request.getParameter("where");
 				List<Delivery> deliveries = null;
 				
-				if(whereTxt != null || column != null) {
-					// TODO: like 절 처리
-				} else {
+				if(whereTxt == null || column == null) {
 					deliveries = delService.regJoinList();
+				} else {
+					deliveries = delService.regJoinList(column, whereTxt);
 				}
 				
 				
