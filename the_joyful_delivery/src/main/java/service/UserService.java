@@ -12,9 +12,13 @@ public interface UserService {
 	public List<User> list();
 	public List<User> listBy(Map<String, Object> fields);
 	public PageInfo<User> page();
-	public User select(int no);
+	public User select(String userId);
 	public int insert(User user);
 	public User insertKey(User user);
 	public int update(User user);
 	public int delete(int no);
+	
+	// 로그인 
+	boolean login(User user);
+    User selectByUsername(String username);
 }

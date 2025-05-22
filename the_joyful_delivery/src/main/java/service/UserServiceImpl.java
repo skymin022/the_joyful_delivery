@@ -41,7 +41,6 @@ public class UserServiceImpl implements UserService {
 		return null;
 	}
 
-	@Override
 	public User select(int no) {
 		// TODO Auto-generated method stub
 		return null;
@@ -70,6 +69,34 @@ public class UserServiceImpl implements UserService {
 		// TODO Auto-generated method stub
 		return 0;
 	}
+
+	@Override
+	public User select(String userId) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+
+    @Override
+    public boolean login(User user) {
+        User dbUser;
+		try {
+			dbUser = userDAO.select(user.getId());
+		} catch (Exception e) {
+			System.err.println("로그인 시 오류 발생 ");
+			e.printStackTrace();
+		}
+        if (dbUser != null && dbUser.getPassword().equals(user.getPassword())) {
+            return true;
+        }
+        return false;
+    }
+
+
+    @Override
+    public User selectByUsername(String username) {
+        return userDAO.selectByUsername(username);
+    }
 
 
 
