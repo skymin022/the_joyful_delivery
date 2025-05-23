@@ -113,7 +113,7 @@
 		        
 		        <div class="main_right_wrap2">
 			      <div class="main_right_bottom1">
-			        <div><p>택배<br>예약하기</p></div>
+			        <div><p>택배<br>예약</p></div>
 			        <span><img src="<%= root %>/static/img/box_white.png" alt="택배박스" ></span>
 			      </div>
 			      <div class="main_right_bottom2">
