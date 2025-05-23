@@ -211,9 +211,17 @@ document.addEventListener("DOMContentLoaded", function () {
     // 회원가입 페이지 --------------------------------------------------------------------------------------------
     
 	// 폼 제출전 자바스크립트 유효성 검사를 실행, 폼 전송 여부 결정 
-	document.forms["sign_up"].onsubmit = function () {
+	// 페이지 경로가 '/signup'인 경우에만 실행
+	if (window.location.pathname === '/signup') {
+	    const signUpForm = document.forms["sign_up"];
+	    if (signUpForm) {
+	        signUpForm.onsubmit = function () {
 	            return Userform.validateSignUpForm();
 	        };
+	    } else {
+	        console.log('sign_up 폼을 찾을 수 없습니다.');
+	    }
+	}
 
 	// 비밀번호 확인 - 일치 여부 판단
 	const password = document.getElementById("password");

@@ -6,13 +6,11 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
-import service.DeliveryServiceImpl;
 import service.UserService;
 import service.UserServiceImpl;
 
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.Map;
 
 import DAO.UserDAO;
 import DTO.User;
@@ -82,10 +80,11 @@ public class UserServlet extends HttpServlet {
                 int roleIdx = loginUser.getRoleIdx(); 
                 if (roleIdx == 1) {
                     // 일반 사용자 페이지
+                	System.out.println(request.getContextPath());
                     response.sendRedirect(request.getContextPath() + "/index.jsp");
                 } else if (roleIdx == 2) {
                     // 관리자 페이지
-                    response.sendRedirect(request.getContextPath() + "/admin_user.jsp");
+                    response.sendRedirect(request.getContextPath() + "/admin/user");
                 } else {
                     // 그 외 역할이거나 예외 처리
                     response.sendRedirect(request.getContextPath() + "/index.jsp");
