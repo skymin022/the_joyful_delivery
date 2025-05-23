@@ -17,4 +17,8 @@ public interface DeliveryService {
 	public Delivery insertKey(Delivery delivery);
 	public int update(Delivery delivery);
 	public int delete(int no);
+	int count() throws Exception;
+	
+	// 알클라이브러리x 메서드
+	public List<Delivery> regJoinList(int pageCut, int offset);
 }

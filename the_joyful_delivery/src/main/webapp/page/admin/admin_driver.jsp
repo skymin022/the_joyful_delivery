@@ -30,18 +30,18 @@
 			</div>
 		</header>
 		<%-- [Contents] ######################################################### --%>
-		<form action="">
+		<form action="<%=root%>/admin/delivery">
 			<div class="ad_search">
-				<div style="position: relative;">
-					<input type="text" name="where_txt">
-					<button class="ad_search_icon"><img src="<%=root%>/static/img/search.png" alt="돋보기 이미지"/></button>
-				</div>
-				<div class="line"></div>
 				<ul>     
 					<li><input name="where" id="comName"   value="comName"   type="radio"/><label for="comName">기사번호</label></li>
 					<li><input name="where" id="drivName" value="drivName" type="radio"/><label for="drivName">기사이름</label></li>
 					<li><input name="where" id="drivNum" value="drivNum" type="radio"/><label for="drivNum">기사연락처</label></li>
 				</ul>
+				<div class="line"></div>
+				<div style="position: relative;">
+					<input type="text" name="where_txt">
+					<button class="ad_search_icon"><img src="<%=root%>/static/img/search.png" alt="돋보기 이미지"/></button>
+				</div>
 			</div>		
 		</form>
 		<div class="adm_table">

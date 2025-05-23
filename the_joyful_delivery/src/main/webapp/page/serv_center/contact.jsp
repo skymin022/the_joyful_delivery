@@ -14,7 +14,8 @@
 		<jsp:include page="/layout/serv_header.jsp" />
 		<%-- [Contents] ######################################################### --%>
 		<div class="contact_container">
-			<h2 class="contact_title">문의하기</h2>
+			<h2 class="title">고객센터</h2>
+			<h3>문의하기</h3>
 			<div class="contact_container il">
 				<form id="form" action="" method="post">
 					<ul class="contact_input_list">

@@ -11,7 +11,7 @@ public interface UserService {
 	// C.R.U.D
 	public List<User> list();
 	public List<User> listBy(Map<String, Object> fields);
-	public PageInfo<User> page();
+	public PageInfo<User> page(String keyword, List<String> columList);
 	public User select(String userId);
 	public int insert(User user);
 	public User insertKey(User user);

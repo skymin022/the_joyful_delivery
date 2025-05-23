@@ -22,8 +22,9 @@
 			</div>    
 			<div class="header_down">
 				<ul class="header_down_1">
-					<li><a href="<%= root %>/page/delivery/delivery_main.jsp">배송 조회</a></li>
-					<li><a href="<%= root %>/page/serv_center/customer_sc.jsp">고객센터</a></li>
+					<li><a href="<%= root %>/page/delivery/delivery_main.jsp">배송조회</a></li>
+					<li><a href="<%= root %>/page/serv_center/customer_sc.jsp">자주묻는질문</a></li>
+					<li><a href="<%= root %>/page/serv_center/announcement.jsp">공지사항</a></li>
 					<li><a href="<%= root %>/page/serv_center/contact.jsp">문의하기</a></li>
 					<li><a href="<%= root %>/page/serv_center/myqna.jsp">내문의사항</a></li>
 				</ul>

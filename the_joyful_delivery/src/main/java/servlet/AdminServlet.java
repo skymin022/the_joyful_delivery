@@ -1,9 +1,13 @@
 package servlet;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
+import com.alohaclass.jdbc.dto.Page;
+import com.alohaclass.jdbc.dto.PageInfo;
 
 import DTO.Delivery;
 import DTO.Driver;
@@ -34,34 +38,61 @@ public class AdminServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String path = request.getPathInfo();
 		System.out.println("요청된 추가 경로 : " + path);
-		String page = "";
+		String page = "";		// forward 로 이동할 경로
+		String whereTxt = "";	// where 절 조건
+		String column = "";		// where 절 컬럼	
+		int currentPage = 0;		// 현재 몇 페이지 
+		int pageCut = 5;		// 한 페이지의 출력 할 행의 수 
+		int size;				// 총 행의 수 담을 변수
 		
 		// 요청별 로직 처리
 		switch(path) {
 			// 어드민 유저관리 페이지
 			case "/user":
-				page = "/page/admin/admin_user.jsp";
-				Map<String, Object> where = new HashMap<>();
-				where.put("role_idx", 1);
-				List<User> users = userService.listBy(where);
+				whereTxt = request.getParameter("where_txt"); // 검색어
+				column = request.getParameter("where"); // 컬럼
+				if(whereTxt != null || column != null) {
+					System.out.println(whereTxt + " " + column);
+					List<String> columnList = new ArrayList<>();
+					columnList.add(column);
+					
+					PageInfo<User> pageInfo = userService.page(whereTxt, columnList);
+					List<User> users = pageInfo.getList();
+					Page pageObj = pageInfo.getPage();
+					
+					request.setAttribute("users", users);
+					request.setAttribute("page", pageObj);
+					request.setAttribute("pageINfo", pageInfo);
+				} else {
+					// TODO: 그냥 리스트 나중에 지우기
+					Map<String, Object> where2 = new HashMap<>();
+					where2.put("role_idx", 1);
+					List<User> users = userService.listBy(where2);
+					request.setAttribute("users", users);
+				}
 				
-				request.setAttribute("users", users);
+				page = "/page/admin/admin_user.jsp";
 				request.getRequestDispatcher(page).forward(request, response);
 				break;
 				
 			// 어드민 택배관리 페이지
 			case "/delivery":
-				page = "/page/admin/admin_delivery.jsp";
-				String whereTxt = request.getParameter("where_txt");
-				String column = request.getParameter("where");
+				whereTxt= request.getParameter("where_txt");
+				column = request.getParameter("where");
+				if(request.getParameter("page") != null) 
+					currentPage = Integer.parseInt(request.getParameter("page")); 
+				
 				List<Delivery> deliveries = null;
 				
 				if(whereTxt == null || column == null) {
-					deliveries = delService.regJoinList();
+					deliveries = delService.regJoinList(pageCut, currentPage * 5);
 				} else {
 					deliveries = delService.regJoinList(column, whereTxt);
 				}
+				size = (int)Math.ceil( delService.count() / pageCut);
 				
+				page = "/page/admin/admin_delivery.jsp";
+				request.setAttribute("size", size);
 				request.setAttribute("deliveries", deliveries);
 				request.getRequestDispatcher(page).forward(request, response);
 				break;

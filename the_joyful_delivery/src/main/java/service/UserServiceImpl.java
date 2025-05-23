@@ -1,10 +1,14 @@
 package service;
 
+
 import java.sql.SQLException;
+
 import java.util.List;
 import java.util.Map;
 
+import com.alohaclass.jdbc.dto.Page;
 import com.alohaclass.jdbc.dto.PageInfo;
+
 import DAO.UserDAO;
 import DTO.User;
 
@@ -37,9 +41,29 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Override
-	public PageInfo<User> page() {
-		// TODO Auto-generated method stub
-		return null;
+	public PageInfo<User> page(String keyword, List<String> columList) {
+		PageInfo<User> pageInfo = null; 
+		try {
+			Page pageObj = new Page(1, 30);
+			pageInfo = userDAO.page(pageObj, keyword, columList);
+
+			// role_idx 가 1인 회원만(일반유저) 추출
+			List<User> list1 = new ArrayList<>();
+			List<User> list2 = pageInfo.getList();
+			for(User user : list2) {
+				int role_idx = user.getRoleIdx();
+				
+				if(role_idx == 1) {
+					list1.add(user);
+				}
+			}
+			
+			pageInfo.setList(list1);
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return pageInfo;
 	}
 
 	public User select(int no) {

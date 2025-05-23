@@ -9,15 +9,23 @@ import DTO.Delivery;
 
 public class DeliveryDAO extends BaseDAOImpl<Delivery> {
 
-	public List<Delivery> regJoinList() {
+	public List<Delivery> regJoinList(int pageCut, int offset) {
 		List<Delivery> list = new ArrayList<>();
 		
-		String sql = "SELECT *, r.status r_status FROM deliveries d INNER JOIN "
-				   + "region_name r ON d.idx = r.del_idx "
-				   + "WHERE r.created_at IN "
-				   + "(SELECT MAX(created_at) FROM region_name GROUP BY del_idx)";
+		String sql = "SELECT d.*, r.status AS r_status "
+				    + "FROM deliveries d "
+				    + "INNER JOIN region_name r ON d.idx = r.del_idx "
+				    + "INNER JOIN ( "
+				    + "    SELECT del_idx, MAX(created_at) AS max_created "
+				    + "    FROM region_name "
+				    + "    GROUP BY del_idx "
+				    + ") AS latest ON r.del_idx = latest.del_idx AND r.created_at = latest.max_created "
+				    + "LIMIT ? OFFSET ?";
 		try {
 			psmt = con.prepareStatement(sql);
+			psmt.setInt(1, pageCut);
+			psmt.setInt(2, offset);
+			
 			rs = psmt.executeQuery();
 			
 			while(rs.next()) {
