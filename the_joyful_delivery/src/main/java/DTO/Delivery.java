@@ -1,6 +1,7 @@
 package DTO;
 
 
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 import com.alohaclass.jdbc.annotation.Column;
@@ -35,4 +36,15 @@ public class Delivery {
 	// 조인해서 가져올 컬럼 원래는 이렇게 하면 안됨.
 	@Column(exist = false)
 	private String regStatus;
+	@Column(exist = false)
+	private String name;
+
+	// 포맷 날짜 받을 변수
+	private String formatCreatedAt;
+	
+	// 날짜 포맷 메서드
+	public String getFormatCreatedAt() {
+		if(this.createdAt == null) return null;
+		return new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(this.createdAt);
+	}
 }

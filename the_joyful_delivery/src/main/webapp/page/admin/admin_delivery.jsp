@@ -1,46 +1,16 @@
-<%@page import="java.util.Map"%>
-<%@page import="java.text.SimpleDateFormat"%>
-<%@page import="service.RegionServiceImpl"%>
-<%@page import="java.sql.Timestamp"%>
-<%@page import="java.time.ZoneId"%>
-<%@page import="java.time.LocalDateTime"%>
-<%@page import="java.util.List"%>
-<%@page import="DTO.Delivery"%>
 <%@ include file="/layout/jstl.jsp" %>
 <%@ include file="/layout/common.jsp" %>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%
-	List<Delivery> list = (List) request.getAttribute("deliveries");
-	int size = (int)request.getAttribute("size");
-	
-	// 
-	StringBuilder queryWithoutPage = new StringBuilder();
-	Map<String, String[]> paramMap = null;
-	if(request.getParameterMap() != null) {
-	    paramMap = request.getParameterMap();
-	    for (Map.Entry<String, String[]> entry : paramMap.entrySet()) {
-	        String key = entry.getKey();
-	        if (!"page".equals(key)) {  // page 제외
-	            for (String value : entry.getValue()) {
-	                if (queryWithoutPage.length() > 0) {
-	                    queryWithoutPage.append("&");
-	                }
-	                queryWithoutPage.append(key)
-	                                .append("=")
-	                                .append(value);
-	            }
-	        }
-	    }
-	}
-	
-	int currentPage = 0;
-	if(request.getParameter("page") != null) {
-		currentPage = Integer.parseInt(request.getParameter("page"));
-	}
-	
+	// 삼항 연산자 전용 변수
+	String queryString = (String)request.getAttribute("paramQuery");	
+	request.setAttribute("queryString", queryString);	// JSTL 에서 쓸 수 있게
 	String baseUrl = root + "/admin/delivery";
---%>
+	request.setAttribute("baseUrl", baseUrl);			// JSTL 에서 쓸 수 있게
+	int size = (int)request.getAttribute("size");
+	int currentPage = (int)request.getAttribute("currentPage");
+%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -100,59 +70,52 @@
 					</tr>
 				</thead>
 				<tbody class="adm_tbody">
-					<%
-						SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-						for(Delivery del : list) {
-							Timestamp _addTime = new Timestamp(del.getCreatedAt().getTime());
-							String addTime = sdf.format(_addTime);
-							// TODO: ORDER BY 로 가장 최근에 위치를 가져와야 함.
-					%>
-					<tr>
-						<td><%=del.getIdx() %></td>
-						<td><%=del.getUserIdx() %></td>
-						<td><%=del.getDriverIdx() %></td>
-						<td><%=addTime %></td>
-						<td><%=del.getRegStatus() %></td>
-						<td><%=del.getValue() %>만원</td>
-						<td><%=del.getPrePos() %></td>
-						<td><%=del.getStatus() %></td>
-					</tr>
-					<%} %>
+					<c:forEach var="del" items="${deliveries}">
+					    <tr>
+					      <td>${del.idx}</td>
+					      <td>${del.userIdx}</td>
+					      <td>${del.name}</td>
+					      <td>${del.formatCreatedAt}</td>
+					      <td>${del.regStatus}</td>
+					      <td>${del.value}만원</td>
+					      <td>${del.prePos}</td>
+					      <td>${del.status}</td>
+					    </tr>
+			  		</c:forEach>
 				</tbody>
 			</table>
 			<div class="adm_bottom_page">
 			    <ul>
 			        <li>
-			            <a href="<%= baseUrl + "?" + (queryWithoutPage.length() > 0 ? queryWithoutPage + "&" : "") + "page=0" %>">
+			            <a href="<%= baseUrl + "?" + (queryString.length() > 0 ? queryString + "&" : "") + "page=0" %>">
 			                <img src="<%=root%>/static/img/lleft.png" alt="처음"/>
 			            </a>
 			        </li>
 			        <li>
-			            <a href="<%= baseUrl + "?" + (queryWithoutPage.length() > 0 ? queryWithoutPage + "&" : "") + "page=" + Math.max(currentPage - 1, 0) %>">
+			            <a href="<%= baseUrl + "?" + (queryString.length() > 0 ? queryString + "&" : "") + "page=" + Math.max(currentPage - 1, 0) %>">
 			                <img src="<%=root%>/static/img/left.png" alt="이전"/>
 			            </a>
 			        </li>
-			        <% for (int i = 0; i < size; i++) {
-			               String pageQuery = "page=" + i;
-			               String fullQuery;
-			           
-			               if (queryWithoutPage.length() > 0) {
-			                   fullQuery = queryWithoutPage.toString() + "&" + pageQuery;
-			               } else {
-			                   fullQuery = pageQuery;
-			               }
-			           
-			               String pageLink = baseUrl + "?" + fullQuery;
-			        %>
-			            <li><a href="<%= pageLink %>"><%= (i + 1) %></a></li>
-			        <% } %>
+			        <c:forEach var="i" begin="${startPage }" end="${endPage}">
+					    <c:set var="pageQuery" value="page=${i}" />
+					    <c:choose>
+					        <c:when test="${not empty queryString}">
+					            <c:set var="fullQuery" value="${queryString}&${pageQuery}" />
+					        </c:when>
+					        <c:otherwise>
+					            <c:set var="fullQuery" value="${pageQuery}" />
+					        </c:otherwise>
+					    </c:choose>
+					    <c:set var="pageLink" value="${baseUrl}?${fullQuery}" />
+					    <li><a style="${i == currentPage ? 'font-weight: bold; color: red;' : ' '}" href="${pageLink}">${i + 1}</a></li>
+					</c:forEach>
 			        <li>
-			            <a href="<%= baseUrl + "?" + (queryWithoutPage.length() > 0 ? queryWithoutPage + "&" : "") + "page=" + Math.min(currentPage + 1, size - 1) %>">
+			            <a href="<%= baseUrl + "?" + (queryString.length() > 0 ? queryString + "&" : "") + "page=" + Math.min(currentPage + 1, size - 1) %>">
 			                <img src="<%=root%>/static/img/right.png" alt="다음"/>
 			            </a>
 			        </li>
 			        <li>
-			            <a href="<%= baseUrl + "?" + (queryWithoutPage.length() > 0 ? queryWithoutPage + "&" : "") + "page=" + (size - 1) %>">
+			            <a href="<%= baseUrl + "?" + (queryString.length() > 0 ? queryString + "&" : "") + "page=" + (size - 1) %>">
 			                <img src="<%=root%>/static/img/rright.png" alt="마지막"/>
 			            </a>
 			        </li>
