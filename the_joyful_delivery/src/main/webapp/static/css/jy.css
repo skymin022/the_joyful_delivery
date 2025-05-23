@@ -297,6 +297,15 @@ input[type="number"]::-webkit-inner-spin-button {
 	border-bottom: none;
 	display: none;
 }
+
+.bottom_page {
+	background-color: white;
+	margin-top: 20px;
+	margin-bottom: 60px;
+	width: 1500px;
+	border-radius: 20px;
+}
+
 .bottom_page ul {
 	display: flex;
 	height: 80px;
@@ -359,7 +368,9 @@ input[type="number"]::-webkit-inner-spin-button {
 
 .adm_table {
 	display: flex;
+	flex-direction: column;
 	justify-content: center;
+	align-items: center;
 	margin-top: 10px;
 }
 table {

@@ -84,6 +84,31 @@
 					<%}%>
 				</tbody>
 			</table>
+			<div class="bottom_page">
+				<ul>
+					<li>
+						<a href="#"><img src="<%=root%>/static/img/lleft.png" alt=""/></a>
+					</li>
+					<li>
+						<a href="#"><img src="<%=root%>/static/img/left.png" alt=""/></a>
+					</li>
+					<li>
+						<a href="#">1</a>
+					</li>
+					<li>
+						<a href="#">2</a>
+					</li>
+					<li>
+						<a href="#">3</a>
+					</li>
+					<li>
+						<a href="#"><img src="<%=root%>/static/img/right.png" alt=""/></a>
+					</li>
+					<li>
+						<a href="#"><img src="<%=root%>/static/img/rright.png" alt=""/></a>
+					</li>
+				 </ul>
+			 </div>
 		</div>
 		<%-- [Contents] ######################################################### --%>
 		<jsp:include page="/layout/script.jsp" />
