@@ -1,25 +1,29 @@
 package servlet;
 
+import java.io.IOException;
+import java.io.PrintWriter;
+import java.util.List;
+
+import DAO.UserDAO;
+import DTO.Delivery;
+import DTO.User;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
+import service.DeliveryService;
+import service.DeliveryServiceImpl;
 import service.UserService;
 import service.UserServiceImpl;
-
-import java.io.IOException;
-import java.io.PrintWriter;
-
-import DAO.UserDAO;
-import DTO.User;
 
 @WebServlet("/users/*")
 public class UserServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
 	private UserService userService = new UserServiceImpl();
+	 private DeliveryService deliveryService = new DeliveryServiceImpl();
 	
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// 로그아웃 
@@ -47,6 +51,32 @@ public class UserServlet extends HttpServlet {
 		    out.print("{\"exists\":" + exists + "}");
 		    out.flush();
 		}
+		
+		// 로그인한 사용자의 배속 목록 반환 
+		 // 새로 추가: 로그인한 사용자의 배송목록 반환 API
+        else if ("/delivery-list".equals(path)) {
+            HttpSession session = request.getSession(false);
+            response.setContentType("application/json;charset=UTF-8");
+
+            if (session == null || session.getAttribute("loginId") == null) {
+                response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+                return;
+            }
+
+            String loginId = (String) session.getAttribute("loginId");
+            // 딜리버리 이동하는 것 수정하기 (확인)
+            List<Delivery> deliveries = deliveryService.getDeliveriesBySenderId(loginId);
+
+            // json 응답으로 변경 하기 
+            // JSON 응답 (Gson 사용 권장)
+            Gson gson = new Gson();
+            String json = gson.toJson(deliveries);
+
+            PrintWriter out = response.getWriter();
+            out.print(json);
+            out.flush();
+        }
+		
 	}
 	
 
@@ -70,8 +100,10 @@ public class UserServlet extends HttpServlet {
             System.out.println(result);
 
             if (result) {
+            	// 비밀번호는 세션 저장 X 
                 loginUser.setPassword(null);
-
+                
+                // 세션 생성, 기존 세션 가져오기 및 로그인된 사용자 정보 세션에 저장  
                 HttpSession session = request.getSession();
                 session.setAttribute("loginId", user.getId());
                 session.setAttribute("loginUser", loginUser);
