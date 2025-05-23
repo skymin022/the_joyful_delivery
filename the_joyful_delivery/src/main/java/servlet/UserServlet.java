@@ -6,12 +6,13 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
-import service.DeliveryServiceImpl;
 import service.UserService;
 import service.UserServiceImpl;
 
 import java.io.IOException;
+import java.io.PrintWriter;
 
+import DAO.UserDAO;
 import DTO.User;
 
 @WebServlet("/users/*")
@@ -30,12 +31,24 @@ public class UserServlet extends HttpServlet {
 	        if (session != null) {
 	            session.invalidate();
 	        }
-
 	        // 로그아웃 후 메인 페이지로 리다이렉트
 	        response.sendRedirect(request.getContextPath() + "/index.jsp");
 	    }
-	
+		
+		// 회원가입 시 - 아이디 중복 검사 
+		else if ("/checkId".equals(path)) {
+		    String id = request.getParameter("id");
+		    System.out.println("[checkId] 요청 아이디 파라미터: " + id);
+		    
+		    boolean exists = userService.isUserIdDuplicate(id); //서비스 계층 호출
+
+		    response.setContentType("application/json");
+		    PrintWriter out = response.getWriter();
+		    out.print("{\"exists\":" + exists + "}");
+		    out.flush();
+		}
 	}
+	
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         
@@ -62,27 +75,84 @@ public class UserServlet extends HttpServlet {
                 HttpSession session = request.getSession();
                 session.setAttribute("loginId", user.getId());
                 session.setAttribute("loginUser", loginUser);
-
-                response.sendRedirect(request.getContextPath() + "/index.jsp");
+                
+                // 유저 / 어드민 분리 
+                int roleIdx = loginUser.getRoleIdx(); 
+                if (roleIdx == 1) {
+                    // 일반 사용자 페이지
+                	System.out.println(request.getContextPath());
+                    response.sendRedirect(request.getContextPath() + "/index.jsp");
+                } else if (roleIdx == 2) {
+                    // 관리자 페이지
+                    response.sendRedirect(request.getContextPath() + "/admin/user");
+                } else {
+                    // 그 외 역할이거나 예외 처리
+                    response.sendRedirect(request.getContextPath() + "/index.jsp");
+                }
             } else {
                 response.sendRedirect(request.getContextPath() + "/page/login/login.jsp?error=true");
             }
+            
         }
         
         //  회원가입 
-        else if ("/signup".equals(path)) {
-            // 회원가입 처리 로직 구현 예정
+        else if ("/sign_up".equals(path)) {
+            // 회원가입 처리 로직
+            String id = request.getParameter("id");
+            String password = request.getParameter("password");
+            String name = request.getParameter("name");
+            String email1 = request.getParameter("email1");
+            String email2 = request.getParameter("email2");
+            String address = request.getParameter("address");
+            String birth = request.getParameter("birth");
+            String phone = request.getParameter("p_number");
+
+            String email = email1 + "@" + email2;
+
+            User user = User.builder()
+                    .id(id)
+                    .password(password)
+                    .username(name)
+                    .email(email)
+                    .address(address)
+                    .birth(birth)
+                    .pNumber(phone)
+                    .roleIdx(1)
+                    .build();
+
+            try {
+                // 서비스 계층으로 중복 검사
+                if (userService.isUserIdDuplicate(id)) {
+                    request.setAttribute("error", "이미 사용 중인 아이디입니다.");
+                    request.getRequestDispatcher("/sign_up.jsp").forward(request, response);
+                    return;
+                }
+
+                // 회원가입 처리도 service 통해 위임하는 것이 이상적이나, DAO 직접 사용해도 무방
+                UserDAO userDAO = new UserDAO();
+                int result = userDAO.insert(user);
+
+                if (result > 0) {
+                    response.sendRedirect( request.getContextPath() + "/page/login/login.jsp");
+                    System.out.println("성공");
+                } else {
+                	System.out.println("실패");
+                    request.setAttribute("error", "회원가입 실패");
+                    request.getRequestDispatcher("/sign_up.jsp").forward(request, response);
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+                System.err.println("try 실패");
+                request.setAttribute("error", "서버 오류 발생: " + e.getMessage());
+                request.getRequestDispatcher("/sign_up.jsp").forward(request, response);
+            }
         }
 
-        // 
-        else {
-            response.sendError(HttpServletResponse.SC_NOT_FOUND);
-        } 
+
+	}
         
-        // 문의하기 -> 내문의사항
-        
-        
-    }
+    
 
 }
+
 

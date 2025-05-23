@@ -192,4 +192,8 @@
 .check-message.error {
 	color: red;
 }
-
+.right-box > ul li.message {
+    all: unset;
+    color: #ff4d4d;
+    display: block;
+}
