@@ -136,8 +136,8 @@ document.addEventListener("DOMContentLoaded", function () {
                 id_input.focus();
                 return;
             }
-            if (id_input.value.length < 6 || id_input.value.length > 20) {
-                alert('아이디는 6~20자 이내로 입력 가능합니다.');
+            if (id_input.value.length < 5 || id_input.value.length > 20) {
+                alert('아이디는 5~20자 이내로 입력 가능합니다.');
                 id_input.select();
                 return false;
             }

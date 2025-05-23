@@ -26,6 +26,7 @@ public class UserDAO extends BaseDAOImpl<User> {
 
 	        while(rs.next()) {
 	            user = new User();
+	            user.setRoleIdx(rs.getInt("role_idx"));
 	            user.setIdx(rs.getInt("idx"));
 	            user.setId(rs.getString("ID"));
 	            user.setPassword(rs.getString("password"));

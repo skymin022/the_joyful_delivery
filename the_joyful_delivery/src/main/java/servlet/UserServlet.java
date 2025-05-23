@@ -77,11 +77,23 @@ public class UserServlet extends HttpServlet {
                 HttpSession session = request.getSession();
                 session.setAttribute("loginId", user.getId());
                 session.setAttribute("loginUser", loginUser);
-
-                response.sendRedirect(request.getContextPath() + "/index.jsp");
+                
+                // 유저 / 어드민 분리 
+                int roleIdx = loginUser.getRoleIdx(); 
+                if (roleIdx == 1) {
+                    // 일반 사용자 페이지
+                    response.sendRedirect(request.getContextPath() + "/index.jsp");
+                } else if (roleIdx == 2) {
+                    // 관리자 페이지
+                    response.sendRedirect(request.getContextPath() + "/admin_user.jsp");
+                } else {
+                    // 그 외 역할이거나 예외 처리
+                    response.sendRedirect(request.getContextPath() + "/index.jsp");
+                }
             } else {
                 response.sendRedirect(request.getContextPath() + "/page/login/login.jsp?error=true");
             }
+            
         }
         
         //  회원가입 
