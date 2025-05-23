@@ -14,6 +14,8 @@ section {
 	min-height: 300px;
 }
 
+/* =============================    header    =============== */
+
 header {
 	background: white;
 }
@@ -63,8 +65,187 @@ header {
 	gap: 20px;
 }
 
+/* -----------------------------------------메뉴 아이콘 */
+.side a {
+  display: inline-block;
+  width: 35px;
+  height: 35px;
+  line-height: 80px;
+  text-align: center;
+/*   background-color: #666ef6; */
+  color: white;
+  font-size: 30px;
+}
+.bars {
+  display: inline-block;
+  position: relative;
+  width: 32px;
+  height: 24px;
+  border: -1px solid black;
+  cursor: pointer;
+  top: -22px;
+  left: 0px;
+  z-index: 105;
+}
+.bar {
+  display: inline-block;
+/*   width: 100%; */
+/*   height: 3px; */
+  background-color: black;
+  position: absolute;
+  transition: all 0.4s;
+  opacity: 1;
+}
+
+.bar.top { 
+	top: 4px; left: 0; 
+	width: 100%;
+	height: 3px;
+}
+/* .bar.mid { top: 50%; left: 0; transform: translateY(-50%); } */
+
+.bar.bottom {
+	bottom: 5px; right: 0; 
+	width: 50%;
+	height: 2px;
+}
+
+/* ---------------------------------메뉴 체크 - 햄버거 작대기 X로 변형 */
+
+/* #offcanvas-toggle:checked ~ .header-wrap .header_down .header_down_2 .bars .top { */
+header:has(#offcanvas-toggle:checked) .bars .top {
+  transform: rotate(45deg) translate(-4px, -5px);
+  transform-origin: top left;
+}
+/* #bars:checked ~ header .bars .mid { */
+/*   opacity: 0; */
+/*   transition: all 0.4s; */
+/* } */
+/* #offcanvas-toggle:checked ~ .header-wrap .header_down .header_down_2 .bars .bottom { */
+header:has(#offcanvas-toggle:checked) .bars .bottom {
+  transform: rotate(-45deg) translate(-3px, 3px);
+  width: 100%;
+  height: 3px;
+  transform-origin: top left;
+}
+/* --------------------------------------------------offcanvas */
+#offcanvas-toggle {display: none;}
+
+/* 오프캔버스 */
+.offcanvas {
+    width: 400px;
+    height: 100vh;
+    background-color: white;
+    position: fixed;
+    top: 0px;
+    right: -400px;
+    transition: all 0.8s ease-in-out;
+    padding: 20px;
+    padding-left: 10px;
+    z-index: 101;
+    
+}
+
+header:has(#offcanvas-toggle:checked) .offcanvas {
+    right: 0;
+}
+
+ul { list-style-type: none; }
+a { text-decoration: none; color: black; }
+
+.offcanvas_top ul {
+	display: flex;
+	justify-content: flex-start;
+	margin-top: 60px;
+	margin-right: 100px;
+	margin-bottom: 50px;
+	font-size: var(--text-small);
+	gap: 35px;
+}
+
+.offcanvas_top ul li {
+	width: 100px;
+	height: 25px;
+	background-color: rgba(2, 76, 170, 0.8);
+	border-radius: 20px;
+	text-align: center;
+	align-items: center;
+}
+.offcanvas_top ul li a {
+	color: white;
+}
+
+.offcanvas_nav ul {
+    min-height: 600px;
+    display: flex;
+    flex-direction: column;
+    row-gap: 50px;
+}
+
+.offcanvas_nav .offcanvas_ul li {
+    /* padding: 20px 0; */
+}
+
+.offcanvas_nav .offcanvas_ul li:hover {
+    background-color: #ccc;
+    color: white;
+}
+
+.offcanvas_nav .offcanvas_ul li a {
+    display: inline-block;
+    width: 100%;
+    height: 100%;
+    padding: 20px 10px;
+}
 
 
+----------------------------------------------------/* close 버튼 */
+.btn-close {
+    position: absolute;
+    top: 20px;
+    right: 25px;
+    cursor: pointer;
+}
+
+.btn-close span {
+    font-size: 40px;
+}
+
+-----------------------------------------------------/* 오버레이 */
+
+/* ✅ 체크되었을 때 스타일 변경 ????여기 지우면 오버레이 안됨... 왜??????????*/
+#offcanvas-toggle:checked + .bars .top {
+  transform: rotate(45deg) translate(5px, 5px);
+}
+
+#offcanvas-toggle:checked + .bars .bottom {
+  transform: rotate(-45deg) translate(5px, -5px);
+}
+
+
+/* 기본 상태에서는 안 보임 */
+.overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5); /* 반투명 검정 */
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.3s ease;
+  z-index:100;
+}
+
+/* ✅ 체크되었을 때 오버레이 활성화 */
+#offcanvas-toggle:checked + a .overlay {
+  opacity: 1;
+  visibility: visible;
+}
+
+/* =============================    header    =============== */
+
+/* =============================    footer    =============== */
 footer {
 	background: var(--footer-color);
 }
@@ -154,6 +335,9 @@ footer .line {
 	margin-bottom: 15px;
 }
 
+/* =============================    footer    =============== */
+
+/* =============================    main    =============== */
 .main_back{
 	background: var(--main-color);
 }
@@ -207,6 +391,14 @@ footer .line {
 	background: rgba(2, 76, 170, 0.8);
 	border-radius: 20px;
 	box-shadow: 1px 1px 10px 1px rgba(0,0,0,0.25);
+}
+.booking_box {
+	background: rgba(255, 194, 81, 1);
+}
+.info_how {
+	display: flex;
+	flex-direction: column;
+	gap: 50px;
 }
 .booking_box p,
 .info_how p {
@@ -295,6 +487,14 @@ footer .line {
 	height: 100%;
 	margin-bottom: 50px;
 	gap: 60px;
+	margin-top: 40px;
+}
+.main_right_wrap1,
+.main_right_wrap2 {
+	display: flex;
+	font-size: var(--text-big);
+	margin-top: 30px;
+	gap: 100px;
 }
 .main_right_top1,
 .main_right_top2,
@@ -302,10 +502,186 @@ footer .line {
 .main_right_bottom2 {
 	display: flex;
 	flex-direction: column;
-	width: 230px;
-	height: 232px;
+	width: 280px;
+	height: 282px;
 	gap:5px;
 	background: rgba(2, 76, 170, 0.8);
 	border-radius: 20px;
 	box-shadow: 1px 1px 10px 1px rgba(0,0,0,0.25);
 }
+
+.main_right_top1 {
+	background: rgba(2, 76, 170, 0.7);
+}
+.main_right_top2 {
+	background: rgba(255, 194, 81, 0.7);
+}
+.main_right_bottom1 {
+	background: rgba(255, 194, 81, 0.7);
+}
+.main_right_bottom2 {
+	background: rgba(2, 76, 170, 0.7);
+}
+
+.main_right_top1 p,
+.main_right_top2 p,
+.main_right_bottom1 p,
+.main_right_bottom2 p {
+	color: white;
+	font-weight: bold;	
+	margin-top: 20px;
+	padding-left: 15px;
+}
+
+.main_right_top1 span,
+.main_right_top2 span,
+.main_right_bottom1 span,
+.main_right_bottom2 span {
+	display: block;
+	text-align:right;
+}
+
+.main_right_top1 span img,
+.main_right_top2 span img,
+.main_right_bottom1 span img,
+.main_right_bottom2 span img {
+	width: 108px;
+	height: 100px;
+}
+
+/* =============================    main    =============== */
+
+/* =============================    contact    =============== */
+
+.contact_container {
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+/* 	height: 2000px; */
+	margin-bottom: 140px;
+}
+.contact_container .il {
+	width: 686px;
+	background-color: white;
+	margin: 56px auto 0;
+	border-radius: 25px;
+	padding-top: 50px;
+	padding-bottom: 130px;
+	position: relative;
+}
+.contact_title {
+	font-size: var(--text-title);
+	margin-top: 135px;
+	text-align: center
+}
+.contact_container label {
+	width: 120px;
+	color: #000;
+	font-size: 20px;
+}
+.contact_input_list li {
+	display: flex;
+	flex-wrap: wrap;
+	align-items: center;
+	column-gap: 50px;
+	position: relative;
+}
+.contact_input_list li + li {margin-top: 40px;}
+
+.contact_input_list input {
+	font-size: 18px;
+	width: 450px; height: 60px;
+	border: 1px solid #D9D9D9;
+	border-radius: 10px;
+	padding-left: 20px;
+}
+.contact_input_list textarea {
+	font-size: 18px;
+	width: 450px;
+	border: 1px solid #D9D9D9;
+	border-radius: 10px;
+	padding-top : 20px;
+	padding-left: 20px;
+}
+.contact_input_list input:focus,
+.contact_input_list textarea:focus {
+	outline: 1px solid var(--sub-color2);
+}
+
+.contact_input_list input::placeholder,
+.contact_input_list textarea::placeholder {
+	font-size: 18px;
+	color: var(--place-hol);
+}
+.contact_container .il .values{
+	margin-top: 15px;
+	margin-bottom: 15px;
+	margin-left: 170px;
+}
+.contact_container .il .values button {
+	width: 65px; height: 30px;
+	color: #000;
+	border-radius: 5px;
+	border: none;
+	pointer-events: none;
+	transition: all 0.3s;
+	background-color: var(--place-hol);
+}
+.contact_container .il .values button.on {
+	pointer-events: auto;
+	background-color: #FFC251;
+}
+.contact_upload {
+	display:flex;
+}
+.input_upload {
+	font-size: 15px;
+	width: 360px; height: 30px;
+	border: 1px solid #D9D9D9;
+	border-radius: 10px;
+	padding-left: 20px;
+	margin-left: 50px;
+	margin-right: 20px;
+	pointer-events: none;
+	user-select: none;
+}
+.contact_btn_find {
+	width: 65px; height: 30px;
+	color: #000;
+	border-radius: 5px;
+	border: none;
+	pointer-events: none;
+	transition: all 0.3s;
+	background-color: var(--place-hol);
+}
+.contact_prev_btn {
+	width: 150px; height: 46px;
+	font-size: 19px;
+	background-color: var(--place-hol);
+	border-radius: 45px;
+	color: #fff;
+	border: none;
+    position: absolute;
+    left: 30px;
+    bottom: 50px;
+}
+.contact_submit_btn {
+	width: 150px; height: 46px;
+	font-size: 19px;
+	background-color: var(--sub-color2);
+	border-radius: 45px;
+	color: #fff;
+	border: none;
+    position: absolute;
+    right: 30px;
+    bottom: 50px;
+}
+
+/* =============================    contact    =============== */
+
+/* =============================    myqna    =============== */
+
+
+
+/* =============================    myqna    =============== */

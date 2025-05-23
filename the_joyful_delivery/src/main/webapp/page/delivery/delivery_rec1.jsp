@@ -17,7 +17,7 @@
 			<h2 class="title">택배접수</h2>
 			<h3>물품정보</h3>
 			<div class="sm_container il">
-				<form id="form" action="">
+				<form id="form" action="" method="post">
 					<ul class="input_list">
 						<li>
 						 	<label for="keyword">품목</label>

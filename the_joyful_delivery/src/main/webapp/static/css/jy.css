@@ -9,7 +9,7 @@ input[type="number"]::-webkit-inner-spin-button {
 /* delivery_main */
 /* 페이지 타이틀 */
 .title {
-	font-size: var(--text-title);
+	font-size: var(--text-big);
 	margin-top: 135px;
 	text-align: center
 }
@@ -25,14 +25,14 @@ input[type="number"]::-webkit-inner-spin-button {
 	height: 55px;
 	border-radius: 30px;
 	border: 0.5px solid rgba(0, 0, 0, 0.25);;
-	padding: 30px;
+	padding-left: 30px;
 	font-size: 19px;
 	outline: none;
 }
 .input_sear::placeholder {
 	color: var(--place-hol);
 }
-.search_icon {
+.search_icon, .ad_search_icon {
  	position: absolute;
     right: 5%;
     top: 24%;
@@ -45,7 +45,6 @@ input[type="number"]::-webkit-inner-spin-button {
 	color: #024CAA;
 	text-align: center;
 	margin-top: 30px;
-	font-size: 19px; 
 }
 /* 가운데 작은 컨테이너 */
 .sm_container {
@@ -263,5 +262,152 @@ input[type="number"]::-webkit-inner-spin-button {
 	margin-top: 10px;
 }
 
+/* customer_sc */
+.bg_container {
+	width: 1020px;
+	background-color: white;
+	margin: 56px auto 0;
+	border-radius: 25px;
+	position: relative;
+}
+.bg_container p {color: #000; font-size: 18px;}
+.bg_container > ul > li {
+	display: flex;
+	align-items: center;
+	padding: 20px 35px;
+	gap: 30px;
+	border-bottom: 1px solid var(--place-hol);
+}
+.bg_container > ul > li .bor_txt {
+	background-color: var(--sub-color1);
+	border-radius: 10px;
+	padding: 0 10px;
+}
+.bg_container button {
+	border: none;
+	background-color: inherit;
+	margin-left: auto;
+	transition: all 0.3s;
+}
+.bg_container button.on {
+	transform: rotate(180deg);
+}
+.bg_container ul li.answer {
+	padding: 50px 150px;
+	border-bottom: none;
+	display: none;
+}
 
+.bottom_page {
+	background-color: white;
+	margin-top: 20px;
+	margin-bottom: 60px;
+	width: 1500px;
+	border-radius: 20px;
+}
 
+.bottom_page ul {
+	display: flex;
+	height: 80px;
+	column-gap: 15px;
+	justify-content: center;
+	align-items: center;
+}
+
+/* admin 페이지 */
+.ad_search {
+	background-color: #fff;
+	width: 1500px; height: 100px;
+	border-radius: 20px;
+	margin: 90px auto 0;
+	display: flex;
+	align-items: center;
+	padding: 0 40px;
+}
+.ad_search input[type="text"] {
+	width: 670px; height: 60px;
+	border: 1px solid var(--place-hol);
+	border-radius: 20px;
+	padding-left: 20px;
+	font-size: 20px;
+}
+.ad_search .line {
+	width: 2px;
+	height: 100px;
+	background-color: #D9D9D9;
+	margin: 0 40px;
+}
+.ad_search ul {
+	display: flex;
+	gap: 20px;
+}
+.ad_search ul li label {
+	margin-left: 10px;
+}
+/* admin_header */
+.admin_header {
+    width: 100%;
+	display: flex;
+	gap: 130px;
+}
+.admin_header nav ul {
+	display: flex;
+	align-items: center;
+	gap: 85px;
+	height: 100%;
+}
+.admin_header nav ul li a {
+	padding: 20px;
+	cursor: pointer;
+	font-size: 20px;
+}
+.admin_header nav ul li a:hover, .admin_header nav ul li.on a {
+	color: var(--sub-color3);
+}
+/* admin_user */
+
+.adm_table {
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+	margin-top: 10px;
+}
+table {
+	background-color: white;
+	
+}
+td {
+	text-align: center;
+}
+.admin_table {
+	width: 1500px;
+	border-radius: 20px;
+	border-collapse: collapse;
+	border-spacing: 0 15px;
+	margin-top: 15px;
+}
+.adm_th_wrap {
+	border-bottom: 1px solid black;
+}
+.adm_tbody tr {
+	/* TODO: border-bottom으로 선을 그으면
+			 맨 아랫쪽에서 border-radius로
+			 깎인 모서리를 선이 튀어나감
+			 그래서 border-top으로 하면
+			 맨 위 헤드라인의 밑줄을 덮어서 검은색이 회색으로바뀜
+	 */
+	border-bottom: 1px solid rgba(0,0,0,0.2);
+}
+.adm_tbody tr:last-child {
+	border-bottom: none;
+	
+}
+.adm_th_wrap th {
+	padding: 10px 0;
+	
+}
+.adm_tbody td {
+	padding: 10px 0;
+	
+}

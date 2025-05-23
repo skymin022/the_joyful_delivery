@@ -10,14 +10,26 @@
 	<jsp:include page="/layout/link.jsp" />
     <link rel="stylesheet" type="text/css" href="<%= root %>/static/css/reset.css">
 	<link rel="stylesheet" type="text/css" href="<%= root %>/static/css/login.css">
+
 </head>
 <body>
     <div class="wrapper">
         <jsp:include page="/layout/header.jsp" />
         <%-- [Contents] ######################################################### --%>
         <main>
+        	<%-- 로그인 실패 오류 경고창  --%>
+	        <%
+			    String error = request.getParameter("error");
+			    if ("true".equals(error)) {
+			%>
+			<script>
+			    alert("아이디 또는 비밀번호가 일치하지 않습니다.");
+			</script>
+			<%
+			    }
+			%>
 			<div class="container">
-				<form id="form" action="" >
+				<form id="form" action="<%= request.getContextPath() %>/users/login" method="post">
 		            <div class="login-box">
 		                <div class="left-box">
 		                    <div class="sign-up">sign-in</div>
@@ -33,7 +45,7 @@
 		                    </div>
 		                    <div class="password-box">
 		                        <span>비밀번호</span>
-		                        <input type="password" name="password" id="password" placeholder="비밀번호를 입력해주세요">
+		                        <input type="password" name="password" id="password" placeholder="비밀번호를 입력해주세요" autocomplete="new-password">
 		                    </div>
 		                    <div class="checkbox">
 		                        <input type="checkbox" name="rememberId" id="rememberId">
