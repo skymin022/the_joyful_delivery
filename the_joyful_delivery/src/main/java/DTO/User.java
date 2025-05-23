@@ -29,4 +29,20 @@ public class User {
 	private String pNumber;
 	private Date signUpDate;
 	private boolean withdrawal;
+	
+	// 출력 
+	@Override
+	public String toString() {
+	    return "User{" +
+	            "roleIdx=" + roleIdx +
+	            ", id='" + id + '\'' +
+	            ", password='[PROTECTED]'" +
+	            ", username='" + username + '\'' +
+	            ", email='" + email + '\'' +
+	            ", address='" + address + '\'' +
+	            ", birth='" + birth + '\'' +
+	            ", pNumber='" + pNumber + '\'' +
+	            '}';
+	}
+
 }
