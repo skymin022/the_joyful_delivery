@@ -17,7 +17,7 @@
 			<h2 class="title">고객센터</h2>
 			<h3>문의하기</h3>
 			<div class="contact_container il">
-				<form id="form" action="" method="post">
+				<form id="form" action="<%= root %>/users" method="post">
 					<ul class="contact_input_list">
 						<li>
 						 	<label for="pre_pos">문의유형</label>

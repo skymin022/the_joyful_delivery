@@ -80,8 +80,20 @@ public class UserServlet extends HttpServlet {
         } 
         
         // 문의하기 -> 내문의사항
-        
-        
+     // 한글 처리
+        request.setCharacterEncoding("UTF-8");
+
+        // 폼에서 넘어온 값 받기
+        String prePos = request.getParameter("pre_pos");
+        String title = request.getParameter("c_title");
+        String content = request.getParameter("c_content");
+
+        // 넘길 값 저장
+        request.setAttribute("pre_posd", prePos);
+        request.setAttribute("c_title", title);
+        request.setAttribute("c_content", content);
+        // 응답 설정
+        response.setContentType("text/html;charset=UTF-8");
     }
 
 }
