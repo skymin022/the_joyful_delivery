@@ -80,7 +80,7 @@
 				          </li>
 				          <li><span class="line"></span></li>
 				          <li>
-					          <a href="">
+					          <a href="<%=root%>/impossible_product.jsp">
 					          	<span>
 							  		<img src="<%= root %>/static/img/nobox.png" alt="" >
 							  		<p>이용불가<br>상품</p>

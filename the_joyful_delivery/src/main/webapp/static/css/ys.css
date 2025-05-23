@@ -284,7 +284,7 @@ footer .line {
 
 
 .footer_middle {
-	margin-top: 200px;
+	margin-top: 100px;
 	margin-left: 30px;
 }
 
@@ -572,6 +572,8 @@ footer .line {
 
 /* =============================    contact    =============== */
 
+
+
 .contact_container {
 	display: flex;
 	flex-direction: column;
@@ -590,7 +592,7 @@ footer .line {
 	position: relative;
 }
 .contact_title {
-	font-size: var(--text-title);
+	font-size: var(--text-big);
 	margin-top: 135px;
 	text-align: center
 }
@@ -697,7 +699,86 @@ footer .line {
     bottom: 50px;
 }
 
+
+
 /* =============================    contact    =============== */
+
+/* =================    impossible_product    =============== */
+.contact_back {
+	background: var(--main-color);
+}
+
+.imp_title {
+	font-size: var(--text-title);
+}
+
+.imp_main_container {
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+	width: 100%;
+	gap: 50px;
+	margin-top: 100px;
+	margin-bottom: 100px;
+}
+
+.impossible_product {
+	display: flex;
+	flex-direction: column;
+	justify-content: flex-start;
+	width: 600px;
+	background: white;
+	padding: 20px;
+	border-radius: 20px;
+}
+.impossible_product p,
+.other_impossible_list p {
+	font-weight: bold;
+}
+
+.impossible-list {
+	border-radius: 20px;
+	background-color: white;
+    padding: 10px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.impossible_list ul {
+	width: 600px;
+	background-color: white;
+  display: flex;
+  flex-wrap: wrap; /* 여러 줄 허용 */
+  gap: 20px;
+  padding: 10px;
+  border-radius: 20px;
+  margin: 0;
+}
+.impossible_list li {
+  width: calc(33.333% - 13.33px); /* 3열로 나누고 gap 고려 */
+  box-sizing: border-box;
+  text-align: center;
+}
+.impossible_list span {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.impossible_list img {
+	width: 160px;
+	height: 80px;
+}
+.other_impossible_list {
+	background: white;
+	padding: 20px;
+	border-radius: 20px;
+	width: 600px;
+}
+
+
+
+/* =================    impossible_product    =============== */
 
 /* =============================    myqna    =============== */
 

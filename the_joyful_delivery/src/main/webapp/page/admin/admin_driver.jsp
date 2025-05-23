@@ -63,7 +63,7 @@
 					</c:forEach>
 				</tbody>
 			</table>
-			<div class="bottom_page">
+			<div class="adm_bottom_page">
 				<ul>
 					<li>
 						<a href="#"><img src="<%=root%>/static/img/lleft.png" alt=""/></a>
