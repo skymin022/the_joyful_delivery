@@ -14,7 +14,11 @@
 	          <li><span class="line"></span></li>
 	          <li><a href="">제휴문의</a></li>
 	          <li><span class="line"></span></li>
-	          <li><a href="">고객센터</a></li>
+	          <li>
+	          	<a href="<%=root%>/page/serv_center/customer_sc.jsp">
+	          		고객센터
+          		</a>
+       		  </li>
 			</ul>
 		</div>
 	</div>

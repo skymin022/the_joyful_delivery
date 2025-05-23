@@ -22,9 +22,9 @@
 				<nav>
 					<ul>
 						<li><a href="<%=root%>/admin/user">회원관리</a></li>
-						<li><a href="<%=root%>/page/admin/admin_delivery.jsp">택배관리</a></li>
-						<li><a href="<%=root%>/page/admin/admin_inq.jsp">문의</a></li>
-						<li class="on"><a href="<%=root%>/page/admin/admin_driver.jsp">기사관리</a></li>
+						<li><a href="<%=root%>/admin/delivery">택배관리</a></li>
+						<li><a href="<%=root%>/admin/inquiry">문의</a></li>
+						<li class="on"><a href="<%=root%>/admin/driver">기사관리</a></li>
 					</ul>
 				</nav>
 			</div>
@@ -54,44 +54,40 @@
 					</tr>
 				</thead>
 				<tbody class="adm_tbody">
-					<tr class="adm_tbody_tr">
+					<c:forEach var="driver" items="${drivers }">
 					<tr>
-						<td>1</td>
-						<td>김덕배</td>
-						<td>010-1234-1234</td>
+						<td>${driver.idx}</td>
+						<td>${driver.name }</td>
+						<td>${driver.number }</td>
 					</tr>
-					<tr>
-						<td>2</td>
-						<td>김조은</td>
-						<td>010-1234-1234</td>
-					</tr>
-					<tr>
-						<td>3</td>
-						<td>손흥민</td>
-						<td>010-1234-1234</td>
-					</tr>
-					<tr>
-						<td>4</td>
-						<td>이강인</td>
-						<td>010-1234-1234</td>
-					</tr>
-					<tr>
-						<td>5</td>
-						<td>박호날두</td>
-						<td>010-1234-1234</td>
-					</tr>
-					<tr>
-						<td>6</td>
-						<td>윤제라드</td>
-						<td>010-1234-1234</td>
-					</tr>
-					<tr>
-						<td>7</td>
-						<td>김메시</td>
-						<td>010-1234-1234</td>
-					</tr>
+					</c:forEach>
 				</tbody>
 			</table>
+			<div class="adm_bottom_page">
+				<ul>
+					<li>
+						<a href="#"><img src="<%=root%>/static/img/lleft.png" alt=""/></a>
+					</li>
+					<li>
+						<a href="#"><img src="<%=root%>/static/img/left.png" alt=""/></a>
+					</li>
+					<li>
+						<a href="#">1</a>
+					</li>
+					<li>
+						<a href="#">2</a>
+					</li>
+					<li>
+						<a href="#">3</a>
+					</li>
+					<li>
+						<a href="#"><img src="<%=root%>/static/img/right.png" alt=""/></a>
+					</li>
+					<li>
+						<a href="#"><img src="<%=root%>/static/img/rright.png" alt=""/></a>
+					</li>
+				 </ul>
+			 </div>
 		 </div>
 		<%-- [Contents] ######################################################### --%>
 		<jsp:include page="/layout/script.jsp" />

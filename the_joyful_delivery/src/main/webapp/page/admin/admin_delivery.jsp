@@ -30,8 +30,8 @@
 					<ul>
 						<li><a href="<%=root%>/admin/user">회원관리</a></li>
 						<li class="on"><a href="<%=root%>/admin/delivery">택배관리</a></li>
-						<li><a href="<%=root%>/page/admin/admin_inq.jsp">문의</a></li>
-						<li><a href="<%=root%>/page/admin/admin_driver.jsp">기사관리</a></li>
+						<li><a href="<%=root%>/admin/inquiry">문의</a></li>
+						<li><a href="<%=root%>/admin/driver">기사관리</a></li>
 					</ul>
 				</nav>
 			</div>
@@ -86,6 +86,31 @@
 					<%} %>
 				</tbody>
 			</table>
+			<div class="adm_bottom_page">
+				<ul>
+					<li>
+						<a href="#"><img src="<%=root%>/static/img/lleft.png" alt=""/></a>
+					</li>
+					<li>
+						<a href="#"><img src="<%=root%>/static/img/left.png" alt=""/></a>
+					</li>
+					<li>
+						<a href="#">1</a>
+					</li>
+					<li>
+						<a href="#">2</a>
+					</li>
+					<li>
+						<a href="#">3</a>
+					</li>
+					<li>
+						<a href="#"><img src="<%=root%>/static/img/right.png" alt=""/></a>
+					</li>
+					<li>
+						<a href="#"><img src="<%=root%>/static/img/rright.png" alt=""/></a>
+					</li>
+				 </ul>
+			 </div>
 		</div>
 		<%-- [Contents] ######################################################### --%>
 		<jsp:include page="/layout/script.jsp" />
