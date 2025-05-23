@@ -10,6 +10,10 @@
 	<jsp:include page="/layout/link.jsp" />
     <link rel="stylesheet" type="text/css" href="<%= root %>/static/css/reset.css">
 	<link rel="stylesheet" type="text/css" href="<%= root %>/static/css/sign_up.css">
+    <script>
+		window.root = "<%= root %>";
+		window.sign_up = window.sign_up || {};
+    </script>
 </head>
 <body>
     <div class="wrapper">
@@ -17,7 +21,7 @@
         <%-- [Contents] ######################################################### --%>
         <main>
 			<div class="container">
-				<form action="<%=root %>/page/login" onsubmit="return validateSignUpForm()" name="sign_up" method="post">
+				<form action="<%= root %>/users/sign_up" onsubmit="return Userform.validateSignUpForm()" name="sign_up" method="post">
 					<div class="login-box">
 						<div class="sign-up-box">
 							<div class="left-box">
@@ -28,12 +32,14 @@
 								</div>
 							    <div class="right-box">
 									<ul>
+										<li class="message">
+											<span id="idCheckMessage"></span>
+										</li>
 										<li>
 											<span class="tname">아이디</span>
 											<input class="box1" type="text" name="id" id="id" placeholder="아이디를 입력해주세요">
-											<button type="button" class="btn2" onclick="checkDuplicateId()">확인</button>
+											<button id="btnCheckId" type="button" class="btn2">확인</button>
 										</li>
-
 										<li>
 											<span class="tname">비밀번호</span>
 											<input class="box" type="password" name="password" id="password" placeholder="비밀번호를 입력해주세요">
@@ -45,7 +51,7 @@
 										</li>
 										<li>
 											<span class="tname">연락처</span>
-											<input class="box1" type="text" id="s_number" name="phone_number1" placeholder="01012345678" />
+											<input class="box1" type="text" id="p_number" name="p_number" placeholder="01012345678" />
 											<button type="button" id="btnPhone" class="btn2">확인</button>
 										</li>
 										<li>
@@ -69,7 +75,7 @@
 										<li>
 											<span class="tname">주소</span>
 											<input class="box1" type="text" name="address" id="address" placeholder="주소를 입력해주세요" readonly>
-											<button type="button" id="btnPhone" class="btn2" onclick="searchAddress()">주소찾기</button>
+											<button type="button" id="btnAddress" class="btn2" onclick="searchAddress()">주소찾기</button>
 										</li>
 										<li>
 											<span class="tname">생년월일</span>

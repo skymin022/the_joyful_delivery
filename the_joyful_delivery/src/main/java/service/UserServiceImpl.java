@@ -1,5 +1,6 @@
 package service;
 
+import java.sql.SQLException;
 import java.util.List;
 import java.util.Map;
 
@@ -94,10 +95,32 @@ public class UserServiceImpl implements UserService {
         return dbUser != null && dbUser.getPassword().equals(user.getPassword());
     }
 
-	   @Override
-	    public User selectUserById(String id) {
-	        return userDAO.select(id);
+   @Override
+    public User selectUserById(String id) {
+        return userDAO.select(id);
+    }
+
+   @Override
+   public boolean insertUser(User user) {
+	    int result = userDAO.insert(user);
+	    boolean success = result > 0;
+
+	    if (success) {
+	        System.out.println("회원가입 성공");
+	    } else {
+	        System.err.println("회원가입 실패");
 	    }
+
+	    return success;
+	}
+
+	@Override
+	public boolean isUserIdDuplicate(String id) {
+		if (id == null || id.trim().isEmpty()) {
+		        return false; // 빈 값 처리
+		}
+		return userDAO.select(id.trim()) != null;
+	}
 
 
 }

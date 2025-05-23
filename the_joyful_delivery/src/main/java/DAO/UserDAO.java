@@ -44,6 +44,35 @@ public class UserDAO extends BaseDAOImpl<User> {
 	    }
 	    return user;
 	}
+	
+	
+	// 회원가입
+	public int insert(User user) {
+	    int rows = 0;
 
+	    String sql = "INSERT INTO users (role_idx, ID, password, username, email, address, birth, p_number) " +
+	                 "VALUES (1, ?, ?, ?, ?, ?, ?, ?)";
+
+	    try {
+	        psmt = con.prepareStatement(sql);
+	        psmt.setString(1, user.getId());
+	        psmt.setString(2, user.getPassword());
+	        psmt.setString(3, user.getUsername());
+	        psmt.setString(4, user.getEmail());
+	        psmt.setString(5, user.getAddress());
+	        psmt.setString(6, user.getBirth());
+	        psmt.setString(7, user.getPNumber());
+
+	        rows = psmt.executeUpdate();
+
+	        System.out.println("사용자 INSERT 성공: " + rows + "행 삽입됨");
+
+	    } catch (Exception e) {
+	        System.err.println("사용자 INSERT 중 오류 발생");
+	        e.printStackTrace();
+	    }
+
+	    return rows;
+	}
 }
 

@@ -29,7 +29,7 @@
 			    }
 			%>
 			<div class="container">
-				<form id="form" action="<%= request.getContextPath() %>/users/login" method="post">
+				<form id="form" action="<%= root %>/users/login" method="post">
 		            <div class="login-box">
 		                <div class="left-box">
 		                    <div class="sign-up">sign-in</div>
