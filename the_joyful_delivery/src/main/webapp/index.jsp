@@ -93,18 +93,27 @@
     		 </div>
   			<div class="main_right">
   				<div class="main_right_wrap1">
-			      <div class="main_right_top1">
-			        <div><p>택배<br>예약하기</p></div>
-			        <span><img src="<%= root %>/static/img/box_white.png" alt="택배박스" ></span>
-			      </div>
-			      <div class="main_right_top2">
-			        <div><p>택배<br>예약하기</p></div>
-			        <span><img src="<%= root %>/static/img/box_white.png" alt="택배박스" ></span>
-			      </div>
-		        </div>
+  					<div class="main_img_slide">
+					    <div class="main_slide" id="main_slide">
+					      <img src="<%= root %>/static/img/mainslide1.jpg" alt="슬라이드1">
+					      <img src="<%= root %>/static/img/mainslide2.jpg" alt="슬라이드2">
+					      <img src="<%= root %>/static/img/mainslide3.jpg" alt="슬라이드3">
+					    </div>
+					</div>
+  				</div>
+<!-- 			      <div class="main_right_top1"> -->
+<!-- 			        <div><p>택배<br>예약하기</p></div> -->
+<%-- 			        <span><img src="<%= root %>/static/img/box_white.png" alt="택배박스" ></span> --%>
+<!-- 			      </div> -->
+<!-- 			      <div class="main_right_top2"> -->
+<!-- 			        <div><p>택배<br>예약하기</p></div> -->
+<%-- 			        <span><img src="<%= root %>/static/img/box_white.png" alt="택배박스" ></span> --%>
+<!-- 			      </div> -->
+<!-- 		        </div> -->
+		        
 		        <div class="main_right_wrap2">
 			      <div class="main_right_bottom1">
-			        <div><p>택배<br>예약하기</p></div>
+			        <div><p>택배<br>예약</p></div>
 			        <span><img src="<%= root %>/static/img/box_white.png" alt="택배박스" ></span>
 			      </div>
 			      <div class="main_right_bottom2">
