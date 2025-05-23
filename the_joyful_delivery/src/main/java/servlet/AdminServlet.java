@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Map;
 
 import DTO.Delivery;
+import DTO.Driver;
 import DTO.Inquiry;
 import DTO.User;
 import jakarta.servlet.ServletException;
@@ -14,6 +15,8 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import service.DeliveryServiceImpl;
+import service.DriverService;
+import service.DriverServiceImpl;
 import service.InquiryServiceImpl;
 import service.UserService;
 import service.UserServiceImpl;
@@ -26,6 +29,7 @@ public class AdminServlet extends HttpServlet {
     // 직접 만든 DAO 메서드 쓰려고 Impl 타입으로 선언
     private DeliveryServiceImpl delService = new DeliveryServiceImpl();
     private InquiryServiceImpl inqService = new InquiryServiceImpl();
+    private DriverService driverService = new DriverServiceImpl();
     
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String path = request.getPathInfo();
@@ -58,7 +62,6 @@ public class AdminServlet extends HttpServlet {
 					deliveries = delService.regJoinList(column, whereTxt);
 				}
 				
-				
 				request.setAttribute("deliveries", deliveries);
 				request.getRequestDispatcher(page).forward(request, response);
 				break;
@@ -72,6 +75,13 @@ public class AdminServlet extends HttpServlet {
 				request.getRequestDispatcher(page).forward(request, response);
 				break;
 				
+			// 어드민 기사관리 페이지
+			case "/driver":
+				page = "/page/admin/admin_driver.jsp";
+				List<Driver> drivers = driverService.list();
+				
+				request.setAttribute("drivers", drivers);
+				request.getRequestDispatcher(page).forward(request, response);
 			default: break;
 		} 
 	}
