@@ -242,24 +242,6 @@
 </head>
 <body>
 
-  <!-- 헤더 -->
-  <header>
-    <div class="logo-area">
-      <img src="./static/img/logo.png" alt="로고" />
-      <div class="nav-links">
-        <a href="#">배송 조회</a>
-        <a href="#">고객센터</a>
-      </div>
-    </div>
-    <div class="header-right">
-      <img src="./static/img/ico_social_instagram_1.png" alt="인스타그램" />
-      <img src="./static/img/ico_social_youtube.png" alt="유튜브" />
-      <img src="./static/img/ico_social_kakaotalk.png" alt="카카오톡" />
-      <a href="#">로그인</a>
-      <a href="#">회원가입</a>
-    </div>
-  </header>
-
   <!-- 본문 카드 -->
   <div class="card-container">
     <!-- 주문/송장 카드 -->
@@ -309,22 +291,22 @@
       <div class="divider"></div>
       <div class="button-row">
         <button class="button cancel" id="cancel-button">결제 취소</button>
-        <button class="button confirm">결제 하기</button>
+        <button class="button confirm" id="confirm-button">결제 하기</button>
       </div>
     </div>
 
     <!-- 배송 정보 카드 -->
     <div class="card">
       <div class="title-row">
-        <div class="card-title">배송 정보 입력</div>
+        <div class="card-title">배송 정보 확인</div>
       </div>
       <div class="form-group">
         <label for="sender-name">배송자 이름</label>
         <input type="text" id="sender-name" placeholder="이름을 입력하세요">
       </div>
       <div class="form-group">
-        <label for="password">비밀번호</label>
-        <input type="password" id="password" placeholder="비밀번호를 입력하세요">
+        <label for="password">송장 번호</label>
+        <input type="password" id="password" placeholder="ex)송장번호">
       </div>
       <div class="form-group">
         <label for="phone">핸드폰 번호</label>
@@ -346,7 +328,7 @@
         <input type="text" id="address-detail" placeholder="상세 주소 입력">
       </div>
       <div class="divider"></div>
-      <button class="submit-button">배송하기</button>
+      
     </div>
   </div>
 
@@ -357,10 +339,14 @@
     </div>
   </footer>
 
-  <!-- 스크립트: 결제 취소 동작 추가 -->
+  <!-- 스크립트: 결제 버튼 동작 -->
   <script>
     document.getElementById("cancel-button").addEventListener("click", function () {
       window.location.href = "http://127.0.0.1:5500/the_joyful_delivery/src/main/webapp/CheckoutPage.html?type=direct#여기";
+    });
+
+    document.getElementById("confirm-button").addEventListener("click", function () {
+      window.location.href = "http://localhost:8080/the_joyful_delivery/page/delivery/delivery_main.jsp";
     });
   </script>
 </body>
