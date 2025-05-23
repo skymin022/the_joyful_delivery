@@ -271,6 +271,12 @@ input[type="number"]::-webkit-inner-spin-button {
 	position: relative;
 }
 .bg_container p {color: #000; font-size: 18px;}
+.bg_container p + p {
+	width: 590px;
+}
+.bg_container .date1 {
+	color: var(--place-hol);
+}
 .bg_container > ul > li {
 	display: flex;
 	align-items: center;
@@ -302,7 +308,6 @@ input[type="number"]::-webkit-inner-spin-button {
 	background-color: white;
 	margin-top: 20px;
 	margin-bottom: 60px;
-	width: 1500px;
 	border-radius: 20px;
 }
 
@@ -344,6 +349,7 @@ input[type="number"]::-webkit-inner-spin-button {
 .ad_search ul li label {
 	margin-left: 10px;
 }
+
 /* admin_header */
 .admin_header {
     width: 100%;
@@ -364,8 +370,8 @@ input[type="number"]::-webkit-inner-spin-button {
 .admin_header nav ul li a:hover, .admin_header nav ul li.on a {
 	color: var(--sub-color3);
 }
-/* admin_user */
 
+/* admin_user */
 .adm_table {
 	display: flex;
 	flex-direction: column;
@@ -409,5 +415,11 @@ td {
 }
 .adm_tbody td {
 	padding: 10px 0;
-	
+}
+.admin_table + .bottom_page {
+	width: 620px;
+	margin-top: 80px;
+}
+.admin_table + .bottom_page ul {
+	justify-content: space-evenly;
 }

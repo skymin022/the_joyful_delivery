@@ -1,3 +1,4 @@
+
 <%@ include file="/layout/jstl.jsp" %>
 <%@ include file="/layout/common.jsp" %>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
@@ -15,6 +16,7 @@
 		<jsp:include page="/layout/serv_header.jsp" />
 		<div class="container">
 			<h2 class="title">고객센터</h2>
+			<h3>자주 묻는 질문(FAQ)</h3>
 			<!-- TODO: form태그 만들기 -->
 			<div class="input_area">
 				<input class="input_sear" name="keyword" type="text" placeholder="검색어" title="검색 키워드를 입력해주세요."/>

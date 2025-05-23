@@ -36,11 +36,6 @@
 		<%-- [Contents] ######################################################### --%>
 		<form action="">
 			<div class="ad_search">
-				<div style="position: relative;">
-					<input type="text" name="where_txt">
-					<button class="ad_search_icon"><img src="<%=root%>/static/img/search.png" alt="돋보기 이미지"/></button>
-				</div>
-				<div class="line"></div>
 				<ul>     
 					<li><input name="where" id="inquiryNo" value="inquiryNo" type="radio"/><label for="inquiryNo">문의번호</label></li>
 					<li><input name="where" id="userNo"    value="userNo"    type="radio"/><label for="userNo">회원번호</label></li>
@@ -48,6 +43,11 @@
 					<li><input name="where" id="cratedAt"  value="cratedAt"  type="radio"/><label for="cratedAt">문의날짜</label></li>
 					<li><input name="where" id="check"     value="check"     type="radio"/><label for="check">답변여부</label></li>
 				</ul>
+				<div class="line"></div>
+				<div style="position: relative;">
+					<input type="text" name="where_txt">
+					<button class="ad_search_icon"><img src="<%=root%>/static/img/search.png" alt="돋보기 이미지"/></button>
+				</div>
 			</div>		
 		</form>
 		<div class="adm_table">

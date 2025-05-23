@@ -12,10 +12,11 @@ public class DeliveryServiceImpl implements DeliveryService {
 		
 	DeliveryDAO delDao = new DeliveryDAO();
 	
-	public List<Delivery> regJoinList() {
+	@Override
+	public List<Delivery> regJoinList(int pageCut, int offset) {
 		List<Delivery> list = null;
 		try {
-			list = delDao.regJoinList();
+			list = delDao.regJoinList(pageCut, offset);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -87,4 +88,16 @@ public class DeliveryServiceImpl implements DeliveryService {
 		return 0;
 	}
 
+	@Override
+	public int count() {
+		int count = 0;
+		
+		try {
+			count = delDao.count();
+		} catch (Exception e) {
+			System.err.println("전체 행 조회 중 에러..");
+			e.printStackTrace();
+		}
+		return count;
+	}
 }

@@ -1,3 +1,4 @@
+<%@page import="java.text.SimpleDateFormat"%>
 <%@page import="service.RegionServiceImpl"%>
 <%@page import="java.sql.Timestamp"%>
 <%@page import="java.time.ZoneId"%>
@@ -8,7 +9,10 @@
 <%@ include file="/layout/common.jsp" %>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<% List<Delivery> list = (List) request.getAttribute("deliveries"); %>
+<%
+	List<Delivery> list = (List) request.getAttribute("deliveries");
+	int size = (int)request.getAttribute("size");
+%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -39,11 +43,6 @@
 		<%-- [Contents] ######################################################### --%>
 		<form action="<%=root%>/admin/delivery">
 			<div class="ad_search">
-				<div style="position: relative;">
-					<input type="text" name="where_txt">
-					<button class="ad_search_icon"><img src="<%=root%>/static/img/search.png" alt="돋보기 이미지"/></button>
-				</div>
-				<div class="line"></div>
 				<ul>     
 					<li><input name="where" id="delNo"     value="idx"     type="radio"/><label for="delNo">송장번호</label></li>
 					<li><input name="where" id="userNo"    value="user_idx"    type="radio"/><label for="userNo">회원번호</label></li>
@@ -51,6 +50,11 @@
 					<li><input name="where" id="currLoc"   value="r_status"   type="radio"/><label for="currLoc">현재위치</label></li>
 					<li><input name="where" id="status"    value="status"    type="radio"/><label for="status">배송상태</label></li>
 				</ul>
+				<div class="line"></div>
+				<div style="position: relative;">
+					<input type="text" name="where_txt">
+					<button class="ad_search_icon"><img src="<%=root%>/static/img/search.png" alt="돋보기 이미지"/></button>
+				</div>
 			</div>		
 		</form>
 		<div class="adm_table">
@@ -69,8 +73,10 @@
 				</thead>
 				<tbody class="adm_tbody">
 					<%
+						SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 						for(Delivery del : list) {
-							Timestamp addTime = new Timestamp(del.getCreatedAt().getTime());
+							Timestamp _addTime = new Timestamp(del.getCreatedAt().getTime());
+							String addTime = sdf.format(_addTime);
 							// TODO: ORDER BY 로 가장 최근에 위치를 가져와야 함.
 					%>
 					<tr>
@@ -94,15 +100,11 @@
 					<li>
 						<a href="#"><img src="<%=root%>/static/img/left.png" alt=""/></a>
 					</li>
+					<% for(int i = 0; i < size; i++) { %>
 					<li>
-						<a href="#">1</a>
+						<a href="?page=<%=i%>"><%=i+1 %></a>
 					</li>
-					<li>
-						<a href="#">2</a>
-					</li>
-					<li>
-						<a href="#">3</a>
-					</li>
+					<%} %>
 					<li>
 						<a href="#"><img src="<%=root%>/static/img/right.png" alt=""/></a>
 					</li>
