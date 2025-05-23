@@ -14,19 +14,34 @@ import java.io.IOException;
 
 import DTO.User;
 
-@WebServlet("/login")
+@WebServlet("/users/*")
 public class UserServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
 	private UserService userService = new UserServiceImpl();
 	
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
-		response.getWriter().append("Served at: ").append(request.getContextPath());
+		// 로그아웃 
+		String path = request.getPathInfo(); 
+		System.out.println(path);
+		if ("/logout".equals(path)) {
+	        // 기존 세션을 가져오고 무효화
+	        HttpSession session = request.getSession(false); // false: 세션이 없으면 null 반환
+	        if (session != null) {
+	            session.invalidate();
+	        }
+
+	        // 로그아웃 후 메인 페이지로 리다이렉트
+	        response.sendRedirect(request.getContextPath() + "/index.jsp");
+	    }
+	
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        String path = request.getServletPath();  // /login
+        
+		// 로그인 로직 
+		String path = request.getPathInfo();
+		System.out.println(path);
 
         if ("/login".equals(path)) {
             String userId = request.getParameter("id");
@@ -53,6 +68,19 @@ public class UserServlet extends HttpServlet {
                 response.sendRedirect(request.getContextPath() + "/page/login/login.jsp?error=true");
             }
         }
+        
+        //  회원가입 
+        else if ("/signup".equals(path)) {
+            // 회원가입 처리 로직 구현 예정
+        }
+
+        // 
+        else {
+            response.sendError(HttpServletResponse.SC_NOT_FOUND);
+        } 
+        
+        
+        
     }
 
 }
