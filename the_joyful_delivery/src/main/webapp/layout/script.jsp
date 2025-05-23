@@ -11,3 +11,4 @@
 
 <script src="<%= root %>/static/js/hm.js"></script>
 <script src="<%= root %>/static/js/jy.js"></script>
+<script src="<%= root %>/static/js/ys.js"></script>
