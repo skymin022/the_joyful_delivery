@@ -29,7 +29,7 @@
 			    }
 			%>
 			<div class="container">
-				<form id="form" action="<%= request.getContextPath() %>/login" method="post">
+				<form id="form" action="<%= request.getContextPath() %>/users/login" method="post">
 		            <div class="login-box">
 		                <div class="left-box">
 		                    <div class="sign-up">sign-in</div>
@@ -45,7 +45,7 @@
 		                    </div>
 		                    <div class="password-box">
 		                        <span>비밀번호</span>
-		                        <input type="password" name="password" id="password" placeholder="비밀번호를 입력해주세요">
+		                        <input type="password" name="password" id="password" placeholder="비밀번호를 입력해주세요" autocomplete="new-password">
 		                    </div>
 		                    <div class="checkbox">
 		                        <input type="checkbox" name="rememberId" id="rememberId">
