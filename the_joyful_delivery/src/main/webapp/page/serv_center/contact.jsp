@@ -17,7 +17,7 @@
 			<h2 class="title">고객센터</h2>
 			<h3>문의하기</h3>
 			<div class="contact_container il">
-				<form id="form" action="">
+				<form id="form" action="" method="post">
 					<ul class="contact_input_list">
 						<li>
 						 	<label for="pre_pos">문의유형</label>
@@ -46,7 +46,7 @@
 			  	 	</div>
 			  	 	<div class="contact_upload">
 			  	 		<label for="c_upload">파일 업로드</label>
-				  	 	<input class="input_upload" id="c_upload" name="c_upload" type="text" title="업로드파일을 선택해주세요." placeholder="업로드할 파일을 불러와주세요." tabindex="-1" disabled>
+				  	 	<input class="input_upload" id="c_upload" name="c_upload" type="file" title="업로드파일을 선택해주세요." placeholder="업로드할 파일을 불러와주세요." tabindex="-1" disabled>
 						<button class="contact_btn_find" type="button">찾아보기</button>
 			  	 	</div>
 					<button class="contact_prev_btn" type="button" onclick="history.back()">이전</button>
