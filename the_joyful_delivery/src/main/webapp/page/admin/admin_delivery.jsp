@@ -1,3 +1,4 @@
+<%@page import="java.util.Map"%>
 <%@page import="java.text.SimpleDateFormat"%>
 <%@page import="service.RegionServiceImpl"%>
 <%@page import="java.sql.Timestamp"%>
@@ -12,7 +13,34 @@
 <%
 	List<Delivery> list = (List) request.getAttribute("deliveries");
 	int size = (int)request.getAttribute("size");
-%>
+	
+	// 
+	StringBuilder queryWithoutPage = new StringBuilder();
+	Map<String, String[]> paramMap = null;
+	if(request.getParameterMap() != null) {
+	    paramMap = request.getParameterMap();
+	    for (Map.Entry<String, String[]> entry : paramMap.entrySet()) {
+	        String key = entry.getKey();
+	        if (!"page".equals(key)) {  // page 제외
+	            for (String value : entry.getValue()) {
+	                if (queryWithoutPage.length() > 0) {
+	                    queryWithoutPage.append("&");
+	                }
+	                queryWithoutPage.append(key)
+	                                .append("=")
+	                                .append(value);
+	            }
+	        }
+	    }
+	}
+	
+	int currentPage = 0;
+	if(request.getParameter("page") != null) {
+		currentPage = Integer.parseInt(request.getParameter("page"));
+	}
+	
+	String baseUrl = root + "/admin/delivery";
+--%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -93,26 +121,43 @@
 				</tbody>
 			</table>
 			<div class="adm_bottom_page">
-				<ul>
-					<li>
-						<a href="#"><img src="<%=root%>/static/img/lleft.png" alt=""/></a>
-					</li>
-					<li>
-						<a href="#"><img src="<%=root%>/static/img/left.png" alt=""/></a>
-					</li>
-					<% for(int i = 0; i < size; i++) { %>
-					<li>
-						<a href="?page=<%=i%>"><%=i+1 %></a>
-					</li>
-					<%} %>
-					<li>
-						<a href="#"><img src="<%=root%>/static/img/right.png" alt=""/></a>
-					</li>
-					<li>
-						<a href="#"><img src="<%=root%>/static/img/rright.png" alt=""/></a>
-					</li>
-				 </ul>
-			 </div>
+			    <ul>
+			        <li>
+			            <a href="<%= baseUrl + "?" + (queryWithoutPage.length() > 0 ? queryWithoutPage + "&" : "") + "page=0" %>">
+			                <img src="<%=root%>/static/img/lleft.png" alt="처음"/>
+			            </a>
+			        </li>
+			        <li>
+			            <a href="<%= baseUrl + "?" + (queryWithoutPage.length() > 0 ? queryWithoutPage + "&" : "") + "page=" + Math.max(currentPage - 1, 0) %>">
+			                <img src="<%=root%>/static/img/left.png" alt="이전"/>
+			            </a>
+			        </li>
+			        <% for (int i = 0; i < size; i++) {
+			               String pageQuery = "page=" + i;
+			               String fullQuery;
+			           
+			               if (queryWithoutPage.length() > 0) {
+			                   fullQuery = queryWithoutPage.toString() + "&" + pageQuery;
+			               } else {
+			                   fullQuery = pageQuery;
+			               }
+			           
+			               String pageLink = baseUrl + "?" + fullQuery;
+			        %>
+			            <li><a href="<%= pageLink %>"><%= (i + 1) %></a></li>
+			        <% } %>
+			        <li>
+			            <a href="<%= baseUrl + "?" + (queryWithoutPage.length() > 0 ? queryWithoutPage + "&" : "") + "page=" + Math.min(currentPage + 1, size - 1) %>">
+			                <img src="<%=root%>/static/img/right.png" alt="다음"/>
+			            </a>
+			        </li>
+			        <li>
+			            <a href="<%= baseUrl + "?" + (queryWithoutPage.length() > 0 ? queryWithoutPage + "&" : "") + "page=" + (size - 1) %>">
+			                <img src="<%=root%>/static/img/rright.png" alt="마지막"/>
+			            </a>
+			        </li>
+			    </ul>
+			</div>
 		</div>
 		<%-- [Contents] ######################################################### --%>
 		<jsp:include page="/layout/script.jsp" />
