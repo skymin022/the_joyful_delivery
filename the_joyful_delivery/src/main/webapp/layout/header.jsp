@@ -31,7 +31,7 @@
 							<li><a href="<%= root %>/page/login/sign_up.jsp">회원가입</a></li>
 						<% } else { %>
 							<li><a href="<%= root %>/page/user/mypage.jsp">마이페이지</a></li>
-							<li><a href="<%= root %>/logout">로그아웃</a></li>
+							<li><a href="<%= root %>/users/logout">로그아웃</a></li>
 						<% } %>
 					</ul>
 				</div>
