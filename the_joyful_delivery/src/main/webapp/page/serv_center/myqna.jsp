@@ -1,4 +1,4 @@
-<%@ include file="/layout/jstl.jsp" %>
+]<%@ include file="/layout/jstl.jsp" %>
 <%@ include file="/layout/common.jsp" %>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
@@ -15,6 +15,7 @@
 		<jsp:include page="/layout/serv_header.jsp" />
 		<div class="container">
 			<h2 class="title">내 문의 내역</h2>
+			<h3></h3>
 			<!-- TODO: form태그 만들기 -->
 			<div class="bg_container">
 				<ul>

@@ -1,7 +1,6 @@
 package DTO;
 
 
-import com.alohaclass.jdbc.annotation.Column;
 import com.alohaclass.jdbc.annotation.Pk;
 import com.alohaclass.jdbc.annotation.Table;
 
