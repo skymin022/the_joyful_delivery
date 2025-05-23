@@ -42,8 +42,8 @@ public class AdminServlet extends HttpServlet {
 		String whereTxt = "";	// where 절 조건
 		String column = "";		// where 절 컬럼	
 		int currentPage = 0;		// 현재 몇 페이지 
-		int pageCut = 5;		// 한 페이지의 출력 할 행의 수 
-		int size;				// 총 행의 수 담을 변수
+		int pageCut = 1;		// 한 페이지의 출력 할 행의 수 
+		int size = 0;				// 총 행의 수 담을 변수
 		
 		// 요청별 로직 처리
 		switch(path) {
@@ -83,13 +83,18 @@ public class AdminServlet extends HttpServlet {
 					currentPage = Integer.parseInt(request.getParameter("page")); 
 				
 				List<Delivery> deliveries = null;
-				
+				// 필터링 없을 때
 				if(whereTxt == null || column == null) {
-					deliveries = delService.regJoinList(pageCut, currentPage * 5);
-				} else {
-					deliveries = delService.regJoinList(column, whereTxt);
+					deliveries = delService.regJoinList(pageCut, currentPage);
+					size = (int)Math.ceil( delService.joinCount() / pageCut);
+					System.out.println("총 행의 개수 : " + size);
+				} 
+				// 필터링 있을 때
+				else {
+					deliveries = delService.regJoinList(column, whereTxt, pageCut, currentPage);
+					size = (int)Math.ceil( delService.filterJoinCount(column, whereTxt) / pageCut);
+					System.out.println("총 행의 개수 : " + size);
 				}
-				size = (int)Math.ceil( delService.count() / pageCut);
 				
 				page = "/page/admin/admin_delivery.jsp";
 				request.setAttribute("size", size);
