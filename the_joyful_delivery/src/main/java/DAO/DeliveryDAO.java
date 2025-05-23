@@ -12,11 +12,11 @@ public class DeliveryDAO extends BaseDAOImpl<Delivery> {
 	// 전체 행 조회
 	public List<Delivery> regJoinList(int pageCut, int offset) {
 		List<Delivery> list = new ArrayList<>();
-		System.out.println(pageCut + " " + offset);
 		
-		String sql = "SELECT d.*, r.status AS r_status "
+		String sql = "SELECT d.*, r.status AS r_status, dr.name "
 				    + "FROM deliveries d "
 				    + "INNER JOIN region_name r ON d.idx = r.del_idx "
+				    + "INNER JOIN drivers dr ON d.driver_idx = dr.idx "
 				    + "INNER JOIN ( "
 				    + "    SELECT del_idx, MAX(created_at) AS max_created "
 				    + "    FROM region_name "
@@ -42,6 +42,7 @@ public class DeliveryDAO extends BaseDAOImpl<Delivery> {
 				delivery.setCreatedAt(rs.getDate("created_at"));
 				delivery.setStatus(rs.getString("status"));
 				delivery.setRegStatus(rs.getString("r_status"));
+				delivery.setName(rs.getString("name"));
 				
 				list.add(delivery);
 			}
@@ -84,9 +85,10 @@ public class DeliveryDAO extends BaseDAOImpl<Delivery> {
 			column = "r.status";
 		}
 		
-		String sql = "SELECT d.*, r.status AS r_status "
+		String sql = "SELECT d.*, r.status AS r_status, dr.name "
 			    + "FROM deliveries d "
 			    + "INNER JOIN region_name r ON d.idx = r.del_idx "
+			    + "INNER JOIN drivers dr ON d.driver_idx = dr.idx "
 			    + "INNER JOIN ( "
 			    + "    SELECT del_idx, MAX(created_at) AS max_created "
 			    + "    FROM region_name "
@@ -115,6 +117,7 @@ public class DeliveryDAO extends BaseDAOImpl<Delivery> {
 				delivery.setCreatedAt(rs.getDate("created_at"));
 				delivery.setStatus(rs.getString("status"));
 				delivery.setRegStatus(rs.getString("r_status"));
+				delivery.setName(rs.getString("name"));
 				
 				list.add(delivery);
 			}
