@@ -302,11 +302,27 @@ input[type="number"]::-webkit-inner-spin-button {
 	background-color: white;
 	margin-top: 20px;
 	margin-bottom: 60px;
-	width: 1500px;
+	width: 100%;
 	border-radius: 20px;
 }
 
 .bottom_page ul {
+	display: flex;
+	height: 80px;
+	column-gap: 15px;
+	justify-content: center;
+	align-items: center;
+}
+
+.adm_bottom_page {
+	background-color: white;
+	margin-top: 20px;
+	margin-bottom: 60px;
+	width: 1500px;
+	border-radius: 20px;
+}
+
+.adm_bottom_page ul {
 	display: flex;
 	height: 80px;
 	column-gap: 15px;
