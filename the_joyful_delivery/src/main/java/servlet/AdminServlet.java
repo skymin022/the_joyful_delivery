@@ -42,13 +42,13 @@ public class AdminServlet extends HttpServlet {
 		String page = "";				// forward 로 이동할 경로
 		String whereTxt = "";		// where 절 조건
 		String column = "";			// where 절 컬럼	
-		int currentPage = 0;		// 현재 몇 페이지 
+		int currentPage = 1;		// 현재 몇 페이지 
 		if(request.getParameter("page") != null)
 			currentPage = Integer.parseInt(request.getParameter("page"));
 		int pageCut = 5;				// 한 페이지의 출력 할 행의 수 
 		int size = 0;						// 총 행의 수 담을 변수
 		int blockSize = 5;
-		int startPage = (currentPage / blockSize) * blockSize;
+		int startPage = (currentPage - 1) / blockSize * blockSize;
 		int endPage = 0;
 		String paramQuery = "";	// 파라미터 쿼리들
 		
@@ -86,23 +86,21 @@ public class AdminServlet extends HttpServlet {
 			case "/delivery":
 				whereTxt= request.getParameter("where_txt");	// 조건 검색어
 				column = request.getParameter("where");				// 컬럼
-				if(request.getParameter("page") != null) 			// 현재 페이지
-					currentPage = Integer.parseInt(request.getParameter("page"));	 
 				if(request.getParameterMap() != null)				 	// 파라미터 쿼리
 					paramQuery = QueryStringBuilder.execute(request.getParameterMap());
-				System.out.println(paramQuery);
 				
 				List<Delivery> deliveries = null;
 				// 필터링 없을 때
 				if(whereTxt == null || column == null) {
-					deliveries = delService.regJoinList(pageCut, currentPage * 5);
+					deliveries = delService.regJoinList(pageCut, (currentPage-1) * 5);
+					System.out.println(currentPage - 1);
 					size = (int)Math.ceil( delService.joinCount() / pageCut);
 					endPage = Math.min(startPage + blockSize - 1, size - 1);
 					System.out.println("총 행의 개수 : " + size);
 				} 
 				// 필터링 있을 때
 				else {
-					deliveries = delService.regJoinList(column, whereTxt, pageCut, currentPage * 5);
+					deliveries = delService.regJoinList(column, whereTxt, pageCut, (currentPage-1) * 5);
 					size = (int)Math.ceil( delService.filterJoinCount(column, whereTxt) / pageCut);
 					endPage = Math.min(startPage + blockSize - 1, size - 1);
 					System.out.println("총 행의 개수 : " + size);
