@@ -87,17 +87,17 @@
 			<div class="adm_bottom_page">
 			    <ul>
 			        <li>
-			            <a href="<%= baseUrl + "?" + (queryString.length() > 0 ? queryString + "&" : "") + "page=0" %>">
+			            <a href="<%= baseUrl + "?" + (queryString.length() > 0 ? queryString + "&" : "") + "page=1" %>">
 			                <img src="<%=root%>/static/img/lleft.png" alt="처음"/>
 			            </a>
 			        </li>
 			        <li>
-			            <a href="<%= baseUrl + "?" + (queryString.length() > 0 ? queryString + "&" : "") + "page=" + Math.max(currentPage - 1, 0) %>">
+			            <a href="<%= baseUrl + "?" + (queryString.length() > 0 ? queryString + "&" : "") + "page=" + Math.max(currentPage - 1, 1) %>">
 			                <img src="<%=root%>/static/img/left.png" alt="이전"/>
 			            </a>
 			        </li>
-			        <c:forEach var="i" begin="${startPage }" end="${endPage}">
-					    <c:set var="pageQuery" value="page=${i}" />
+			        <c:forEach var="i" begin="${startPage}" end="${endPage}">
+					    <c:set var="pageQuery" value="page=${i+1}" />
 					    <c:choose>
 					        <c:when test="${not empty queryString}">
 					            <c:set var="fullQuery" value="${queryString}&${pageQuery}" />
@@ -107,15 +107,15 @@
 					        </c:otherwise>
 					    </c:choose>
 					    <c:set var="pageLink" value="${baseUrl}?${fullQuery}" />
-					    <li><a style="${i == currentPage ? 'font-weight: bold; color: red;' : ' '}" href="${pageLink}">${i + 1}</a></li>
+					    <li><a style="${i  == currentPage - 1 ? 'font-weight: bold; color: red;' : ' '}" href="${pageLink}">${i + 1}</a></li>
 					</c:forEach>
 			        <li>
-			            <a href="<%= baseUrl + "?" + (queryString.length() > 0 ? queryString + "&" : "") + "page=" + Math.min(currentPage + 1, size - 1) %>">
+			            <a href="<%= baseUrl + "?" + (queryString.length() > 0 ? queryString + "&" : "") + "page=" + Math.min(currentPage + 1, size) %>">
 			                <img src="<%=root%>/static/img/right.png" alt="다음"/>
 			            </a>
 			        </li>
 			        <li>
-			            <a href="<%= baseUrl + "?" + (queryString.length() > 0 ? queryString + "&" : "") + "page=" + (size - 1) %>">
+			            <a href="<%= baseUrl + "?" + (queryString.length() > 0 ? queryString + "&" : "") + "page=" + (size) %>">
 			                <img src="<%=root%>/static/img/rright.png" alt="마지막"/>
 			            </a>
 			        </li>
