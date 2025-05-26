@@ -322,11 +322,6 @@ INSERT INTO region_name (del_idx, created_at, status) VALUES
 (98, '2024-08-06 09:55:00', '서울 중구'),
 (99, '2024-08-07 11:30:00', '광주 서구'),
 (100, '2024-08-08 13:05:00', '부산 해운대구');
-<<<<<<< HEAD
-=======
-
->>>>>>> stash
-
 
 INSERT INTO payment (d_idx, p_card, p_amount)
 VALUES
@@ -380,7 +375,7 @@ VALUES
 (0, 0, 0),
 (1, 1, 1);
 
-INSERT INTO announcement (a_name, a_content)
+INSERT INTO announcement (title, content)
 VALUES
 ('시스템 점검 안내', '내일 오전 2시부터 4시까지 시스템 점검이 진행됩니다.'),
 ('택배 지연 안내', '폭설로 인해 일부 지역의 배송이 지연되고 있습니다.'),

@@ -10,6 +10,10 @@
 	request.setAttribute("baseUrl", baseUrl);			// JSTL 에서 쓸 수 있게
 	int size = (int)request.getAttribute("size");
 	int currentPage = (int)request.getAttribute("currentPage");
+	String where = "";
+	if(request.getParameter("where") != null) {
+		where = request.getParameter("where");
+	}
 %>
 <!DOCTYPE html>
 <html>
@@ -42,15 +46,15 @@
 		<form action="<%=root%>/admin/delivery">
 			<div class="ad_search">
 				<ul>     
-					<li><input name="where" id="delNo"     value="idx"     type="radio"/><label for="delNo">송장번호</label></li>
-					<li><input name="where" id="userNo"    value="user_idx"    type="radio"/><label for="userNo">회원번호</label></li>
-					<li><input name="where" id="createdAt" value="created_at" type="radio"/><label for="createdAt">송장발행일</label></li>
-					<li><input name="where" id="currLoc"   value="r_status"   type="radio"/><label for="currLoc">현재위치</label></li>
-					<li><input name="where" id="status"    value="status"    type="radio"/><label for="status">배송상태</label></li>
+					<li><input name="where" id="delNo"     value="idx"     	  type="radio" <%=where.equals("idx") ? "checked" : ""%>/><label for="delNo">송장번호</label></li>
+					<li><input name="where" id="userNo"    value="user_idx"   type="radio" <%=where.equals("user_idx") ? "checked" : ""%>/><label for="userNo">회원번호</label></li>
+					<li><input name="where" id="createdAt" value="created_at" type="radio" <%=where.equals("created_at") ? "checked" : ""%>/><label for="createdAt">송장발행일</label></li>
+					<li><input name="where" id="currLoc"   value="r_status"   type="radio" <%=where.equals("r_status") ? "checked" : ""%>/><label for="currLoc">현재위치</label></li>
+					<li><input name="where" id="status"    value="status"     type="radio" <%=where.equals("status") ? "checked" : ""%>/><label for="status">배송상태</label></li>
 				</ul>
 				<div class="line"></div>
 				<div style="position: relative;">
-					<input type="text" name="where_txt">
+					<input type="text" name="where_txt" value="<%=request.getParameter("where_txt") != null ? request.getParameter("where_txt") : "" %>">
 					<button class="ad_search_icon"><img src="<%=root%>/static/img/search.png" alt="돋보기 이미지"/></button>
 				</div>
 			</div>		
