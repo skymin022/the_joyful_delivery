@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ include file="/layout/common.jsp" %>
+<%@ include file="/layout/jstl.jsp" %>
 <head>
 	<style type="text/css" >
 		nav {
@@ -16,8 +17,14 @@
 			<div>
 				<ul class="header_top">
 					<li><a href="<%= root %>/search"><img src="<%= root %>/static/img/btn_search.png" width="30" height="30"></a></li>
-					<li><a href="<%= root %>/page/login/login.jsp">로그인</a></li>
-					<li><a href="<%= root %>/page/login//sign_up.jsp">회원가입</a></li>
+					<c:if test="${ empty loginUser }">
+						<li><a href="<%= root %>/page/login/login.jsp">로그인</a></li>
+						<li><a href="<%= root %>/page/login//sign_up.jsp">회원가입</a></li>
+					</c:if>
+					<c:if test="${not empty loginUser }">
+						<li><a href="<%= root %>/users/mypage-jsp">마이페이지</a></li>
+						<li><a href="<%= root %>/users/logout">로그아웃</a></li>
+					</c:if>
 				</ul>
 			</div>    
 			<div class="header_down">
@@ -25,8 +32,10 @@
 					<li><a href="<%= root %>/page/delivery/delivery_main.jsp">배송조회</a></li>
 					<li><a href="<%= root %>/serv_center/faq">자주묻는질문</a></li>
 					<li><a href="<%= root %>/serv_center/announcement">공지사항</a></li>
-					<li><a href="<%= root %>/page/serv_center/contact.jsp">문의하기</a></li>
-					<li><a href="<%= root %>/page/serv_center/myqna.jsp">내문의사항</a></li>
+					<c:if test="${ not empty loginUser}">
+						<li><a href="<%= root %>/page/serv_center/contact.jsp">문의하기</a></li>
+						<li><a href="<%= root %>/page/serv_center/myqna.jsp">내문의사항</a></li>
+	            	</c:if>
 				</ul>
 				<ul class="header_down_2">
 					<li><a href="<%= root%>/search"><img src="<%= root %>/static/img/ico_social_instagram.png" width="35" height="35"></a></li>
@@ -55,15 +64,21 @@
 			<div class="offcanvas">
 	        <div class="offcanvas_top">
 	            <ul>
-					<li><a href="<%= root %>/page/login/login.jsp">로그인</a></li>
-					<li><a href="<%= root %>/page/login//sign_up.jsp">회원가입</a></li>
+	            	<c:if test="${ empty loginUser }">
+						<li><a href="<%= root %>/page/login/login.jsp">로그인</a></li>
+						<li><a href="<%= root %>/page/login//sign_up.jsp">회원가입</a></li>
+					</c:if>
+					<c:if test="${not empty loginUser }">
+						<li><a href="<%= root %>/users/mypage-jsp">마이페이지</a></li>
+						<li><a href="<%= root %>/users/logout">로그아웃</a></li>
+					</c:if>
 				</ul>
 	        </div>
 	        <nav class="offcanvas_nav">
 	            <ul class="offcanvas_ul">
 	                <li><a href="">공지사항</a></li>
 	                <li><a href="<%= root %>/page/delivery/delivery_main.jsp">배송조회하기</a></li>
-	                <li><a href="<%= root %>/page/serv_center/customer_sc.jsp">고객센터</a></li>
+	                <li><a href="<%= root %>/serv_center/faq">고객센터</a></li>
 	                <li><a href="<%= root %>/page/login/login.jsp">문의하기</a></li>
 	            </ul>
 	        </nav>
