@@ -43,7 +43,7 @@ public class UserServiceImpl implements UserService {
 	public PageInfo<User> page(String keyword, List<String> columList) {
 		PageInfo<User> pageInfo = null; 
 		try {
-			Page pageObj = new Page(1, 1);
+			Page pageObj = new Page(1, 10);
 			pageInfo = userDAO.page(pageObj, keyword, columList);
 
 			// role_idx 가 1인 회원만(일반유저) 추출

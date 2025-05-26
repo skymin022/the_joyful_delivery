@@ -311,11 +311,7 @@ input[type="number"]::-webkit-inner-spin-button {
 	background-color: white;
 	margin-top: 20px;
 	margin-bottom: 60px;
-<<<<<<< HEAD
-=======
 	width: 100%;
->>>>>>> stash
-	border-radius: 20px;
 }
 
 .bottom_page ul {
@@ -328,13 +324,8 @@ input[type="number"]::-webkit-inner-spin-button {
 
 .adm_bottom_page {
 	background-color: white;
-<<<<<<< HEAD
 	position: absolute;
 	top: 886px;
-=======
-	margin-top: 80px;
-	margin-bottom: 60px;
->>>>>>> stash
 	width: 1500px;
 	border-radius: 20px;
 }

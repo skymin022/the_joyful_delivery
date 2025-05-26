@@ -1,7 +1,10 @@
 package servlet;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
+
+import com.alohaclass.jdbc.dto.PageInfo;
 
 import DTO.Announcement;
 import DTO.FAQ;
@@ -28,16 +31,39 @@ public class CscServlet extends HttpServlet {
 	
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String path = request.getPathInfo();
+		String root = request.getContextPath();
 		System.out.println("요청된 추가 경로 : " + path);
 		String page = "";
+		String whereTxt = "";
+		List<String> column = null;
 		
 		switch(path) {
 			
 			case "/announcement": 
 				page = "/page/serv_center/announcement.jsp";
-				List<Announcement> annos = annoService.list();
+				List<Announcement> annoList = annoService.list();
 				
-				request.setAttribute("annos", annos);
+				request.setAttribute("list", annoList);
+				request.getRequestDispatcher(page).forward(request, response);
+				break;
+				
+			case "/announcement/search": 
+				whereTxt = request.getParameter("keyword");
+				
+				if(whereTxt == null || whereTxt.isEmpty()) {
+					response.sendRedirect(root + "/serv_center/announcement");
+					return;
+				}
+				
+				column = new ArrayList<>();
+				column.add("title");	// 제목
+				column.add("content");	// 내용
+				
+				PageInfo<Announcement> annoInfo = annoService.page(whereTxt, column);
+				List<Announcement> annoSearchList = annoInfo.getList();
+				
+				page = "/page/serv_center/announcement.jsp";
+				request.setAttribute("list", annoSearchList);
 				request.getRequestDispatcher(page).forward(request, response);
 				break;
 		
@@ -45,8 +71,29 @@ public class CscServlet extends HttpServlet {
 				page = "/page/serv_center/faq.jsp";
 				List<FAQ> faqList = faqService.listDesc();
 				
-				request.setAttribute("faqList", faqList);
+				request.setAttribute("list", faqList);
 				request.getRequestDispatcher(page).forward(request, response);
+				break;
+				
+			case "/faq/search": 
+				whereTxt = request.getParameter("keyword");
+				
+				if(whereTxt == null || whereTxt.isEmpty()) {
+					response.sendRedirect(root + "/serv_center/faq");
+					return;
+				}
+				
+				column = new ArrayList<>();
+				column.add("title");	// 제목
+				column.add("content");	// 내용
+				
+				PageInfo<FAQ> faqInfo = faqService.page(whereTxt, column);
+				List<FAQ> faqSearchList = faqInfo.getList();
+				
+				page = "/page/serv_center/faq.jsp";
+				request.setAttribute("list", faqSearchList);
+				request.getRequestDispatcher(page).forward(request, response);
+				break;
 				
 			default: break;
 		}

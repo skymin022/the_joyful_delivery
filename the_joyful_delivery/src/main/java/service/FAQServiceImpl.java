@@ -1,23 +1,26 @@
 package service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+import com.alohaclass.jdbc.dto.Page;
 import com.alohaclass.jdbc.dto.PageInfo;
 
 import DAO.FAQDAO;
 import DTO.FAQ;
+import DTO.User;
 
 public class FAQServiceImpl implements FAQService {
 		
-	FAQDAO fd = new FAQDAO();
+	FAQDAO faqDao = new FAQDAO();
 	
 	@Override
 	public List<FAQ> listDesc() {
 		List<FAQ> list = null;
 		
 		try {
-			list = fd.listDesc();
+			list = faqDao.listDesc();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -30,7 +33,7 @@ public class FAQServiceImpl implements FAQService {
 		List<FAQ> list = null;
 		
 		try {
-			list = fd.list();
+			list = faqDao.list();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -44,9 +47,16 @@ public class FAQServiceImpl implements FAQService {
 	}
 
 	@Override
-	public PageInfo<FAQ> page() {
-		// TODO Auto-generated method stub
-		return null;
+	public PageInfo<FAQ> page(String keyword, List<String> columList) {
+		PageInfo<FAQ> pageInfo = null; 
+		try {
+			Page pageObj = new Page(1, 10);
+			pageInfo = faqDao.page(pageObj, keyword, columList);
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return pageInfo;
 	}
 
 	@Override
