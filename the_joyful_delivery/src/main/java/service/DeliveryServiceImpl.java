@@ -1,5 +1,6 @@
 package service;
 
+import java.sql.Connection;
 import java.util.List;
 import java.util.Map;
 
@@ -135,5 +136,13 @@ public class DeliveryServiceImpl implements DeliveryService {
 			e.printStackTrace();
 		}
 		return list;
+	}
+
+
+	@Override
+	public Delivery getDeliveryByIdx(int idx) throws Exception {
+		try (Connection con = .getConnection()) {
+            DeliveryDAO dao = new DeliveryDAO(con);
+            return dao.selectDeliveryByIdx(idx);
 	}
 }

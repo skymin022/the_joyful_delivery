@@ -231,6 +231,10 @@ public class DeliveryDAO extends BaseDAOImpl<Delivery> {
 		}
 		return list;
 	}
+	
+	
+	// 배송 현황 
+	
 }	
 
 

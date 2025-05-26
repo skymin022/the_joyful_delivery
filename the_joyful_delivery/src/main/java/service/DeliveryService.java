@@ -26,4 +26,7 @@ public interface DeliveryService {
 	
 	// 회원전용 택배 조회
 	public List<Delivery> listByUserId(String loginId);
+	
+	// 배송현황 조회
+	Delivery getDeliveryByIdx(int idx) throws Exception;
 }
