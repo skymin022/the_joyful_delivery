@@ -135,7 +135,7 @@ public class UserServlet extends HttpServlet {
                 if (roleIdx == 1) {
                     // 일반 사용자 페이지
                 	System.out.println(request.getContextPath());
-                    response.sendRedirect(request.getContextPath() + "/index.jsp");
+                    response.sendRedirect(request.getContextPath() + "/index");
                 } else if (roleIdx == 2) {
                     // 관리자 페이지
                     response.sendRedirect(request.getContextPath() + "/admin/user");

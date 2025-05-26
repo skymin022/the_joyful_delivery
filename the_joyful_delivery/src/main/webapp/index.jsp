@@ -36,7 +36,7 @@
 				    	<p>공지사항</p>
 			    	</div>
 			    	<%
-			    		List<Announcement> list = (List)request.getAttribute("anno_list");
+			    		List<Announcement> list = (List)request.getAttribute("list");
 			    		for(Announcement anno : list) {
 			    	%>
 				    	<div class="anno_line">
