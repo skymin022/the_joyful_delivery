@@ -196,7 +196,7 @@ document.addEventListener("DOMContentLoaded", function() {
 			this.value = this.value.replace(/[^a-zA-Z가-힣]+/g, '');
 		})
 	}
-})
+}) 
 
 $(function() {
 	/* customer_sc 드랍다운 */

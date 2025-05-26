@@ -45,8 +45,8 @@ public class AdminServlet extends HttpServlet {
 		int currentPage = 1;		// 현재 몇 페이지 
 		if(request.getParameter("page") != null)
 			currentPage = Integer.parseInt(request.getParameter("page"));
-		int pageCut = 5;				// 한 페이지의 출력 할 행의 수 
-		int size = 0;						// 총 행의 수 담을 변수
+		int pageCut = 10;				// 한 페이지의 출력 할 행의 수 
+		int size = 0;					// 총 행의 수 담을 변수
 		int blockSize = 5;
 		int startPage = (currentPage - 1) / blockSize * blockSize;
 		int endPage = 0;
@@ -92,23 +92,25 @@ public class AdminServlet extends HttpServlet {
 				List<Delivery> deliveries = null;
 				// 필터링 없을 때
 				if(whereTxt == null || column == null) {
-					deliveries = delService.regJoinList(pageCut, (currentPage-1) * 5);
+					deliveries = delService.regJoinList(pageCut, (currentPage-1) * pageCut);
 					System.out.println(currentPage - 1);
-					size = (int)Math.ceil( delService.joinCount() / pageCut);
+					size = (int)Math.ceil( delService.joinCount() / (double)pageCut);
 					endPage = Math.min(startPage + blockSize - 1, size - 1);
-					System.out.println("총 행의 개수 : " + size);
+					System.out.println("총 페이지 수 : " + size);
 				} 
 				// 필터링 있을 때
 				else {
-					deliveries = delService.regJoinList(column, whereTxt, pageCut, (currentPage-1) * 5);
-					size = (int)Math.ceil( delService.filterJoinCount(column, whereTxt) / pageCut);
+					deliveries = delService.regJoinList(column, whereTxt, pageCut, (currentPage-1) * pageCut);
+					size = (int)Math.ceil( delService.filterJoinCount(column, whereTxt) / (double)pageCut);
 					endPage = Math.min(startPage + blockSize - 1, size - 1);
-					System.out.println("총 행의 개수 : " + size);
+					System.out.println(delService.filterJoinCount(column, whereTxt));
+					System.out.println(Math.ceil(delService.joinCount() / pageCut));
+					System.out.println("총 페이지 수 : " + size);
 				}
 				
 				page = "/page/admin/admin_delivery.jsp";
 				request.setAttribute("paramQuery", paramQuery);		// 파라미터 쿼리 
-		    request.setAttribute("currentPage", currentPage); // 페이지							
+				request.setAttribute("currentPage", currentPage); // 페이지							
 				request.setAttribute("size", size);								// 행 사이즈
 				request.setAttribute("deliveries", deliveries);		// 행 리스트
 				request.setAttribute("startPage", startPage);			// 시작 페이지
