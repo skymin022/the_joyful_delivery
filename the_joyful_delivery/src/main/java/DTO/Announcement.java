@@ -1,9 +1,7 @@
 package DTO;
 
-
 import java.util.Date;
 
-import com.alohaclass.jdbc.annotation.Column;
 import com.alohaclass.jdbc.annotation.Pk;
 import com.alohaclass.jdbc.annotation.Table;
 
@@ -21,8 +19,8 @@ public class Announcement {
 	
 	@Pk
 	private int idx;
-	private String aName;
-	private String aContent;
-	private Date aCreatedAt;
-	private Date aUpdatedAt;
+	private String title;
+	private String content;
+	private Date createdAt;
+	private Date updatedAt;
 }

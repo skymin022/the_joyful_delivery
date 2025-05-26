@@ -17,4 +17,7 @@ public interface AnnouncementService {
 	public Announcement insertKey(Announcement announcement);
 	public int update(Announcement announcement);
 	public int delete(int no);
+	
+	// index 페이지 공지사항 3개
+	public List<Announcement> top3Anno();
 }

@@ -9,7 +9,7 @@
 -- region_name 			- 지역명 테이블
 -- charge 				- 요금 관련 체크 테이블
 -- deliveries 			- 배송 정보 테이블
--- announcement 			- 공지사항 테이블
+-- announcement 		- 공지사항 테이블
 -- drivers 				- 운전자 정보 테이블
 
 -- 계정 : mini_team1		비번 : 123456	    스키마 : delivery
@@ -137,10 +137,10 @@ CREATE TABLE `charge` (
 
 CREATE TABLE `announcement` (
     `idx` BIGINT NOT NULL AUTO_INCREMENT,
-    `a_name` VARCHAR(100) NOT NULL,
-    `a_content` TEXT NOT NULL,
-    `a_created_at` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    `a_updated_at` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    `name` VARCHAR(200) NOT NULL,
+    `content` TEXT NOT NULL,
+    `created_at` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    `updated_at` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
     PRIMARY KEY (`idx`)
 );
 
