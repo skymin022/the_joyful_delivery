@@ -1,7 +1,11 @@
-]<%@ include file="/layout/jstl.jsp" %>
+]<%@page import="org.apache.jasper.tagplugins.jstl.core.ForEach"%>
+<%@page import="DTO.AskDTO"%>
+<%@page import="java.util.List"%>
+<%@ include file="/layout/jstl.jsp" %>
 <%@ include file="/layout/common.jsp" %>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<% List<AskDTO> list = (List)request.getAttribute("askList"); %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -17,106 +21,35 @@
 			<h2 class="title">내 문의 내역</h2>
 			<h3></h3>
 			<!-- TODO: form태그 만들기 -->
-			<div class="bg_container">
+			<div class="qna_container">
 				<ul>
+				<% for(AskDTO askDto : list) {%>
 					<li>
 						<img alt="사람이미지" src="<%=root%>/static/img/person.png">
-						<p class="bor_txt">문의</p>
-						<p>택배를 취소하고 싶어요</p>
+						<p class="bor_txt"><%= askDto.getType() %></p>
+						<p class="ask_title"><%= askDto.getTitle() %></p>
+						<p class="ask_date"><%= askDto.getCreatedAt() %></p>
 						<button type="button" class="dropdown">
 							<img alt="드랍다운 화살표" src="<%=root%>/static/img/downarrow.png">
 						</button>
 					</li>
-					<li class="answer">
-						<p>
-						택배 취소는 기사님께서 수거해가지 않으셨을 경우에만 취소가 가능해요! <br> 접수 하신 후 2일이 되지 않으셨다면 접수하신 점포에서 근무자를 통해 취소가 가능하시며, <br>
-						2일이 경과하신 경우에는 당사 고객센터(1234-5678)로 문의 주시면 됩니다.
-						</p>
+					<li class="answer admin">
+						<p><%= askDto.getContent() %></p>
+						<span class="qna_line"></span>
+						<div class="answer_wrap">
+							<p>관리자 : </p>
+							<p><%= askDto.getCreatedAt() %></p>
+						</div>
+							<% if(askDto.getCheckAnswer() == 1) { %>
+							<p class="admin_answer">
+							<%-- <% ??????.getAnswer() %> --%>
+							</p>
+							<% } else { %>
+								<p class="admin_answer">아직 답변이 등록되지 않았습니다.</p>
+							<% } %>
 					</li>
-					<li>
-						<img alt="사람이미지" src="<%=root%>/static/img/person.png">
-						<p class="bor_txt">문의</p>
-						<p>택배를 취소하고 싶어요</p>
-						<button type="button" class="dropdown">
-							<img alt="드랍다운 화살표" src="<%=root%>/static/img/downarrow.png">
-						</button>
-					</li>
-					<li class="answer">
-						<p>
-						택배 취소는 기사님께서 수거해가지 않으셨을 경우에만 취소가 가능해요! <br> 접수 하신 후 2일이 되지 않으셨다면 접수하신 점포에서 근무자를 통해 취소가 가능하시며, <br>
-						2일이 경과하신 경우에는 당사 고객센터(1234-5678)로 문의 주시면 됩니다.
-						</p>
-					</li>
-					<li>
-						<img alt="사람이미지" src="<%=root%>/static/img/person.png">
-						<p class="bor_txt">문의</p>
-						<p>택배를 취소하고 싶어요</p>
-						<button type="button" class="dropdown">
-							<img alt="드랍다운 화살표" src="<%=root%>/static/img/downarrow.png">
-						</button>
-					</li>
-					<li class="answer">
-						<p>
-						택배 취소는 기사님께서 수거해가지 않으셨을 경우에만 취소가 가능해요! <br> 접수 하신 후 2일이 되지 않으셨다면 접수하신 점포에서 근무자를 통해 취소가 가능하시며, <br>
-						2일이 경과하신 경우에는 당사 고객센터(1234-5678)로 문의 주시면 됩니다.
-						</p>
-					</li>
-					<li>
-						<img alt="사람이미지" src="<%=root%>/static/img/person.png">
-						<p class="bor_txt">문의</p>
-						<p>택배를 취소하고 싶어요</p>
-						<button type="button" class="dropdown">
-							<img alt="드랍다운 화살표" src="<%=root%>/static/img/downarrow.png">
-						</button>
-					</li>
-					<li class="answer">
-						<p>
-						택배 취소는 기사님께서 수거해가지 않으셨을 경우에만 취소가 가능해요! <br> 접수 하신 후 2일이 되지 않으셨다면 접수하신 점포에서 근무자를 통해 취소가 가능하시며, <br>
-						2일이 경과하신 경우에는 당사 고객센터(1234-5678)로 문의 주시면 됩니다.
-						</p>
-					</li>
-					<li>
-						<img alt="사람이미지" src="<%=root%>/static/img/person.png">
-						<p class="bor_txt">문의</p>
-						<p>택배를 취소하고 싶어요</p>
-						<button type="button" class="dropdown">
-							<img alt="드랍다운 화살표" src="<%=root%>/static/img/downarrow.png">
-						</button>
-					</li>
-					<li class="answer">
-						<p>
-						택배 취소는 기사님께서 수거해가지 않으셨을 경우에만 취소가 가능해요! <br> 접수 하신 후 2일이 되지 않으셨다면 접수하신 점포에서 근무자를 통해 취소가 가능하시며, <br>
-						2일이 경과하신 경우에는 당사 고객센터(1234-5678)로 문의 주시면 됩니다.
-						</p>
-					</li>
-					<li>
-						<img alt="사람이미지" src="<%=root%>/static/img/person.png">
-						<p class="bor_txt">문의</p>
-						<p>택배를 취소하고 싶어요</p>
-						<button type="button" class="dropdown">
-							<img alt="드랍다운 화살표" src="<%=root%>/static/img/downarrow.png">
-						</button>
-					</li>
-					<li class="answer">
-						<p>
-						택배 취소는 기사님께서 수거해가지 않으셨을 경우에만 취소가 가능해요! <br> 접수 하신 후 2일이 되지 않으셨다면 접수하신 점포에서 근무자를 통해 취소가 가능하시며, <br>
-						2일이 경과하신 경우에는 당사 고객센터(1234-5678)로 문의 주시면 됩니다.
-						</p>
-					</li>
-					<li>
-						<img alt="사람이미지" src="<%=root%>/static/img/person.png">
-						<p class="bor_txt">문의</p>
-						<p>택배를 취소하고 싶어요</p>
-						<button type="button" class="dropdown">
-							<img alt="드랍다운 화살표" src="<%=root%>/static/img/downarrow.png">
-						</button>
-					</li>
-					<li class="answer">
-						<p>
-						택배 취소는 기사님께서 수거해가지 않으셨을 경우에만 취소가 가능해요! <br> 접수 하신 후 2일이 되지 않으셨다면 접수하신 점포에서 근무자를 통해 취소가 가능하시며, <br>
-						2일이 경과하신 경우에는 당사 고객센터(1234-5678)로 문의 주시면 됩니다.
-						</p>
-					</li>
+			<% } %>
+					
 				</ul>
 				<div class="bottom_page">
 					<ul>

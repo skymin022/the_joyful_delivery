@@ -75,6 +75,8 @@ public class UserDAO extends BaseDAOImpl<User> {
 
 	    return rows;
 	}
+<<<<<<< HEAD
+=======
 	
 	// 마이페이지 
 	
@@ -82,5 +84,6 @@ public class UserDAO extends BaseDAOImpl<User> {
 	
 	
 	
+>>>>>>> refs/heads/main
 }
 

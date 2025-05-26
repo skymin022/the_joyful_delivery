@@ -40,6 +40,7 @@ public class AdminServlet extends HttpServlet {
 		String path = request.getPathInfo();
 		System.out.println("요청된 추가 경로 : " + path);
 		String page = "";				// forward 로 이동할 경로
+<<<<<<< HEAD
 		String whereTxt = "";			// where 절 조건
 		String column = "";				// where 절 컬럼	
 		int currentPage = 1;			// 현재 몇 페이지 
@@ -51,14 +52,32 @@ public class AdminServlet extends HttpServlet {
 		int startPage = (currentPage - 1) / blockSize * blockSize;
 		int endPage = 0;
 		String paramQuery = "";			// 파라미터 쿼리들
+=======
+		String whereTxt = "";		// where 절 조건
+		String column = "";			// where 절 컬럼	
+		int currentPage = 1;		// 현재 몇 페이지 
+		if(request.getParameter("page") != null)
+			currentPage = Integer.parseInt(request.getParameter("page"));
+		int pageCut = 5;				// 한 페이지의 출력 할 행의 수 
+		int size = 0;						// 총 행의 수 담을 변수
+		int blockSize = 5;
+		int startPage = (currentPage - 1) / blockSize * blockSize;
+		int endPage = 0;
+		String paramQuery = "";	// 파라미터 쿼리들
+>>>>>>> stash
 		
 		// 요청별 로직 처리
 		switch(path) {
 			// 어드민 유저관리 페이지
 			case "/user":
+<<<<<<< HEAD
 				whereTxt = request.getParameter("where_txt"); 		// 조건 검색어
 				column = request.getParameter("where"); 			// 컬럼
 				
+=======
+				whereTxt = request.getParameter("where_txt"); // 조건 검색어
+				column = request.getParameter("where"); 			// 컬럼
+>>>>>>> stash
 				if(whereTxt != null || column != null) {
 					System.out.println(column + " LIKE %" + whereTxt + "%");
 					List<String> columnList = new ArrayList<>();
@@ -85,14 +104,20 @@ public class AdminServlet extends HttpServlet {
 			// 어드민 택배관리 페이지
 			case "/delivery":
 				whereTxt= request.getParameter("where_txt");	// 조건 검색어
+<<<<<<< HEAD
 				column = request.getParameter("where");			// 컬럼
 				System.out.println(column + " LIKE %" + whereTxt + "%");
 				if(request.getParameterMap() != null)		    // 파라미터 쿼리
+=======
+				column = request.getParameter("where");				// 컬럼
+				if(request.getParameterMap() != null)				 	// 파라미터 쿼리
+>>>>>>> stash
 					paramQuery = QueryStringBuilder.execute(request.getParameterMap());
 				
 				List<Delivery> deliveries = null;
 				// 필터링 없을 때
 				if(whereTxt == null || column == null) {
+<<<<<<< HEAD
 					deliveries = delService.regJoinList(pageCut, (currentPage-1) * pageCut);
 					size = (int)Math.ceil( delService.joinCount() / (double)pageCut);
 					endPage = Math.min(startPage + blockSize - 1, size - 1);
@@ -104,15 +129,37 @@ public class AdminServlet extends HttpServlet {
 					size = (int)Math.ceil( delService.filterJoinCount(column, whereTxt) / (double)pageCut);
 					endPage = Math.min(startPage + blockSize - 1, size - 1);
 					System.out.println("총 페이지 수 : " + size);
+=======
+					deliveries = delService.regJoinList(pageCut, (currentPage-1) * 5);
+					System.out.println(currentPage - 1);
+					size = (int)Math.ceil( delService.joinCount() / pageCut);
+					endPage = Math.min(startPage + blockSize - 1, size - 1);
+					System.out.println("총 행의 개수 : " + size);
+				} 
+				// 필터링 있을 때
+				else {
+					deliveries = delService.regJoinList(column, whereTxt, pageCut, (currentPage-1) * 5);
+					size = (int)Math.ceil( delService.filterJoinCount(column, whereTxt) / pageCut);
+					endPage = Math.min(startPage + blockSize - 1, size - 1);
+					System.out.println("총 행의 개수 : " + size);
+>>>>>>> stash
 				}
 				
 				page = "/page/admin/admin_delivery.jsp";
 				request.setAttribute("paramQuery", paramQuery);		// 파라미터 쿼리 
+<<<<<<< HEAD
 				request.setAttribute("currentPage", currentPage); 	// 페이지							
 				request.setAttribute("size", size);					// 행 사이즈
 				request.setAttribute("deliveries", deliveries);		// 행 리스트
 				request.setAttribute("startPage", startPage);		// 시작 페이지
 				request.setAttribute("endPage", endPage);			// 종료 페이지
+=======
+		    request.setAttribute("currentPage", currentPage); // 페이지							
+				request.setAttribute("size", size);								// 행 사이즈
+				request.setAttribute("deliveries", deliveries);		// 행 리스트
+				request.setAttribute("startPage", startPage);			// 시작 페이지
+				request.setAttribute("endPage", endPage);					// 종료 페이지
+>>>>>>> stash
 				request.getRequestDispatcher(page).forward(request, response);
 				break;
 				

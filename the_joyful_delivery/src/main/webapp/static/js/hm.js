@@ -98,8 +98,10 @@ const Userform = {
         }
         return true;
     },
+
 	// 마이페이지 
 	
+
 
 	
 }	
