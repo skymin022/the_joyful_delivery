@@ -9,12 +9,14 @@ import DTO.Delivery;
 
 public class DeliveryDAO extends BaseDAOImpl<Delivery> {
 
+	// 전체 행 조회
 	public List<Delivery> regJoinList(int pageCut, int offset) {
 		List<Delivery> list = new ArrayList<>();
 		
-		String sql = "SELECT d.*, r.status AS r_status "
+		String sql = "SELECT d.*, r.status AS r_status, dr.name "
 				    + "FROM deliveries d "
 				    + "INNER JOIN region_name r ON d.idx = r.del_idx "
+				    + "INNER JOIN drivers dr ON d.driver_idx = dr.idx "
 				    + "INNER JOIN ( "
 				    + "    SELECT del_idx, MAX(created_at) AS max_created "
 				    + "    FROM region_name "
@@ -40,6 +42,7 @@ public class DeliveryDAO extends BaseDAOImpl<Delivery> {
 				delivery.setCreatedAt(rs.getDate("created_at"));
 				delivery.setStatus(rs.getString("status"));
 				delivery.setRegStatus(rs.getString("r_status"));
+				delivery.setName(rs.getString("name"));
 				
 				list.add(delivery);
 			}
@@ -48,8 +51,32 @@ public class DeliveryDAO extends BaseDAOImpl<Delivery> {
 		}
 		return list;
 	}
+
+	// 필터링 없을 때 카운트
+	public int joinCount() {
+			
+			int count = 0;
+			String sql = "SELECT COUNT(*) "
+				    + "FROM deliveries d "
+				    + "INNER JOIN region_name r ON d.idx = r.del_idx "
+				    + "INNER JOIN ( "
+				    + "    SELECT del_idx, MAX(created_at) AS max_created "
+				    + "    FROM region_name "
+				    + "    GROUP BY del_idx "
+				    + ") AS latest ON r.del_idx = latest.del_idx AND r.created_at = latest.max_created";
+			try {
+				psmt = con.prepareStatement(sql);
+				rs = psmt.executeQuery();
+				if(rs.next()) count = rs.getInt(1);
+			} catch (Exception e) {
+				System.err.println("택배 - 로그 조인 카운트 조회 중 에러...");
+				e.printStackTrace();
+			}
+			return count;
+	}
 	
-	public List<Delivery> regJoinList(String column, String value) {
+	// 필터링 검색
+	public List<Delivery> regJoinList(String column, String value, int pageCut, int offset) {
 		List<Delivery> list = new ArrayList<>();
 		System.out.println("요청 조건 : " + column + " = " + value);
 		String chooseColumn = "d.";
@@ -57,17 +84,24 @@ public class DeliveryDAO extends BaseDAOImpl<Delivery> {
 			chooseColumn = "";
 			column = "r.status";
 		}
-		String sql = "SELECT *, r.status r_status FROM deliveries d INNER JOIN "
-				   + "region_name r ON d.idx = r.del_idx "
-				   + "WHERE r.created_at IN "
-				   + "(SELECT MAX(created_at) FROM region_name GROUP BY del_idx) "
-				   + "AND " +chooseColumn+column+  " LIKE ?";
 		
-		System.out.println(sql);
+		String sql = "SELECT d.*, r.status AS r_status, dr.name "
+			    + "FROM deliveries d "
+			    + "INNER JOIN region_name r ON d.idx = r.del_idx "
+			    + "INNER JOIN drivers dr ON d.driver_idx = dr.idx "
+			    + "INNER JOIN ( "
+			    + "    SELECT del_idx, MAX(created_at) AS max_created "
+			    + "    FROM region_name "
+			    + "    GROUP BY del_idx "
+			    + ") AS latest ON r.del_idx = latest.del_idx AND r.created_at = latest.max_created "
+			    + "WHERE " +chooseColumn+column+ " LIKE ? "
+			    + "LIMIT ? OFFSET ?";
 		
 		try {
 			psmt = con.prepareStatement(sql);
 			psmt.setString(1, "%" + value + "%");
+			psmt.setInt(2, pageCut);
+			psmt.setInt(3, offset);
 			
 			rs = psmt.executeQuery();
 		
@@ -83,6 +117,7 @@ public class DeliveryDAO extends BaseDAOImpl<Delivery> {
 				delivery.setCreatedAt(rs.getDate("created_at"));
 				delivery.setStatus(rs.getString("status"));
 				delivery.setRegStatus(rs.getString("r_status"));
+				delivery.setName(rs.getString("name"));
 				
 				list.add(delivery);
 			}
@@ -90,5 +125,38 @@ public class DeliveryDAO extends BaseDAOImpl<Delivery> {
 			e.printStackTrace();
 		}
 		return list;
+	}
+	
+	// 필터링 했을 때 카운트
+	public int filterJoinCount(String column, String value) {
+		int count = 0;
+		
+		String chooseColumn = "d.";
+		if(column.equals("r_status")) {
+			chooseColumn = "";
+			column = "r.status";
+		}
+		
+		String sql = "SELECT COUNT(*) "
+			    + "FROM deliveries d "
+			    + "INNER JOIN region_name r ON d.idx = r.del_idx "
+			    + "INNER JOIN ( "
+			    + "    SELECT del_idx, MAX(created_at) AS max_created "
+			    + "    FROM region_name "
+			    + "    GROUP BY del_idx "
+			    + ") AS latest ON r.del_idx = latest.del_idx AND r.created_at = latest.max_created "
+			    + "WHERE " +chooseColumn+column+ " LIKE ? ";
+		
+		try {
+			psmt = con.prepareStatement(sql);
+			psmt.setString(1, "%" + value + "%");
+			rs = psmt.executeQuery();
+			
+			if(rs.next()) count = rs.getInt(1);
+		} catch (Exception e) {
+			System.err.println("택배 - 로그 조인, 필터 카운트 조회 중 에러...");
+			e.printStackTrace();
+		}
+		return count;
 	}
 }
