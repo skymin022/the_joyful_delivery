@@ -1,13 +1,17 @@
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <!DOCTYPE html>
 <html lang="ko">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>결제 페이지</title>
-  <link rel="stylesheet" href="./static/css/reset.css" />
-  <link rel="stylesheet" href="./static/css/checkout.css" />
+  <link rel="stylesheet" href="${pageContext.request.contextPath}/static/css/reset.css" />
+  <link rel="stylesheet" href="${pageContext.request.contextPath}/static/css/checkout.css" />
   <style>
+    html, body {
+      height: 100%;
+      margin: 0;
+    }
     body {
       font-family: 'Arial', sans-serif;
       background-color: #EFF6FF;
@@ -16,201 +20,141 @@
       flex-direction: column;
       min-height: 100vh;
     }
-
     header {
       background-color: #fff;
-      padding: 10px 20px;
+      padding: 10px 30px;
       display: flex;
       justify-content: space-between;
       align-items: center;
       border-bottom: 1px solid #ddd;
+      height: 120px;
       box-sizing: border-box;
     }
-
     .logo-area {
       display: flex;
       align-items: center;
       gap: 20px;
     }
-
     .logo-area img {
       height: 40px;
     }
-
     .nav-links {
       font-size: 14px;
       color: #333;
     }
-
     .nav-links a {
       margin: 0 10px;
       text-decoration: none;
       color: #333;
     }
-
     .header-right {
       display: flex;
       align-items: center;
       gap: 15px;
     }
-
     .header-right img {
       width: 24px;
       height: 24px;
     }
-
     .header-right a {
       font-size: 14px;
       text-decoration: none;
       color: #333;
       margin-left: 10px;
     }
-
+    main {
+      flex: 1;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background-color: #EFF6FF;
+      box-sizing: border-box;
+      padding: 60px;
+    }
     .card-container {
       display: flex;
       justify-content: center;
+      align-items: center;
       flex-wrap: wrap;
-      padding: 40px 20px;
       gap: 30px;
     }
-
     .card {
       width: 300px;
       background-color: #ffffff;
       border-radius: 12px;
-      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
       padding: 20px;
       box-sizing: border-box;
-      border: 2px solid #65FB13;
     }
-
     .card small {
       font-size: 12px;
       color: #888;
       display: block;
       margin-bottom: 4px;
     }
-
-    .card-title {
-      font-size: 16px;
-      font-weight: bold;
-      margin-bottom: 5px;
+    .title-row {
+      display: flex;
+      gap: 25px;
+      align-items: center;
     }
-
+    .card-title {
+      font-size: 1.1em;
+      font-weight: bold;
+    }
     .price-highlight {
-      color: #ff6666;
+      font-size: 1em;
+      color: #e53935;
       font-weight: bold;
       margin-left: 30px;
     }
-
-    .title-row {
+    .truck-row {
       display: flex;
-      justify-content: space-between;
-      align-items: center;
-      gap: 25px;
+      align-items: flex-start;
+      gap: 14px;
+      margin-top: 10px;
     }
-
+    .icon {
+      width: 50px;
+      height: 50px;
+    }
     .price-list {
       font-size: 14px;
-      margin-bottom: 20px;
+      flex: 1;
     }
-
     .price-list .row {
       display: flex;
       justify-content: space-between;
       margin: 6px 0;
     }
-
+    .sub-note span:last-child {
+      color: #aaa;
+    }
+    .price-list .sub-note {
+      font-size: 13px;
+      color: #aaa;
+      padding-left: 18px;
+    }
     .divider {
       border-top: 1px solid #eee;
       margin: 20px 0;
     }
-
-    .button-row {
-      display: flex;
-      justify-content: space-between;
-      gap: 12px;
-      margin-top: 10px;
-    }
-
     .button {
-      flex: 1;
-      padding: 10px 0;
+      display: block;
+      width: 100px;
+      margin: 0 auto;
+      padding: 8px 0;
+      background-color: #ffc658;
+      color: white;
       border: none;
       border-radius: 20px;
       font-weight: bold;
-      cursor: pointer;
       text-align: center;
-      background-color: #ffc658;
-      color: white;
+      text-decoration: none;
+      cursor: pointer;
     }
-
     .button:hover {
       background-color: #ffb737;
     }
-
-    .form-group {
-      display: flex;
-      flex-direction: column;
-      margin-bottom: 15px;
-    }
-
-    .form-group label {
-      margin-bottom: 6px;
-      font-weight: bold;
-    }
-
-    .form-group input {
-      padding: 8px;
-      border: 1px solid #ccc;
-      border-radius: 6px;
-      font-size: 14px;
-    }
-
-    .submit-button {
-      width: 100%;
-      margin-top: 10px;
-      padding: 10px 0;
-      border: none;
-      border-radius: 20px;
-      font-weight: bold;
-      cursor: pointer;
-      background-color: #ffc658;
-      color: white;
-      text-align: center;
-    }
-
-    .submit-button:hover {
-      background-color: #ffb737;
-    }
-
-    .item-card {
-      border: none;
-      background-color: transparent;
-      box-shadow: none;
-    }
-
-    .item-title {
-      font-weight: bold;
-      font-size: 16px;
-      margin: 10px 0;
-    }
-
-    .item-image {
-      width: 100%;
-      height: 80px;
-      margin: 10px 0;
-      border-radius: 12px;
-      border: 1px solid #ccc;
-      background-image:
-        linear-gradient(45deg, #eee 25%, transparent 25%),
-        linear-gradient(-45deg, #eee 25%, transparent 25%),
-        linear-gradient(45deg, transparent 75%, #eee 75%),
-        linear-gradient(-45deg, transparent 75%, #eee 75%);
-      background-size: 20px 20px;
-      background-position: 0 0, 0 10px, 10px -10px, -10px 0px;
-    }
-
     footer {
       background-color: #F5F6FF;
       width: 100vw;
@@ -227,12 +171,10 @@
       border-top: 1px solid #ddd;
       flex-shrink: 0;
     }
-
     .footer-content {
       max-width: 1200px;
       margin: 0 auto;
     }
-
     .footer-logo {
       max-width: 70%;
       height: auto;
@@ -242,100 +184,90 @@
   </style>
 </head>
 <body>
-  <div class="card-container">
-    <!-- 주문/송장 카드 -->
-    <div class="card item-card">
-      <div class="form-group">
-        <label for="order-number">주문 번호</label>
-        <input type="text" id="order-number" value="<%= request.getAttribute("orderNumber") != null ? request.getAttribute("orderNumber") : "" %>" />
+  <!-- 헤더 -->
+  <header>
+    <div class="logo-area">
+      <img src="${pageContext.request.contextPath}/static/img/logo.png" alt="로고" />
+      <div class="nav-links">
+        <a href="#">배송 조회</a>
+        <a href="#">고객센터</a>
       </div>
-      <div class="form-group">
-        <label for="tracking-number">송장 번호</label>
-        <input type="text" id="tracking-number" value="<%= request.getAttribute("trackingNumber") != null ? request.getAttribute("trackingNumber") : "" %>" />
-      </div>
-      <h4 class="item-title">물품 목록</h4>
-      <div class="item-image"></div>
-      <div class="item-image"></div>
     </div>
+    <div class="header-right">
+      <img src="${pageContext.request.contextPath}/static/img/ico_social_instagram_1.png" alt="인스타그램" />
+      <img src="${pageContext.request.contextPath}/static/img/ico_social_youtube.png" alt="유튜브" />
+      <img src="${pageContext.request.contextPath}/static/img/ico_social_kakaotalk.png" alt="카카오톡" />
+      <a href="#">로그인</a>
+      <a href="#">회원가입</a>
+    </div>
+  </header>
 
-    <!-- 결제 카드 -->
-    <div class="card">
-      <div class="title-row">
-        <div class="card-title">총 결제 금액</div>
-        <div class="price-highlight">12000원</div>
-      </div>
-      <div class="truck-row">
-        <div class="price-list">
-          <div class="row"><span>· 발송 건수</span><span>2건</span></div>
-          <div class="row"><span>· 기본운임</span><span>5500원</span></div>
-          <div class="row"><span>· 배달 수수료</span><span>1000원</span></div>
-          <div class="row"><span>· 최종 운임</span><span>12000원</span></div>
+  <!-- 본문 -->
+  <main>
+    <div class="card-container">
+      <!-- 카드 1 -->
+      <div class="card">
+        <small>동일권 구분 없는 균일 가</small>
+        <div class="title-row">
+          <div class="card-title">직접 방문 택배</div>
+          <div class="price-highlight">↓ 2800원 부터</div>
         </div>
-      </div>
-      <div class="divider"></div>
-      <form action="/the_joyful_delivery/page/delivery/delivery_main.jsp" method="post">
-        <div class="payment-method">
-          <p style="font-weight: bold; margin-bottom: 10px;">
-            <span style="color: green; font-weight: bold;">✔</span> 카드결제
-          </p>
-          <div class="form-group">
-            <input type="text" name="cardNumber" placeholder="카드번호 입력해주세요" required />
+        <div class="truck-row">
+          <img class="icon" src="${pageContext.request.contextPath}/static/img/image26.png" alt="트럭 이미지" />
+          <div class="price-list">
+            <div class="row"><span>· 500g이하</span><span>2800원</span></div>
+            <div class="row"><span>· 5kg이하</span><span>3600원</span></div>
+            <div class="row sub-note"><span>↳ 점포수령</span><span>2200원</span></div>
           </div>
-          <div class="form-group">
-            <input type="text" name="payerName" placeholder="입금자명(미 입력시 주문자 명)" />
-          </div>
-          <p style="font-size: 12px; color: red; margin-top: 5px;">
-            주문 후 3시간 동안 미지급 시 자동 취소 됩니다.
-          </p>
         </div>
         <div class="divider"></div>
-        <div class="button-row">
-          <button type="button" class="button cancel" onclick="location.href='CheckoutPage.jsp?type=direct#여기'">결제 취소</button>
-          <button type="submit" class="button confirm">결제 하기</button>
-        </div>
-      </form>
-    </div>
+        <a href="${pageContext.request.contextPath}/paypage.jsp" class="button">선택 하기</a>
+      </div>
 
-    <!-- 배송 정보 카드 -->
-    <div class="card">
-      <div class="title-row">
-        <div class="card-title">배송 정보 확인</div>
+      <!-- 카드 2 -->
+      <div class="card">
+        <small>기사 방문 택배</small>
+        <div class="title-row">
+          <div class="card-title">다량 택배 배송</div>
+          <div class="price-highlight">↓ 4300원 부터</div>
+        </div>
+        <div class="truck-row">
+          <img class="icon" src="${pageContext.request.contextPath}/static/img/image25.png" alt="트럭 이미지" />
+          <div class="price-list">
+            <div class="row"><span>· 80cm이하</span><span>4300원</span></div>
+            <div class="row"><span>·140cm이하</span><span>4800원</span></div>
+            <div class="row"><span>·160cm이하</span><span>5800원</span></div>
+          </div>
+        </div>
+        <div class="divider"></div>
+        <a href="${pageContext.request.contextPath}/paypage.jsp" class="button">선택 하기</a>
       </div>
-      <div class="form-group">
-        <label for="sender-name">배송자 이름</label>
-        <input type="text" id="sender-name" name="senderName" placeholder="이름을 입력하세요">
+
+      <!-- 카드 3 -->
+      <div class="card">
+        <small>5박스 이상 접수 가능</small>
+        <div class="title-row">
+          <div class="card-title">다량 택배 배송</div>
+          <div class="price-highlight">↓ 2700원 부터</div>
+        </div>
+        <div class="truck-row">
+          <img class="icon" src="${pageContext.request.contextPath}/static/img/image23.png" alt="트럭 이미지" />
+          <div class="price-list">
+            <div class="row"><span>· 60cm이하</span><span>2700원</span></div>
+            <div class="row"><span>·120cm이하</span><span>3400원</span></div>
+            <div class="row"><span>·180cm이하</span><span>3600원</span></div>
+          </div>
+        </div>
+        <div class="divider"></div>
+        <a href="${pageContext.request.contextPath}/paypage.jsp" class="button">선택 하기</a>
       </div>
-      <div class="form-group">
-        <label for="password">송장 번호</label>
-        <input type="password" id="password" name="trackingPwd" placeholder="ex)송장번호">
-      </div>
-      <div class="form-group">
-        <label for="phone">핸드폰 번호</label>
-        <input type="tel" id="phone" name="phone" placeholder="010-0000-0000">
-      </div>
-      <div class="form-group">
-        <label for="email">E-mail</label>
-        <input type="email" id="email" name="email" placeholder="이메일 주소 입력">
-      </div>
-      <div class="form-group">
-        <label for="receiver-name">받는 분 이름</label>
-        <input type="text" id="receiver-name" name="receiverName" placeholder="이름 입력">
-      </div>
-      <div class="form-group">
-        <label for="address">받는 분 주소</label>
-        <input type="text" id="address" name="address" placeholder="주소 입력">
-      </div>
-      <div class="form-group">
-        <input type="text" id="address-detail" name="addressDetail" placeholder="상세 주소 입력">
-      </div>
-      <div class="divider"></div>
     </div>
-  </div>
+  </main>
 
   <!-- 푸터 -->
   <footer>
     <div class="footer-content">
-      <img src="./static/img/footer.png" alt="푸터 로고" class="footer-logo" />
+      <img src="${pageContext.request.contextPath}/static/img/footer.png" alt="푸터 로고" class="footer-logo" />
     </div>
   </footer>
 </body>
