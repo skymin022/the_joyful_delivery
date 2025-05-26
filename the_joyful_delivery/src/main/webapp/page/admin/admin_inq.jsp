@@ -73,6 +73,15 @@
 					</tr>
 					<% } %>
 				</tbody>
+<%-- 				<c:forEach var="inquiry" items="inquiries"> --%>
+<!-- 					<tr> -->
+<%-- 						<td>${inquiry.idx }</td> --%>
+<%-- 						<td>${inquiry.userNo }</td> --%>
+<%-- 						<td>${inquiry.content }</td> --%>
+<%-- 						<td>${inquiry.createdAt }</td> --%>
+<%-- 						<td>${inquiry.checkAnswer }</td> --%>
+<!-- 					</tr> -->
+<%-- 				</c:forEach> --%>
 			</table>
 			<div class="adm_bottom_page">
 				<ul>
