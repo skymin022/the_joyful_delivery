@@ -78,7 +78,6 @@ public class DeliveryDAO extends BaseDAOImpl<Delivery> {
 	// 필터링 검색
 	public List<Delivery> regJoinList(String column, String value, int pageCut, int offset) {
 		List<Delivery> list = new ArrayList<>();
-		System.out.println("요청 조건 : " + column + " = " + value);
 		String chooseColumn = "d.";
 		if(column.equals("r_status")) {
 			chooseColumn = "";
