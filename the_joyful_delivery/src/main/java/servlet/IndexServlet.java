@@ -24,7 +24,7 @@ public class IndexServlet extends HttpServlet {
 		
 		// 공지사항 영역
 		List<Announcement> annoList = annService.top3Anno();
-		request.setAttribute("anno_list", annoList);
+		request.setAttribute("list", annoList);
 		request.getRequestDispatcher("/index.jsp").forward(request, response);
 	}
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
