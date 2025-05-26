@@ -25,5 +25,5 @@ public interface DeliveryService {
 	public int filterJoinCount(String column, String value);
 	
 	// 회원전용 택배 조회
-	public List<Map<String, Object>> getDeliveryDetailsByUserId(String loginId);
+	public List<Delivery> listByUserId(String loginId);
 }

@@ -8,6 +8,7 @@ import java.util.Map;
 import com.google.gson.Gson;
 
 import DAO.UserDAO;
+import DTO.Delivery;
 import DTO.User;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
@@ -76,7 +77,8 @@ public class UserServlet extends HttpServlet {
 //		}
 		else if ("/mypage-jsp".equals(path)) {
 		    HttpSession session = request.getSession(false);
-
+		    // 로그인 체크
+		    // TODO: 로그인 필터로 전환
 		    if (session == null || session.getAttribute("loginId") == null) {
 		        response.sendRedirect(request.getContextPath() + "/page/login/login.jsp");
 		        return;
@@ -85,7 +87,8 @@ public class UserServlet extends HttpServlet {
 		    String loginId = (String) session.getAttribute("loginId");
 		    System.out.println("[/mypage-jsp] JSP용 배송 목록 조회. 로그인 아이디: " + loginId);
 
-		    List<Map<String, Object>> deliveries = deliveryService.getDeliveryDetailsByUserId(loginId);
+		    // 배송내역 조회
+		    List<Delivery> deliveries = deliveryService.listByUserId(loginId);
 
 		    request.setAttribute("deliveries", deliveries);
 		    request.getRequestDispatcher("/page/login/login_list.jsp").forward(request, response);
