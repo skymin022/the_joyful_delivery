@@ -98,6 +98,8 @@ const Userform = {
         }
         return true;
     },
+	// 마이페이지 
+	
 
 	
 }	
@@ -301,120 +303,157 @@ document.addEventListener("DOMContentLoaded", function () {
 
 
         // 로그인 후 목록 확인 ----------------------------------------------------------------------------------
-    document.querySelectorAll('.tap .tab').forEach(tab => {
-        tab.addEventListener('click', function () {     // 클릭 시
-        document.querySelectorAll('.tap .tab').forEach(t => t.classList.remove('active')); // active 부여, 다른 하나 active 제거
-        this.classList.add('active');
-        });
-    });
+//    document.querySelectorAll('.tap .tab').forEach(tab => {
+//        tab.addEventListener('click', function () {     // 클릭 시
+//        document.querySelectorAll('.tap .tab').forEach(t => t.classList.remove('active')); // active 부여, 다른 하나 active 제거
+//        this.classList.add('active');
+//        });
+//    });
+//
+//	// 로그인 후 목록 확인 (검색어, 필터 적용)
+//	const tabPart1 = document.querySelector(".tab.part1");
+//	const tabPart2 = document.querySelector(".tab.part2");
+//	const rows = document.querySelectorAll(".row-box");
+//	const searchInput = document.getElementById("searchInput");
+//	const sendOption = document.getElementById("sendOption");
+//	const mid = document.querySelector(".mid");
+//
+//	let paymentFilter = null;
+//	let deliveryStatusFilter = null;
+//
+//	if (tabPart1 && tabPart2 && rows.length > 0 && searchInput && sendOption && mid) {
+//
+//	    let currentTabFilter = status => status === "배송 전" || status === "배송 중"; // 기본 필터
+//
+//	    function activateTab(selectedTab) {
+//	        document.querySelectorAll(".tab").forEach(tab => tab.classList.remove("active"));
+//	        selectedTab.classList.add("active");
+//
+//	        if (selectedTab === tabPart1) {
+//	            currentTabFilter = status => status === "배송 전" || status === "배송 중";
+//	        } else if (selectedTab === tabPart2) {
+//	            currentTabFilter = status => status === "배송 완료";
+//	        }
+//
+//	        filterRows();
+//	    }
+//
+//	    function filterRows() {
+//	        const keyword = searchInput.value.trim().toLowerCase();
+//	        const option = sendOption.value;
+//
+//	        rows.forEach(row => {
+//	            const cells = row.querySelectorAll(".row-content > div");
+//	            const status = cells[5].textContent.trim();
+//	            const payment = cells[4].textContent.trim();
+//
+//	            // 탭 필터
+//	            if (!currentTabFilter(status)) {
+//	                row.style.display = "none";
+//	                return;
+//	            }
+//
+//	            // mid 영역 필터 (선불 / 후불 / 배송 완료)
+//	            if (paymentFilter && payment !== paymentFilter) {
+//	                row.style.display = "none";
+//	                return;
+//	            }
+//	            if (deliveryStatusFilter && status !== deliveryStatusFilter) {
+//	                row.style.display = "none";
+//	                return;
+//	            }
+//
+//	            let textToCheck = "";
+//
+//	            switch(option) {
+//	                case "delivery":
+//	                    textToCheck = cells[1].textContent.trim().toLowerCase();
+//	                    break;
+//	                case "sender":
+//	                    textToCheck = cells[2].textContent.trim().toLowerCase();
+//	                    break;
+//	                case "receiver":
+//	                    textToCheck = cells[3].textContent.trim().toLowerCase();
+//	                    break;
+//	                case "address":
+//	                    textToCheck = cells[2].textContent.trim().toLowerCase() + " " + cells[3].textContent.trim().toLowerCase();
+//	                    break;
+//	                default:
+//	                    textToCheck = "";
+//	            }
+//
+//	            if (keyword === "" || textToCheck.includes(keyword)) {
+//	                row.style.display = "";
+//	            } else {
+//	                row.style.display = "none";
+//	            }
+//	        });
+//	    }
+//
+//	    // mid 내 button 클릭 시 필터 적용
+//	    mid.querySelectorAll("button").forEach(elem => {
+//	        elem.style.cursor = "pointer";
+//
+//	        elem.addEventListener("click", () => {
+//	            const text = elem.textContent.trim();
+//
+//	            if (text === "선불" || text === "후불") {
+//	                paymentFilter = (paymentFilter === text) ? null : text;
+//	                deliveryStatusFilter = null;
+//	            } else if (text === "배송 완료") {
+//	                deliveryStatusFilter = (deliveryStatusFilter === text) ? null : text;
+//	                paymentFilter = null;
+//	            }
+//
+//	            filterRows();
+//	        });
+//	    });
+//
+//	    tabPart1.addEventListener("click", () => activateTab(tabPart1));
+//	    tabPart2.addEventListener("click", () => activateTab(tabPart2));
+//	    searchInput.addEventListener("input", filterRows);
+//	    sendOption.addEventListener("change", filterRows);
+//
+//	    activateTab(tabPart1);
+//	}
 
-	// 로그인 후 목록 확인 (검색어, 필터 적용)
-	const tabPart1 = document.querySelector(".tab.part1");
-	const tabPart2 = document.querySelector(".tab.part2");
-	const rows = document.querySelectorAll(".row-box");
-	const searchInput = document.getElementById("searchInput");
-	const sendOption = document.getElementById("sendOption");
-	const mid = document.querySelector(".mid");
 
-	let paymentFilter = null;
-	let deliveryStatusFilter = null;
+	// 마이페이지 ----------------------------------------------------------------
+	// login_list.jsp 페이지에서만 작동하는 배송 상태 로딩
+	 if (window.location.pathname.includes('/login/login_list.jsp')) {
+		async function loadDeliveryStatus() {
+		      const response = await fetch('/users/mypage');
+		      if (!response.ok) {
+		          console.warn("세션 없음 또는 로그인 안됨");
+		          return;
+		      }
+		      const deliveries = await response.json();
+		      const rowBox = document.getElementById('row-box');
+		      rowBox.innerHTML = '';
 
-	if (tabPart1 && tabPart2 && rows.length > 0 && searchInput && sendOption && mid) {
+		      deliveries.forEach(item => {
+		          const row = document.createElement('div');
+		          row.className = 'row-content';
+		          row.innerHTML = `
+		              <div>${item.번호}</div>
+		              <div>${item.배송_내역}</div>
+		              <div>${item.보내는_사람_주소}</div>
+		              <div>${item.받는_사람_주소}</div>
+		              <div>${item.선불_후불}</div>
+		              <div>${item.배송_상태}</div>
+		          `;
+		          // 상세 정보 연동
+		          row.addEventListener("click", () => {
+		              document.querySelector(".detail input:nth-of-type(1)").value = item.주문번호;
+		              document.querySelector(".detail input:nth-of-type(2)").value = "카드 정보 비공개"; // 실제 카드 정보 없음
+		              document.querySelector(".detail input:nth-of-type(3)").value = item.결제날짜 || "-";
+		              document.querySelector(".detail input:nth-of-type(4)").value = item.금액.toLocaleString();
+		          });
 
-	    let currentTabFilter = status => status === "배송 전" || status === "배송 중"; // 기본 필터
+		          rowBox.appendChild(row);
+		      });
+		  }
 
-	    function activateTab(selectedTab) {
-	        document.querySelectorAll(".tab").forEach(tab => tab.classList.remove("active"));
-	        selectedTab.classList.add("active");
-
-	        if (selectedTab === tabPart1) {
-	            currentTabFilter = status => status === "배송 전" || status === "배송 중";
-	        } else if (selectedTab === tabPart2) {
-	            currentTabFilter = status => status === "배송 완료";
-	        }
-
-	        filterRows();
-	    }
-
-	    function filterRows() {
-	        const keyword = searchInput.value.trim().toLowerCase();
-	        const option = sendOption.value;
-
-	        rows.forEach(row => {
-	            const cells = row.querySelectorAll(".row-content > div");
-	            const status = cells[5].textContent.trim();
-	            const payment = cells[4].textContent.trim();
-
-	            // 탭 필터
-	            if (!currentTabFilter(status)) {
-	                row.style.display = "none";
-	                return;
-	            }
-
-	            // mid 영역 필터 (선불 / 후불 / 배송 완료)
-	            if (paymentFilter && payment !== paymentFilter) {
-	                row.style.display = "none";
-	                return;
-	            }
-	            if (deliveryStatusFilter && status !== deliveryStatusFilter) {
-	                row.style.display = "none";
-	                return;
-	            }
-
-	            let textToCheck = "";
-
-	            switch(option) {
-	                case "delivery":
-	                    textToCheck = cells[1].textContent.trim().toLowerCase();
-	                    break;
-	                case "sender":
-	                    textToCheck = cells[2].textContent.trim().toLowerCase();
-	                    break;
-	                case "receiver":
-	                    textToCheck = cells[3].textContent.trim().toLowerCase();
-	                    break;
-	                case "address":
-	                    textToCheck = cells[2].textContent.trim().toLowerCase() + " " + cells[3].textContent.trim().toLowerCase();
-	                    break;
-	                default:
-	                    textToCheck = "";
-	            }
-
-	            if (keyword === "" || textToCheck.includes(keyword)) {
-	                row.style.display = "";
-	            } else {
-	                row.style.display = "none";
-	            }
-	        });
-	    }
-
-	    // mid 내 button 클릭 시 필터 적용
-	    mid.querySelectorAll("button").forEach(elem => {
-	        elem.style.cursor = "pointer";
-
-	        elem.addEventListener("click", () => {
-	            const text = elem.textContent.trim();
-
-	            if (text === "선불" || text === "후불") {
-	                paymentFilter = (paymentFilter === text) ? null : text;
-	                deliveryStatusFilter = null;
-	            } else if (text === "배송 완료") {
-	                deliveryStatusFilter = (deliveryStatusFilter === text) ? null : text;
-	                paymentFilter = null;
-	            }
-
-	            filterRows();
-	        });
-	    });
-
-	    tabPart1.addEventListener("click", () => activateTab(tabPart1));
-	    tabPart2.addEventListener("click", () => activateTab(tabPart2));
-	    searchInput.addEventListener("input", filterRows);
-	    sendOption.addEventListener("change", filterRows);
-
-	    activateTab(tabPart1);
-	}
-
-
-
-});
+		  loadDeliveryStatus();
+		  }
+	});

@@ -1,25 +1,32 @@
 package servlet;
 
+import java.io.IOException;
+import java.io.PrintWriter;
+import java.util.List;
+import java.util.Map;
+
+import com.google.gson.Gson;
+
+import DAO.UserDAO;
+import DTO.User;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
+import service.DeliveryService;
+import service.DeliveryServiceImpl;
 import service.UserService;
 import service.UserServiceImpl;
 
-import java.io.IOException;
-import java.io.PrintWriter;
-
-import DAO.UserDAO;
-import DTO.User;
 
 @WebServlet("/users/*")
 public class UserServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
 	private UserService userService = new UserServiceImpl();
+	 private DeliveryService deliveryService = new DeliveryServiceImpl();
 	
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// 로그아웃 
@@ -47,6 +54,46 @@ public class UserServlet extends HttpServlet {
 		    out.print("{\"exists\":" + exists + "}");
 		    out.flush();
 		}
+		
+		// 로그인한 사용자의 배속 목록 반환 
+//		else if ("/mypage".equals(path)) {
+//		    HttpSession session = request.getSession(false);
+//		    response.setContentType("application/json;charset=UTF-8");
+//
+//		    if (session == null || session.getAttribute("loginId") == null) {
+//		        response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+//		        return;
+//		    }
+//
+//		    String loginId = (String) session.getAttribute("loginId");
+//		    System.out.println("[/mypage] 로그인 아이디로 배송 조회: " + loginId);
+//
+//		    List<Map<String, Object>> deliveries = deliveryService.getDeliveryDetailsByUserId(loginId);
+//
+//		    Gson gson = new Gson();
+//		    String json = gson.toJson(deliveries);
+//		    response.getWriter().print(json);
+//		}
+		else if ("/mypage-jsp".equals(path)) {
+		    HttpSession session = request.getSession(false);
+
+		    if (session == null || session.getAttribute("loginId") == null) {
+		        response.sendRedirect(request.getContextPath() + "/page/login/login.jsp");
+		        return;
+		    }
+
+		    String loginId = (String) session.getAttribute("loginId");
+		    System.out.println("[/mypage-jsp] JSP용 배송 목록 조회. 로그인 아이디: " + loginId);
+
+		    List<Map<String, Object>> deliveries = deliveryService.getDeliveryDetailsByUserId(loginId);
+
+		    request.setAttribute("deliveries", deliveries);
+		    request.getRequestDispatcher("/page/login/login_list.jsp").forward(request, response);
+		}
+
+
+
+		
 	}
 	
 
@@ -70,8 +117,10 @@ public class UserServlet extends HttpServlet {
             System.out.println(result);
 
             if (result) {
+            	// 비밀번호는 세션 저장 X 
                 loginUser.setPassword(null);
-
+                
+                // 세션 생성, 기존 세션 가져오기 및 로그인된 사용자 정보 세션에 저장  
                 HttpSession session = request.getSession();
                 session.setAttribute("loginId", user.getId());
                 session.setAttribute("loginUser", loginUser);

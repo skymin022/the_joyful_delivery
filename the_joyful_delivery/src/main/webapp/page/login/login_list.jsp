@@ -48,8 +48,8 @@
 	            </div>
 	            <div class="main-content">
 	                <div class="tap">
-	                    <span class="tab part1 active">배송 중 / 전</span>
-	                    <span class="tab part2">배송 완료</span>
+	                    <span class="tab part1 active">배송 상태</span>
+	                    <span class="tab part2">회원정보수정</span>
 	                </div>
 					 <div class="table-and-detail">
 						 <div class="table-wrapper">
@@ -61,68 +61,10 @@
 								 <div>선불 / 후불</div>
 								 <div>배송 상태</div>
 							 </div>
-							 <div class="row-box">
-								 <div class="row-content">
-									 <div>1</div>
-									 <div>전자기기</div>
-									 <div>886 방배읍 - 인제, 강원 / 95154</div>
-									 <div>4085 신월동 - 군산, 경남 / 86656</div>
-									 <div>선불</div>
-									 <div>배송 전</div>
-								 </div>
-							 </div>
-							 <div class="row-box">
-								 <div class="row-content">
-									 <div>1</div>
-									 <div>전자기기</div>
-									 <div>886 방배읍 - 인제, 강원 / 95154</div>
-									 <div>4085 신월동 - 군산, 경남 / 86656</div>
-									 <div>선불</div>
-									 <div>배송 전</div>
-								 </div>
-							 </div>
-							 <div class="row-box">
-								 <div class="row-content">
-									 <div>1</div>
-									 <div>전자기기</div>
-									 <div>886 방배읍 - 인제, 강원 / 95154</div>
-									 <div>4085 신월동 - 군산, 경남 / 86656</div>
-									 <div>선불</div>
-									 <div>배송 완료</div>
-								 </div>
-							 </div>
-							 <div class="row-box">
-								 <div class="row-content">
-									 <div>1</div>
-									 <div>전자기기</div>
-									 <div>홍길동 / 서울 강남구 역삼동 123-45</div>
-									 <div>김철수 / 부산 해운대구 중동 678-90</div>
-									 <div>선불</div>
-									 <div>배송 전</div>
-								 </div>
+							 <div class="row-box" id="row-box">
+								<!-- js 코드로 행 추가 -->
 							 </div>
 
-							 <div class="row-box">
-								 <div class="row-content">
-									 <div>2</div>
-									 <div>의류</div>
-									 <div>이영희 / 인천 남동구 논현동 111-22</div>
-									 <div>박민수 / 대구 수성구 범어동 333-44</div>
-									 <div>후불</div>
-									 <div>배송 중</div>
-								 </div>
-							 </div>
-
-							 <div class="row-box">
-								 <div class="row-content">
-									 <div>3</div>
-									 <div>도서</div>
-									 <div>최수진 / 광주 북구 일곡동 555-66</div>
-									 <div>오세훈 / 대전 유성구 봉명동 777-88</div>
-									 <div>선불</div>
-									 <div>배송 완료</div>
-								 </div>
-							 </div>
 						</div>
 						<div class="detail">
                         <div class="header">상세 내역</div>
