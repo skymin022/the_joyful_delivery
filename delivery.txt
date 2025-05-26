@@ -1,0 +1,5143 @@
+-- main 폴더 내 
+java 폴더, webapp 폴더 존재
+
+
+-- java 폴더 내 
+DAO, DTO, service, servlet, util 폴더가 존재하고 db.properties 파일이 존재
+
+-- DAO 폴더 내 
+AnnouncementDAO, AskDAO, DeliveryDAO, DriverDAO, FAQDAO, InquiryDAO, JDBConnection, PayDAO, RegionNameDAO, SendingReceivingDAO, UserDAO이름으로 구성된 java 파일들이 존재
+
+-- AnnouncementDAO 파일 
+package DAO;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import com.alohaclass.jdbc.dao.BaseDAOImpl;
+
+import DTO.Announcement;
+
+public class AnnouncementDAO extends BaseDAOImpl<Announcement> {
+
+	public List<Announcement> top3Anno() {
+		List<Announcement> list = new ArrayList<>();
+		
+		String sql = "SELECT * FROM announcement "
+				   + "ORDER BY created_at DESC "
+				   + "LIMIT 3 OFFSET 0";
+		try {
+			psmt = con.prepareStatement(sql);
+			rs = psmt.executeQuery();
+			
+			while(rs.next()) {
+				list.add(new Announcement(rs.getInt("idx"), rs.getString("title"), rs.getString("content"), rs.getDate("created_at"), rs.getDate("updated_at")));
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return list;
+	}
+}
+
+-- AskDAO 파일 
+package DAO;
+
+import com.alohaclass.jdbc.dao.BaseDAOImpl;
+
+import DTO.AskDTO;
+import DTO.User;
+
+public class AskDAO extends BaseDAOImpl<AskDTO> {
+
+	
+	
+}
+
+-- DeliveryDAO 파일 
+package DAO;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import com.alohaclass.jdbc.dao.BaseDAOImpl;
+
+import DTO.Delivery;
+import DTO.Payment;
+import DTO.SendingReceiving;
+
+public class DeliveryDAO extends BaseDAOImpl<Delivery> {
+
+	// 전체 행 조회
+	public List<Delivery> regJoinList(int pageCut, int offset) {
+		List<Delivery> list = new ArrayList<>();
+		
+		String sql = "SELECT d.*, r.status AS r_status, dr.name "
+				    + "FROM deliveries d "
+				    + "INNER JOIN region_name r ON d.idx = r.del_idx "
+				    + "INNER JOIN drivers dr ON d.driver_idx = dr.idx "
+				    + "INNER JOIN ( "
+				    + "    SELECT del_idx, MAX(created_at) AS max_created "
+				    + "    FROM region_name "
+				    + "    GROUP BY del_idx "
+				    + ") AS latest ON r.del_idx = latest.del_idx AND r.created_at = latest.max_created "
+				    + "LIMIT ? OFFSET ?";
+		try {
+			psmt = con.prepareStatement(sql);
+			psmt.setInt(1, pageCut);
+			psmt.setInt(2, offset);
+			
+			rs = psmt.executeQuery();
+			
+			while(rs.next()) {
+				Delivery delivery = new Delivery();
+				delivery.setIdx(rs.getInt("idx"));
+				delivery.setUserIdx(rs.getInt("user_idx"));
+				delivery.setDriverIdx(rs.getInt("driver_idx"));
+				delivery.setSrIdx(rs.getInt("sr_idx"));
+				delivery.setKeyword(rs.getString("keyword"));
+				delivery.setValue(rs.getInt("value"));
+				delivery.setPrePos(rs.getString("pre_pos"));
+				delivery.setCreatedAt(rs.getDate("created_at"));
+				delivery.setStatus(rs.getString("status"));
+				delivery.setRegStatus(rs.getString("r_status"));
+				delivery.setName(rs.getString("name"));
+				
+				list.add(delivery);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return list;
+	}
+
+	// 필터링 없을 때 카운트
+	public int joinCount() {
+			
+			int count = 0;
+			String sql = "SELECT COUNT(*) "
+				    + "FROM deliveries d "
+				    + "INNER JOIN region_name r ON d.idx = r.del_idx "
+				    + "INNER JOIN ( "
+				    + "    SELECT del_idx, MAX(created_at) AS max_created "
+				    + "    FROM region_name "
+				    + "    GROUP BY del_idx "
+				    + ") AS latest ON r.del_idx = latest.del_idx AND r.created_at = latest.max_created";
+			try {
+				psmt = con.prepareStatement(sql);
+				rs = psmt.executeQuery();
+				if(rs.next()) count = rs.getInt(1);
+			} catch (Exception e) {
+				System.err.println("택배 - 로그 조인 카운트 조회 중 에러...");
+				e.printStackTrace();
+			}
+			return count;
+	}
+	
+	// 필터링 검색
+	public List<Delivery> regJoinList(String column, String value, int pageCut, int offset) {
+		List<Delivery> list = new ArrayList<>();
+		String chooseColumn = "d.";
+		if(column.equals("r_status")) {
+			chooseColumn = "";
+			column = "r.status";
+		}
+		
+		String sql = "SELECT d.*, r.status AS r_status, dr.name "
+			    + "FROM deliveries d "
+			    + "INNER JOIN region_name r ON d.idx = r.del_idx "
+			    + "INNER JOIN drivers dr ON d.driver_idx = dr.idx "
+			    + "INNER JOIN ( "
+			    + "    SELECT del_idx, MAX(created_at) AS max_created "
+			    + "    FROM region_name "
+			    + "    GROUP BY del_idx "
+			    + ") AS latest ON r.del_idx = latest.del_idx AND r.created_at = latest.max_created "
+			    + "WHERE " +chooseColumn+column+ " LIKE ? "
+			    + "LIMIT ? OFFSET ?";
+		
+		try {
+			psmt = con.prepareStatement(sql);
+			psmt.setString(1, "%" + value + "%");
+			psmt.setInt(2, pageCut);
+			psmt.setInt(3, offset);
+			
+			rs = psmt.executeQuery();
+		
+			while(rs.next()) {
+				Delivery delivery = new Delivery();
+				delivery.setIdx(rs.getInt("idx"));
+				delivery.setUserIdx(rs.getInt("user_idx"));
+				delivery.setDriverIdx(rs.getInt("driver_idx"));
+				delivery.setSrIdx(rs.getInt("sr_idx"));
+				delivery.setKeyword(rs.getString("keyword"));
+				delivery.setValue(rs.getInt("value"));
+				delivery.setPrePos(rs.getString("pre_pos"));
+				delivery.setCreatedAt(rs.getDate("created_at"));
+				delivery.setStatus(rs.getString("status"));
+				delivery.setRegStatus(rs.getString("r_status"));
+				delivery.setName(rs.getString("name"));
+				
+				list.add(delivery);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return list;
+	}
+	
+	// 필터링 했을 때 카운트
+	public int filterJoinCount(String column, String value) {
+		int count = 0;
+		
+		String chooseColumn = "d.";
+		if(column.equals("r_status")) {
+			chooseColumn = "";
+			column = "r.status";
+		}
+		
+		String sql = "SELECT COUNT(*) "
+			    + "FROM deliveries d "
+			    + "INNER JOIN region_name r ON d.idx = r.del_idx "
+			    + "INNER JOIN ( "
+			    + "    SELECT del_idx, MAX(created_at) AS max_created "
+			    + "    FROM region_name "
+			    + "    GROUP BY del_idx "
+			    + ") AS latest ON r.del_idx = latest.del_idx AND r.created_at = latest.max_created "
+			    + "WHERE " +chooseColumn+column+ " LIKE ? ";
+		
+		try {
+			psmt = con.prepareStatement(sql);
+			psmt.setString(1, "%" + value + "%");
+			rs = psmt.executeQuery();
+			
+			if(rs.next()) count = rs.getInt(1);
+		} catch (Exception e) {
+			System.err.println("택배 - 로그 조인, 필터 카운트 조회 중 에러...");
+			e.printStackTrace();
+		}
+		return count;
+	}
+	
+	// listByUserId 메서드
+	/**
+	 * deliveries x region_name x drivers 테이블을 조인하여
+	 * 사용자의 배송 내역을 조회하는 메서드
+	 * @param loginId
+	 * @return
+	 */
+	public List<Delivery> listByUserId(String loginId) {
+		List<Delivery> list = new ArrayList<>();
+		String sql = " SELECT d.*, "
+		           + "        (SELECT status FROM region_name WHERE del_idx = d.idx ORDER BY created_at DESC LIMIT 1) AS r_status, "
+		           + "        dr.name, "
+		           + "        sr.s_name, "
+		           + "        sr.s_address, "
+		           + "        sr.r_name, "
+		           + "        sr.r_address, "
+		           + "        p.idx AS p_idx, "
+		           + "        p.p_amount, "
+		           + "        p.p_card, "
+		           + "        p.p_date "
+		           + " FROM deliveries d "
+		           + " INNER JOIN drivers dr ON d.driver_idx = dr.idx "
+		           + " INNER JOIN sending_and_receiving sr ON d.sr_idx = sr.idx "
+		           + " LEFT JOIN payment p ON d.idx = p.d_idx "
+		           + " WHERE d.user_idx = (SELECT idx FROM users WHERE id = ?) "
+		           + " ORDER BY d.created_at DESC";
+
+		try {
+			psmt = con.prepareStatement(sql);
+			psmt.setString(1, loginId);
+			rs = psmt.executeQuery();
+			
+			while(rs.next()) {
+				Delivery delivery = new Delivery();
+				delivery.setIdx(rs.getInt("idx"));
+				delivery.setUserIdx(rs.getInt("user_idx"));
+				delivery.setDriverIdx(rs.getInt("driver_idx"));
+				delivery.setSrIdx(rs.getInt("sr_idx"));
+				delivery.setKeyword(rs.getString("keyword"));
+				delivery.setValue(rs.getInt("value"));
+				delivery.setPrePos(rs.getString("pre_pos"));
+				delivery.setCreatedAt(rs.getDate("created_at"));
+				delivery.setStatus(rs.getString("status"));
+				delivery.setRegStatus(rs.getString("r_status"));
+				delivery.setName(rs.getString("name"));
+				
+				// 받는사람 보내는사람 정보 설정
+				SendingReceiving sr = new SendingReceiving();
+				sr.setSName(rs.getString("s_name"));
+				sr.setSAddress(rs.getString("s_address"));
+				sr.setRName(rs.getString("r_name"));
+				sr.setRAddress(rs.getString("r_address"));
+				delivery.setSendingReceiving(sr);
+				
+				// 결제 정보 설정
+				Payment payment = new Payment();
+				payment.setIdx(rs.getInt("p_idx"));
+				payment.setDIdx(rs.getInt("idx"));
+				payment.setPCard(rs.getString("p_card"));
+				payment.setPAmount(rs.getInt("p_amount"));
+				payment.setPDate(rs.getDate("p_date"));
+				delivery.setPayment(payment);
+				
+				list.add(delivery);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return list;
+	}
+	
+	
+	// 배송 현황 
+	
+}	
+
+-- DriverDAO 파일 
+package DAO;
+
+
+import com.alohaclass.jdbc.dao.BaseDAOImpl;
+
+import DTO.Driver;
+
+public class DriverDAO extends BaseDAOImpl<Driver> {
+
+}
+
+-- FAQDAO 파일 
+package DAO;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import com.alohaclass.jdbc.dao.BaseDAOImpl;
+
+import DTO.FAQ;
+
+public class FAQDAO extends BaseDAOImpl<FAQ>{
+
+	public List<FAQ> listDesc() {
+		List<FAQ> list = new ArrayList<>();
+		String sql = "SELECT * FROM faq ORDER BY created_at DESC";
+		try {
+			psmt = con.prepareStatement(sql);
+			rs = psmt.executeQuery();
+			
+			while(rs.next()) {
+				list.add(new FAQ(rs.getInt(1), rs.getString(2), rs.getString(3), rs.getDate(4), rs.getDate(5)));
+			}
+		} catch (Exception e) {
+			System.err.println("FAQ DESC 리스트 조회 중 에러...");
+			e.printStackTrace();
+		}
+		return list;
+	}
+}
+
+-- InquiryDAO 파일 
+package DAO;
+
+import com.alohaclass.jdbc.dao.BaseDAOImpl;
+
+import DTO.Inquiry;
+
+public class InquiryDAO extends BaseDAOImpl<Inquiry> {
+
+}
+
+-- JDBConnection 파일 
+package DAO;
+
+import java.sql.*;
+
+public class JDBConnection {
+	
+	public Connection con;
+	public Statement stmt;
+	public PreparedStatement psmt;
+	public ResultSet rs;
+	
+	public JDBConnection() {
+		try {
+			Class.forName("com.mysql.cj.jdbc.Driver");
+			
+			String url = "jdbc:mysql://127.0.0.1:3306/delivery?serverTimezone=Asia/Seoul&allowPublicKeyRetrieval=true&useSSL=false";
+			String id = "mini_team1";
+			String pw = "123456";
+			con = DriverManager.getConnection(url, id, pw);
+			System.out.println("DB 연결 성공");
+		} catch(Exception e) {
+			System.out.println("DB 연결 실패");
+			e.printStackTrace();
+		}
+	}
+}
+
+-- PayDAO 파일 
+package DAO;
+
+import java.sql.SQLException;
+
+import com.alohaclass.jdbc.dao.BaseDAOImpl;
+
+import DTO.PayDTO;
+
+public class PayDAO extends BaseDAOImpl<PayDTO> {
+
+    // 결제정보 삽입 메서드
+    public boolean insertPaymentInfo(PayDTO dto) {
+        String sql = "INSERT INTO payment_info " +
+                     "(order_number, tracking_number, card_number, depositor_name, " +
+                     "sender_name, waybill_password, phone, email, receiver_name, address, address_detail) " +
+                     "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+
+        try {
+			psmt = con.prepareStatement(sql);
+			rs = psmt.executeQuery();
+
+            psmt.setString(1, dto.getOrderNumber());
+            psmt.setString(2, dto.getTrackingNumber());
+            psmt.setString(3, dto.getCardNumber());
+            psmt.setString(4, dto.getDepositorName());
+            psmt.setString(5, dto.getSenderName());
+            psmt.setString(6, dto.getWaybillPassword());
+            psmt.setString(7, dto.getPhone());
+            psmt.setString(8, dto.getEmail());
+            psmt.setString(9, dto.getReceiverName());
+            psmt.setString(10, dto.getAddress());
+            psmt.setString(11, dto.getAddressDetail());
+
+            int result = psmt.executeUpdate();
+            return result == 1;  // 1행이 정상 입력됐으면 true 반환
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+
+}
+
+-- RegionNameDAO 파일 
+package DAO;
+
+import com.alohaclass.jdbc.dao.BaseDAOImpl;
+
+import DTO.Delivery;
+import DTO.RegionName;
+
+public class RegionNameDAO extends BaseDAOImpl<RegionName> {
+
+}
+
+-- SendingReceivingDAO 파일
+package DAO;
+
+import com.alohaclass.jdbc.dao.BaseDAOImpl;
+
+import DTO.SendingReceiving;
+
+public class SendingReceivingDAO extends BaseDAOImpl<SendingReceiving>{
+
+}
+
+-- UserDAO 
+package DAO;
+
+import com.alohaclass.jdbc.dao.BaseDAOImpl;
+
+import DTO.User;
+
+public class UserDAO extends BaseDAOImpl<User> {
+
+	public User select(String id) {
+		User user = null;
+
+		try {
+			// DB 연결 상태 체크
+			if (con == null || con.isClosed()) {
+				System.out.println("DB 커넥션이 유효하지 않습니다.");
+				// 필요하면 여기서 재연결 시도 또는 예외 처리
+			} else {
+				System.out.println("DB 커넥션 정상 작동 중");
+			}
+
+			String sql = "SELECT * FROM users WHERE ID = ?";
+			psmt = con.prepareStatement(sql);
+			psmt.setString(1, id.trim());
+			rs = psmt.executeQuery();
+
+			while (rs.next()) {
+				user = new User();
+				user.setRoleIdx(rs.getInt("role_idx"));
+				user.setIdx(rs.getInt("idx"));
+				user.setId(rs.getString("ID"));
+				user.setPassword(rs.getString("password"));
+				user.setUsername(rs.getString("username"));
+				user.setEmail(rs.getString("email"));
+				user.setAddress(rs.getString("address"));
+				user.setBirth(rs.getString("birth"));
+				user.setSignUpDate(rs.getTimestamp("sign_up_date"));
+				user.setWithdrawal(rs.getBoolean("withdrawal"));
+				user.setPNumber(rs.getString("p_number"));
+			}
+
+		} catch (Exception e) {
+			e.printStackTrace();
+			System.err.println("로그인 - db데이터 가져오는 중 오류 발생 ");
+		}
+		return user;
+	}
+
+	// 회원가입
+	public int insert(User user) {
+		int rows = 0;
+
+		String sql = "INSERT INTO users (role_idx, ID, password, username, email, address, birth, p_number) "
+				+ "VALUES (1, ?, ?, ?, ?, ?, ?, ?)";
+
+		try {
+			psmt = con.prepareStatement(sql);
+			psmt.setString(1, user.getId());
+			psmt.setString(2, user.getPassword());
+			psmt.setString(3, user.getUsername());
+			psmt.setString(4, user.getEmail());
+			psmt.setString(5, user.getAddress());
+			psmt.setString(6, user.getBirth());
+			psmt.setString(7, user.getPNumber());
+
+			rows = psmt.executeUpdate();
+
+			System.out.println("사용자 INSERT 성공: " + rows + "행 삽입됨");
+
+		} catch (Exception e) {
+			System.err.println("사용자 INSERT 중 오류 발생");
+			e.printStackTrace();
+		}
+
+		return rows;
+	}
+
+
+	// 마이페이지 - 회원정보 수정
+//	public int update(User user) {
+//		int result = 0;
+//		String sql = "UPDATE users SET password = ?, email = ?, address = ?, p_number = ? WHERE idx = ?";
+//		try {
+//			psmt = con.prepareStatement(sql);
+//			psmt.setString(1, user.getPassword());
+//			psmt.setString(2, user.getEmail());
+//			psmt.setString(3, user.getAddress());
+//			psmt.setString(4, user.getPNumber());
+//			psmt.setInt(5, user.getIdx());
+//
+//			System.out.println("[UserDAO] 업데이트 요청 값:");
+//			System.out.println("idx: " + user.getIdx());
+//			System.out.println("PW: " + user.getPassword());
+//			System.out.println("Email: " + user.getEmail());
+//			System.out.println("Address: " + user.getAddress());
+//			System.out.println("Phone: " + user.getPNumber());
+//
+//			
+//			result = psmt.executeUpdate();
+//			System.out.println("[UserDAO] 회원정보 업데이트 성공");
+//		} catch (Exception e) {
+//			e.printStackTrace();
+//			System.err.println("[UserDAO] 회원정보 업데이트 중 오류 발생");
+//		}
+//		return result;
+//	}
+
+}
+
+
+
+-- DTO 폴더 내
+Announcement, AskDTO, Delivery, Driver, FAQ, Inquiry, PayDTO, Payment, RegionName, SendingReceiving, User 이름으로 된 java 파일들이 존재 
+
+-- Announcement 파일 
+package DTO;
+
+import java.util.Date;
+
+import com.alohaclass.jdbc.annotation.Pk;
+import com.alohaclass.jdbc.annotation.Table;
+
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+@Table("announcement")
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder
+public class Announcement {
+	
+	@Pk
+	private int idx;
+	private String title;
+	private String content;
+	private Date createdAt;
+	private Date updatedAt;
+}
+
+-- AskDTO 파일 
+package DTO;
+
+import java.util.Date;
+
+import com.alohaclass.jdbc.annotation.Pk;
+import com.alohaclass.jdbc.annotation.Table;
+
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+@Table("inquiries")
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder
+public class AskDTO {
+	
+	@Pk
+	private int idx;
+	private int userNo;
+	private String title;
+	private String content;
+	private Date createdAt;
+	private int checkAnswer;
+	private String type;
+
+}
+
+-- Delivery 파일 
+ package DTO;
+
+
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
+import com.alohaclass.jdbc.annotation.Column;
+import com.alohaclass.jdbc.annotation.Pk;
+import com.alohaclass.jdbc.annotation.Table;
+
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+@Table("deliveries")
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder
+public class Delivery {
+	
+	@Pk
+	private int idx;
+	private int userIdx;
+	private int driverIdx;
+	private int srIdx;
+	private String keyword;
+	private String status;
+	private int value;
+	private String prePos;
+	private Date createdAt;
+	private String reserName;	// 예약명
+	private boolean success;
+	
+	// 조인해서 가져올 컬럼 원래는 이렇게 하면 안됨.
+	@Column(exist = false)
+	private String regStatus;
+	@Column(exist = false)
+	private String name;
+
+	@Column(exist = false)
+	private SendingReceiving sendingReceiving; // 조인해서 가져올 SendingReceiving 객체
+	@Column(exist = false)
+	private Payment payment; // 조인해서 가져올 Payment 객체
+	
+	@Column(exist = false)
+	private RegionName regionName; // 조인해서 가져올 region_name 객체 
+
+	// 포맷 날짜 받을 변수
+	private String formatCreatedAt;
+	
+	// 날짜 포맷 메서드
+	public String getFormatCreatedAt() {
+		if(this.createdAt == null) return null;
+		return new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(this.createdAt);
+	}
+}
+
+-- Driver 파일 
+package DTO;
+
+
+import com.alohaclass.jdbc.annotation.Pk;
+import com.alohaclass.jdbc.annotation.Table;
+
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+@Table("drivers")
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder
+public class Driver {
+	
+	@Pk
+	private int idx;
+	private String name;
+	private String number;
+}
+
+-- FAQ 파일 
+package DTO;
+import java.util.Date;
+
+
+
+import com.alohaclass.jdbc.annotation.Pk;
+import com.alohaclass.jdbc.annotation.Table;
+
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+@Table("faq")
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder
+public class FAQ {
+	
+	@Pk
+	private int idx;
+	private String title;
+	private String content;
+	private Date createdAt;
+	private Date updatedAt;
+	
+}
+
+-- Inquiry 파일 
+package DTO;
+
+
+import java.util.Date;
+
+import com.alohaclass.jdbc.annotation.Column;
+import com.alohaclass.jdbc.annotation.Pk;
+import com.alohaclass.jdbc.annotation.Table;
+
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+@Table("inquiries")
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder
+public class Inquiry {
+	
+	@Pk
+	private int idx;
+	private int userNo;
+	private String title;
+	private String content;
+	private Date createdAt;
+	private boolean checkAnswer;
+	
+}
+
+-- PayDTO 파일 
+package DTO;
+import lombok.Data;
+
+
+@Data
+public class PayDTO {
+    private String orderNumber;
+    private String trackingNumber;
+    private String cardNumber;
+    private String depositorName;
+    private String senderName;
+    private String waybillPassword;
+    private String phone;
+    private String email;
+    private String receiverName;
+    private String address;
+    private String addressDetail;
+}
+
+-- Payment 파일
+package DTO;
+
+import java.util.Date;
+
+import com.alohaclass.jdbc.annotation.Table;
+
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+@Table("payment")
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder
+public class Payment {
+    private int idx;	  // 결제 idx
+    private int dIdx;     // 배송idx
+    private String pCard; // 결제 카드
+    private int pAmount;  // 결제 금액
+    private Date pDate;   // 결제 날짜
+}
+
+-- RegionName 파일
+package DTO;
+
+import java.util.Date;
+
+import com.alohaclass.jdbc.annotation.Pk;
+import com.alohaclass.jdbc.annotation.Table;
+
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+@Table("region_name")
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder
+public class RegionName {
+	
+	@Pk
+	private long idx;
+	private long delIdx;
+	private Date createdAt;
+	private String status;
+}
+
+-- SendingReceiving 파일 
+package DTO;
+
+import com.alohaclass.jdbc.annotation.Pk;
+import com.alohaclass.jdbc.annotation.Table;
+
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+@Table("sending_and_receiving")
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder
+public class SendingReceiving {
+
+	@Pk
+	private int idx;
+	private String sName;
+	private String sNumber;
+	private String sAddress;
+	private String rName;
+	private String rNumber;
+	private String rAddress;
+}
+
+-- User 파일 
+package DTO;
+
+import java.util.Date;
+
+import com.alohaclass.jdbc.annotation.Pk;
+import com.alohaclass.jdbc.annotation.Table;
+
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+@Table("users")
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder
+public class User {
+	
+	@Pk
+	private Integer idx;
+	private Integer roleIdx;
+	private String id;
+	private String password;
+	private String username;
+	private String email;
+	private String address;
+	private String birth;
+	private String pNumber;
+	private Date signUpDate;
+	private boolean withdrawal;
+	
+	// 출력 
+	@Override
+	public String toString() {
+	    return "User{" +
+	            "roleIdx=" + roleIdx +
+	            ", id='" + id + '\'' +
+	            ", password='[PROTECTED]'" +
+	            ", username='" + username + '\'' +
+	            ", email='" + email + '\'' +
+	            ", address='" + address + '\'' +
+	            ", birth='" + birth + '\'' +
+	            ", pNumber='" + pNumber + '\'' +
+	            '}';
+	}
+
+}
+
+
+-- service 폴더 내
+AnnouncementService, AnnouncementServiceImpl, AskService, AskServiceImpl, DeliveryService, DeliveryServiceImpl, DriverService, DriverServiceImpl, FAQService, FAQServiceImpl, InquiryService, InquiryServiceImpl, RegionService, RegionServiceImpl, UserService, UserServiceImpl 이름으로 된 java 파일들이 존재 
+
+-- AnnouncementService 파일 
+package service;
+
+import java.util.List;
+import java.util.Map;
+
+import com.alohaclass.jdbc.dto.PageInfo;
+import DTO.Announcement;
+
+public interface AnnouncementService {
+
+	// C.R.U.D
+	public List<Announcement> list();
+	public List<Announcement> listBy(Map<String, Object> fields);
+	public PageInfo<Announcement> page(String keyword, List<String> columList);
+	public Announcement select(int no);
+	public int insert(Announcement announcement);
+	public Announcement insertKey(Announcement announcement);
+	public int update(Announcement announcement);
+	public int delete(int no);
+	
+	// index 페이지 공지사항 3개
+	public List<Announcement> top3Anno();
+}
+
+-- AnnouncementServiceImpl 파일 
+package service;
+
+import java.util.List;
+import java.util.Map;
+
+import com.alohaclass.jdbc.dto.Page;
+import com.alohaclass.jdbc.dto.PageInfo;
+
+import DAO.AnnouncementDAO;
+import DTO.Announcement;
+import DTO.FAQ;
+
+public class AnnouncementServiceImpl implements AnnouncementService {
+	
+	AnnouncementDAO annDao = new AnnouncementDAO();
+
+	@Override
+	public List<Announcement> top3Anno() {
+		List<Announcement> list = null;
+		
+		try {
+			list = annDao.top3Anno();
+		} catch (Exception e) {
+			System.err.println("공지사항 3개 조회 중 에러...");
+			e.printStackTrace();
+		}
+		
+		return list;
+	}
+	
+	@Override
+	public List<Announcement> list() {
+		List<Announcement> list = null;
+		
+		try {
+			list = annDao.list();
+			System.out.println(list);
+		} catch (Exception e) {
+			System.err.println("공지사항 전체 조회 중 에러...");
+			e.printStackTrace();
+		}
+		return list;
+	}
+
+	@Override
+	public List<Announcement> listBy(Map<String, Object> fields) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public PageInfo<Announcement> page(String keyword, List<String> columList) {
+		PageInfo<Announcement> pageInfo = null; 
+		try {
+			Page pageObj = new Page(1, 10);
+			pageInfo = annDao.page(pageObj, keyword, columList);
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return pageInfo;
+	}
+
+	@Override
+	public Announcement select(int no) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public int insert(Announcement announcement) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	@Override
+	public Announcement insertKey(Announcement announcement) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public int update(Announcement announcement) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	@Override
+	public int delete(int no) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+
+
+
+
+}
+
+-- AskService 파일 
+package service;
+
+import java.util.List;
+import java.util.Map;
+
+import com.alohaclass.jdbc.dto.PageInfo;
+
+import DTO.AskDTO;
+import DTO.Delivery;
+
+public interface AskService {
+
+	// C.R.U.D
+		public List<AskDTO> list();
+		public List<AskDTO> listBy(Map<String, Object> fields);
+		public PageInfo<AskDTO> page();
+		public Delivery select(int no);
+		public int insert(AskDTO AskDto);
+		public Delivery insertKey(AskDTO AskDto);
+		public int update(AskDTO AskDto);
+		public int delete(int no);
+		int count() throws Exception;
+		public int getFilterOptions(Map<String, String> filterOptions);
+	
+}
+
+-- AskServiceImpl 파일 
+package service;
+
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import com.alohaclass.jdbc.dto.PageInfo;
+
+import DAO.AskDAO;
+import DTO.AskDTO;
+import DTO.Delivery;
+import servlet.AskServlet;
+
+public class AskServiceImpl implements AskService {
+
+	AskDAO askDao = new AskDAO();
+	
+	@Override
+	public List<AskDTO> list() {
+		List<AskDTO> list = null;
+		
+		try {
+			list = askDao.list();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		return list;
+	}
+
+	@Override
+	public List<AskDTO> listBy(Map<String, Object> fields) {
+		List<AskDTO> list = null;
+		
+		try {
+			list = askDao.listBy(fields);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return list;
+	}
+
+	@Override
+	public PageInfo<AskDTO> page() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Delivery select(int no) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public int insert(AskDTO askDto) {
+		int result = 0;
+		try {
+			result = askDao.insert(askDto);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		if (result > 0) {
+			return 0;
+		}
+		return 0;
+	}
+
+	@Override
+	public Delivery insertKey(AskDTO AskDto) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public int update(AskDTO AskDto) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	@Override
+	public int delete(int no) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	@Override
+	public int count() throws Exception {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	@Override
+	public int getFilterOptions(Map<String, String> filterOptions) {
+		
+		Map<String, String> qnaFilter = new HashMap<String, String>();
+		return 0;
+	}
+	
+	
+
+}
+
+-- DeliveryService 파일 
+package service;
+
+import java.util.List;
+import java.util.Map;
+
+import com.alohaclass.jdbc.dto.PageInfo;
+import DTO.Delivery;
+
+public interface DeliveryService {
+
+	// C.R.U.D
+	public List<Delivery> list();
+	public List<Delivery> listBy(Map<String, Object> fields);
+	public PageInfo<Delivery> page();
+	public Delivery select(int no);
+	public int insert(Delivery delivery);
+	public Delivery insertKey(Delivery delivery);
+	public int update(Delivery delivery);
+	public int delete(int no);
+	int count() throws Exception;
+	
+	// 알클라이브러리x 메서드
+	public List<Delivery> regJoinList(int pageCut, int offset);
+	public int joinCount();
+	public int filterJoinCount(String column, String value);
+	
+	// 회원전용 택배 조회
+	public List<Delivery> listByUserId(String loginId);
+	
+	// 배송현황 조회
+	Delivery getDeliveryByIdx(int idx) throws Exception;
+}
+
+-- DeliveryServiceImpl 파일 
+package service;
+
+import java.sql.Connection;
+import java.util.List;
+import java.util.Map;
+
+import com.alohaclass.jdbc.dto.PageInfo;
+
+import DAO.DeliveryDAO;
+import DTO.Delivery;
+
+public class DeliveryServiceImpl implements DeliveryService {
+		
+	DeliveryDAO delDao = new DeliveryDAO();
+	
+	@Override
+	public int joinCount() {
+		int count = 0;
+		try {
+			count = delDao.joinCount();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return count;
+	}
+	
+
+	@Override
+	public int filterJoinCount(String column, String value) {
+		int count = 0;
+		try {
+			count = delDao.filterJoinCount(column, value);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return count;
+	}
+	
+	@Override
+	public List<Delivery> regJoinList(int pageCut, int offset) {
+		List<Delivery> list = null;
+		try {
+			list = delDao.regJoinList(pageCut, offset);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return list;
+	}
+	
+	public List<Delivery> regJoinList(String column, String value, int pageCut, int offset) {
+		List<Delivery> list = null;
+		try {
+			list = delDao.regJoinList(column, value, pageCut, offset);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return list;
+	}
+	
+	
+	@Override
+	public List<Delivery> list() {
+		List<Delivery> list = null;
+		try {
+			list = delDao.list();
+		} catch (Exception e) {
+			System.err.println("모든 배송 조회중 에러...");
+			e.printStackTrace();
+		}
+		return list;
+	}
+
+	@Override
+	public List<Delivery> listBy(Map<String, Object> fields) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public PageInfo<Delivery> page() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Delivery select(int no) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public int insert(Delivery Delivery) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	@Override
+	public Delivery insertKey(Delivery Delivery) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public int update(Delivery Delivery) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	@Override
+	public int delete(int no) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	@Override
+	public int count() {
+		int count = 0;
+		
+		try {
+			count = delDao.count();
+		} catch (Exception e) {
+			System.err.println("전체 행 조회 중 에러..");
+			e.printStackTrace();
+		}
+		return count;
+	}
+	
+	// 회원전용 목록
+	@Override
+	public List<Delivery> listByUserId(String userId) {
+		List<Delivery> list = null;
+		try {
+			list = delDao.listByUserId(userId);
+		} catch (Exception e) {
+			System.err.println("회원전용 배송 조회 중 에러...");
+			e.printStackTrace();
+		}
+		return list;
+	}
+
+
+	@Override
+	public Delivery getDeliveryByIdx(int idx) throws Exception {
+		try (Connection con = .getConnection()) {
+            DeliveryDAO dao = new DeliveryDAO(con);
+            return dao.selectDeliveryByIdx(idx);
+	}
+}
+
+-- DriverService 파일 
+package service;
+
+import java.util.List;
+import java.util.Map;
+
+import com.alohaclass.jdbc.dto.PageInfo;
+import DTO.Driver;
+
+public interface DriverService {
+
+	// C.R.U.D
+	public List<Driver> list();
+	public List<Driver> listBy(Map<String, Object> fields);
+	public PageInfo<Driver> page();
+	public Driver select(int no);
+	public int insert(Driver driver);
+	public Driver insertKey(Driver driver);
+	public int update(Driver driver);
+	public int delete(int no);
+	
+
+}
+
+-- DriverServiceImpl 파일 
+package service;
+
+import java.util.List;
+import java.util.Map;
+
+import com.alohaclass.jdbc.dto.PageInfo;
+
+import DAO.DriverDAO;
+import DTO.Driver;
+
+public class DriverServiceImpl implements DriverService {
+	
+	DriverDAO driverDao = new DriverDAO();
+	
+	@Override
+	public List<Driver> list() {
+		List<Driver> list = null;
+		try {
+			list = driverDao.list();
+		} catch (Exception e) {
+			System.err.println("배달기사 전체 조회 중 에러...");
+			e.printStackTrace();
+		}
+		return list;
+	}
+
+	@Override
+	public List<Driver> listBy(Map<String, Object> fields) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public PageInfo<Driver> page() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Driver select(int no) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public int insert(Driver driver) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	@Override
+	public Driver insertKey(Driver driver) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public int update(Driver driver) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	@Override
+	public int delete(int no) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+	
+
+
+}
+
+-- FAQService 파일 
+package service;
+
+import java.util.List;
+import java.util.Map;
+import com.alohaclass.jdbc.dto.PageInfo;
+import DTO.FAQ;
+
+public interface FAQService {
+	
+	// C.R.U.D
+	public List<FAQ> list();
+	public List<FAQ> listBy(Map<String, Object> fields);
+	public PageInfo<FAQ> page(String keyword, List<String> columList);
+	public FAQ select(int no);
+	public int insert(FAQ faq);
+	public FAQ insertKey(FAQ faq);
+	public int update(FAQ faq);
+	public int delete(int no);
+
+	// FAQ DESC
+	public List<FAQ> listDesc();
+}
+
+-- FAQServiceImpl 파일 
+package service;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
+
+import com.alohaclass.jdbc.dto.Page;
+import com.alohaclass.jdbc.dto.PageInfo;
+
+import DAO.FAQDAO;
+import DTO.FAQ;
+import DTO.User;
+
+public class FAQServiceImpl implements FAQService {
+		
+	FAQDAO faqDao = new FAQDAO();
+	
+	@Override
+	public List<FAQ> listDesc() {
+		List<FAQ> list = null;
+		
+		try {
+			list = faqDao.listDesc();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		return list;
+	}
+	
+	@Override
+	public List<FAQ> list() {
+		List<FAQ> list = null;
+		
+		try {
+			list = faqDao.list();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return list;
+	}
+
+	@Override
+	public List<FAQ> listBy(Map<String, Object> fields) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public PageInfo<FAQ> page(String keyword, List<String> columList) {
+		PageInfo<FAQ> pageInfo = null; 
+		try {
+			Page pageObj = new Page(1, 10);
+			pageInfo = faqDao.page(pageObj, keyword, columList);
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return pageInfo;
+	}
+
+	@Override
+	public FAQ select(int no) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public int insert(FAQ faq) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	@Override
+	public FAQ insertKey(FAQ faq) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public int update(FAQ faq) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	@Override
+	public int delete(int no) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+
+
+}
+
+-- InquiryService 파일 
+package service;
+
+import java.util.List;
+import java.util.Map;
+
+import com.alohaclass.jdbc.dto.PageInfo;
+import DTO.Inquiry;
+
+public interface InquiryService {
+
+	// C.R.U.D
+	public List<Inquiry> list();
+	public List<Inquiry> listBy(Map<String, Object> fields);
+	public PageInfo<Inquiry> page();
+	public Inquiry select(int no);
+	public int insert(Inquiry inquiry);
+	public Inquiry insertKey(Inquiry inquiry);
+	public int update(Inquiry inquiry);
+	public int delete(int no);
+}
+
+-- InquiryServiceImpl 파일
+package service;
+
+import java.util.List;
+import java.util.Map;
+
+import com.alohaclass.jdbc.dto.PageInfo;
+
+import DAO.InquiryDAO;
+import DTO.Inquiry;
+
+public class InquiryServiceImpl implements InquiryService {
+	
+	InquiryDAO inquiryDao = new InquiryDAO();
+	
+	@Override
+	public List<Inquiry> list() {
+		List<Inquiry> list = null;
+		try {
+			list = inquiryDao.list();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return list;
+	}
+
+	@Override
+	public List<Inquiry> listBy(Map<String, Object> fields) {
+		List<Inquiry> list = null;
+		try {
+			list = inquiryDao.listBy(fields);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return list;
+	}
+
+	@Override
+	public PageInfo<Inquiry> page() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Inquiry select(int no) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public int insert(Inquiry inquiry) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	@Override
+	public Inquiry insertKey(Inquiry inquiry) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public int update(Inquiry inquiry) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	@Override
+	public int delete(int no) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+}
+
+-- RegionService 파일 
+package service;
+
+import java.util.List;
+import java.util.Map;
+
+import com.alohaclass.jdbc.dto.PageInfo;
+import DTO.RegionName;
+
+public interface RegionService {
+
+	// C.R.U.D
+	public List<RegionName> list();
+	public List<RegionName> listBy(Map<String, Object> fields);
+	public PageInfo<RegionName> page();
+	public RegionName select(int no);
+	public int insert(RegionName regionName);
+	public RegionName insertKey(RegionName regionName);
+	public int update(RegionName regionName);
+	public int delete(int no);
+}
+
+-- RegionServiceImpl 파일 
+package service;
+
+import java.util.List;
+import java.util.Map;
+
+import com.alohaclass.jdbc.dto.PageInfo;
+
+import DAO.RegionNameDAO;
+import DTO.RegionName;
+
+public class RegionServiceImpl implements RegionService {
+	
+	RegionNameDAO rnDao = new RegionNameDAO();
+
+	@Override
+	public List<RegionName> list() {
+		
+		return null;
+	}
+
+	@Override
+	public List<RegionName> listBy(Map<String, Object> fields) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public PageInfo<RegionName> page() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public RegionName select(int no) {
+		RegionName regionName = null;
+		try {
+			regionName = rnDao.select(no);
+		} catch (Exception e) {
+			System.err.println("del_no 로 위치 테이블 조회 중 에러...");
+			e.printStackTrace();
+		}
+		return regionName;
+	}
+
+	@Override
+	public int insert(RegionName regionName) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	@Override
+	public RegionName insertKey(RegionName regionName) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public int update(RegionName regionName) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	@Override
+	public int delete(int no) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+}
+
+-- UserService 파일 
+package service;
+
+import java.util.List;
+import java.util.Map;
+
+import com.alohaclass.jdbc.dto.PageInfo;
+import DTO.User;
+
+public interface UserService {
+
+	// C.R.U.D
+	public List<User> list();
+	public List<User> listBy(Map<String, Object> fields);
+	public PageInfo<User> page(String keyword, List<String> columList);
+	public User select(String userId);
+	public int insert(User user);
+	public User insertKey(User user);
+	public int update(User user);
+	public int delete(int no);
+	
+	// 로그인 
+	boolean login(User user);
+	User selectUserById(String id);
+	boolean insertUser(User user);
+    boolean isUserIdDuplicate(String id); // 아이디 중복 검사
+    
+}
+
+-- UserServiceImpl 파일 
+package service;
+
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
+
+import com.alohaclass.jdbc.dto.Page;
+import com.alohaclass.jdbc.dto.PageInfo;
+
+import DAO.UserDAO;
+import DTO.User;
+
+public class UserServiceImpl implements UserService {
+	
+	private UserDAO userDAO = new UserDAO();
+
+	@Override
+	public List<User> list() {
+		List<User> list = null;
+		try {
+			list = userDAO.list();
+		} catch (Exception e) {
+			System.err.println("유저 전체 조회 중 에러");
+			e.printStackTrace();
+		}
+		return list;
+	}
+	
+	@Override
+	public List<User> listBy(Map<String, Object> fields) {
+		List<User> list = null;
+		try {
+			list = userDAO.listBy(fields);
+		} catch (Exception e) {
+			System.err.println("특정 유저 조회");
+			e.printStackTrace();
+		}
+		return list;
+	}
+
+	@Override
+	public PageInfo<User> page(String keyword, List<String> columList) {
+		PageInfo<User> pageInfo = null; 
+		try {
+			Page pageObj = new Page(1, 10);
+			pageInfo = userDAO.page(pageObj, keyword, columList);
+
+			// role_idx 가 1인 회원만(일반유저) 추출
+			List<User> list1 = new ArrayList<>();
+			List<User> list2 = pageInfo.getList();
+			for(User user : list2) {
+				int role_idx = user.getRoleIdx();
+				
+				if(role_idx == 1) {
+					list1.add(user);
+				}
+			}
+			
+			pageInfo.setList(list1);
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return pageInfo;
+	}
+
+	public User select(int no) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public int insert(User user) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	@Override
+	public User insertKey(User user) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public int update(User user) {
+		int result = 0;
+		try {
+			result = userDAO.update(user);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return result;
+	}
+
+	@Override
+	public int delete(int no) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	@Override
+	public User select(String userId) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+
+	@Override
+    public boolean login(User user) {
+        User dbUser = null;
+        try {
+            dbUser = selectUserById(user.getId());
+            System.out.println("입력 아이디: " + user.getId());
+            System.out.println("DB 조회 결과: " + dbUser);
+            System.out.println("입력 비밀번호: " + user.getPassword());
+            System.out.println("DB 비밀번호: " + (dbUser != null ? dbUser.getPassword() : "null"));
+        } catch (Exception e) {
+            System.err.println("로그인 시 오류 발생");
+            e.printStackTrace();
+        }
+
+        return dbUser != null && dbUser.getPassword().equals(user.getPassword());
+    }
+
+   @Override
+    public User selectUserById(String id) {
+        return userDAO.select(id);
+    }
+
+   @Override
+   public boolean insertUser(User user) {
+	    int result = userDAO.insert(user);
+	    boolean success = result > 0;
+
+	    if (success) {
+	        System.out.println("회원가입 성공");
+	    } else {
+	        System.err.println("회원가입 실패");
+	    }
+
+	    return success;
+	}
+
+	@Override
+	public boolean isUserIdDuplicate(String id) {
+		if (id == null || id.trim().isEmpty()) {
+		        return false; // 빈 값 처리
+		}
+		return userDAO.select(id.trim()) != null;
+	}
+
+
+}
+
+
+-- servlet 폴더 내
+AdminServlet, AskServlet, CscServlet, DeliveryStatusServlet, EncodingFilter, IndexServlet, UserServlet 이름으로 된 java 파일들이 존재 
+
+-- AdminServlet 파일 
+package servlet;
+
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import com.alohaclass.jdbc.dto.Page;
+import com.alohaclass.jdbc.dto.PageInfo;
+
+import DTO.Delivery;
+import DTO.Driver;
+import DTO.Inquiry;
+import DTO.User;
+import jakarta.servlet.ServletException;
+import jakarta.servlet.annotation.WebServlet;
+import jakarta.servlet.http.HttpServlet;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
+import service.DeliveryServiceImpl;
+import service.DriverService;
+import service.DriverServiceImpl;
+import service.InquiryServiceImpl;
+import service.UserService;
+import service.UserServiceImpl;
+import util.QueryStringBuilder;
+
+@WebServlet("/admin/*")
+public class AdminServlet extends HttpServlet {
+	private static final long serialVersionUID = 1L;
+	
+    private UserService userService = new UserServiceImpl();
+    // 직접 만든 DAO 메서드 쓰려고 Impl 타입으로 선언
+    private DeliveryServiceImpl delService = new DeliveryServiceImpl();
+    private InquiryServiceImpl inqService = new InquiryServiceImpl();
+    private DriverService driverService = new DriverServiceImpl();
+    
+	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		String path = request.getPathInfo();
+		System.out.println("요청된 추가 경로 : " + path);
+		String page = "";				// forward 로 이동할 경로
+		String whereTxt = "";			// where 절 조건
+		String column = "";				// where 절 컬럼	
+		int currentPage = 1;			// 현재 몇 페이지 
+		if(request.getParameter("page") != null)
+		currentPage = Integer.parseInt(request.getParameter("page"));
+		int pageCut = 10;				// 한 페이지의 출력 할 행의 수 
+		int size = 0;					// 총 행의 수 담을 변수
+		int blockSize = 5;
+		int startPage = (currentPage - 1) / blockSize * blockSize;
+		int endPage = 0;
+		String paramQuery = "";			// 파라미터 쿼리들
+		
+		// 요청별 로직 처리
+		switch(path) {
+			// 어드민 유저관리 페이지
+			case "/user":
+				whereTxt = request.getParameter("where_txt"); // 조건 검색어
+				column = request.getParameter("where"); 			// 컬럼
+				if(whereTxt != null || column != null) {
+					System.out.println(column + " LIKE %" + whereTxt + "%");
+					List<String> columnList = new ArrayList<>();
+					columnList.add(column);
+					
+					PageInfo<User> pageInfo = userService.page(whereTxt, columnList);
+					List<User> users = pageInfo.getList();
+					Page pageObj = pageInfo.getPage();
+					
+					request.setAttribute("users", users);
+					request.setAttribute("page", pageObj);
+					request.setAttribute("pageInfo", pageInfo);
+				} else {
+					Map<String, Object> where2 = new HashMap<>();
+					where2.put("role_idx", 1);
+					List<User> users = userService.listBy(where2);
+					request.setAttribute("users", users);
+				}
+				
+				page = "/page/admin/admin_user.jsp";
+				request.getRequestDispatcher(page).forward(request, response);
+				break;
+				
+			// 어드민 택배관리 페이지
+			case "/delivery":
+				whereTxt= request.getParameter("where_txt");	// 조건 검색어
+				column = request.getParameter("where");			// 컬럼
+				System.out.println(column + " LIKE %" + whereTxt + "%");
+				if(request.getParameterMap() != null)		    // 파라미터 쿼리
+					paramQuery = QueryStringBuilder.execute(request.getParameterMap());
+				
+				List<Delivery> deliveries = null;
+				// 필터링 없을 때
+				if(whereTxt == null || column == null) {
+					deliveries = delService.regJoinList(pageCut, (currentPage-1) * 5);
+					System.out.println(currentPage - 1);
+					size = (int)Math.ceil( delService.joinCount() / pageCut);
+					endPage = Math.min(startPage + blockSize - 1, size - 1);
+					System.out.println("총 행의 개수 : " + size);
+				} 
+				// 필터링 있을 때
+				else {
+					deliveries = delService.regJoinList(column, whereTxt, pageCut, (currentPage-1) * 5);
+					size = (int)Math.ceil( delService.filterJoinCount(column, whereTxt) / pageCut);
+					endPage = Math.min(startPage + blockSize - 1, size - 1);
+					System.out.println("총 행의 개수 : " + size);
+				}
+				
+				page = "/page/admin/admin_delivery.jsp";
+				request.setAttribute("paramQuery", paramQuery);		// 파라미터 쿼리 
+		    request.setAttribute("currentPage", currentPage); // 페이지							
+				request.setAttribute("size", size);								// 행 사이즈
+				request.setAttribute("deliveries", deliveries);		// 행 리스트
+				request.setAttribute("startPage", startPage);			// 시작 페이지
+				request.setAttribute("endPage", endPage);					// 종료 페이지
+				request.getRequestDispatcher(page).forward(request, response);
+				break;
+				
+			// 어드민 문의 페이지
+			case "/inquiry":
+				page = "/page/admin/admin_inq.jsp";
+				List<Inquiry> inquiries = inqService.list();
+				
+				request.setAttribute("inquiries", inquiries);
+				request.getRequestDispatcher(page).forward(request, response);
+				break;
+				
+			// 어드민 기사관리 페이지
+			case "/driver":
+				page = "/page/admin/admin_driver.jsp";
+				List<Driver> drivers = driverService.list();
+				
+				request.setAttribute("drivers", drivers);
+				request.getRequestDispatcher(page).forward(request, response);
+			default: break;
+		} 
+	}
+	
+	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		doGet(request, response);
+	}
+}
+
+-- AskServlet 파일 
+package servlet;
+
+import java.io.IOException;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import DTO.AskDTO;
+import DTO.User;
+import jakarta.servlet.RequestDispatcher;
+import jakarta.servlet.ServletException;
+import jakarta.servlet.annotation.WebServlet;
+import jakarta.servlet.http.HttpServlet;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
+import service.AskService;
+import service.AskServiceImpl;
+import service.UserService;
+import service.UserServiceImpl;
+
+/**
+ * Servlet implementation class AskServlet
+ */
+@WebServlet("/ask")
+public class AskServlet extends HttpServlet {
+	private static final long serialVersionUID = 1L;
+       
+	private UserService userService = new UserServiceImpl();
+	private AskService askService = new AskServiceImpl();
+	
+	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		
+		
+        
+		
+		response.getWriter().append("Served at: ").append(request.getContextPath());
+	}
+
+	/**
+	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
+	 */
+	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		// 세션에서 유저넘버 받아오기
+        HttpSession session = request.getSession();
+        User user = (User)session.getAttribute("loginUser");
+        int idx = user.getIdx();
+        System.out.println("user" + user);
+        
+		String path = request.getPathInfo();
+		
+		Map<String, Object> qna = new HashMap<String, Object>();
+		qna.put("user_no", idx);
+		
+		// 문의하기 -> 내문의사항
+		String page = "";
+		List<AskDTO> askList = askService.listBy(qna); 
+		System.out.println("asklist" + askList);
+		
+        // 한글 처리
+        request.setCharacterEncoding("UTF-8");
+
+        
+        
+        
+        // 폼에서 넘어온 값 받기
+        String type = request.getParameter("qna_type");
+        String title = request.getParameter("c_title");
+        String content = request.getParameter("c_content");
+        
+        // 넘어온 값 객체 생성
+        AskDTO askDto = AskDTO.builder()
+        					  .userNo(idx)
+        					  .title(title)
+        					  .content(content)
+        					  .type(type)
+        					  .build();
+        askService.insert(askDto);	  
+
+        // 넘길 값 저장
+        request.setAttribute("qna_type", type); //배송유형
+        request.setAttribute("c_title", title);  //문의제목
+        request.setAttribute("c_content", content);  //문의내용
+        
+        // 결과 페이지로 포워딩
+        page = "/page/serv_center/myqna.jsp";
+        request.setAttribute("askList", askList);
+        RequestDispatcher dispatcher = request.getRequestDispatcher(page);
+        dispatcher.forward(request, response);
+		
+		doGet(request, response);
+	}
+
+}
+
+-- CscServlet 파일 
+package servlet;
+
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
+
+import com.alohaclass.jdbc.dto.PageInfo;
+
+import DTO.Announcement;
+import DTO.FAQ;
+import jakarta.servlet.ServletException;
+import jakarta.servlet.annotation.WebServlet;
+import jakarta.servlet.http.HttpServlet;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
+import service.AnnouncementService;
+import service.AnnouncementServiceImpl;
+import service.FAQService;
+import service.FAQServiceImpl;
+
+/**
+ * Servlet implementation class CscServlet
+ */
+@WebServlet("/serv_center/*")
+public class CscServlet extends HttpServlet {
+	
+	private static final long serialVersionUID = 1L;
+       
+	AnnouncementService annoService = new AnnouncementServiceImpl();
+	FAQService faqService = new FAQServiceImpl();
+	
+	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		String path = request.getPathInfo();
+		String root = request.getContextPath();
+		System.out.println("요청된 추가 경로 : " + path);
+		String page = "";
+		String whereTxt = "";
+		List<String> column = null;
+		
+		switch(path) {
+			
+			case "/announcement": 
+				page = "/page/serv_center/announcement.jsp";
+				List<Announcement> annoList = annoService.list();
+				
+				request.setAttribute("list", annoList);
+				request.getRequestDispatcher(page).forward(request, response);
+				break;
+				
+			case "/announcement/search": 
+				whereTxt = request.getParameter("keyword");
+				
+				if(whereTxt == null || whereTxt.isEmpty()) {
+					response.sendRedirect(root + "/serv_center/announcement");
+					return;
+				}
+				
+				column = new ArrayList<>();
+				column.add("title");	// 제목
+				column.add("content");	// 내용
+				
+				PageInfo<Announcement> annoInfo = annoService.page(whereTxt, column);
+				List<Announcement> annoSearchList = annoInfo.getList();
+				
+				page = "/page/serv_center/announcement.jsp";
+				request.setAttribute("list", annoSearchList);
+				request.getRequestDispatcher(page).forward(request, response);
+				break;
+		
+			case "/faq":
+				page = "/page/serv_center/faq.jsp";
+				List<FAQ> faqList = faqService.listDesc();
+				
+				request.setAttribute("list", faqList);
+				request.getRequestDispatcher(page).forward(request, response);
+				break;
+				
+			case "/faq/search": 
+				whereTxt = request.getParameter("keyword");
+				
+				if(whereTxt == null || whereTxt.isEmpty()) {
+					response.sendRedirect(root + "/serv_center/faq");
+					return;
+				}
+				
+				column = new ArrayList<>();
+				column.add("title");	// 제목
+				column.add("content");	// 내용
+				
+				PageInfo<FAQ> faqInfo = faqService.page(whereTxt, column);
+				List<FAQ> faqSearchList = faqInfo.getList();
+				
+				page = "/page/serv_center/faq.jsp";
+				request.setAttribute("list", faqSearchList);
+				request.getRequestDispatcher(page).forward(request, response);
+				break;
+				
+			default: break;
+		}
+		response.getWriter().append("Served at: ").append(request.getContextPath());
+	}
+
+	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		doGet(request, response);
+	}
+
+}
+
+-- DeliveryStatusServlet 파일 
+package servlet;
+
+import java.io.IOException;
+
+import DTO.Delivery;
+import jakarta.servlet.RequestDispatcher;
+import jakarta.servlet.ServletException;
+import jakarta.servlet.annotation.WebServlet;
+import jakarta.servlet.http.HttpServlet;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
+import service.DeliveryService;
+import service.DeliveryServiceImpl;
+
+
+@WebServlet("/DeliveryStatusServlet")
+public class DeliveryStatusServlet extends HttpServlet {
+	private static final long serialVersionUID = 1L;
+    
+	 private DeliveryService deliveryService = new DeliveryServiceImpl();
+
+	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		String idxStr = request.getParameter("idx");
+        if (idxStr == null) {
+        	response.sendError(HttpServletResponse.SC_BAD_REQUEST, "배송 idx가 필요합니다.");
+            return;
+        }
+        try {
+            int idx = Integer.parseInt(idxStr);
+            Delivery delivery = deliveryService.getDeliveryByIdx(idx);
+            if (delivery == null) {
+            	response.sendError(HttpServletResponse.SC_NOT_FOUND, "배송 정보를 찾을 수 없습니다.");
+                return;
+            }
+            request.setAttribute("delivery", delivery);
+            RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/views/deliveryStatus.jsp");
+            rd.forward(request, response);
+        } catch (Exception e) {
+            e.printStackTrace();
+            response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, "서버 오류");
+        }
+    }
+		
+		
+	
+
+
+	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		// TODO Auto-generated method stub
+		doGet(request, response);
+	}
+
+}
+
+-- EncodingFilter 파일 
+package servlet;
+
+import jakarta.servlet.Filter;
+import jakarta.servlet.FilterChain;
+import jakarta.servlet.FilterConfig;
+import jakarta.servlet.ServletException;
+import jakarta.servlet.ServletRequest;
+import jakarta.servlet.ServletResponse;
+import jakarta.servlet.annotation.WebFilter;
+import jakarta.servlet.http.HttpFilter;
+import java.io.IOException;
+
+/**
+ * Servlet Filter implementation class EncodingFilter
+ */
+@WebFilter("/*")
+public class EncodingFilter extends HttpFilter implements Filter {
+       
+	public void destroy() {
+		
+	}
+
+	public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
+		request.setCharacterEncoding("UTF-8");
+		
+		chain.doFilter(request, response);
+	}
+
+	public void init(FilterConfig fConfig) throws ServletException {
+		
+	}
+
+}
+
+-- IndexServlet 파일 
+package servlet;
+
+import java.io.IOException;
+import java.util.List;
+
+import DTO.Announcement;
+import jakarta.servlet.ServletException;
+import jakarta.servlet.annotation.WebServlet;
+import jakarta.servlet.http.HttpServlet;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
+import service.AnnouncementService;
+import service.AnnouncementServiceImpl;
+
+/**
+ * Servlet implementation class IndexServlet
+ */
+@WebServlet("/index")
+public class IndexServlet extends HttpServlet {
+	
+	AnnouncementService annService = new AnnouncementServiceImpl();
+	
+	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		
+		// 공지사항 영역
+		List<Announcement> annoList = annService.top3Anno();
+		request.setAttribute("anno_list", annoList);
+		request.getRequestDispatcher("/index.jsp").forward(request, response);
+	}
+	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		doGet(request, response);
+	}
+
+}
+
+-- UserServlet 파일 
+package servlet;
+
+import java.io.IOException;
+import java.io.PrintWriter;
+import java.util.List;
+import java.util.Map;
+
+import com.google.gson.Gson;
+
+import DAO.UserDAO;
+import DTO.Delivery;
+import DTO.User;
+import jakarta.servlet.ServletException;
+import jakarta.servlet.annotation.WebServlet;
+import jakarta.servlet.http.HttpServlet;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
+
+import service.DeliveryService;
+import service.DeliveryServiceImpl;
+import service.UserService;
+import service.UserServiceImpl;
+
+import java.io.IOException;
+import java.io.PrintWriter;
+
+import DAO.UserDAO;
+import DTO.User;
+
+@WebServlet("/users/*")
+public class UserServlet extends HttpServlet {
+	private static final long serialVersionUID = 1L;
+       
+	private UserService userService = new UserServiceImpl();
+	 private DeliveryService deliveryService = new DeliveryServiceImpl();
+	
+	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		// 로그아웃 
+		String path = request.getPathInfo(); 
+		System.out.println(path);
+		if ("/logout".equals(path)) {
+	        // 기존 세션을 가져오고 무효화
+	        HttpSession session = request.getSession(false); // false: 세션이 없으면 null 반환
+	        if (session != null) {
+	            session.invalidate();
+	        }
+	        // 로그아웃 후 메인 페이지로 리다이렉트
+	        response.sendRedirect(request.getContextPath() + "/index.jsp");
+	    }
+		
+		// 회원가입 시 - 아이디 중복 검사 
+		else if ("/checkId".equals(path)) {
+		    String id = request.getParameter("id");
+		    System.out.println("[checkId] 요청 아이디 파라미터: " + id);
+		    
+		    boolean exists = userService.isUserIdDuplicate(id); //서비스 계층 호출
+
+		    response.setContentType("application/json");
+		    PrintWriter out = response.getWriter();
+		    out.print("{\"exists\":" + exists + "}");
+		    out.flush();
+		}
+		
+		// 로그인한 사용자의 배속 목록 반환 
+//		else if ("/mypage".equals(path)) {
+//		    HttpSession session = request.getSession(false);
+//		    response.setContentType("application/json;charset=UTF-8");
+//
+//		    if (session == null || session.getAttribute("loginId") == null) {
+//		        response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+//		        return;
+//		    }
+//
+//		    String loginId = (String) session.getAttribute("loginId");
+//		    System.out.println("[/mypage] 로그인 아이디로 배송 조회: " + loginId);
+//
+//		    List<Map<String, Object>> deliveries = deliveryService.getDeliveryDetailsByUserId(loginId);
+//
+//		    Gson gson = new Gson();
+//		    String json = gson.toJson(deliveries);
+//		    response.getWriter().print(json);
+//		}
+		else if ("/mypage-jsp".equals(path)) {
+		    HttpSession session = request.getSession(false);
+		    // 로그인 체크
+		    // TODO: 로그인 필터로 전환
+		    if (session == null || session.getAttribute("loginId") == null) {
+		        response.sendRedirect(request.getContextPath() + "/page/login/login.jsp");
+		        return;
+		    }
+
+		    String loginId = (String) session.getAttribute("loginId");
+		    System.out.println("[/mypage-jsp] JSP용 배송 목록 조회. 로그인 아이디: " + loginId);
+
+		    // 배송내역 조회
+		    List<Delivery> deliveries = deliveryService.listByUserId(loginId);
+
+		    request.setAttribute("deliveries", deliveries);
+		    request.getRequestDispatcher("/page/login/login_list.jsp").forward(request, response);
+		}
+		
+	}
+
+	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        
+		// 로그인 로직 
+		String path = request.getPathInfo();
+		System.out.println(path);
+
+        if ("/login".equals(path)) {
+            String userId = request.getParameter("id");
+            String password = request.getParameter("password");
+
+            User user = User.builder()
+                            .id(userId)
+                            .password(password)
+                            .build();
+
+            boolean result = userService.login(user);
+            User loginUser = userService.selectUserById(user.getId());
+            System.out.println(result);
+
+            if (result) {
+            	// 비밀번호는 세션 저장 X 
+                loginUser.setPassword(null);
+                
+                // 세션 생성, 기존 세션 가져오기 및 로그인된 사용자 정보 세션에 저장  
+                HttpSession session = request.getSession();
+                session.setAttribute("loginId", user.getId());
+                session.setAttribute("loginUser", loginUser);
+                
+                // 유저 / 어드민 분리 
+                int roleIdx = loginUser.getRoleIdx(); 
+                if (roleIdx == 1) {
+                    // 일반 사용자 페이지
+                	System.out.println(request.getContextPath());
+                    response.sendRedirect(request.getContextPath() + "/index.jsp");
+                } else if (roleIdx == 2) {
+                    // 관리자 페이지
+                    response.sendRedirect(request.getContextPath() + "/admin/user");
+                } else {
+                    // 그 외 역할이거나 예외 처리
+                    response.sendRedirect(request.getContextPath() + "/index.jsp");
+                }
+            } else {
+                response.sendRedirect(request.getContextPath() + "/page/login/login.jsp?error=true");
+            }
+            
+        }
+        
+        //  회원가입 
+        else if ("/sign_up".equals(path)) {
+            // 회원가입 처리 로직
+            String id = request.getParameter("id");
+            String password = request.getParameter("password");
+            String name = request.getParameter("name");
+            String email1 = request.getParameter("email1");
+            String email2 = request.getParameter("email2");
+            String address = request.getParameter("address");
+            String birth = request.getParameter("birth");
+            String phone = request.getParameter("p_number");
+
+            String email = email1 + "@" + email2;
+
+            User user = User.builder()
+                    .id(id)
+                    .password(password)
+                    .username(name)
+                    .email(email)
+                    .address(address)
+                    .birth(birth)
+                    .pNumber(phone)
+                    .roleIdx(1)
+                    .build();
+
+            try {
+                // 서비스 계층으로 중복 검사
+                if (userService.isUserIdDuplicate(id)) {
+                    request.setAttribute("error", "이미 사용 중인 아이디입니다.");
+                    request.getRequestDispatcher("/sign_up.jsp").forward(request, response);
+                    return;
+                }
+
+                // 회원가입 처리도 service 통해 위임하는 것이 이상적이나, DAO 직접 사용해도 무방
+                UserDAO userDAO = new UserDAO();
+                int result = userDAO.insert(user);
+
+                if (result > 0) {
+                    response.sendRedirect( request.getContextPath() + "/page/login/login.jsp");
+                    System.out.println("성공");
+                } else {
+                	System.out.println("실패");
+                    request.setAttribute("error", "회원가입 실패");
+                    request.getRequestDispatcher("/sign_up.jsp").forward(request, response);
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+                System.err.println("try 실패");
+                request.setAttribute("error", "서버 오류 발생: " + e.getMessage());
+                request.getRequestDispatcher("/sign_up.jsp").forward(request, response);
+            }
+
+            
+                        
+        } // 회원가입 끝 
+
+        // 마이페이지 - 회원정보 수정 
+        else if ("/update".equals(path)) {
+            HttpSession session = request.getSession(false);
+            if (session == null || session.getAttribute("loginId") == null) {
+                response.sendRedirect(request.getContextPath() + "/page/login/login.jsp");
+                return;
+            }
+
+            String p_number = request.getParameter("p_number");
+            String id = request.getParameter("id");
+            if (id == null || id.trim().isEmpty()) {
+                System.out.println("ID가 비어 있습니다.");
+                // 처리 중단
+            }
+            
+            // idx 파라미터 받아오기
+            int idx = Integer.parseInt(request.getParameter("idx"));  //
+
+
+            String password = request.getParameter("password");
+            String email1 = request.getParameter("email1");
+            String email2 = request.getParameter("email2");
+            String email = email1 + "@" + email2;
+
+            System.out.println("[UserServlet POST] path: " + path);
+            String address = request.getParameter("address");
+            String addressDetail = request.getParameter("address_detail");
+            
+            // 두 주소를 합쳐서 하나의 문자열로 만든다 (공백 한 칸 추가)
+            String fullAddress = address;
+            if(addressDetail != null && !addressDetail.trim().isEmpty()) {
+                fullAddress += " " + addressDetail.trim();
+            }
+            
+            User updatedUser = User.builder()
+            		.idx(idx)
+            	    .id(id)
+            	    .password(password)
+            	    .email(email)
+            	    .address(fullAddress)
+            	    .pNumber(p_number)
+            	    .build();
+            // 로그 추적 
+            System.out.println("업데이트 객체 : " + updatedUser);
+
+            int result = userService.update(updatedUser);
+            System.out.println("결과" + result);
+            if (result > 0) {
+                // 세션에 최신 정보 갱신
+                User refreshedUser = userService.selectUserById(id);
+                refreshedUser.setPassword(null); // 비밀번호 감춤 
+                session.setAttribute("loginUser", refreshedUser);
+
+                response.sendRedirect(request.getContextPath() + "/index.jsp");
+            } else {
+                request.setAttribute("error", "업데이트 실패");
+                request.getRequestDispatcher("/page/login/login_list_update.jsp").forward(request, response);
+            }
+        }
+
+
+	}
+}
+
+
+
+-- util 폴더 내 
+-- QueryStringBuilder java 파일 존재 
+package util;
+
+import java.net.URLEncoder;
+import java.util.Map;
+import java.util.StringJoiner;
+
+public class QueryStringBuilder {
+
+	// 파라미터 쿼리에서 page 빼고 다시 연결하는 메서드
+	public static String execute(Map<String, String[]> param) {
+    StringJoiner sj = new StringJoiner("&");
+    
+    for(Map.Entry<String, String[]> entry : param.entrySet()) {
+        String key = entry.getKey();
+        if (!key.equals("page")) {
+            for(String value : entry.getValue()) {
+                try {
+                    String encodedValue = URLEncoder.encode(value, "UTF-8");
+                    sj.add(key + "=" + encodedValue);
+                } catch (Exception e) {
+                    sj.add(key + "=" + value);
+                }
+            }
+        }
+    }
+    return sj.toString();
+}
+}
+ 
+
+-- db.properties 파일 
+db.url=jdbc:mysql://127.0.0.1:3306/delivery?serverTimezone=Asia/Seoul&allowPublicKeyRetrieval=true&useSSL=false
+db.username=mini_team1
+db.password=123456
+mapUnderscoreToCamelCase=true
+mapCamelCaseToUnderscore=true
+autoCommit=true
+sqlLog=true
+
+
+-- webapp 폴더 내 
+layout 폴더, page 폴더, static 폴더, web-inf 폴더 존재함 
+
+-- layout 폴더 내
+admin_header, common, footer, header, jstl, link, meta, script, serv_header 이름의 jsp 파일들이 존재 
+
+-- admin_header 파일
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+<%@ include file="/layout/common.jsp" %>
+<head>
+</head>
+<header>
+	<div class="admin_header">
+		<a href="<%= root %>/index.jsp"><img src="<%= root %>/static/img/logo.png" width="380" height="153" ></a>
+		<nav>
+			<ul>
+				<li class="on"><a href="<%=root%>/page/admin/admin_user.jsp">회원관리</a></li>
+				<li><a href="<%=root%>/page/admin/admin_delivery.jsp">택배관리</a></li>
+				<li><a href="<%=root%>/page/admin/admin_inq.jsp">문의</a></li>
+				<li><a href="<%=root%>/page/admin/admin_driver.jsp">기사관리</a></li>
+			</ul>
+		</nav>
+	</div>
+</header> 
+-- common 파일 
+<%-- 전역변수 --%>
+<%
+	// Context Path (루트 경로)
+	String root = request.getContextPath();
+	// 로그인 아이디 (세션)
+	String loginId = (String) session.getAttribute("loginId");	
+%>
+-- footer 파일 
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+<%@ include file="/layout/common.jsp" %>
+<footer>
+	<div class="footer_top">
+		<div><p>주)더조은물류회사</p></div>
+		<div class="footer_list_wrap">
+			<ul class="footer_list">
+			  <li><a href="">회사소개</a></li>
+	          <li><span class="line"></span></li>
+	          <li><a href="">이용약관</a></li>
+	          <li><span class="line"></span></li>
+	          <li><a href="">개인정보처리방침</a></li>
+	          <li><span class="line"></span></li>
+	          <li><a href="">제휴문의</a></li>
+	          <li><span class="line"></span></li>
+	          <li>
+	          	<a href="<%=root%>/page/serv_center/customer_sc.jsp">
+	          		고객센터
+          		</a>
+       		  </li>
+			</ul>
+		</div>
+	</div>
+	<div class="footer_middle">
+		<div class="footer_middle_1">
+			<ul class="fm1">
+				<li>대표자명</li>
+				<li><span class="line"></span></li>
+				<li>김조은</li>
+			</ul>
+		</div>
+		<div class="footer_middle_2">
+			<ul class="fm2_1">
+				<li>주소</li>
+				<li><span class="line"></span></li>
+				<li>인천광역시 부평구 경원대로 1336 스테이션 타워</li>
+			</ul>
+			<ul class="fm2_2">
+				<li>e-mail</li>
+				<li><span class="line"></span></li>
+				<li>tjd@thejd.co.kr</li>
+			</ul>
+			<ul class="fm2_3">
+				<li>FAX</li>
+				<li><span class="line"></span></li>
+				<li>032-123-4321</li>
+			</ul>
+		</div>
+		<div class="footer_middle_3">
+			<ul class="fm3_1">
+				<li>호스팅 서비스 제공자</li>
+				<li><span class="line"></span></li>
+				<li>주)더조은물류회사</li>
+			</ul>
+			<ul class="fm3_2">
+				<li>사업자등록번호</li>
+				<li><span class="line"></span></li>
+				<li>111-22-33445</li>
+			</ul>
+			<ul class="fm3_3">
+				<li>통신판매번호</li>
+				<li><span class="line"></span></li>
+				<li>2025-인천부평-12345</li>
+			</ul>
+		</div>
+	</div>
+	<div class="footer_bottom">
+		<a href="<%= root %>/logo"><img src="<%= root %>/static/img/logo.png" width="360" height="120" ></a>
+		<p>Copyright ⓒ BGFNetworks ALL RIGHTS RESERVED.</p>
+	</div>
+</footer>
+-- header 파일 
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+<%@ include file="/layout/common.jsp" %>
+<head>
+	<style type="text/css" >
+		nav {
+			display: flex;
+			justify-content: space-between;
+		}
+	</style>
+<%-- 	<link href="<%= root %>/static/css/style.css" rel="stylesheet" /> --%>
+<%-- 	<link href="<%= root %>/static/css/reset.css" rel="stylesheet" /> --%>
+<%-- 	<link href="<%= root %>/static/css/ys.css" rel="stylesheet" /> --%>
+</head>
+<header>
+	<nav>
+		<a href="<%= root %>/index"><img src="<%= root %>/static/img/logo.png" width="380" height="153" ></a>
+	    
+	    
+			<div class="header_wrap">
+				<div>
+					<ul class="header_top">
+						<li>
+							<a href="<%= root %>/search">
+								<img src="<%= root %>/static/img/btn_search.png" width="30" height="30">
+							</a>
+						</li>
+			
+						<% if (loginId == null) { %>
+							<li><a href="<%= root %>/page/login/login.jsp">로그인</a></li>
+							<li><a href="<%= root %>/page/login/sign_up.jsp">회원가입</a></li>
+						<% } else { %>
+							<li><a href="<%= root %>/users/mypage-jsp">마이페이지</a></li>
+							<li><a href="javascript:void(0);" onclick="confirmLogout()">로그아웃</a></li>
+						<% } %>
+					</ul>
+				</div>
+			
+				<div class="header_down">
+					<ul class="header_down_1">
+						<li><a href="<%= root %>/page/delivery/delivery_main.jsp">배송 조회</a></li>
+						<li><a href="<%= root %>/serv_center/faq">고객센터</a></li>
+					</ul>
+					<ul class="header_down_2">
+						<li><a href="<%= root %>/search"><img src="<%= root %>/static/img/ico_social_instagram.png" width="35" height="35"></a></li>
+						<li><a href="<%= root %>/search"><img src="<%= root %>/static/img/ico_social_youtube.png" width="35" height="35"></a></li>
+						<li><a href="<%= root %>/search"><img src="<%= root %>/static/img/ico_social_kakaotalk.png" width="35" height="35"></a></li>
+						<li>
+							<div class="side">
+								<input type="checkbox" id="offcanvas-toggle">
+								<a href="javascript: ;">
+									<label for="offcanvas-toggle" class="overlay"></label>
+									<label for="offcanvas-toggle" class="bars">
+										<span class="bar top"></span>
+										<span class="bar bottom"></span>
+									</label>
+								</a>
+							</div>
+						</li>
+					</ul>
+				</div>
+			</div>
+			
+			<!-- 사이드 메뉴 로그인 관련 -->
+			<div class="offcanvas">
+				<div class="offcanvas_top">
+					<ul>
+						<% if (loginId == null) { %>
+							<li><a href="<%= root %>/page/login/login.jsp">로그인</a></li>
+							<li><a href="<%= root %>/page/login/sign_up.jsp">회원가입</a></li>
+						<% } else { %>
+							<li><a href="<%= root %>/users/mypage-jsp">마이페이지</a></li>
+							<li><a href="javascript:void(0);" onclick="confirmLogout()">로그아웃</a></li>
+						<% } %>
+					</ul>
+				</div>
+			
+				<nav class="offcanvas_nav">
+					<ul class="offcanvas_ul">
+						<li><a href="#">공지사항</a></li>
+						<li><a href="<%= root %>/page/delivery/delivery_main.jsp">배송조회하기</a></li>
+						<li><a href="<%= root %>/page/serv_center/customer_sc.jsp">고객센터</a></li>
+						<li><a href="<%= root %>/page/login/login.jsp">문의하기</a></li>
+					</ul>
+				</nav>
+			</div>
+
+		
+	</nav>
+</header>
+-- jstl 파일 
+<%-- JSTL --%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
+<%@ taglib prefix="sql" uri="http://java.sun.com/jsp/jstl/sql"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+-- link 파일 
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+<%@ include file="/layout/common.jsp" %>
+<%-- 폰트 --%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%-- 라이브러리 --%>
+<link href="<%= root %>/static/css/reset.css" rel="stylesheet" />
+<link href="<%= root %>/static/css/style.css" rel="stylesheet" />
+<link href="<%= root %>/static/css/jy.css" rel="stylesheet" />
+<link href="<%= root %>/static/css/ys.css" rel="stylesheet" />
+
+
+-- meta 파일 
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+<%@ include file="/layout/common.jsp" %>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<!-- <title>project💻 - ALOHA CLASS🌴</title> -->
+<!-- 파비콘 -->
+<link rel="icon" href="<%= root %>/static/img/logo.png" type="image/x-icon">
+<!-- 썸네일 이미지 설정 -->
+<meta property="og:image" content="https://i.imgur.com/yiTQ3EV.jpg">
+<!-- 웹 페이지 설명 (선택 사항) -->
+<meta property="og:description" content="ALOHA CLASS🌴 - 쇼핑몰 프로젝트">
+<!-- 웹 페이지 URL -->
+<meta property="og:url" content="<%= root %>">
+<!-- 웹 페이지 제목 -->
+<meta name="title" content="project💻 - ALOHA CLASS🌴">
+<meta property="og:title" content="project💻 - ALOHA CLASS🌴">
+<!-- 웹 페이지 타입 (웹사이트, 기사, 제품 등) -->
+<meta property="og:type" content="website">
+<!-- 검색어 -->
+<meta name="keywords" content="쇼핑몰 프로젝트, 자바 웹개발, ALOHA CLASS, 알로하 클래스">
+<meta name="robots" content="index, follow">
+<!-- 사이트 맵 -->
+<link rel="sitemap" href="<%= root %>/static/sitemap.xml">
+-- script 파일 
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+<%@ include file="/layout/common.jsp" %>
+<%-- 라이브러리 --%>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.6/dist/js/bootstrap.bundle.min.js" integrity="sha384-j1CDi7MgGQ12Z7Qab0qlWQ/Qqz24Gc6BM0thvEMVjHnfYGF0rmFCozFSxQBxwHKO" crossorigin="anonymous"></script>
+<%-- jQuery --%>
+<script  src="http://code.jquery.com/jquery-latest.min.js"></script>
+<script src="<%= root %>/static/js/script.js"></script>
+
+
+
+<script src="<%= root %>/static/js/hm.js"></script>
+<script src="<%= root %>/static/js/jy.js"></script>
+<script src="<%= root %>/static/js/ys.js"></script>
+-- serv_header 파일 
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+<%@ include file="/layout/common.jsp" %>
+<head>
+	<style type="text/css" >
+		nav {
+			display: flex;
+			justify-content: space-between;
+		}
+	</style>
+</head>
+<header>
+	<nav>
+		<a href="<%= root %>/index"><img src="<%= root %>/static/img/logo.png" width="380" height="153" ></a>
+		<div class="header_wrap">
+			<div>
+				<ul class="header_top">
+					<li><a href="<%= root %>/search"><img src="<%= root %>/static/img/btn_search.png" width="30" height="30"></a></li>
+					<li><a href="<%= root %>/page/login/login.jsp">로그인</a></li>
+					<li><a href="<%= root %>/page/login//sign_up.jsp">회원가입</a></li>
+				</ul>
+			</div>    
+			<div class="header_down">
+				<ul class="header_down_1">
+					<li><a href="<%= root %>/page/delivery/delivery_main.jsp">배송조회</a></li>
+					<li><a href="<%= root %>/serv_center/faq">자주묻는질문</a></li>
+					<li><a href="<%= root %>/serv_center/announcement">공지사항</a></li>
+					<li><a href="<%= root %>/page/serv_center/contact.jsp">문의하기</a></li>
+					<li><a href="<%= root %>/page/serv_center/myqna.jsp">내문의사항</a></li>
+				</ul>
+				<ul class="header_down_2">
+					<li><a href="<%= root%>/search"><img src="<%= root %>/static/img/ico_social_instagram.png" width="35" height="35"></a></li>
+					<li><a href="<%= root%>/search"><img src="<%= root %>/static/img/ico_social_youtube.png" width="35" height="35"></a></li>
+					<li><a href="<%= root%>/search"><img src="<%= root %>/static/img/ico_social_kakaotalk.png" width="35" height="35"></a></li>
+					<li>
+						<div class="side">
+							<!-- checkbox -->
+					        <input type="checkbox" id="offcanvas-toggle">
+					        <!-- a href="javascript ;"  : a 태그 링크 이동 막기 -->
+					        <a href="javascript: ;">
+					        <!-- 오버레이 -->
+       						<label for="offcanvas-toggle" class="overlay"></label>
+       						 
+					         <label for="offcanvas-toggle" class="bars">
+					           <span class="bar top"></span>
+<!-- 					           <span class="bar mid"></span> -->
+					           <span class="bar bottom"></span>
+					         </label>
+					        </a>
+				        </div>
+					</li>
+				</ul>
+			</div>
+		</div>
+			<div class="offcanvas">
+	        <div class="offcanvas_top">
+	            <ul>
+					<li><a href="<%= root %>/page/login/login.jsp">로그인</a></li>
+					<li><a href="<%= root %>/page/login//sign_up.jsp">회원가입</a></li>
+				</ul>
+	        </div>
+	        <nav class="offcanvas_nav">
+	            <ul class="offcanvas_ul">
+	                <li><a href="">공지사항</a></li>
+	                <li><a href="<%= root %>/page/delivery/delivery_main.jsp">배송조회하기</a></li>
+	                <li><a href="<%= root %>/page/serv_center/customer_sc.jsp">고객센터</a></li>
+	                <li><a href="<%= root %>/page/login/login.jsp">문의하기</a></li>
+	            </ul>
+	        </nav>
+   		</div>
+	</nav>
+</header>
+
+
+
+
+-- page 폴더 내
+admin 폴더, delivery 폴더, login 폴더, serv_center 폴더가 존재 
+
+-- admin 폴더 내 
+admin_delivery, admin_driver, admin_inq, admin_user 이름의 jsp 파일 존재 
+
+
+-- admin_delivery 파일 
+<%@ include file="/layout/jstl.jsp" %>
+<%@ include file="/layout/common.jsp" %>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+<%
+	// 삼항 연산자 전용 변수
+	String queryString = (String)request.getAttribute("paramQuery");	
+	request.setAttribute("queryString", queryString);	// JSTL 에서 쓸 수 있게
+	String baseUrl = root + "/admin/delivery";
+	request.setAttribute("baseUrl", baseUrl);			// JSTL 에서 쓸 수 있게
+	int size = (int)request.getAttribute("size");
+	int currentPage = (int)request.getAttribute("currentPage");
+%>
+<!DOCTYPE html>
+<html>
+<head>
+	<title>project💻 - ALOHA CLASS🌴</title>
+	<jsp:include page="/layout/meta.jsp" />
+	<jsp:include page="/layout/link.jsp" />
+	<style type="text/css">
+		body {
+			background-color: #EEEEEE !important;
+		}
+	</style>
+</head>
+<body>
+	<div class="wrapper">
+		<header>
+			<div class="admin_header">
+				<a href="<%= root %>/index"><img src="<%= root %>/static/img/logo.png" width="380" height="153" ></a>
+				<nav>
+					<ul>
+						<li><a href="<%=root%>/admin/user">회원관리</a></li>
+						<li class="on"><a href="<%=root%>/admin/delivery">택배관리</a></li>
+						<li><a href="<%=root%>/admin/inquiry">문의</a></li>
+						<li><a href="<%=root%>/admin/driver">기사관리</a></li>
+					</ul>
+				</nav>
+			</div>
+		</header>
+		<%-- [Contents] ######################################################### --%>
+		<form action="<%=root%>/admin/delivery">
+			<div class="ad_search">
+				<ul>     
+					<li><input name="where" id="delNo"     value="idx"     type="radio"/><label for="delNo">송장번호</label></li>
+					<li><input name="where" id="userNo"    value="user_idx"    type="radio"/><label for="userNo">회원번호</label></li>
+					<li><input name="where" id="createdAt" value="created_at" type="radio"/><label for="createdAt">송장발행일</label></li>
+					<li><input name="where" id="currLoc"   value="r_status"   type="radio"/><label for="currLoc">현재위치</label></li>
+					<li><input name="where" id="status"    value="status"    type="radio"/><label for="status">배송상태</label></li>
+				</ul>
+				<div class="line"></div>
+				<div style="position: relative;">
+					<input type="text" name="where_txt">
+					<button class="ad_search_icon"><img src="<%=root%>/static/img/search.png" alt="돋보기 이미지"/></button>
+				</div>
+			</div>		
+		</form>
+		<div class="adm_table">
+			<table class="admin_table">
+				<thead class="adm_th_wrap">
+					<tr class="adm_th_tr">
+						<th>송장번호</th>
+						<th>회원번호</th>
+						<th>담당기사</th>
+						<th>송장발행일</th>
+						<th>현재위치</th>
+						<th>물품가액</th>
+						<th>선불착불</th>
+						<th>배송상태</th>
+					</tr>
+				</thead>
+				<tbody class="adm_tbody">
+					<c:forEach var="del" items="${deliveries}">
+					    <tr>
+					      <td>${del.idx}</td>
+					      <td>${del.userIdx}</td>
+					      <td>${del.name}</td>
+					      <td>${del.formatCreatedAt}</td>
+					      <td>${del.regStatus}</td>
+					      <td>${del.value}만원</td>
+					      <td>${del.prePos}</td>
+					      <td>${del.status}</td>
+					    </tr>
+			  		</c:forEach>
+				</tbody>
+			</table>
+			<div class="adm_bottom_page">
+			    <ul>
+			        <li>
+			            <a href="<%= baseUrl + "?" + (queryString.length() > 0 ? queryString + "&" : "") + "page=1" %>">
+			                <img src="<%=root%>/static/img/lleft.png" alt="처음"/>
+			            </a>
+			        </li>
+			        <li>
+			            <a href="<%= baseUrl + "?" + (queryString.length() > 0 ? queryString + "&" : "") + "page=" + Math.max(currentPage - 1, 1) %>">
+			                <img src="<%=root%>/static/img/left.png" alt="이전"/>
+			            </a>
+			        </li>
+			        <c:forEach var="i" begin="${startPage}" end="${endPage}">
+					    <c:set var="pageQuery" value="page=${i+1}" />
+					    <c:choose>
+					        <c:when test="${not empty queryString}">
+					            <c:set var="fullQuery" value="${queryString}&${pageQuery}" />
+					        </c:when>
+					        <c:otherwise>
+					            <c:set var="fullQuery" value="${pageQuery}" />
+					        </c:otherwise>
+					    </c:choose>
+					    <c:set var="pageLink" value="${baseUrl}?${fullQuery}" />
+					    <li><a style="${i  == currentPage - 1 ? 'font-weight: bold; color: red;' : ' '}" href="${pageLink}">${i + 1}</a></li>
+					</c:forEach>
+			        <li>
+			            <a href="<%= baseUrl + "?" + (queryString.length() > 0 ? queryString + "&" : "") + "page=" + Math.min(currentPage + 1, size) %>">
+			                <img src="<%=root%>/static/img/right.png" alt="다음"/>
+			            </a>
+			        </li>
+			        <li>
+			            <a href="<%= baseUrl + "?" + (queryString.length() > 0 ? queryString + "&" : "") + "page=" + (size) %>">
+			                <img src="<%=root%>/static/img/rright.png" alt="마지막"/>
+			            </a>
+			        </li>
+			    </ul>
+			</div>
+		</div>
+		<%-- [Contents] ######################################################### --%>
+		<jsp:include page="/layout/script.jsp" />
+	</div>
+</body>
+</html>
+-- admin_driver 파일 
+<%@ include file="/layout/jstl.jsp" %>
+<%@ include file="/layout/common.jsp" %>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+<!DOCTYPE html>
+<html>
+<head>
+	<title>project💻 - ALOHA CLASS🌴</title>
+	<jsp:include page="/layout/meta.jsp" />
+	<jsp:include page="/layout/link.jsp" />
+	<style type="text/css">
+		body {
+			background-color: #EEEEEE !important;
+		}
+	</style>
+</head>
+<body>
+	<div class="wrapper">
+		<header>
+			<div class="admin_header">
+				<a href="<%= root %>/index"><img src="<%= root %>/static/img/logo.png" width="380" height="153" ></a>
+				<nav>
+					<ul>
+						<li><a href="<%=root%>/admin/user">회원관리</a></li>
+						<li><a href="<%=root%>/admin/delivery">택배관리</a></li>
+						<li><a href="<%=root%>/admin/inquiry">문의</a></li>
+						<li class="on"><a href="<%=root%>/admin/driver">기사관리</a></li>
+					</ul>
+				</nav>
+			</div>
+		</header>
+		<%-- [Contents] ######################################################### --%>
+		<form action="<%=root%>/admin/delivery">
+			<div class="ad_search">
+				<ul>     
+					<li><input name="where" id="comName"   value="comName"   type="radio"/><label for="comName">기사번호</label></li>
+					<li><input name="where" id="drivName" value="drivName" type="radio"/><label for="drivName">기사이름</label></li>
+					<li><input name="where" id="drivNum" value="drivNum" type="radio"/><label for="drivNum">기사연락처</label></li>
+				</ul>
+				<div class="line"></div>
+				<div style="position: relative;">
+					<input type="text" name="where_txt">
+					<button class="ad_search_icon"><img src="<%=root%>/static/img/search.png" alt="돋보기 이미지"/></button>
+				</div>
+			</div>		
+		</form>
+		<div class="adm_table">
+			<table class="admin_table">
+				<thead class="adm_th_wrap">
+					<tr class="adm_th_tr">
+						<th>기사번호</th>
+						<th>기사이름</th>
+						<th>기사연락처</th>
+					</tr>
+				</thead>
+				<tbody class="adm_tbody">
+					<c:forEach var="driver" items="${drivers }">
+					<tr>
+						<td>${driver.idx}</td>
+						<td>${driver.name }</td>
+						<td>${driver.number }</td>
+					</tr>
+					</c:forEach>
+				</tbody>
+			</table>
+			<div class="adm_bottom_page">
+				<ul>
+					<li>
+						<a href="#"><img src="<%=root%>/static/img/lleft.png" alt=""/></a>
+					</li>
+					<li>
+						<a href="#"><img src="<%=root%>/static/img/left.png" alt=""/></a>
+					</li>
+					<li>
+						<a href="#">1</a>
+					</li>
+					<li>
+						<a href="#">2</a>
+					</li>
+					<li>
+						<a href="#">3</a>
+					</li>
+					<li>
+						<a href="#"><img src="<%=root%>/static/img/right.png" alt=""/></a>
+					</li>
+					<li>
+						<a href="#"><img src="<%=root%>/static/img/rright.png" alt=""/></a>
+					</li>
+				 </ul>
+			 </div>
+		 </div>
+		<%-- [Contents] ######################################################### --%>
+		<jsp:include page="/layout/script.jsp" />
+	</div>
+</body>
+</html>
+-- admin_inq 파일 
+<%@page import="org.apache.jasper.tagplugins.jstl.core.If"%>
+<%@page import="java.util.List"%>
+<%@page import="DTO.Inquiry"%>
+<%@ include file="/layout/jstl.jsp" %>
+<%@ include file="/layout/common.jsp" %>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+<% List<Inquiry> list = (List)request.getAttribute("inquiries"); %>
+<!DOCTYPE html>
+<html>
+<head>
+	<title>project💻 - ALOHA CLASS🌴</title>
+	<jsp:include page="/layout/meta.jsp" />
+	<jsp:include page="/layout/link.jsp" />
+	<style type="text/css">
+		body {
+			background-color: #EEEEEE !important;
+		}
+	</style>
+</head>
+<body>
+	<div class="wrapper">
+		<header>
+			<div class="admin_header">
+				<a href="<%= root %>/index"><img src="<%= root %>/static/img/logo.png" width="380" height="153" ></a>
+				<nav>
+					<ul>
+						<li><a href="<%=root%>/admin/user">회원관리</a></li>
+						<li><a href="<%=root%>/admin/delivery">택배관리</a></li>
+						<li class="on"><a href="<%=root%>/admin/inquiry">문의</a></li>
+						<li><a href="<%=root%>/admin/driver">기사관리</a></li>
+					</ul>
+				</nav>
+			</div>
+		</header>
+		<%-- [Contents] ######################################################### --%>
+		<form action="">
+			<div class="ad_search">
+				<ul>     
+					<li><input name="where" id="inquiryNo" value="inquiryNo" type="radio"/><label for="inquiryNo">문의번호</label></li>
+					<li><input name="where" id="userNo"    value="userNo"    type="radio"/><label for="userNo">회원번호</label></li>
+					<li><input name="where" id="content"   value="content"   type="radio"/><label for="content">내용</label></li>
+					<li><input name="where" id="cratedAt"  value="cratedAt"  type="radio"/><label for="cratedAt">문의날짜</label></li>
+					<li><input name="where" id="check"     value="check"     type="radio"/><label for="check">답변여부</label></li>
+				</ul>
+				<div class="line"></div>
+				<div style="position: relative;">
+					<input type="text" name="where_txt">
+					<button class="ad_search_icon"><img src="<%=root%>/static/img/search.png" alt="돋보기 이미지"/></button>
+				</div>
+			</div>		
+		</form>
+		<div class="adm_table">
+			<table class="admin_table">
+				<thead class="adm_th_wrap">
+					<tr class="adm_th_tr">
+						<th>문의번호</th>
+						<th>회원번호</th>
+						<th>내용</th>
+						<th>문의날짜</th>
+						<th>답변여부</th>
+					</tr>
+				</thead>
+				<tbody class="adm_tbody">
+				<% for(Inquiry inquiry : list) { %>
+					<tr class="adm_tbody_tr">
+					<tr>
+						<td><%= inquiry.getIdx() %></td>
+						<td><%= inquiry.getUserNo() %></td>
+						<td><%= inquiry.getContent() %></td>
+						<td><%= inquiry.getCreatedAt() %></td>
+						<td><%= inquiry.isCheckAnswer() ? "Y" : "N" %></td>
+					</tr>
+					<% } %>
+				</tbody>
+<%-- 				<c:forEach var="inquiry" items="inquiries"> --%>
+<!-- 					<tr> -->
+<%-- 						<td>${inquiry.idx }</td> --%>
+<%-- 						<td>${inquiry.userNo }</td> --%>
+<%-- 						<td>${inquiry.content }</td> --%>
+<%-- 						<td>${inquiry.createdAt }</td> --%>
+<%-- 						<td>${inquiry.checkAnswer }</td> --%>
+<!-- 					</tr> -->
+<%-- 				</c:forEach> --%>
+			</table>
+			<div class="adm_bottom_page">
+				<ul>
+					<li>
+						<a href="#"><img src="<%=root%>/static/img/lleft.png" alt=""/></a>
+					</li>
+					<li>
+						<a href="#"><img src="<%=root%>/static/img/left.png" alt=""/></a>
+					</li>
+					<li>
+						<a href="#">1</a>
+					</li>
+					<li>
+						<a href="#">2</a>
+					</li>
+					<li>
+						<a href="#">3</a>
+					</li>
+					<li>
+						<a href="#"><img src="<%=root%>/static/img/right.png" alt=""/></a>
+					</li>
+					<li>
+						<a href="#"><img src="<%=root%>/static/img/rright.png" alt=""/></a>
+					</li>
+				 </ul>
+			 </div>
+		<%-- [Contents] ######################################################### --%>
+		<jsp:include page="/layout/script.jsp" />
+	</div>
+ </div>
+</body>
+</html>
+-- admin_user 파일 
+<%@page import="DTO.User"%>
+<%@page import="java.util.List"%>
+<%@ include file="/layout/jstl.jsp"%>
+<%@ include file="/layout/common.jsp"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+	pageEncoding="UTF-8"%>
+<!DOCTYPE html>
+<html>
+<head>
+<title>project💻 - ALOHA CLASS🌴</title>
+<jsp:include page="/layout/meta.jsp" />
+<jsp:include page="/layout/link.jsp" />
+<style type="text/css">
+body {
+	background-color: #EEEEEE !important;
+}
+</style>
+</head>
+<body>
+	<div class="wrapper">
+		<header>
+			<div class="admin_header">
+				<a href="<%=root%>/index"><img
+					src="<%=root%>/static/img/logo.png" width="380" height="153"></a>
+				<nav>
+					<ul>
+						<li class="on"><a href="<%=root%>/admin/user">회원관리</a></li>
+						<li><a href="<%=root%>/admin/delivery">택배관리</a></li>
+						<li><a href="<%=root%>/admin/inquiry">문의</a></li>
+						<li><a href="<%=root%>/admin/driver">기사관리</a></li>
+					</ul>
+				</nav>
+			</div>
+		</header>
+		<%-- [Contents] ######################################################### --%>
+		<form action="<%=root%>/admin/user">
+			<div class="ad_search">
+				<ul>
+					<li><input name="where" id="userNo" value="idx" type="radio" /><label
+						for="userNo">회원번호</label></li>
+					<li><input name="where" id="userName" value="username"
+						type="radio" /><label for="userName">이름</label></li>
+					<li><input name="where" id="userId" value="ID" type="radio" /><label
+						for="userId">아이디</label></li>
+					<li><input name="where" id="userEma" value="email"
+						type="radio" /><label for="userEma">이메일</label></li>
+					<li><input name="where" id="userPho" value="p_number"
+						type="radio" /><label for="userPho">전화번호</label></li>
+					<li><input name="where" id="userAdd" value="address"
+						type="radio" /><label for="userAdd">주소</label></li>
+					<li><input name="where" id="userBir" value="birth"
+						type="radio" /><label for="userBir">생년월일</label></li>
+				</ul>
+				<div class="line"></div>
+				<div style="position: relative;">
+					<input type="text" name="where_txt">
+					<button class="ad_search_icon">
+						<img src="<%=root%>/static/img/search.png" alt="돋보기 이미지" />
+					</button>
+				</div>
+			</div>
+		</form>
+		<div class="adm_table">
+			<table class="admin_table">
+				<thead class="adm_th_wrap">
+					<tr class="adm_th_tr">
+						<th>회원번호</th>
+						<th>이름</th>
+						<th>아이디</th>
+						<th>이메일</th>
+						<th>전화번호</th>
+						<th>주소</th>
+						<th>생년월일</th>
+						<th>예약건수</th>
+						<th>탈퇴여부</th>
+					</tr>
+				</thead>
+				<tbody class="adm_tbody">
+					<c:forEach var="user" items="${users}">
+						<tr class="adm_tbody_tr">
+							<td>${user.idx}</td>
+							<td>${user.username}</td>
+							<td>${user.id}</td>
+							<td>${user.email}</td>
+							<td>${user.PNumber}</td>
+							<td>${user.address}</td>
+							<td>${user.birth}</td>
+							<td>3</td>
+							<td>${user.withdrawal ? "Y" : "N"}</td>
+						</tr>
+					</c:forEach>
+				</tbody>
+			</table>
+			<div class="adm_bottom_page">
+				<ul>
+					<span>TODO: 페이징처리</span>
+					<li><a href="#"><img src="<%=root%>/static/img/lleft.png"
+							alt="" /></a></li>
+					<li><a href="#"><img src="<%=root%>/static/img/left.png"
+							alt="" /></a></li>
+					<li><a href="#">1</a></li>
+					<li><a href="#">2</a></li>
+					<li><a href="#">3</a></li>
+					<li><a href="#"><img src="<%=root%>/static/img/right.png"
+							alt="" /></a></li>
+					<li><a href="#"><img src="<%=root%>/static/img/rright.png"
+							alt="" /></a></li>
+				</ul>
+			</div>
+		</div>
+		<%-- [Contents] ######################################################### --%>
+		<jsp:include page="/layout/script.jsp" />
+	</div>
+</body>
+</html>
+
+-- delivery 폴더 내
+delivery_main, delivery_rec1, delivery_rec2, delivery_rec3, delivery_status 이름의 jsp 파일 존재 
+
+-- delivery_main 파일 
+<%@ include file="/layout/jstl.jsp" %>
+<%@ include file="/layout/common.jsp" %>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+<!DOCTYPE html>
+<html>
+<head>
+	<title>project💻 - ALOHA CLASS🌴</title>
+	<jsp:include page="/layout/meta.jsp" />
+	<jsp:include page="/layout/link.jsp" />
+</head>
+<body>
+	<div class="wrapper">
+		<jsp:include page="/layout/header.jsp" />
+		<%-- [Contents] ######################################################### --%>
+		<div class="container">
+			<h2 class="title">배송조회</h2>
+			<!-- TODO: 배송조회 servlet 으로 action 연결 -->
+			<form id="form" action="<%=root%>/">
+				<div class="input_area">
+					<input class="input_sear d" name="del_idx" type="number" placeholder="운송장번호" title="운송장번호를 입력해주세요.">
+					<button class="search_icon"><img src="<%=root%>/static/img/search.png" alt="돋보기 이미지"/></button>
+				</div>
+				<p>※ 비회원으로 이용하실 시 최근 배송내역 목록은 조회되지 않습니다.</p>
+			</form>
+			<div class="sm_container">
+				<div class="img_area">
+					<img alt="택배 이미지" src="<%=root%>/static/img/delivery.png">
+				</div>
+				<p>로그인 시 더욱 간편하게 여러 운송장을 조회할 수 있습니다.</p>
+				<div class="btn_area">
+					<a href="<%=root%>/page/login/login.jsp">로그인</a>
+				</div>
+			</div>
+		</div>
+		<%-- [Contents] ######################################################### --%>
+		<jsp:include page="/layout/footer.jsp" />
+	</div>
+	<jsp:include page="/layout/script.jsp" />
+</body>
+</html>
+-- delivery_rec1 파일 
+<%@ include file="/layout/jstl.jsp" %>
+<%@ include file="/layout/common.jsp" %>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+<!DOCTYPE html>
+<html>
+<head>
+	<title>project💻 - ALOHA CLASS🌴</title>
+	<jsp:include page="/layout/meta.jsp" />
+	<jsp:include page="/layout/link.jsp" />
+</head>
+<body>
+	<div class="wrapper">
+		<jsp:include page="/layout/header.jsp" />
+		<%-- [Contents] ######################################################### --%>
+		<div class="container">
+			<h2 class="title">택배접수</h2>
+			<h3>물품정보</h3>
+			<div class="sm_container il">
+				<form id="form" action="" method="post">
+					<ul class="input_list">
+						<li>
+						 	<label for="keyword">품목</label>
+						 	<select id="keyword" name="keyword">
+								<option disabled selected>품목 선택</option>
+								<option value="의류">의류</option>
+								<option value="서신/서류">서신/서류</option>
+								<option value="가전제품류">가전제품류</option>
+								<option value="과일류">과일류</option>
+								<option value="곡물류">곡물류</option>
+								<option value="한약류">한약류</option>
+								<option value="식품류">식품류</option>
+								<option value="잡화/서적류">잡화/서적류</option>
+							</select>				
+						</li>
+						<li>
+						 	<label for="value">물품가액</label>
+					  	 	<input id="value" name="value" type="text" title="물품가액을 입력해주세요." placeholder="물품가액">
+					  	 	<span class="value_txt">만원</span>
+					  	 	<div class="values">
+					  	 		<button type="button">1만원</button>
+					  	 		<button type="button">3만원</button>
+					  	 		<button type="button">5만원</button>
+					  	 		<button type="button">10만원</button>
+					  	 		<button type="button">50만원</button>
+					  	 		<button type="button">99만원</button>
+					  	 	</div>
+					  	 	<p class="long_txt">
+					  	 		&middot; 물품의 총 가액을 콤마( , )없이 입력하여 주세요. <br>
+								&middot; 물품 가액이 50만원을 초과시 고가 할증운임 2,500원이 추가되며 100만원 이상은 &nbsp;&nbsp;접수 불가합니다.<br>
+								&middot; 권역에 따른 배송비 산정은 물품을 발송하는 편의점 위치 기준함.<br>
+								&nbsp;&nbsp; (보내는 분 주소 기준이 아님)<br>
+								&middot; 물품가액은 배송 사고 시 보상의 기준이 되오며, 허위 기재 시 배송 과정에서 불이익이 발생할 수 있으니 실제 물품의 가치를 정확히 기재 바랍니다.<br>
+					  	 	</p>
+						</li>
+						<li>
+						 	<label for="reserv">예약명</label>
+						 	<input id="reserv" name="reserv" type="text" placeholder="예약명">
+						</li>
+					</ul>
+					<button id="next_btn" type="submit">다음으로</button>
+				</form>
+			</div> <!-- sm_container -->
+		</div> <!-- container -->
+		<%-- [Contents] ######################################################### --%>
+		<jsp:include page="/layout/footer.jsp" />
+	</div> <!-- wrapper -->
+	<jsp:include page="/layout/script.jsp" />
+</body>
+</html>
+-- delivery_rec2 파일 
+<%@ include file="/layout/jstl.jsp" %>
+<%@ include file="/layout/common.jsp" %>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+<!DOCTYPE html>
+<html>
+<head>
+	<title>project💻 - ALOHA CLASS🌴</title>
+	<jsp:include page="/layout/meta.jsp" />
+	<jsp:include page="/layout/link.jsp" />
+</head>
+<body>
+	<div class="wrapper">
+		<jsp:include page="/layout/header.jsp" />
+		<%-- [Contents] ######################################################### --%>
+		<div class="container">
+			<h2 class="title">택배접수</h2>
+			<h3>보내는 분</h3>
+			<div class="sm_container il">
+				<form id="form" action="" method="post">
+					<ul class="input_list">
+						<li>
+						 	<label for="s_name">이름</label>
+					  	 	<input class="check_trim" id="s_name" name="s_name" type="text" title="보내는분의 이름을 입력해주세요." placeholder="이름">
+						</li>
+						<li>
+						 	<label for="s_number">휴대폰 번호</label>
+					  	 	<input id="s_number" name="s_number" type="text" title="보내는분의 번호를 입력해주세요." placeholder="하이픈 '-' 없이 입력해주세요." maxlength="11">
+					  	 	<button class="btn_ph" type="button">인증번호 받기</button>
+					  	 	<input id="certi_num" type="text" title="인증번호를 입력해주세요." placeholder="인증번호 입력">
+						</li>
+						<li>
+						 	<label for="s_address">주소</label>
+						 	<input id="s_address" name="s_address" type="text" placeholder="기본주소" title="주소를 입력해주세요.">
+						 	<label for="s_address"> </label>
+						 	<input id="s_address2" name="s_address2" type="text" placeholder="상세주소" title="상세주소를 입력해주세요.">
+						</li>
+					</ul>
+					<button id="prev_btn" type="button" onclick="history.back()">이전</button>
+					<button id="next_btn2" type="submit">다음</button>
+				</form>
+			</div> <!-- sm_container -->
+		</div> <!-- container -->
+		<%-- [Contents] ######################################################### --%>
+		<jsp:include page="/layout/footer.jsp" />
+	</div> <!-- wrapper -->
+	<jsp:include page="/layout/script.jsp" />
+</body>
+</html>
+-- delivery_rec3 파일 
+<%@ include file="/layout/jstl.jsp" %>
+<%@ include file="/layout/common.jsp" %>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+<!DOCTYPE html>
+<html>
+<head>
+	<title>project💻 - ALOHA CLASS🌴</title>
+	<jsp:include page="/layout/meta.jsp" />
+	<jsp:include page="/layout/link.jsp" />
+</head>
+<body>
+	<div class="wrapper">
+		<jsp:include page="/layout/header.jsp" />
+		<%-- [Contents] ######################################################### --%>
+		<div class="container">
+			<h2 class="title">택배접수</h2>
+			<h3>받는 분</h3>
+			<div class="sm_container il">
+				<form id="form" action="" method="post">
+					<ul class="input_list">
+						<li>
+						 	<label for="r_name">이름</label>
+					  	 	<input class="check_trim" id="r_name" name="r_name" type="text" title="받는분의 이름을 입력해주세요." placeholder="이름">
+						</li>
+						<li>
+						 	<label for="r_number">휴대폰 번호</label>
+					  	 	<input id="r_number" name="r_number" type="text" title="받는분의 번호를 입력해주세요." placeholder="하이픈 '-' 없이 입력해주세요." maxlength="11">
+						</li>
+						<li>
+						 	<label for="r_address">주소</label>
+						 	<input id="r_address" name="r_address" type="text" placeholder="기본주소" title="주소를 입력해주세요.">
+						 	<label for="r_address"> </label>
+						 	<input id="r_address2" name="r_address2" type="text" placeholder="상세주소" title="상세주소를 입력해주세요.">
+						</li>
+						<li>
+						 	<label for="r_number">요청사항</label>
+					  	 	<input id="r_number" name="r_req" type="text" title="요청사항을 입력해주세요." placeholder="배송 요청사항" maxlength="11">
+						</li>
+						<li>
+						 	<label for="pre_pos">지불방법</label>
+						 	<select id="pre_pos" name="pre_pos">
+								<option disabled selected>지불 방법 선택</option>
+								<option value="선불">선불</option>
+								<option value="후불">후불</option>
+							</select>
+						</li>
+					</ul>
+					<button id="prev_btn" type="button" onclick="history.back()">이전</button>
+					<button id="next_btn3" type="submit">예약</button>
+				</form>
+			</div> <!-- sm_container -->
+		</div> <!-- container -->
+		<%-- [Contents] ######################################################### --%>
+		<jsp:include page="/layout/footer.jsp" />
+	</div> <!-- wrapper -->
+	<jsp:include page="/layout/script.jsp" />
+</body>
+</html>
+-- delivery_status 파일 
+<%@ include file="/layout/jstl.jsp" %>
+<%@ include file="/layout/common.jsp" %>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+<%@ page import="DTO.Delivery" %>
+<%@ page import="DTO.DeliveryLogDTO" %>
+<%
+    Delivery delivery = (Delivery) request.getAttribute("delivery");
+%>
+<!DOCTYPE html>
+<html>
+<head>
+    <title>배송현황</title>
+    <jsp:include page="/layout/meta.jsp" />
+    <jsp:include page="/layout/link.jsp" />
+    <style>
+        .delivery-status-box {
+            background: #f4f8ff;
+            border-radius: 16px;
+            padding: 32px;
+            max-width: 350px;
+            margin: 40px auto;
+        }
+        .icon-area {
+            text-align: center;
+            margin-bottom: 16px;
+        }
+        .icon-area img {
+            width: 60px;
+        }
+        .info-list, .log-list {
+            list-style: none;
+            padding: 0;
+            margin: 0 0 16px 0;
+        }
+        .info-list li, .log-list li {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 8px;
+            font-size: 14px;
+        }
+        .log-list li {
+            font-size: 13px;
+        }
+        .btn-area {
+            text-align: center;
+            margin-top: 16px;
+        }
+        .btn-area a {
+            background: #ffb74d;
+            color: white;
+            padding: 10px 32px;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <div class="wrapper">
+        <jsp:include page="/layout/header.jsp" />
+        <div class="delivery-status-box">
+            <div class="icon-area">
+                <img src="<%=request.getContextPath()%>/static/img/delivery.png" alt="택배 이미지" />
+            </div>
+            <ul class="info-list">
+                <li><span>예약명</span><span><%= delivery.getReserName() %></span></li>
+                <li><span>보내는 분</span><span><%= delivery.getSendingReceiving().getSName() %></span></li>
+                <li><span>받는 분</span><span><%= delivery.getSendingReceiving().getRName() %></span></li>
+                <li><span>배송지점</span><span><%= delivery.getSendingReceiving().getRAddress() %></span></li>
+            </ul>
+            <hr />
+            <ul class="log-list">
+                <% for (DeliveryLogDTO log : delivery.getLogs()) { %>
+                    <li><%= log.getTime() %> [<%= log.getLocation() %>] <%= log.getStatus() %></li>
+                <% } %>
+            </ul>
+            <div class="btn-area">
+                <a href="<%=request.getContextPath()%>/main">메인으로</a>
+            </div>
+        </div>
+        <jsp:include page="/layout/footer.jsp" />
+    </div>
+    <jsp:include page="/layout/script.jsp" />
+</body>
+</html>
+
+-- login 폴더 내 
+login_list_update, login_list, login, sign_up 이름의 jsp 파일들이 존재 
+
+-- login_list_update 파일 
+<%@ include file="/layout/jstl.jsp" %>
+<%@ include file="/layout/common.jsp" %>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+    
+   <%@ page import="DTO.User" %>  <%-- loginUser 객체 가져오기 --%>
+
+<%
+    User loginUser = (User) session.getAttribute("loginUser");
+%>
+<!DOCTYPE html>
+<html>
+<head>
+	<title>project💻 - ALOHA CLASS🌴</title>
+	<jsp:include page="/layout/meta.jsp" />
+	<jsp:include page="/layout/link.jsp" />
+    <link rel="stylesheet" type="text/css" href="<%= root %>/static/css/reset.css">
+	<link rel="stylesheet" type="text/css" href="<%= root %>/static/css/login_list_update.css">
+</head>
+<body>
+	<div class="wrapper">
+		<jsp:include page="/layout/header.jsp" />
+		<%-- [Contents] ######################################################### --%>
+		<main>
+
+			<div class="wrapper">
+			        <div class="container">
+			            <div class="main-content">
+			                <div class="tap">
+			                    <span class="tab part1">배송 상태</span>
+			                    <span class="tab part2 active">회원정보 수정</span>
+			                </div>
+			
+			                <div class="update-container">
+								<form action="<%= root %>/users/update" method="post" name="update_form" onsubmit="return Userform.validateUpdateForm();">
+								    <input type="hidden" name="idx" value="${loginUser.idx}" />
+								    <div class="form-row">
+								        <label>아이디</label>
+								        <input type="text" name="id" id="id" value="${loginUser.id}" readonly />
+								    </div>
+								    <div class="form-row">
+								        <label>이름</label>
+								        <input type="text" name="name" id="name" value="${loginUser.username}" readonly />
+								    </div>
+								    <div class="form-row">
+								        <label>생년월일</label>
+								        <input type="text" name="birth" id="birth" value="${loginUser.birth}" readonly />
+								    </div>
+								
+								    <!-- 비밀번호 변경 -->
+								    <fieldset class="group-box">
+								        <legend>비밀번호 변경</legend>
+								        <div class="form-row">
+								            <label>새 비밀번호</label>
+								            <input type="password" name="password" id="password" />
+								        </div>
+								        <div class="form-row">
+								            <label>비밀번호 확인</label>
+								            <input type="password" name="passwordcheck" id="passwordcheck" />
+								            <span id="pwCheckMessage" class="check-message"></span>
+								        </div>
+								    </fieldset>
+								
+								    <!-- 연락처 변경 -->
+								    <fieldset class="group-box">
+								        <legend>연락처</legend>
+								        <div class="form-row">
+								            <label>전화번호</label>
+								            <input type="text" name="p_number" id="p_number" value="${loginUser.PNumber}" />
+								            <button type="button" id="btnPhone">확인</button>
+								        </div>
+								        <div class="form-row">
+								            <label>인증번호</label>
+								            <input type="text" id="check_number" placeholder="인증번호 입력" />
+								        </div>
+								    </fieldset>
+								
+								    <!-- 이메일 변경 -->
+									<%
+									    String email = loginUser.getEmail(); // 예: pass001@gmail.com
+									    String email1 = "";
+									    String email2 = "";
+									    if(email != null && email.contains("@")) {
+									        String[] parts = email.split("@");
+									        email1 = parts[0];
+									        email2 = parts[1];
+									    }
+									%>
+									
+									<fieldset class="group-box">
+									    <legend>이메일</legend>
+									    <div class="form-row">
+									        <label>이메일</label>
+									        <input type="text" name="email1" id="email1" placeholder="이메일 아이디" value="<%= email1 %>" />
+									        <span>@</span>
+									        <input type="text" name="email2" id="email2" placeholder="gmail.com" list="emailDomains" value="<%= email2 %>" />
+									        <datalist id="emailDomains">
+									            <option value="gmail.com" />
+									            <option value="naver.com" />
+									        </datalist>
+									    </div>
+									</fieldset>
+
+								
+								    <!-- 주소 변경 -->
+								    <fieldset class="group-box">
+								        <legend>주소</legend>
+								        <div class="form-row">
+								            <label>주소</label>
+								            <input type="text" name="address" id="address" value="${loginUser.address}" readonly />
+								            <button type="button" id="btnAddress" onclick="searchAddress()">주소찾기</button>
+								        </div>
+							            <div class="form-row">
+									        <label for="address_detail">상세 주소</label>
+									        <input type="text" name="address_detail" id="address_detail" placeholder="상세 주소를 입력하세요" value="${user.addressDetail}" />
+									    </div>
+								    </fieldset>
+								
+								    <div class="submit-box">
+								        <button type="submit" class="btn-update">수정완료</button>
+								    </div>
+								</form>
+
+			                </div>
+			
+			            </div>
+			        </div>
+			    </div>
+
+		</main>
+		<%-- [Contents] ######################################################### --%>
+		<jsp:include page="/layout/footer.jsp" />
+		<jsp:include page="/layout/script.jsp" />
+	</div>
+	    <script src="https://t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+	<script>
+	function searchAddress() {
+	    new daum.Postcode({
+	        oncomplete: function(data) {
+	            // 사용자가 선택한 주소를 address input에 입력
+	            document.getElementById("address").value = data.address;
+	        }
+	    }).open();
+	}
+	</script>
+</body>
+</html>
+-- login_list 파일 
+<%@ include file="/layout/jstl.jsp" %>
+<%@ include file="/layout/common.jsp" %>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+<!DOCTYPE html>
+<html>
+<head>
+	<title>project💻 - ALOHA CLASS🌴</title>
+	<jsp:include page="/layout/meta.jsp" />
+	<jsp:include page="/layout/link.jsp" />
+    <link rel="stylesheet" type="text/css" href="<%= root %>/static/css/reset.css">
+	<link rel="stylesheet" type="text/css" href="<%= root %>/static/css/login_list.css">
+</head>
+<body>
+	<div class="wrapper">
+		<jsp:include page="/layout/header.jsp" />
+		<%-- [Contents] ######################################################### --%>
+		<main>
+
+	        <div class="container">
+	            <div class="search">
+	                <div class="top">
+	                    <div class="left">
+	                        <img src="<%=root %>/static/img/plus.png" alt="">
+	                        <input type="text" class="searchInput" id="searchInput" placeholder="검색어를 입력하세요" />
+	                    </div>
+	                    <div class="right">
+	                        <span>|</span>
+		                        <div class="list">
+								    <label for="sendOption"></label>
+								    <select id="sendOption" name="sendOption" class="box">
+								        <option value="delivery">배송 내역</option>
+								        <option value="sender" selected>보내는 사람</option>
+								        <option value="receiver" selected>받는 사람</option>
+								        <option value="address" selected>주소</option>
+								    </select>
+								</div>
+	                    </div>
+	                </div>
+	                <div class="mid">
+	                    <ul>
+	                        <li>
+								<button class="h2" type="button">선불</button>
+					            <button class="h2" type="button">후불</button>
+	                        </li>
+	                    </ul>
+	                </div>
+	            </div>
+	            <div class="main-content">
+	                <div class="tap">
+	                    <span class="tab part1 active">배송 상태</span>
+	                    <span class="tab part2">회원정보수정</span>
+	                </div>
+					 <div class="table-and-detail">
+						 <div class="table-wrapper">
+							 <div class="table-header">
+								 <div>번호</div>
+								 <div>배송 내역</div>
+								 <div>보내는 사람 / 주소</div>
+								 <div>받는 사람 / 주소</div>
+								 <div>선불 / 후불</div>
+								 <div>배송 상태</div>
+							 </div>
+							 <c:if test="${empty deliveries}">
+                                 <div class="no-data">등록된 배송 내역이 없습니다.</div>
+                              </c:if>	
+							 <c:forEach var="delivery" items="${deliveries}">
+								<div class="row-box row-content" onclick="...">
+								    <input type="hidden" name="idx" value="${delivery.payment.idx}" />
+								    <input type="hidden" name="pCard" value="${delivery.payment.PCard}" />
+								    <input type="hidden" name="pAmount" value="${delivery.payment.PAmount}" />
+								    <input type="hidden" name="pDate" value="${delivery.payment.PDate}" />
+								
+								    <div>${delivery.idx}</div>
+								    <div>${delivery.value}</div>
+								    <div>${delivery.sendingReceiving.SName} / ${delivery.sendingReceiving.SAddress}</div>
+								    <div>${delivery.sendingReceiving.RName} / ${delivery.sendingReceiving.RAddress}</div>
+								    <div>${delivery.prePos}</div>
+								    <div>${delivery.status}</div>
+								</div>
+	
+							 </c:forEach>
+
+						</div>
+						<div class="detail">
+                        <div class="header">상세 내역</div>
+                            <div class="form-group font">
+                                <label>주문번호</label>
+                                <input type="text" placeholder="주문번호" id="payment-idx" />
+                            </div>
+                            <div class="form-group font">
+                                <label>카드정보</label>
+                                <input type="text" placeholder="카드정보" id="payment-card" />
+                            </div>
+                            <div class="form-group font">
+                                <label>결제날짜</label>
+                                <input type="text" placeholder="결제날짜" id="payment-date" />
+                            </div>
+                            <div class="form-group font">
+                                <label>금액</label>
+                                <input type="text" placeholder="금액" id="payment-amount" />
+                            </div>
+                    	</div>
+					 </div>
+	            </div>
+	        </div>
+
+		</main>
+		<%-- [Contents] ######################################################### --%>
+		<jsp:include page="/layout/footer.jsp" />
+		<jsp:include page="/layout/script.jsp" />
+		
+		<script>
+
+		</script>
+	</div>
+</body>
+</html>
+
+
+-- login 파일 
+<%@ include file="/layout/jstl.jsp" %>
+<%@ include file="/layout/common.jsp" %>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+<!DOCTYPE html>
+<html>
+<head>
+	<title>project💻 - ALOHA CLASS🌴</title>
+	<jsp:include page="/layout/meta.jsp" />
+	<jsp:include page="/layout/link.jsp" />
+    <link rel="stylesheet" type="text/css" href="<%= root %>/static/css/reset.css">
+	<link rel="stylesheet" type="text/css" href="<%= root %>/static/css/login.css">
+
+</head>
+<body>
+    <div class="wrapper">
+        <jsp:include page="/layout/header.jsp" />
+        <%-- [Contents] ######################################################### --%>
+        <main>
+        	<%-- 로그인 실패 오류 경고창  --%>
+	        <%
+			    String error = request.getParameter("error");
+			    if ("true".equals(error)) {
+			%>
+			<script>
+			    alert("아이디 또는 비밀번호가 일치하지 않습니다.");
+			</script>
+			<%
+			    }
+			%>
+			<div class="container">
+				<form id="form" action="<%= root %>/users/login" method="post">
+		            <div class="login-box">
+		                <div class="left-box">
+		                    <div class="sign-up">sign-in</div>
+		                    <div class="image-set">
+		                        <img src="<%= root %>/static/img/ico_social_instagram_1.png" alt="">
+		                        <img src="<%= root %>/static/img/icons8_google_48.png" alt="">
+		                        <img src="<%= root %>/static/img/ico_social_kakaotalk_1.png" alt="">
+		                    </div>
+		                    <div class="sm-content">or use your account</div>
+		                    <div class="id-box">
+		                        <span>아이디</span>
+		                        <input type="text" name="id" id="id" placeholder="아이디를 입력해주세요">
+		                    </div>
+		                    <div class="password-box">
+		                        <span>비밀번호</span>
+		                        <input type="password" name="password" id="password" placeholder="비밀번호를 입력해주세요" autocomplete="new-password">
+		                    </div>
+		                    <div class="checkbox">
+		                        <input type="checkbox" name="rememberId" id="rememberId">
+		                        <label for="rememberId">아이디 저장</label> 
+		                        <input type="checkbox" name="autologin" id="autologin">
+		                        <label for="autologin">자동 로그인</label>
+		                    </div>
+		                    <div>
+		                        <button type="submit" class="btn" id="login_btn" >로그인</button>
+		                    </div>
+		                </div>
+		                <div class="right-box">
+		                    <h2>wellcome, customer</h2>
+		                    <h3>Enter your personal details and start <br> FAST delivery Service with us</h3>
+		                    <a href="<%= root %>/page/login//sign_up.jsp" class="btn" >회원가입</a>
+		                </div>
+		            </div>
+	            </form>
+	        </div>
+        </main>
+        <%-- [Contents] ######################################################### --%>
+        <jsp:include page="/layout/footer.jsp" />
+        <jsp:include page="/layout/script.jsp" />
+    </div>
+</body>
+</html>
+-- sign_up 파일 
+<%@ include file="/layout/jstl.jsp" %>
+<%@ include file="/layout/common.jsp" %>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+<!DOCTYPE html>
+<html>
+<head>
+	<title>project💻 - ALOHA CLASS🌴</title>
+	<jsp:include page="/layout/meta.jsp" />
+	<jsp:include page="/layout/link.jsp" />
+    <link rel="stylesheet" type="text/css" href="<%= root %>/static/css/reset.css">
+	<link rel="stylesheet" type="text/css" href="<%= root %>/static/css/sign_up.css">
+    <script>
+		window.root = "<%= root %>";
+		window.sign_up = window.sign_up || {};
+    </script>
+</head>
+<body>
+    <div class="wrapper">
+        <jsp:include page="/layout/header.jsp" />
+        <%-- [Contents] ######################################################### --%>
+        <main>
+			<div class="container">
+				<form action="<%= root %>/users/sign_up" onsubmit="return Userform.validateSignUpForm();" name="sign_up" method="post">
+					<div class="login-box">
+						<div class="sign-up-box">
+							<div class="left-box">
+								<div class="sign-up">sign-up</div>
+									<h2>welcome, customer</h2>
+									<h3>Enter your personal details and start <br> FAST delivery Service with us</h3>
+									<input type="submit" class="btn1" value="회원가입" />
+								</div>
+							    <div class="right-box">
+									<ul>
+										<li class="message">
+											<span id="idCheckMessage"></span>
+										</li>
+										<li>
+											<span class="tname">아이디</span>
+											<input class="box1" type="text" name="id" id="id" placeholder="아이디를 입력해주세요">
+											<button id="btnCheckId" type="button" class="btn2">확인</button>
+										</li>
+										<li>
+											<span class="tname">비밀번호</span>
+											<input class="box" type="password" name="password" id="password" placeholder="비밀번호를 입력해주세요">
+										</li>
+										<li>
+											<span class="tname">비밀번호<br>확인</span>
+											<span id="pwCheckMessage" class="check-message"></span>
+											<input class="box" type="password" name ="passwordcheck" id="passwordcheck" placeholder="한번 더 비밀번호를 입력해주세요">
+										</li>
+										<li>
+											<span class="tname">연락처</span>
+											<input class="box1" type="text" id="p_number" name="p_number" placeholder="01012345678" />
+											<button type="button" id="btnPhone" class="btn2">확인</button>
+										</li>
+										<li>
+											<span class="tname">인증번호</span>
+											<input class="box" type="text" id="check_number" placeholder="인증번호 입력" />
+										</li>
+										<li>
+											<span class="tname">이름</span>
+											<input class="box" type="text" name="name" id="name" placeholder="이름을 입력해주세요">
+										</li>
+										<li>
+											<span class="tname">이메일</span>
+											<input class="box email" type="text" name="email1" id="email1" placeholder="이메일 아이디">
+											<span>@</span>
+											<input class="box email" type="text" name="email2" id="email2" placeholder="gmail.com" list="emailDomains">
+											<datalist id="emailDomains">
+												<option value="gmail.com">
+												<option value="naver.com">
+											</datalist>
+										</li>
+										<li>
+											<span class="tname">주소</span>
+											<input class="box1" type="text" name="address" id="address" placeholder="주소를 입력해주세요" readonly>
+											<button type="button" id="btnAddress" class="btn2" onclick="searchAddress()">주소찾기</button>
+										</li>
+										<li>
+											<span class="tname">생년월일</span>
+											<input class="box" type="text" name="birth" id="birth" placeholder="예: 19990101">
+										</li>
+									</ul>
+								</div>
+							</div>
+						</div>
+					</form>
+				</div>
+        </main>
+        <%-- [Contents] ######################################################### --%>
+        <jsp:include page="/layout/footer.jsp" />
+        <jsp:include page="/layout/script.jsp" />
+    </div>
+    <script src="https://t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+	<script>
+	function searchAddress() {
+	    new daum.Postcode({
+	        oncomplete: function(data) {
+	            // 사용자가 선택한 주소를 address input에 입력
+	            document.getElementById("address").value = data.address;
+	        }
+	    }).open();
+	}
+	</script>
+</body>
+</html>
+
+
+-- serv_center 폴더 내
+announcement, contact, faq, myqna 이름의 jsp 파일들이 존재 
+
+
+-- announcement 파일 
+
+<%@ include file="/layout/jstl.jsp" %>
+<%@ include file="/layout/common.jsp" %>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+<!DOCTYPE html>
+<html>
+<head>
+	<title>project💻 - ALOHA CLASS🌴</title>
+	<jsp:include page="/layout/meta.jsp" />
+	<jsp:include page="/layout/link.jsp" />
+</head>
+<body>
+	<div class="wrapper">
+	<%-- [Contents] ######################################################### --%>
+		<jsp:include page="/layout/serv_header.jsp" />
+		<div class="container">
+			<h2 class="title">고객센터</h2>
+			<h3>공지사항</h3>
+			<form id="form_to_search" action="<%=root%>/serv_center/announcement/search">
+				<div class="input_area">
+					<input class="input_sear" name="keyword" type="text" placeholder="검색어" title="검색 키워드를 입력해주세요." value="<%=request.getParameter("keyword") != null ? request.getParameter("keyword") : ""%>"/>
+					<button onclick="document.getElementById('form_to_search').submit()" type="submit" class="search_icon"><img src="<%=root%>/static/img/search.png" alt="돋보기 이미지"/></button>
+				</div>
+			</form>
+			<div class="bg_container">
+				<ul>
+					<c:forEach var="anno" items="${list }">
+						<li>
+							<img alt="깃발이미지" src="<%=root%>/static/img/flags.png">
+							<p class="bor_txt">택배서비스</p>
+							<p class="ann_title">${anno.title}</p>
+							<span class="date1">${anno.createdAt}</span>
+							<button type="button" class="dropdown">
+								<img alt="드랍다운 화살표" src="<%=root%>/static/img/downarrow.png">
+							</button>
+						</li>
+						<li class="answer">
+							<p>
+								${anno.content}
+							</p>
+						</li>
+					</c:forEach>
+				</ul>
+				<div class="bottom_page">
+					<ul>
+						<li>
+							<a href="#"><img src="<%=root%>/static/img/lleft.png" alt=""/></a>
+						</li>
+						<li>
+							<a href="#"><img src="<%=root%>/static/img/left.png" alt=""/></a>
+						</li>
+						<li>
+							<a href="#">1</a>
+						</li>
+						<li>
+							<a href="#">2</a>
+						</li>
+						<li>
+							<a href="#">3</a>
+						</li>
+						<li>
+							<a href="#"><img src="<%=root%>/static/img/right.png" alt=""/></a>
+						</li>
+						<li>
+							<a href="#"><img src="<%=root%>/static/img/rright.png" alt=""/></a>
+						</li>
+					</ul>
+				</div>
+			</div>
+		</div>
+		<jsp:include page="/layout/footer.jsp" />
+	</div>
+	<%-- [Contents] ######################################################### --%>
+	<jsp:include page="/layout/script.jsp" />
+</body>
+</html>
+-- contact 파일 
+<%@ include file="/layout/jstl.jsp" %>
+<%@ include file="/layout/common.jsp" %>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+<!DOCTYPE html>
+<html>
+<head>
+	<title>project💻 - ALOHA CLASS🌴</title>
+	<jsp:include page="/layout/meta.jsp" />
+	<jsp:include page="/layout/link.jsp" />
+</head>
+<body>
+	<div class="wrapper main_back">
+		<jsp:include page="/layout/serv_header.jsp" />
+		<%-- [Contents] ######################################################### --%>
+		<div class="contact_container">
+			<h2 class="title">문의하기</h2>
+			<div class="contact_container il">
+				<form id="form_qna" action="<%= root %>/ask" method="post">
+					<ul class="contact_input_list">
+						<li>
+						 	<label for="qna_type">문의유형</label>
+						 	<select id="qna_type" name="qna_type">
+								<option disabled selected>유형선택</option>
+								<option value="배송문의">배송문의</option>
+								<option value="결제관련문의">결제관련문의</option>
+								<option value="사고보상문의">사고보상문의</option>
+								<option value="서비스관련문의">서비스관련문의</option>
+								<option value="불편사항문의">불편사항문의</option>
+							</select>
+						</li>
+						<li>
+						 	<label for="c_title">제목</label>
+					  	 	<input class="check_title" id="c_title" name="c_title" type="text" title="제목" placeholder="제목을 입력해 주세요.">
+						</li>
+						<li>
+						 	<label for="c_content">문의내용</label>
+					  	 	<textarea id="c_content" name="c_content" rows="15" cols="62" placeholder="문의 내용을 입력해 주세요."></textarea>
+						</li>
+					</ul>
+					<div class="values">
+			  	 		<button type="button">파일1</button>
+			  	 		<button type="button">파일2</button>
+			  	 		<button type="button">파일3</button>
+			  	 	</div>
+			  	 	<div class="contact_upload">
+			  	 		<label for="c_upload">파일 업로드</label>
+				  	 	<input class="input_upload" id="c_upload" name="c_upload" type="file" title="업로드파일을 선택해주세요." placeholder="업로드할 파일을 불러와주세요." tabindex="-1" disabled>
+						<button class="contact_btn_find" type="button">찾아보기</button>
+			  	 	</div>
+					<button class="contact_prev_btn" type="button" onclick="history.back()">이전</button>
+					<button class="contact_submit_btn" type="submit">접수하기</button>
+				</form>
+			</div> <!-- contact_container il -->
+		</div> <!-- container -->
+		<%-- [Contents] ######################################################### --%>
+		<jsp:include page="/layout/footer.jsp" />
+		<jsp:include page="/layout/script.jsp" />
+	</div>
+</body>
+</html>
+-- faq 파일 
+
+<%@page import="DTO.FAQ"%>
+<%@page import="java.util.List"%>
+<%@ include file="/layout/jstl.jsp" %>
+<%@ include file="/layout/common.jsp" %>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+<!DOCTYPE html>
+<html>
+<head>
+	<title>project💻 - ALOHA CLASS🌴</title>
+	<jsp:include page="/layout/meta.jsp" />
+	<jsp:include page="/layout/link.jsp" />
+</head>
+<body>
+	<div class="wrapper">
+	<%-- [Contents] ######################################################### --%>
+		<jsp:include page="/layout/serv_header.jsp" />
+		<div class="container">
+			<h2 class="title">고객센터</h2>
+			<h3>자주 묻는 질문(FAQ)</h3>
+			<form id="form_to_search" action="<%=root%>/serv_center/faq/search">
+				<div class="input_area">
+					<input class="input_sear" name="keyword" type="text" placeholder="검색어" title="검색 키워드를 입력해주세요." value="<%=request.getParameter("keyword") != null ? request.getParameter("keyword") : ""%>"/>
+					<button onclick="document.getElementById('form_to_search').submit()" type="submit" class="search_icon"><img src="<%=root%>/static/img/search.png" alt="돋보기 이미지"/></button>
+				</div>
+			</form>
+			<div class="bg_container">
+				<ul>
+					<%
+						List<FAQ> list = (List)request.getAttribute("list");
+						for(FAQ faq : list) {
+					%>
+						<li>
+							<img class="icon_img" alt="깃발이미지" src="<%=root%>/static/img/Megaphone.png">
+							<p class="bor_txt">택배서비스</p>
+							<p><%=faq.getTitle() %></p>
+							<button type="button" class="dropdown">
+								<img alt="드랍다운 화살표" src="<%=root%>/static/img/downarrow.png">
+							</button>
+						</li>
+						<li class="answer">
+							<p><%=faq.getContent() %></p>
+						</li>
+					<%}%>
+				</ul>
+				<div class="bottom_page">
+					<ul>
+						<li>
+							<a href="#"><img src="<%=root%>/static/img/lleft.png" alt=""/></a>
+						</li>
+						<li>
+							<a href="#"><img src="<%=root%>/static/img/left.png" alt=""/></a>
+						</li>
+						<li>
+							<a href="#">1</a>
+						</li>
+						<li>
+							<a href="#">2</a>
+						</li>
+						<li>
+							<a href="#">3</a>
+						</li>
+						<li>
+							<a href="#"><img src="<%=root%>/static/img/right.png" alt=""/></a>
+						</li>
+						<li>
+							<a href="#"><img src="<%=root%>/static/img/rright.png" alt=""/></a>
+						</li>
+					</ul>
+				</div>
+			</div>
+		</div>
+		<jsp:include page="/layout/footer.jsp" />
+	</div>
+	<%-- [Contents] ######################################################### --%>
+	<jsp:include page="/layout/script.jsp" />
+</body>
+</html>
+-- myqna 파일 
+]<%@page import="DTO.AskDTO"%>
+<%@page import="org.apache.jasper.tagplugins.jstl.core.ForEach"%>
+<%@page import="java.util.List"%>
+<%@ include file="/layout/jstl.jsp" %>
+<%@ include file="/layout/common.jsp" %>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+<% List<AskDTO> list = (List)request.getAttribute("askList"); %>
+<!DOCTYPE html>
+<html>
+<head>
+	<title>project💻 - ALOHA CLASS🌴</title>
+	<jsp:include page="/layout/meta.jsp" />
+	<jsp:include page="/layout/link.jsp" />
+</head>
+<body>
+	<div class="wrapper">
+	<%-- [Contents] ######################################################### --%>
+		<jsp:include page="/layout/serv_header.jsp" />
+		<div class="container">
+			<h2 class="title">내 문의 내역</h2>
+			<h3></h3>
+			<!-- TODO: form태그 만들기 -->
+			<div class="qna_container">
+				<ul>
+				<% for(AskDTO askDto : list) {%>
+					<li>
+						<img alt="사람이미지" src="<%=root%>/static/img/person.png">
+						<p class="bor_txt"><%= askDto.getType() %></p>
+						<p class="ask_title"><%= askDto.getTitle() %></p>
+						<p class="ask_date"><%= askDto.getCreatedAt() %></p>
+						<button type="button" class="dropdown">
+							<img alt="드랍다운 화살표" src="<%=root%>/static/img/downarrow.png">
+						</button>
+					</li>
+					<li class="answer admin">
+						<p><%= askDto.getContent() %></p>
+						<span class="qna_line"></span>
+						<div class="answer_wrap">
+							<p>관리자 : </p>
+							<p><%= askDto.getCreatedAt() %></p>
+						</div>
+							<% if(askDto.getCheckAnswer() == 1) { %>
+							<p class="admin_answer">
+							<%-- <% ??????.getAnswer() %> --%>
+							</p>
+							<% } else { %>
+								<p class="admin_answer">아직 답변이 등록되지 않았습니다.</p>
+							<% } %>
+					</li>
+			<% } %>
+					
+				</ul>
+				<div class="bottom_page">
+					<ul>
+						<li>
+							<a href="#"><img src="<%=root%>/static/img/lleft.png" alt=""/></a>
+						</li>
+						<li>
+							<a href="#"><img src="<%=root%>/static/img/left.png" alt=""/></a>
+						</li>
+						<li>
+							<a href="#">1</a>
+						</li>
+						<li>
+							<a href="#">2</a>
+						</li>
+						<li>
+							<a href="#">3</a>
+						</li>
+						<li>
+							<a href="#"><img src="<%=root%>/static/img/right.png" alt=""/></a>
+						</li>
+						<li>
+							<a href="#"><img src="<%=root%>/static/img/rright.png" alt=""/></a>
+						</li>
+					</ul>
+				</div>
+			</div>
+		</div>
+		<jsp:include page="/layout/footer.jsp" />
+	</div>
+	<%-- [Contents] ######################################################### --%>
+	<jsp:include page="/layout/script.jsp" />
+</body>
+</html>
+
+
+-- static 폴더 내
+css 폴더, font, img, js 파일들이 존재 
+
+js 폴더 내 
+hm, jy, newfile.1, newfile, script, ys 이름의 js 파일들이 존재
+
+-- hm 파일 
+/**
+ *  로그인
+ * 	회원가입
+ *  로그인 후 목록 확인
+ */
+// 현재 페이지의 파일명 구하기
+const currentPage = window.location.pathname;
+
+if (currentPage.includes("sign_up.jsp") || currentPage.includes("login_list_update.jsp")) {
+    const Userform = {
+
+        // 회원가입 유효성 검사
+        validateSignUpForm: function () {
+            const id = document.getElementById("id");
+            const password = document.getElementById("password");
+            const passwordCheck = document.getElementById("passwordcheck");
+            const phone = document.getElementById("p_number");
+            const code = document.getElementById("check_number");
+            const name = document.getElementById("name");
+            const email1 = document.getElementById("email1");
+            const email2 = document.getElementById("email2");
+            const address = document.getElementById("address");
+            const birth = document.getElementById("birth");
+
+            // 정규식
+            const idRegex = /^[가-힣a-zA-Z0-9]+$/;
+            const pwRegex = /^(?=.*[A-Za-z])(?=.*\d)(?=.*[!@#$%^&*])[A-Za-z\d!@#$%^&*]{8,}$/;
+            const phoneRegex = /^\d{11}$/;
+            const nameRegex = /^[가-힣a-zA-Z]+$/;
+            const emailRegex = /^[a-zA-Z0-9._%+-]+$/;
+            const birthRegex = /^\d{8}$/;
+
+            const fields = [
+                { el: id, name: "아이디" },
+                { el: password, name: "비밀번호" },
+                { el: passwordCheck, name: "비밀번호 확인" },
+                { el: phone, name: "연락처" },
+                { el: code, name: "인증번호" },
+                { el: name, name: "이름" },
+                { el: email1, name: "이메일 아이디" },
+                { el: email2, name: "이메일 도메인" },
+                { el: address, name: "주소" },
+                { el: birth, name: "생년월일" }
+            ];
+
+            for (let field of fields) {
+                if (!field.el.value.trim()) {
+                    alert(`${field.name}를 입력해주세요.`);
+                    field.el.focus();
+                    return false;
+                }
+            }
+
+            if (!idRegex.test(id.value)) {
+                alert("아이디는 한글, 영어, 숫자만 입력 가능합니다.");
+                id.focus();
+                return false;
+            }
+
+            if (!window.sign_up || !window.sign_up.idChecked) {
+                alert("아이디 중복 확인을 해주세요.");
+                id.focus();
+                return false;
+            }
+
+            if (!pwRegex.test(password.value)) {
+                alert("비밀번호는 특수문자, 영문, 숫자를 포함해 8자 이상이어야 합니다.");
+                password.focus();
+                return false;
+            }
+
+            if (password.value !== passwordCheck.value) {
+                alert("비밀번호가 일치하지 않습니다.");
+                passwordCheck.focus();
+                return false;
+            }
+
+            if (!phoneRegex.test(phone.value)) {
+                alert("연락처는 숫자만 포함하여 11자리를 입력해주세요.");
+                phone.focus();
+                return false;
+            }
+
+            if (!nameRegex.test(name.value)) {
+                alert("이름은 한글 또는 영어만 입력 가능합니다.");
+                name.focus();
+                return false;
+            }
+
+            if (!emailRegex.test(email1.value) || !emailRegex.test(email2.value)) {
+                alert("이메일은 영문, 숫자, 일부 특수문자(., _, %, +, -)만 입력 가능합니다.");
+                email1.focus();
+                return false;
+            }
+
+            if (!birthRegex.test(birth.value)) {
+                alert("생년월일은 숫자 8자리로 입력해주세요. (예: 19990101)");
+                birth.focus();
+                return false;
+            }
+
+            return true;
+        },
+
+		// 회원정보 수정 유효성 검사
+		validateUpdateForm: function () {
+		    const password = document.getElementById("password");
+		    const passwordCheck = document.getElementById("passwordcheck");
+		    const phone = document.getElementById("p_number");
+		    const email1 = document.getElementById("email1");
+		    const email2 = document.getElementById("email2");
+		    const address = document.getElementById("address");
+
+		    const pwRegex = /^(?=.*[A-Za-z])(?=.*\d)(?=.*[!@#$%^&*])[A-Za-z\d!@#$%^&*]{8,}$/;
+		    const phoneRegex = /^\d{11}$/;
+		    const emailRegex = /^[a-zA-Z0-9._%+-]+$/;
+
+		    const fields = [
+		        { el: password, name: "비밀번호" },
+		        { el: passwordCheck, name: "비밀번호 확인" },
+		        { el: phone, name: "연락처" },
+		        { el: email1, name: "이메일 아이디" },
+		        { el: email2, name: "이메일 도메인" },
+		        { el: address, name: "주소" }
+		    ];
+
+		    for (let field of fields) {
+		        if (!field.el.value.trim()) {
+		            alert(`${field.name}를 입력해주세요.`);
+		            field.el.focus();
+		            return false;
+		        }
+		    }
+
+		    if (!pwRegex.test(password.value)) {
+		        alert("비밀번호는 특수문자, 영문, 숫자를 포함해 8자 이상이어야 합니다.");
+		        password.focus();
+		        return false;
+		    }
+
+		    if (password.value !== passwordCheck.value) {
+		        alert("비밀번호가 일치하지 않습니다.");
+		        passwordCheck.focus();
+		        return false;
+		    }
+
+		    if (!phoneRegex.test(phone.value)) {
+		        alert("연락처는 숫자만 포함하여 11자리를 입력해주세요.");
+		        phone.focus();
+		        return false;
+		    }
+
+		    if (!emailRegex.test(email1.value) || !emailRegex.test(email2.value)) {
+		        alert("이메일은 영문, 숫자, 일부 특수문자(., _, %, +, -)만 입력 가능합니다.");
+		        email1.focus();
+		        return false;
+		    }
+
+		    return true;
+		}
+
+
+    };
+}
+
+
+	
+
+
+
+// 로그아웃 확인창
+function confirmLogout() {
+    if (confirm("로그아웃 하시겠습니까?")) {
+        location.href = "/the_joyful_delivery/users/logout";
+    }
+}
+
+document.addEventListener("DOMContentLoaded", function () {
+	
+	
+
+
+	// 로그인 페이지
+    const id_input = document.getElementById("id");
+    const password_input = document.getElementById("password");
+    const remember_id = document.getElementById("rememberId");
+    const autologin = document.getElementById("autologin");
+
+    // 쿠키 를 가져옴(특정 쿠키)
+    const getCookie = (name) => {
+        const value = document.cookie.match('(^|;)\\s*' + name + '\\s*=\\s*([^;]+)');
+        return value ? value.pop() : '';
+    };
+
+    const save_id = getCookie("save_id");
+    if (save_id) {
+        id_input.value = save_id;
+        remember_id.checked = true;
+    }
+    if (getCookie("autologin") === "true") {
+        autologin.checked = true;
+    }
+    const l_form = document.getElementById("form");
+    if (l_form) {
+        l_form.addEventListener("submit", function (e) {
+            e.preventDefault();
+
+            if (id_input.value === "") {
+                alert("아이디를 입력해주세요");
+                id_input.focus();
+                return;
+            }
+            if (id_input.value.length < 5 || id_input.value.length > 20) {
+                alert('아이디는 5~20자 이내로 입력 가능합니다.');
+                id_input.select();
+                return false;
+            }
+            if (password_input.value === "") {
+                alert("비밀번호를 입력해주세요");
+                password_input.focus();
+                return;
+            }
+            if (password_input.value.length < 6) {
+                alert("비밀번호는 6자 이상으로 입력해야 합니다.");
+                password_input.focus();
+                return false;
+            }
+			// ckeckbox - 아이디 저장, 자동로그인(쿠키 활용)
+            if (remember_id.checked) {
+                document.cookie = `save_id=${id_input.value}; path=/`;
+            } else {
+                document.cookie = `save_id=; path=/; max-age=0`;
+            }
+            if (autologin.checked) {
+                document.cookie = `autologin=true; path=/`;
+            } else {
+                document.cookie = `autologin=; path=/; max-age=0`;
+            }
+            l_form.submit();
+        });
+    }
+
+	// 아이디 중복 클릭 시 
+	const btnCheckId = document.getElementById("btnCheckId");
+	if (btnCheckId) {
+	    btnCheckId.addEventListener("click", checkDuplicateId);
+	}
+	// 아이디 중복 검사 
+	// 선언적 함수 정의
+	function checkDuplicateId() {
+	    const userId = document.getElementById("id").value.trim();
+	    const idRegex = /^[가-힣a-zA-Z0-9]+$/;
+	    const messageElement = document.getElementById("idCheckMessage");
+
+	    if (userId === "") {
+	        alert("아이디를 입력해주세요.");
+	        return;
+	    }
+	    if (!idRegex.test(userId)) {
+	        alert("아이디는 한글, 영문, 숫자만 입력 가능합니다.");
+	        return;
+	    }
+
+	    fetch(`${root}/users/checkId?id=${encodeURIComponent(userId)}`)
+	        .then(response => response.json())
+	        .then(data => {
+	            if (data.exists) {
+	                messageElement.style.color = "red";
+	                messageElement.textContent = "이미 사용 중인 아이디입니다.";
+	                sign_up.idChecked = false;
+	            } else {
+	                messageElement.style.color = "green";
+	                messageElement.textContent = "사용 가능한 아이디입니다.";
+	                sign_up.idChecked = true;
+	            }
+	        })
+	        .catch(error => {
+	            messageElement.style.color = "red";
+	            messageElement.textContent = "오류 발생: " + error.message;
+	            sign_up.idChecked = false;
+	        });
+	}
+
+
+    // 회원가입 페이지 --------------------------------------------------------------------------------------------
+    
+	// 폼 제출전 자바스크립트 유효성 검사를 실행, 폼 전송 여부 결정 
+	// 페이지 경로가 '/signup'인 경우에만 실행
+	if (window.location.pathname === '/signup') {
+	    const signUpForm = document.forms["sign_up"];
+	    if (signUpForm) {
+	        signUpForm.onsubmit = function () {
+	            return Userform.validateSignUpForm();
+	        };
+	    } else {
+	        console.log('sign_up 폼을 찾을 수 없습니다.');
+	    }
+	}
+
+	// 비밀번호 확인 - 일치 여부 판단
+	const password = document.getElementById("password");
+	const passwordCheck = document.getElementById("passwordcheck");
+	const pwCheckMessage = document.getElementById("pwCheckMessage");
+
+	if (password && passwordCheck && pwCheckMessage) {
+	    function checkPasswordMatch() {
+	        if (!password.value || !passwordCheck.value) {
+	            pwCheckMessage.textContent = "";
+	            pwCheckMessage.className = "check-message";
+	            return;
+	        }
+
+	        if (password.value === passwordCheck.value) {
+	            pwCheckMessage.textContent = "✔";
+	            pwCheckMessage.className = "check-message success";
+	        } else {
+	            pwCheckMessage.textContent = "❌";
+	            pwCheckMessage.className = "check-message error";
+	        }
+	    }
+
+	    password.addEventListener("input", checkPasswordMatch);
+	    passwordCheck.addEventListener("input", checkPasswordMatch);
+	}
+
+
+		// 인증번호 확인
+		const inputPhone = document.getElementById("p_number");
+		const btnPhone = document.getElementById("btnPhone");
+		const inputCerti = document.getElementById("check_number");
+
+		if (inputPhone && btnPhone && inputCerti) {
+		    let certiCheck = false;
+		    let certiNum = null;
+
+		    // 초기 버튼 상태 비활성화
+		    btnPhone.disabled = inputPhone.value.length < 10;
+
+		    // 연락처 입력 10자리 이상일 때 버튼 활성화
+		    inputPhone.addEventListener("keyup", function () {
+		        btnPhone.disabled = this.value.length < 10;
+		    });
+
+		    // 인증번호 발급
+		    btnPhone.addEventListener("click", function () {
+		        if (btnPhone.disabled) return; // 버튼 비활성 시 동작하지 않도록 안전장치
+
+		        certiNum = Math.floor(100000 + Math.random() * 900000); // 6자리 숫자
+		        alert("임시 인증번호: " + certiNum);
+		        inputCerti.classList.add("on");
+
+		        // 기존 이벤트 제거 후 다시 등록 (중복 방지)
+		        inputCerti.removeEventListener("change", checkCerti);
+		        inputCerti.addEventListener("change", checkCerti);
+		    });
+
+		    // 인증번호 확인 함수
+		    function checkCerti() {
+		        if (inputCerti.value == certiNum) {
+		            alert("인증되었습니다.");
+		            certiCheck = true;
+		        } else {
+		            alert("인증번호가 다릅니다.");
+		            certiCheck = false;
+		        }
+		        console.log("인증 여부:", certiCheck);
+		    }
+
+		    // 인증번호 입력 시 포커스되면 값 초기화
+		    inputCerti.addEventListener("focus", function () {
+		        this.value = "";
+		    });
+		}
+
+
+
+    // 로그인 후 목록 확인 ----------------------------------------------------------------------------------
+	
+	// 마이페이지 ----------------------------------------------------------------
+	// 탭 클릭 이벤트
+	document.querySelectorAll('.tab').forEach(tab => {
+	    tab.addEventListener('click', function() {
+	        document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+	        this.classList.add('active');
+
+	        if (this.classList.contains('part2')) {
+	            // 회원정보수정 탭 클릭 시 이동
+	            window.location.href = '/the_joyful_delivery/page/login/login_list_update.jsp';
+	        } else {
+	            // 배송상태 탭은 기존 동작 유지
+	            document.querySelector('.table-and-detail').className = 'table-and-detail part1';
+	        }
+	    });
+	});
+
+
+	// 행 클릭 이벤트
+	document.querySelectorAll('.row-box').forEach(row => {
+	    row.addEventListener('click', function() {
+	        const idx = this.querySelector('input[name="idx"]').value;
+	        const card = this.querySelector('input[name="pCard"]').value;
+	        const amount = this.querySelector('input[name="pAmount"]').value;
+	        const date = this.querySelector('input[name="pDate"]').value;
+
+	        document.getElementById('payment-idx').value = idx;
+	        document.getElementById('payment-card').value = card;
+	        document.getElementById('payment-amount').value = amount;
+	        document.getElementById('payment-date').value = date;
+	    });
+	});
+
+	// 최초에 첫 행을 상세정보에 출력
+	const firstRow = document.querySelector('.row-box');
+	if (firstRow) {
+	    const idx = firstRow.querySelector('input[name="idx"]').value;
+	    const card = firstRow.querySelector('input[name="pCard"]').value;
+	    const amount = firstRow.querySelector('input[name="pAmount"]').value;
+	    const date = firstRow.querySelector('input[name="pDate"]').value;
+
+	    document.getElementById('payment-idx').value = idx;
+	    document.getElementById('payment-card').value = card;
+	    document.getElementById('payment-amount').value = amount;
+	    document.getElementById('payment-date').value = date;
+	}
+
+
+
+
+
+		  
+		  
+		  
+	});
+
+-- script 파일 
+/**
+ * 
+ */
+document.addEventListener("DOMContentLoaded", function() {
+})
+
+-- ys.js 파일 
+/**
+ * 
+ */
+// 문서 준비 이벤트
+document.addEventListener("DOMContentLoaded", (e) => {
+  // 이미지 3장
+  const slides = document.querySelector('#main_slide')
+  const img = document.querySelectorAll('.main_slide img')
+  const count = img.length
+  const size = 770
+  const delay = 3000
+  const speed = 1000
+  let index = 0
+
+  // 이미지 슬라이드 복제
+  const list = []
+  for (let i = 0; i < img.length; i++) {
+      const clone = img[i].cloneNode(true)
+      list.push(clone)
+  }
+
+  // 다 비우고 1번2번 이미지 넣기
+  slides.innerHTML = ''
+  slides.appendChild(list[index])
+  slides.appendChild(list[index+1])
+
+  // 애니메이션
+  function animate( value ) {
+      for (let i = 0; i < list.length; i++) {
+          const slideImg = list[i];
+          slideImg.style.transform
+           = `translateX( ${value}px )`
+      }
+  }
+
+  // 슬라이드
+  function slide() {
+      // 사이즈 만큼 슬라이드
+      animate(-size)
+      // index 계산
+      index = (index + 1) % count
+      next = (index + 1) % count
+      // 다음 슬라이드로 전환
+      setTimeout(() => {
+          slides.innerHTML = ''
+          animate(0)
+          slides.appendChild(list[index])
+          slides.appendChild(list[next])
+      }, speed)
+  }
+  // 3초마다 슬라이드
+  setInterval( slide, delay )
+})
+
+-- web-inf 폴더 내 
+lib 폴더 내 
+alcl-jdbc
+gson-2.13.1
+jakarta.servlet-api-6.1.0
+jakarta.servlet.jsp.jstl-3.0.1
+jakarta.servlet.jsp.jstl-api-3.0.2
+jbcrypt-0.4
+lombok
+mysql-connector-j-9.2.0 라이브러리들을 사용함 
