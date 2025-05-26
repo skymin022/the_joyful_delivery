@@ -421,9 +421,9 @@ footer .line {
 }
 
 .notice_wrap {
+	width: 715px;
 	display: flex;
 	flex-direction: column;
-	width: 410px;
 	background: white;
 	border-radius: 20px;
 	box-shadow: 1px 1px 10px 1px rgba(0,0,0,0.25);
@@ -434,12 +434,9 @@ footer .line {
 	font-weight: bold;
 	font-size: var(--text-normal);
 }
-.line1, .line2, .line3 {
+.anno_line {
 	display: flex;
 	justify-content: space-between;
-}
-.line1 .title_date1, .line2 .title_date2, .line3 .title_date3 {
-	font-size: 10px;
 }
 
 .customer_service {

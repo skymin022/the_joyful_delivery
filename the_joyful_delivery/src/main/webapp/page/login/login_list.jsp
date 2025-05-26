@@ -48,8 +48,8 @@
 	            </div>
 	            <div class="main-content">
 	                <div class="tap">
-	                    <span class="tab part1 active">배송 중 / 전</span>
-	                    <span class="tab part2">배송 완료</span>
+	                    <span class="tab part1 active">배송 상태</span>
+	                    <span class="tab part2">회원정보수정</span>
 	                </div>
 					 <div class="table-and-detail">
 						 <div class="table-wrapper">
@@ -61,86 +61,56 @@
 								 <div>선불 / 후불</div>
 								 <div>배송 상태</div>
 							 </div>
-							 <div class="row-box">
-								 <div class="row-content">
-									 <div>1</div>
-									 <div>전자기기</div>
-									 <div>886 방배읍 - 인제, 강원 / 95154</div>
-									 <div>4085 신월동 - 군산, 경남 / 86656</div>
-									 <div>선불</div>
-									 <div>배송 전</div>
+							 <c:if test="${empty deliveries}">
+                                 <div class="no-data">등록된 배송 내역이 없습니다.</div>
+                              </c:if>	
+							 <c:forEach var="delivery" items="${deliveries}">
+								 <div class="row-box" id="row-box">
+                                 	<div class="row">
+                                 		<input type="hidden" name="idx" value="${delivery.payment.idx}" />
+                                 		<input type="hidden" name="pCard" value="${delivery.payment.PCard}" />
+                                 		<input type="hidden" name="pAmount" value="${delivery.payment.PAmount}" />
+                                 		<input type="hidden" name="pDate" value="${delivery.payment.PDate}" />
+                                 	    <div class="col number">
+                                     	    <span class="number-text">${delivery.idx}</span>
+                                 	    </div>
+                                 	    <div class="col delivery-info">
+                                 	        <span class="delivery-text">${delivery.value}</span>
+                                 	    </div>
+                                 	    <div class="col sender-info">
+                                 	        <span class="sender-text">${delivery.sendingReceiving.SName} / ${delivery.sendingReceiving.SAddress}</span>
+                                 	    </div>
+                                 	    <div class="col receiver-info">
+                                 	        <span class="receiver-text">${delivery.sendingReceiving.RName} / ${delivery.sendingReceiving.RAddress}</span>
+                                 	    </div>
+                                 	    <div class="col payment-type">
+                                 	        <span class="payment-text">${delivery.prePos}</span>
+                                 	    </div>
+                                 	    <div class="col status">
+                                 	        <span class="status-text">${delivery.status}</span>
+                                 	    </div>
+                                 	</div>
 								 </div>
-							 </div>
-							 <div class="row-box">
-								 <div class="row-content">
-									 <div>1</div>
-									 <div>전자기기</div>
-									 <div>886 방배읍 - 인제, 강원 / 95154</div>
-									 <div>4085 신월동 - 군산, 경남 / 86656</div>
-									 <div>선불</div>
-									 <div>배송 전</div>
-								 </div>
-							 </div>
-							 <div class="row-box">
-								 <div class="row-content">
-									 <div>1</div>
-									 <div>전자기기</div>
-									 <div>886 방배읍 - 인제, 강원 / 95154</div>
-									 <div>4085 신월동 - 군산, 경남 / 86656</div>
-									 <div>선불</div>
-									 <div>배송 완료</div>
-								 </div>
-							 </div>
-							 <div class="row-box">
-								 <div class="row-content">
-									 <div>1</div>
-									 <div>전자기기</div>
-									 <div>홍길동 / 서울 강남구 역삼동 123-45</div>
-									 <div>김철수 / 부산 해운대구 중동 678-90</div>
-									 <div>선불</div>
-									 <div>배송 전</div>
-								 </div>
-							 </div>
+							 </c:forEach>
 
-							 <div class="row-box">
-								 <div class="row-content">
-									 <div>2</div>
-									 <div>의류</div>
-									 <div>이영희 / 인천 남동구 논현동 111-22</div>
-									 <div>박민수 / 대구 수성구 범어동 333-44</div>
-									 <div>후불</div>
-									 <div>배송 중</div>
-								 </div>
-							 </div>
-
-							 <div class="row-box">
-								 <div class="row-content">
-									 <div>3</div>
-									 <div>도서</div>
-									 <div>최수진 / 광주 북구 일곡동 555-66</div>
-									 <div>오세훈 / 대전 유성구 봉명동 777-88</div>
-									 <div>선불</div>
-									 <div>배송 완료</div>
-								 </div>
-							 </div>
 						</div>
 						<div class="detail">
                         <div class="header">상세 내역</div>
                             <div class="form-group font">
                                 <label>주문번호</label>
-                                <input type="text" value="01010010101010" />
+                                <input type="text" placeholder="주문번호" id="payment-idx" />
                             </div>
                             <div class="form-group font">
                                 <label>카드정보</label>
-                                <input type="text" placeholder="카드정보" />
+                                <input type="text" placeholder="카드정보" id="payment-card" />
                             </div>
                             <div class="form-group font">
                                 <label>결제날짜</label>
-                                <input type="text" placeholder="결제날짜" />
+                                <input type="text" placeholder="결제날짜" id="payment-date" />
                             </div>
                             <div class="form-group font">
                                 <label>금액</label>
-                                <input type="text" value="100,100,100" />
+                                <input type="text" placeholder="금액" id="payment-amount" />
                             </div>
                     	</div>
 					 </div>
@@ -151,6 +121,70 @@
 		<%-- [Contents] ######################################################### --%>
 		<jsp:include page="/layout/footer.jsp" />
 		<jsp:include page="/layout/script.jsp" />
+		
+		<script>
+			// 탭 클릭 이벤트
+            document.querySelectorAll('.tab').forEach(tab => {
+                tab.addEventListener('click', function() {
+                    document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+                    this.classList.add('active');
+                    const part = this.classList.contains('part1') ? 'part1' : 'part2';
+                    document.querySelector('.table-and-detail').className = `table-and-detail ${part}`;
+                });
+            });
+
+            // 행 클릭 이벤트
+            document.querySelectorAll('.row-box').forEach(row => {
+                row.addEventListener('click', function() {
+                    const idx = this.querySelector('input[name="idx"]').value;
+                    const card = this.querySelector('input[name="pCard"]').value;
+                    const amount = this.querySelector('input[name="pAmount"]').value;
+                    const date = this.querySelector('input[name="pDate"]').value;
+
+                    document.getElementById('payment-idx').value = idx;
+                    document.getElementById('payment-card').value = card;
+                    document.getElementById('payment-amount').value = amount;
+                    document.getElementById('payment-date').value = date;
+                });
+            });
+            
+            // 최초에 첫 행을 상세정보에 출력
+            const firstRow = document.querySelector('.row-box');
+            if (firstRow) {
+                const idx = firstRow.querySelector('input[name="idx"]').value;
+                const card = firstRow.querySelector('input[name="pCard"]').value;
+                const amount = firstRow.querySelector('input[name="pAmount"]').value;
+                const date = firstRow.querySelector('input[name="pDate"]').value;
+
+                document.getElementById('payment-idx').value = idx;
+                document.getElementById('payment-card').value = card;
+                document.getElementById('payment-amount').value = amount;
+                document.getElementById('payment-date').value = date;
+            }
+		</script>
 	</div>
 </body>
 </html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

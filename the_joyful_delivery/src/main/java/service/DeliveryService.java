@@ -21,4 +21,9 @@ public interface DeliveryService {
 	
 	// 알클라이브러리x 메서드
 	public List<Delivery> regJoinList(int pageCut, int offset);
+	public int joinCount();
+	public int filterJoinCount(String column, String value);
+	
+	// 회원전용 택배 조회
+	public List<Delivery> listByUserId(String loginId);
 }

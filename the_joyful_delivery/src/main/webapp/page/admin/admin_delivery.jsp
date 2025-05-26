@@ -1,17 +1,15 @@
-<%@page import="java.text.SimpleDateFormat"%>
-<%@page import="service.RegionServiceImpl"%>
-<%@page import="java.sql.Timestamp"%>
-<%@page import="java.time.ZoneId"%>
-<%@page import="java.time.LocalDateTime"%>
-<%@page import="java.util.List"%>
-<%@page import="DTO.Delivery"%>
 <%@ include file="/layout/jstl.jsp" %>
 <%@ include file="/layout/common.jsp" %>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%
-	List<Delivery> list = (List) request.getAttribute("deliveries");
+	// 삼항 연산자 전용 변수
+	String queryString = (String)request.getAttribute("paramQuery");	
+	request.setAttribute("queryString", queryString);	// JSTL 에서 쓸 수 있게
+	String baseUrl = root + "/admin/delivery";
+	request.setAttribute("baseUrl", baseUrl);			// JSTL 에서 쓸 수 있게
 	int size = (int)request.getAttribute("size");
+	int currentPage = (int)request.getAttribute("currentPage");
 %>
 <!DOCTYPE html>
 <html>
@@ -72,47 +70,57 @@
 					</tr>
 				</thead>
 				<tbody class="adm_tbody">
-					<%
-						SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-						for(Delivery del : list) {
-							Timestamp _addTime = new Timestamp(del.getCreatedAt().getTime());
-							String addTime = sdf.format(_addTime);
-							// TODO: ORDER BY 로 가장 최근에 위치를 가져와야 함.
-					%>
-					<tr>
-						<td><%=del.getIdx() %></td>
-						<td><%=del.getUserIdx() %></td>
-						<td><%=del.getDriverIdx() %></td>
-						<td><%=addTime %></td>
-						<td><%=del.getRegStatus() %></td>
-						<td><%=del.getValue() %>만원</td>
-						<td><%=del.getPrePos() %></td>
-						<td><%=del.getStatus() %></td>
-					</tr>
-					<%} %>
+					<c:forEach var="del" items="${deliveries}">
+					    <tr>
+					      <td>${del.idx}</td>
+					      <td>${del.userIdx}</td>
+					      <td>${del.name}</td>
+					      <td>${del.formatCreatedAt}</td>
+					      <td>${del.regStatus}</td>
+					      <td>${del.value}만원</td>
+					      <td>${del.prePos}</td>
+					      <td>${del.status}</td>
+					    </tr>
+			  		</c:forEach>
 				</tbody>
 			</table>
 			<div class="adm_bottom_page">
-				<ul>
-					<li>
-						<a href="#"><img src="<%=root%>/static/img/lleft.png" alt=""/></a>
-					</li>
-					<li>
-						<a href="#"><img src="<%=root%>/static/img/left.png" alt=""/></a>
-					</li>
-					<% for(int i = 0; i < size; i++) { %>
-					<li>
-						<a href="?page=<%=i%>"><%=i+1 %></a>
-					</li>
-					<%} %>
-					<li>
-						<a href="#"><img src="<%=root%>/static/img/right.png" alt=""/></a>
-					</li>
-					<li>
-						<a href="#"><img src="<%=root%>/static/img/rright.png" alt=""/></a>
-					</li>
-				 </ul>
-			 </div>
+			    <ul>
+			        <li>
+			            <a href="<%= baseUrl + "?" + (queryString.length() > 0 ? queryString + "&" : "") + "page=1" %>">
+			                <img src="<%=root%>/static/img/lleft.png" alt="처음"/>
+			            </a>
+			        </li>
+			        <li>
+			            <a href="<%= baseUrl + "?" + (queryString.length() > 0 ? queryString + "&" : "") + "page=" + Math.max(currentPage - 1, 1) %>">
+			                <img src="<%=root%>/static/img/left.png" alt="이전"/>
+			            </a>
+			        </li>
+			        <c:forEach var="i" begin="${startPage}" end="${endPage}">
+					    <c:set var="pageQuery" value="page=${i+1}" />
+					    <c:choose>
+					        <c:when test="${not empty queryString}">
+					            <c:set var="fullQuery" value="${queryString}&${pageQuery}" />
+					        </c:when>
+					        <c:otherwise>
+					            <c:set var="fullQuery" value="${pageQuery}" />
+					        </c:otherwise>
+					    </c:choose>
+					    <c:set var="pageLink" value="${baseUrl}?${fullQuery}" />
+					    <li><a style="${i  == currentPage - 1 ? 'font-weight: bold; color: red;' : ' '}" href="${pageLink}">${i + 1}</a></li>
+					</c:forEach>
+			        <li>
+			            <a href="<%= baseUrl + "?" + (queryString.length() > 0 ? queryString + "&" : "") + "page=" + Math.min(currentPage + 1, size) %>">
+			                <img src="<%=root%>/static/img/right.png" alt="다음"/>
+			            </a>
+			        </li>
+			        <li>
+			            <a href="<%= baseUrl + "?" + (queryString.length() > 0 ? queryString + "&" : "") + "page=" + (size) %>">
+			                <img src="<%=root%>/static/img/rright.png" alt="마지막"/>
+			            </a>
+			        </li>
+			    </ul>
+			</div>
 		</div>
 		<%-- [Contents] ######################################################### --%>
 		<jsp:include page="/layout/script.jsp" />

@@ -13,6 +13,29 @@ public class DeliveryServiceImpl implements DeliveryService {
 	DeliveryDAO delDao = new DeliveryDAO();
 	
 	@Override
+	public int joinCount() {
+		int count = 0;
+		try {
+			count = delDao.joinCount();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return count;
+	}
+	
+
+	@Override
+	public int filterJoinCount(String column, String value) {
+		int count = 0;
+		try {
+			count = delDao.filterJoinCount(column, value);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return count;
+	}
+	
+	@Override
 	public List<Delivery> regJoinList(int pageCut, int offset) {
 		List<Delivery> list = null;
 		try {
@@ -23,10 +46,10 @@ public class DeliveryServiceImpl implements DeliveryService {
 		return list;
 	}
 	
-	public List<Delivery> regJoinList(String column, String value) {
+	public List<Delivery> regJoinList(String column, String value, int pageCut, int offset) {
 		List<Delivery> list = null;
 		try {
-			list = delDao.regJoinList(column, value);
+			list = delDao.regJoinList(column, value, pageCut, offset);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -100,4 +123,21 @@ public class DeliveryServiceImpl implements DeliveryService {
 		}
 		return count;
 	}
+	
+	// 회원전용 목록
+	@Override
+	public List<Delivery> listByUserId(String userId) {
+		List<Delivery> list = null;
+		try {
+			list = delDao.listByUserId(userId);
+		} catch (Exception e) {
+			System.err.println("회원전용 배송 조회 중 에러...");
+			e.printStackTrace();
+		}
+		return list;
+	}
+
+
+
+
 }

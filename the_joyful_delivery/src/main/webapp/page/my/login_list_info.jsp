@@ -48,8 +48,8 @@
 	            </div>
 	            <div class="main-content">
 	                <div class="tap">
-	                    <span class="tab part1 active">배송 중 / 전</span>
-	                    <span class="tab part2">배송 완료</span>
+	                    <span class="tab part1 active">배송 상태</span>
+	                    <span class="tab part2">회원정보 수정</span>
 	                </div>
 					 <div class="table-and-detail">
 						 <div class="table-wrapper">
