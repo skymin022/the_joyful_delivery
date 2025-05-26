@@ -136,8 +136,4 @@ public class DeliveryServiceImpl implements DeliveryService {
 		}
 		return list;
 	}
-
-
-
-
 }

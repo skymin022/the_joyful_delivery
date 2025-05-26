@@ -74,6 +74,7 @@ public class UserDAO extends BaseDAOImpl<User> {
 		return rows;
 	}
 
+
 	// 마이페이지 - 회원정보 수정
 //	public int update(User user) {
 //		int result = 0;

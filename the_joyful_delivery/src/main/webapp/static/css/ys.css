@@ -421,9 +421,9 @@ footer .line {
 }
 
 .notice_wrap {
+	width: 715px;
 	display: flex;
 	flex-direction: column;
-	width: 410px;
 	background: white;
 	border-radius: 20px;
 	box-shadow: 1px 1px 10px 1px rgba(0,0,0,0.25);
@@ -434,12 +434,9 @@ footer .line {
 	font-weight: bold;
 	font-size: var(--text-normal);
 }
-.line1, .line2, .line3 {
+.anno_line {
 	display: flex;
 	justify-content: space-between;
-}
-.line1 .title_date1, .line2 .title_date2, .line3 .title_date3 {
-	font-size: 10px;
 }
 
 .customer_service {
@@ -574,7 +571,8 @@ footer .line {
 
 
 
-.contact_container {
+
+.contact_container .il {
 	display: flex;
 	flex-direction: column;
 	justify-content: center;
@@ -591,6 +589,13 @@ footer .line {
 	padding-bottom: 130px;
 	position: relative;
 }
+
+.contact_container > ul > li .bor_txt {
+	background-color: var(--sub-color1);
+	border-radius: 10px;
+	padding: 0 10px;
+}
+
 .contact_title {
 	font-size: var(--text-big);
 	margin-top: 135px;
@@ -601,6 +606,8 @@ footer .line {
 	color: #000;
 	font-size: 20px;
 }
+
+
 .contact_input_list li {
 	display: flex;
 	flex-wrap: wrap;
@@ -608,6 +615,7 @@ footer .line {
 	column-gap: 50px;
 	position: relative;
 }
+
 .contact_input_list li + li {margin-top: 40px;}
 
 .contact_input_list input {
@@ -640,6 +648,15 @@ footer .line {
 	margin-bottom: 15px;
 	margin-left: 170px;
 }
+.contact_input_list #qna_type {
+	font-size: 18px;
+	width: 450px; height: 65px;
+	text-align: center;
+	border-radius: 10px;
+	background-color: #F5F5F5;
+	border: none;
+	cursor: pointer;
+}
 .contact_container .il .values button {
 	width: 65px; height: 30px;
 	color: #000;
@@ -653,6 +670,14 @@ footer .line {
 	pointer-events: auto;
 	background-color: #FFC251;
 }
+
+.contact_container ul li.answer {
+	padding: 50px 150px;
+	border-bottom: none;
+	display: none;
+}
+
+
 .contact_upload {
 	display:flex;
 }
@@ -699,9 +724,116 @@ footer .line {
     bottom: 50px;
 }
 
+.qna .bottom_page {
+	background-color: white;
+	margin-top: 20px;
+	margin-bottom: 60px;
+	width: 100%;
+	border-radius: 20px;
+}
 
+.qna .bottom_page ul {
+	display: flex;
+	height: 80px;
+	column-gap: 15px;
+	justify-content: center;
+	align-items: center;
+}
 
 /* =============================    contact    =============== */
+
+/* =============================    myqna    =============== */
+
+.qna_container {
+	width: 1020px;
+	background-color: white;
+	margin: 56px auto 0;
+	border-radius: 25px;
+	position: relative;
+}
+.qnat_container p {color: #000; font-size: 18px;}
+.qna_container p + p {
+	width: 450px;
+	text-align: left;
+}
+.qna_container .date1 {
+	color: var(--place-hol);
+}
+.qna_container > ul > li {
+	display: flex;
+	align-items: center;
+	padding: 20px 35px;
+	gap: 30px;
+	border-bottom: 1px solid var(--place-hol);
+}
+.qna_container > ul > li > .ask_date {
+	width: 150px;
+	text-align: end;
+	font-size: var(--text-small);
+	color: var(--place-hol);
+}
+.qna_container > ul > li .bor_txt {
+	background-color: var(--sub-color1);
+	border-radius: 10px;
+	padding: 0 10px;
+}
+.qna_container button {
+	border: none;
+	background-color: inherit;
+	margin-left: auto;
+	transition: all 0.3s;
+}
+.qna_container button.on {
+	transform: rotate(180deg);
+}
+.qna_container ul li.answer {
+	padding: 50px 150px;
+	border-bottom: none;
+	display: none;
+}
+
+.qna_container ul li .qna_line {
+  display: inline-block;
+  width: 100%;
+  height: 1px;
+  position: relative;
+  top: 2px;
+  background-color: black;
+  margin-top : 20px;
+  margin-bottom: 20px;
+}
+.qna_container ul li .answer_wrap {
+	width: 100%;
+	display: flex;
+	justify-content: space-between;
+}
+.qna_container ul li .answer_wrap p + p {
+	text-align: end;
+	font-size: var(--text-small);
+	color: var(--place-hol);
+}
+.qna_container ul li .answer_wrap .admin_answer {
+	text-align: left;
+}
+
+.bottom_page {
+	background-color: white;
+	margin-top: 20px;
+	margin-bottom: 60px;
+	width: 100%;
+	border-radius: 20px;
+}
+
+.bottom_page ul {
+	display: flex;
+	height: 80px;
+	column-gap: 15px;
+	justify-content: center;
+	align-items: center;
+}
+
+/* =============================    myqna    =============== */
+
 
 /* =================    impossible_product    =============== */
 .contact_back {

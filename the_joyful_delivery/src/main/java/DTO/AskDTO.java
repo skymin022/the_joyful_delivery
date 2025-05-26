@@ -10,17 +10,20 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-@Table("announcement")
+@Table("inquiries")
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class Announcement {
+public class AskDTO {
 	
 	@Pk
 	private int idx;
+	private int userNo;
 	private String title;
 	private String content;
 	private Date createdAt;
-	private Date updatedAt;
+	private int checkAnswer;
+	private String type;
+
 }

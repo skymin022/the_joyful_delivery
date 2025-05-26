@@ -9,11 +9,13 @@ document.addEventListener("DOMContentLoaded", function() {
 		icon.addEventListener("click", (e) => {
 			e.preventDefault()	
 			const input = document.querySelector(".input_sear.d")
-			if (isNaN(input.value) || input.value.trim() === "") {
-				alert("운송장번호(숫자)를 입력해주세요.")
-				return false;
-			} else {
-				document.getElementById("form").submit()
+			if(input) {
+				if (isNaN(input.value) || input.value.trim() === "") {
+					alert("운송장번호(숫자)를 입력해주세요.")
+					return false;
+				} else {
+					document.getElementById("form").submit()
+				}
 			}
 		});
 	}

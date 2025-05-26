@@ -9,7 +9,7 @@
 -- region_name 			- 지역명 테이블
 -- charge 				- 요금 관련 체크 테이블
 -- deliveries 			- 배송 정보 테이블
--- announcement 			- 공지사항 테이블
+-- announcement 		- 공지사항 테이블
 -- drivers 				- 운전자 정보 테이블
 
 -- 계정 : mini_team1		비번 : 123456	    스키마 : delivery
@@ -29,12 +29,21 @@ DROP TABLE IF EXISTS user_roles;
 DROP TABLE IF EXISTS reimbursement;
 DROP TABLE IF EXISTS charge;
 DROP TABLE IF EXISTS announcement;
+DROP TABLE IF EXISTS faq;
 
 -- 2. 테이블 생성 (의존성 없는 순서대로)
 CREATE TABLE `user_roles` (
     `idx` BIGINT NOT NULL AUTO_INCREMENT,
     `role` VARCHAR(20) NOT NULL,
     PRIMARY KEY (`idx`)
+);
+
+CREATE TABLE `faq` (
+	`idx`	BIGINT	NOT NULL AUTO_INCREMENT,
+	`title`	VARCHAR(200)	NOT NULL,
+	`content`	TEXT	NOT NULL,
+	`created_at`	TIMESTAMP	NOT NULL	DEFAULT CURRENT_TIMESTAMP,
+	`updated_at`	TIMESTAMP	NOT NULL	DEFAULT CURRENT_TIMESTAMP
 );
 
 CREATE TABLE `sending_and_receiving` (
@@ -137,10 +146,10 @@ CREATE TABLE `charge` (
 
 CREATE TABLE `announcement` (
     `idx` BIGINT NOT NULL AUTO_INCREMENT,
-    `a_name` VARCHAR(100) NOT NULL,
-    `a_content` TEXT NOT NULL,
-    `a_created_at` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    `a_updated_at` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    `name` VARCHAR(200) NOT NULL,
+    `content` TEXT NOT NULL,
+    `created_at` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    `updated_at` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
     PRIMARY KEY (`idx`)
 );
 

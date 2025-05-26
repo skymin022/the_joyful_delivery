@@ -38,6 +38,7 @@ public class Delivery {
 	private String regStatus;
 	@Column(exist = false)
 	private String name;
+
 	@Column(exist = false)
 	private SendingReceiving sendingReceiving; // 조인해서 가져올 SendingReceiving 객체
 	@Column(exist = false)

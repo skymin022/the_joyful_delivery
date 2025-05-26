@@ -11,7 +11,7 @@
 </head>
 <header>
 	<nav>
-		<a href="<%= root %>/index.jsp"><img src="<%= root %>/static/img/logo.png" width="380" height="153" ></a>
+		<a href="<%= root %>/index"><img src="<%= root %>/static/img/logo.png" width="380" height="153" ></a>
 		<div class="header_wrap">
 			<div>
 				<ul class="header_top">
@@ -23,8 +23,8 @@
 			<div class="header_down">
 				<ul class="header_down_1">
 					<li><a href="<%= root %>/page/delivery/delivery_main.jsp">배송조회</a></li>
-					<li><a href="<%= root %>/page/serv_center/customer_sc.jsp">자주묻는질문</a></li>
-					<li><a href="<%= root %>/page/serv_center/announcement.jsp">공지사항</a></li>
+					<li><a href="<%= root %>/serv_center/faq">자주묻는질문</a></li>
+					<li><a href="<%= root %>/serv_center/announcement">공지사항</a></li>
 					<li><a href="<%= root %>/page/serv_center/contact.jsp">문의하기</a></li>
 					<li><a href="<%= root %>/page/serv_center/myqna.jsp">내문의사항</a></li>
 				</ul>

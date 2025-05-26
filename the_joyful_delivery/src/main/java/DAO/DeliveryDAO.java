@@ -161,7 +161,6 @@ public class DeliveryDAO extends BaseDAOImpl<Delivery> {
 		return count;
 	}
 	
-	
 	// listByUserId 메서드
 	/**
 	 * deliveries x region_name x drivers 테이블을 조인하여
@@ -232,13 +231,7 @@ public class DeliveryDAO extends BaseDAOImpl<Delivery> {
 		}
 		return list;
 	}
-	
-	
-	
-	
-	
-}
-
+}	
 
 
 

@@ -1,4 +1,6 @@
 
+<%@page import="DTO.FAQ"%>
+<%@page import="java.util.List"%>
 <%@ include file="/layout/jstl.jsp" %>
 <%@ include file="/layout/common.jsp" %>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
@@ -16,8 +18,8 @@
 		<jsp:include page="/layout/serv_header.jsp" />
 		<div class="container">
 			<h2 class="title">고객센터</h2>
-			<h3>공지사항</h3>
-			<form id="form_to_search" action="<%=root%>/serv_center/announcement/search">
+			<h3>자주 묻는 질문(FAQ)</h3>
+			<form id="form_to_search" action="<%=root%>/serv_center/faq/search">
 				<div class="input_area">
 					<input class="input_sear" name="keyword" type="text" placeholder="검색어" title="검색 키워드를 입력해주세요." value="<%=request.getParameter("keyword") != null ? request.getParameter("keyword") : ""%>"/>
 					<button onclick="document.getElementById('form_to_search').submit()" type="submit" class="search_icon"><img src="<%=root%>/static/img/search.png" alt="돋보기 이미지"/></button>
@@ -25,22 +27,22 @@
 			</form>
 			<div class="bg_container">
 				<ul>
-					<c:forEach var="anno" items="${list }">
+					<%
+						List<FAQ> list = (List)request.getAttribute("list");
+						for(FAQ faq : list) {
+					%>
 						<li>
-							<img alt="깃발이미지" src="<%=root%>/static/img/flags.png">
+							<img class="icon_img" alt="깃발이미지" src="<%=root%>/static/img/Megaphone.png">
 							<p class="bor_txt">택배서비스</p>
-							<p class="ann_title">${anno.title}</p>
-							<span class="date1">${anno.createdAt}</span>
+							<p><%=faq.getTitle() %></p>
 							<button type="button" class="dropdown">
 								<img alt="드랍다운 화살표" src="<%=root%>/static/img/downarrow.png">
 							</button>
 						</li>
 						<li class="answer">
-							<p>
-								${anno.content}
-							</p>
+							<p><%=faq.getContent() %></p>
 						</li>
-					</c:forEach>
+					<%}%>
 				</ul>
 				<div class="bottom_page">
 					<ul>

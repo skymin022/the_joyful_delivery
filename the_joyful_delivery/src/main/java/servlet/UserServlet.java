@@ -16,11 +16,17 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
+
 import service.DeliveryService;
 import service.DeliveryServiceImpl;
 import service.UserService;
 import service.UserServiceImpl;
 
+import java.io.IOException;
+import java.io.PrintWriter;
+
+import DAO.UserDAO;
+import DTO.User;
 
 @WebServlet("/users/*")
 public class UserServlet extends HttpServlet {
@@ -93,12 +99,8 @@ public class UserServlet extends HttpServlet {
 		    request.setAttribute("deliveries", deliveries);
 		    request.getRequestDispatcher("/page/login/login_list.jsp").forward(request, response);
 		}
-
-
-
 		
 	}
-	
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         
@@ -198,6 +200,7 @@ public class UserServlet extends HttpServlet {
                 request.setAttribute("error", "서버 오류 발생: " + e.getMessage());
                 request.getRequestDispatcher("/sign_up.jsp").forward(request, response);
             }
+
             
                         
         } // 회원가입 끝 
@@ -262,10 +265,6 @@ public class UserServlet extends HttpServlet {
             }
         }
 
+
 	}
-        
-    
-
 }
-
-

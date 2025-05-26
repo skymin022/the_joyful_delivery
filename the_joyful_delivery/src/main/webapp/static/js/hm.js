@@ -159,11 +159,10 @@ if (currentPage.includes("sign_up.jsp") || currentPage.includes("login_list_upda
 		    return true;
 		}
 
+
     };
 }
 
-
-	
 
 	
 
