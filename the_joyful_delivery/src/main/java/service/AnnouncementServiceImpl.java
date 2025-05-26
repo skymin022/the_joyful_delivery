@@ -3,10 +3,12 @@ package service;
 import java.util.List;
 import java.util.Map;
 
+import com.alohaclass.jdbc.dto.Page;
 import com.alohaclass.jdbc.dto.PageInfo;
 
 import DAO.AnnouncementDAO;
 import DTO.Announcement;
+import DTO.FAQ;
 
 public class AnnouncementServiceImpl implements AnnouncementService {
 	
@@ -47,9 +49,16 @@ public class AnnouncementServiceImpl implements AnnouncementService {
 	}
 
 	@Override
-	public PageInfo<Announcement> page() {
-		// TODO Auto-generated method stub
-		return null;
+	public PageInfo<Announcement> page(String keyword, List<String> columList) {
+		PageInfo<Announcement> pageInfo = null; 
+		try {
+			Page pageObj = new Page(1, 10);
+			pageInfo = annDao.page(pageObj, keyword, columList);
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return pageInfo;
 	}
 
 	@Override
@@ -81,6 +90,8 @@ public class AnnouncementServiceImpl implements AnnouncementService {
 		// TODO Auto-generated method stub
 		return 0;
 	}
+
+
 
 
 

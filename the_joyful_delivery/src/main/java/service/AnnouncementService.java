@@ -11,7 +11,7 @@ public interface AnnouncementService {
 	// C.R.U.D
 	public List<Announcement> list();
 	public List<Announcement> listBy(Map<String, Object> fields);
-	public PageInfo<Announcement> page();
+	public PageInfo<Announcement> page(String keyword, List<String> columList);
 	public Announcement select(int no);
 	public int insert(Announcement announcement);
 	public Announcement insertKey(Announcement announcement);
