@@ -20,7 +20,7 @@ body {
 	<div class="wrapper">
 		<header>
 			<div class="admin_header">
-				<a href="<%=root%>/index.jsp"><img
+				<a href="<%=root%>/index"><img
 					src="<%=root%>/static/img/logo.png" width="380" height="153"></a>
 				<nav>
 					<ul>
@@ -93,6 +93,7 @@ body {
 			</table>
 			<div class="adm_bottom_page">
 				<ul>
+					<span>TODO: 페이징처리</span>
 					<li><a href="#"><img src="<%=root%>/static/img/lleft.png"
 							alt="" /></a></li>
 					<li><a href="#"><img src="<%=root%>/static/img/left.png"
