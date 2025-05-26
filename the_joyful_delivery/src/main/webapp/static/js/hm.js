@@ -420,32 +420,40 @@ document.addEventListener("DOMContentLoaded", function () {
 
 	// 마이페이지 ----------------------------------------------------------------
 	// login_list.jsp 페이지에서만 작동하는 배송 상태 로딩
-	 if (window.location.pathname.includes('/the_joyful_delivery/page/login/login_list.jsp')) {
-	     async function loadDeliveryStatus() {
-	         const response = await fetch('/api/delivery-status'); // 백엔드 엔드포인트
-	         const deliveries = await response.json();
+	 if (window.location.pathname.includes('/login/login_list.jsp')) {
+		async function loadDeliveryStatus() {
+		      const response = await fetch('/users/mypage');
+		      if (!response.ok) {
+		          console.warn("세션 없음 또는 로그인 안됨");
+		          return;
+		      }
+		      const deliveries = await response.json();
+		      const rowBox = document.getElementById('row-box');
+		      rowBox.innerHTML = '';
 
-	         const rowBox = document.getElementById('row-box');
-	         if (!rowBox) return; // row-box가 없으면 종료
-	         rowBox.innerHTML = ''; // 기존 내용 비우기
+		      deliveries.forEach(item => {
+		          const row = document.createElement('div');
+		          row.className = 'row-content';
+		          row.innerHTML = `
+		              <div>${item.번호}</div>
+		              <div>${item.배송_내역}</div>
+		              <div>${item.보내는_사람_주소}</div>
+		              <div>${item.받는_사람_주소}</div>
+		              <div>${item.선불_후불}</div>
+		              <div>${item.배송_상태}</div>
+		          `;
+		          // 상세 정보 연동
+		          row.addEventListener("click", () => {
+		              document.querySelector(".detail input:nth-of-type(1)").value = item.주문번호;
+		              document.querySelector(".detail input:nth-of-type(2)").value = "카드 정보 비공개"; // 실제 카드 정보 없음
+		              document.querySelector(".detail input:nth-of-type(3)").value = item.결제날짜 || "-";
+		              document.querySelector(".detail input:nth-of-type(4)").value = item.금액.toLocaleString();
+		          });
 
-	         deliveries.forEach(item => {
-	             const row = document.createElement('div');
-	             row.className = 'row-content';
-	             row.innerHTML = `
-	                 <div>${item.번호}</div>
-	                 <div>${item.배송_내역}</div>
-	                 <div>${item.보내는_사람_주소}</div>
-	                 <div>${item.받는_사람_주소}</div>
-	                 <div>${item.선불_후불}</div>
-	                 <div>${item.배송_상태}</div>
-	             `;
-	             rowBox.appendChild(row);
-	         });
-	     }
+		          rowBox.appendChild(row);
+		      });
+		  }
 
-	     loadDeliveryStatus(); // 함수 호출
-	 }
-
-
-});
+		  loadDeliveryStatus();
+		  }
+	});

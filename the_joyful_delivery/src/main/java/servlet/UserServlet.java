@@ -3,9 +3,11 @@ package servlet;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.List;
+import java.util.Map;
+
+import com.google.gson.Gson;
 
 import DAO.UserDAO;
-import DTO.Delivery;
 import DTO.User;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
@@ -17,6 +19,7 @@ import service.DeliveryService;
 import service.DeliveryServiceImpl;
 import service.UserService;
 import service.UserServiceImpl;
+
 
 @WebServlet("/users/*")
 public class UserServlet extends HttpServlet {
@@ -53,29 +56,43 @@ public class UserServlet extends HttpServlet {
 		}
 		
 		// 로그인한 사용자의 배속 목록 반환 
-		 // 새로 추가: 로그인한 사용자의 배송목록 반환 API
-        else if ("/delivery-list".equals(path)) {
-            HttpSession session = request.getSession(false);
-            response.setContentType("application/json;charset=UTF-8");
+//		else if ("/mypage".equals(path)) {
+//		    HttpSession session = request.getSession(false);
+//		    response.setContentType("application/json;charset=UTF-8");
+//
+//		    if (session == null || session.getAttribute("loginId") == null) {
+//		        response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+//		        return;
+//		    }
+//
+//		    String loginId = (String) session.getAttribute("loginId");
+//		    System.out.println("[/mypage] 로그인 아이디로 배송 조회: " + loginId);
+//
+//		    List<Map<String, Object>> deliveries = deliveryService.getDeliveryDetailsByUserId(loginId);
+//
+//		    Gson gson = new Gson();
+//		    String json = gson.toJson(deliveries);
+//		    response.getWriter().print(json);
+//		}
+		else if ("/mypage-jsp".equals(path)) {
+		    HttpSession session = request.getSession(false);
 
-            if (session == null || session.getAttribute("loginId") == null) {
-                response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
-                return;
-            }
+		    if (session == null || session.getAttribute("loginId") == null) {
+		        response.sendRedirect(request.getContextPath() + "/page/login/login.jsp");
+		        return;
+		    }
 
-            String loginId = (String) session.getAttribute("loginId");
-            // 딜리버리 이동하는 것 수정하기 (확인)
-            List<Delivery> deliveries = deliveryService.getDeliveriesBySenderId(loginId);
+		    String loginId = (String) session.getAttribute("loginId");
+		    System.out.println("[/mypage-jsp] JSP용 배송 목록 조회. 로그인 아이디: " + loginId);
 
-            // json 응답으로 변경 하기 
-            // JSON 응답 (Gson 사용 권장)
-            Gson gson = new Gson();
-            String json = gson.toJson(deliveries);
+		    List<Map<String, Object>> deliveries = deliveryService.getDeliveryDetailsByUserId(loginId);
 
-            PrintWriter out = response.getWriter();
-            out.print(json);
-            out.flush();
-        }
+		    request.setAttribute("deliveries", deliveries);
+		    request.getRequestDispatcher("/page/login/login_list.jsp").forward(request, response);
+		}
+
+
+
 		
 	}
 	
