@@ -96,6 +96,7 @@ CREATE TABLE `region_name` (
 CREATE TABLE `payment` (
     `idx` BIGINT NOT NULL AUTO_INCREMENT,
     `d_idx` BIGINT NOT NULL,
+    `p_card` VARCHAR(200) ,
     `p_amount` INT NOT NULL,
     `p_date` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
     PRIMARY KEY (`idx`)
