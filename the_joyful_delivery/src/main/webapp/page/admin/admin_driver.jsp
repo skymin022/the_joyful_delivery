@@ -18,7 +18,7 @@
 	<div class="wrapper">
 		<header>
 			<div class="admin_header">
-				<a href="<%= root %>/index.jsp"><img src="<%= root %>/static/img/logo.png" width="380" height="153" ></a>
+				<a href="<%= root %>/index"><img src="<%= root %>/static/img/logo.png" width="380" height="153" ></a>
 				<nav>
 					<ul>
 						<li><a href="<%=root%>/admin/user">회원관리</a></li>

@@ -270,6 +270,9 @@ input[type="number"]::-webkit-inner-spin-button {
 	border-radius: 25px;
 	position: relative;
 }
+.bg_container .icon_img {
+	width: 30px; height: 30px;
+}
 .bg_container p {color: #000; font-size: 18px;}
 .bg_container p + p {
 	width: 585px;

@@ -15,9 +15,10 @@
 		<%-- [Contents] ######################################################### --%>
 		<div class="container">
 			<h2 class="title">배송조회</h2>
-			<form id="form" action="<%=root%>">
+			<!-- TODO: 배송조회 servlet 으로 action 연결 -->
+			<form id="form" action="<%=root%>/">
 				<div class="input_area">
-					<input class="input_sear d" name="delivery_no" type="number" placeholder="운송장번호" title="운송장번호를 입력해주세요.">
+					<input class="input_sear d" name="del_idx" type="number" placeholder="운송장번호" title="운송장번호를 입력해주세요.">
 					<button class="search_icon"><img src="<%=root%>/static/img/search.png" alt="돋보기 이미지"/></button>
 				</div>
 				<p>※ 비회원으로 이용하실 시 최근 배송내역 목록은 조회되지 않습니다.</p>

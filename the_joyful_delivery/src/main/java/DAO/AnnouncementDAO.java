@@ -20,7 +20,7 @@ public class AnnouncementDAO extends BaseDAOImpl<Announcement> {
 			rs = psmt.executeQuery();
 			
 			while(rs.next()) {
-				list.add(new Announcement(rs.getInt(1), rs.getString(2), rs.getString(3), rs.getDate(4), rs.getDate(5)));
+				list.add(new Announcement(rs.getInt("idx"), rs.getString("title"), rs.getString("content"), rs.getDate("created_at"), rs.getDate("updated_at")));
 			}
 		} catch (Exception e) {
 			e.printStackTrace();

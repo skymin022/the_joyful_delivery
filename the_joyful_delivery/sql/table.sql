@@ -29,12 +29,21 @@ DROP TABLE IF EXISTS user_roles;
 DROP TABLE IF EXISTS reimbursement;
 DROP TABLE IF EXISTS charge;
 DROP TABLE IF EXISTS announcement;
+DROP TABLE IF EXISTS faq;
 
 -- 2. 테이블 생성 (의존성 없는 순서대로)
 CREATE TABLE `user_roles` (
     `idx` BIGINT NOT NULL AUTO_INCREMENT,
     `role` VARCHAR(20) NOT NULL,
     PRIMARY KEY (`idx`)
+);
+
+CREATE TABLE `faq` (
+	`idx`	BIGINT	NOT NULL AUTO_INCREMENT,
+	`title`	VARCHAR(200)	NOT NULL,
+	`content`	TEXT	NOT NULL,
+	`created_at`	TIMESTAMP	NOT NULL	DEFAULT CURRENT_TIMESTAMP,
+	`updated_at`	TIMESTAMP	NOT NULL	DEFAULT CURRENT_TIMESTAMP
 );
 
 CREATE TABLE `sending_and_receiving` (

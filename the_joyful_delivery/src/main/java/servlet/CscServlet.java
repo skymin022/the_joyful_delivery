@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.util.List;
 
 import DTO.Announcement;
+import DTO.FAQ;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
@@ -11,6 +12,8 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import service.AnnouncementService;
 import service.AnnouncementServiceImpl;
+import service.FAQService;
+import service.FAQServiceImpl;
 
 /**
  * Servlet implementation class CscServlet
@@ -21,6 +24,7 @@ public class CscServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
 	AnnouncementService annoService = new AnnouncementServiceImpl();
+	FAQService faqService = new FAQServiceImpl();
 	
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String path = request.getPathInfo();
@@ -37,6 +41,13 @@ public class CscServlet extends HttpServlet {
 				request.getRequestDispatcher(page).forward(request, response);
 				break;
 		
+			case "/faq":
+				page = "/page/serv_center/faq.jsp";
+				List<FAQ> faqList = faqService.list();
+				
+				request.setAttribute("faqList", faqList);
+				request.getRequestDispatcher(page).forward(request, response);
+				
 			default: break;
 		}
 		response.getWriter().append("Served at: ").append(request.getContextPath());
