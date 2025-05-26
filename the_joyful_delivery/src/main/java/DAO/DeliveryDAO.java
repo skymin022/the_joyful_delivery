@@ -160,8 +160,6 @@ public class DeliveryDAO extends BaseDAOImpl<Delivery> {
 		}
 		return count;
 	}
-<<<<<<< HEAD
-	
 	
 	// listByUserId 메서드
 	/**
@@ -233,15 +231,7 @@ public class DeliveryDAO extends BaseDAOImpl<Delivery> {
 		}
 		return list;
 	}
-	
-	
-	
-	
-	
-=======
->>>>>>> stash
-}
-
+}	
 
 
 

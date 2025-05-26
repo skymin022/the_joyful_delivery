@@ -17,4 +17,6 @@ public interface FAQService {
 	public int update(FAQ faq);
 	public int delete(int no);
 
+	// FAQ DESC
+	public List<FAQ> listDesc();
 }
