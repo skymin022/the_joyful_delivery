@@ -1,3 +1,5 @@
+<%@page import="DTO.Announcement"%>
+<%@page import="java.util.List"%>
 <%@ include file="/layout/jstl.jsp" %>
 <%@ include file="/layout/common.jsp" %>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
@@ -33,18 +35,15 @@
 			    	<div class="notice">
 				    	<p>공지사항</p>
 			    	</div>
-			    	<div class="line1">
-				    	<p class="title1">1번 공지사항 입니다.</p>
-				    	<p class="title_date1">25.05.20</p>
-			    	</div>
-			    	<div class="line2">
-				    	<p class="title2">2번 공지사항 입니다.</p>
-				    	<p class="title_date2">25.05.20</p>
-			    	</div>
-			    	<div class="line3">
-				    	<p class="title3">3번 공지사항 입니다.</p>
-				    	<p class="title_date3">25.05.20</p>
-			    	</div>
+			    	<%
+			    		List<Announcement> list = (List)request.getAttribute("anno_list");
+			    		for(Announcement anno : list) {
+			    	%>
+				    	<div class="anno_line">
+					    	<p class="title1"><%=anno.getTitle() %></p>
+					    	<p class="title_date"><%=anno.getCreatedAt() %></p>
+				    	</div>
+			    	<%} %>
 			    </div>
 			    <div class="customer_service">
 			    	<div class="serv_center">

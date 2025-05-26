@@ -13,6 +13,20 @@ public class AnnouncementServiceImpl implements AnnouncementService {
 	AnnouncementDAO annDao = new AnnouncementDAO();
 
 	@Override
+	public List<Announcement> top3Anno() {
+		List<Announcement> list = null;
+		
+		try {
+			list = annDao.top3Anno();
+		} catch (Exception e) {
+			System.err.println("공지사항 3개 조회 중 에러...");
+			e.printStackTrace();
+		}
+		
+		return list;
+	}
+	
+	@Override
 	public List<Announcement> list() {
 		List<Announcement> list = null;
 		
@@ -67,5 +81,7 @@ public class AnnouncementServiceImpl implements AnnouncementService {
 		// TODO Auto-generated method stub
 		return 0;
 	}
+
+
 
 }

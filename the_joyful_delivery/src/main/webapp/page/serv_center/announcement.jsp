@@ -29,14 +29,14 @@
 							<img alt="깃발이미지" src="<%=root%>/static/img/flags.png">
 							<p class="bor_txt">택배서비스</p>
 							<p class="ann_title">${anno.AName}</p>
-							<span class="date1">${anno.aCreatedAt}</span>
+							<span class="date1">${anno.ACreatedAt}</span>
 							<button type="button" class="dropdown">
 								<img alt="드랍다운 화살표" src="<%=root%>/static/img/downarrow.png">
 							</button>
 						</li>
 						<li class="answer">
 							<p>
-								${anno.aContent}
+								${anno.AContent}
 							</p>
 						</li>
 					</c:forEach>
