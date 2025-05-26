@@ -21,7 +21,7 @@
         <%-- [Contents] ######################################################### --%>
         <main>
 			<div class="container">
-				<form action="<%= root %>/users/sign_up" onsubmit="return Userform.validateSignUpForm()" name="sign_up" method="post">
+				<form action="<%= root %>/users/sign_up" onsubmit="return Userform.validateSignUpForm();" name="sign_up" method="post">
 					<div class="login-box">
 						<div class="sign-up-box">
 							<div class="left-box">

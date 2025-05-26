@@ -1,6 +1,5 @@
 package DAO;
 
-
 import com.alohaclass.jdbc.dao.BaseDAOImpl;
 
 import DTO.User;
@@ -8,79 +7,100 @@ import DTO.User;
 public class UserDAO extends BaseDAOImpl<User> {
 
 	public User select(String id) {
-	    User user = null;
+		User user = null;
 
-	    try {
-	        // DB 연결 상태 체크
-	        if (con == null || con.isClosed()) {
-	            System.out.println("DB 커넥션이 유효하지 않습니다.");
-	            // 필요하면 여기서 재연결 시도 또는 예외 처리
-	        } else {
-	            System.out.println("DB 커넥션 정상 작동 중");
-	        }
+		try {
+			// DB 연결 상태 체크
+			if (con == null || con.isClosed()) {
+				System.out.println("DB 커넥션이 유효하지 않습니다.");
+				// 필요하면 여기서 재연결 시도 또는 예외 처리
+			} else {
+				System.out.println("DB 커넥션 정상 작동 중");
+			}
 
-	        String sql = "SELECT * FROM users WHERE ID = ?";
-	        psmt = con.prepareStatement(sql);
-	        psmt.setString(1, id.trim());
-	        rs = psmt.executeQuery();
+			String sql = "SELECT * FROM users WHERE ID = ?";
+			psmt = con.prepareStatement(sql);
+			psmt.setString(1, id.trim());
+			rs = psmt.executeQuery();
 
-	        while(rs.next()) {
-	            user = new User();
-	            user.setRoleIdx(rs.getInt("role_idx"));
-	            user.setIdx(rs.getInt("idx"));
-	            user.setId(rs.getString("ID"));
-	            user.setPassword(rs.getString("password"));
-	            user.setUsername(rs.getString("username"));
-	            user.setEmail(rs.getString("email"));
-	            user.setAddress(rs.getString("address"));
-	            user.setBirth(rs.getString("birth")); 
-	            user.setSignUpDate(rs.getTimestamp("sign_up_date"));
-	            user.setWithdrawal(rs.getBoolean("withdrawal"));
-	            user.setPNumber(rs.getString("p_number"));
-	        }
+			while (rs.next()) {
+				user = new User();
+				user.setRoleIdx(rs.getInt("role_idx"));
+				user.setIdx(rs.getInt("idx"));
+				user.setId(rs.getString("ID"));
+				user.setPassword(rs.getString("password"));
+				user.setUsername(rs.getString("username"));
+				user.setEmail(rs.getString("email"));
+				user.setAddress(rs.getString("address"));
+				user.setBirth(rs.getString("birth"));
+				user.setSignUpDate(rs.getTimestamp("sign_up_date"));
+				user.setWithdrawal(rs.getBoolean("withdrawal"));
+				user.setPNumber(rs.getString("p_number"));
+			}
 
-	    } catch (Exception e) {
-	        e.printStackTrace();
-	        System.err.println("로그인 - db데이터 가져오는 중 오류 발생 ");
-	    }
-	    return user;
+		} catch (Exception e) {
+			e.printStackTrace();
+			System.err.println("로그인 - db데이터 가져오는 중 오류 발생 ");
+		}
+		return user;
 	}
-	
-	
+
 	// 회원가입
 	public int insert(User user) {
-	    int rows = 0;
+		int rows = 0;
 
-	    String sql = "INSERT INTO users (role_idx, ID, password, username, email, address, birth, p_number) " +
-	                 "VALUES (1, ?, ?, ?, ?, ?, ?, ?)";
+		String sql = "INSERT INTO users (role_idx, ID, password, username, email, address, birth, p_number) "
+				+ "VALUES (1, ?, ?, ?, ?, ?, ?, ?)";
 
-	    try {
-	        psmt = con.prepareStatement(sql);
-	        psmt.setString(1, user.getId());
-	        psmt.setString(2, user.getPassword());
-	        psmt.setString(3, user.getUsername());
-	        psmt.setString(4, user.getEmail());
-	        psmt.setString(5, user.getAddress());
-	        psmt.setString(6, user.getBirth());
-	        psmt.setString(7, user.getPNumber());
+		try {
+			psmt = con.prepareStatement(sql);
+			psmt.setString(1, user.getId());
+			psmt.setString(2, user.getPassword());
+			psmt.setString(3, user.getUsername());
+			psmt.setString(4, user.getEmail());
+			psmt.setString(5, user.getAddress());
+			psmt.setString(6, user.getBirth());
+			psmt.setString(7, user.getPNumber());
 
-	        rows = psmt.executeUpdate();
+			rows = psmt.executeUpdate();
 
-	        System.out.println("사용자 INSERT 성공: " + rows + "행 삽입됨");
+			System.out.println("사용자 INSERT 성공: " + rows + "행 삽입됨");
 
-	    } catch (Exception e) {
-	        System.err.println("사용자 INSERT 중 오류 발생");
-	        e.printStackTrace();
-	    }
+		} catch (Exception e) {
+			System.err.println("사용자 INSERT 중 오류 발생");
+			e.printStackTrace();
+		}
 
-	    return rows;
+		return rows;
 	}
-	
-	// 마이페이지 
-	
-	
-	
-	
-	
-}
 
+	// 마이페이지 - 회원정보 수정
+//	public int update(User user) {
+//		int result = 0;
+//		String sql = "UPDATE users SET password = ?, email = ?, address = ?, p_number = ? WHERE idx = ?";
+//		try {
+//			psmt = con.prepareStatement(sql);
+//			psmt.setString(1, user.getPassword());
+//			psmt.setString(2, user.getEmail());
+//			psmt.setString(3, user.getAddress());
+//			psmt.setString(4, user.getPNumber());
+//			psmt.setInt(5, user.getIdx());
+//
+//			System.out.println("[UserDAO] 업데이트 요청 값:");
+//			System.out.println("idx: " + user.getIdx());
+//			System.out.println("PW: " + user.getPassword());
+//			System.out.println("Email: " + user.getEmail());
+//			System.out.println("Address: " + user.getAddress());
+//			System.out.println("Phone: " + user.getPNumber());
+//
+//			
+//			result = psmt.executeUpdate();
+//			System.out.println("[UserDAO] 회원정보 업데이트 성공");
+//		} catch (Exception e) {
+//			e.printStackTrace();
+//			System.err.println("[UserDAO] 회원정보 업데이트 중 오류 발생");
+//		}
+//		return result;
+//	}
+
+}

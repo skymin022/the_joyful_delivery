@@ -45,6 +45,7 @@
     border-radius: 12px;
     box-shadow: 0 0 10px rgba(0,0,0,0.1);
     overflow: hidden;
+   padding: 16px;
 }
 
 .title-box {

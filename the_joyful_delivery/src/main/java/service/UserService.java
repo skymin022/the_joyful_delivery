@@ -23,4 +23,5 @@ public interface UserService {
 	User selectUserById(String id);
 	boolean insertUser(User user);
     boolean isUserIdDuplicate(String id); // 아이디 중복 검사
+    
 }

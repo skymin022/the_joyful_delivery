@@ -18,8 +18,8 @@ import lombok.NoArgsConstructor;
 public class User {
 	
 	@Pk
-	private int idx;
-	private int roleIdx;
+	private Integer idx;
+	private Integer roleIdx;
 	private String id;
 	private String password;
 	private String username;
