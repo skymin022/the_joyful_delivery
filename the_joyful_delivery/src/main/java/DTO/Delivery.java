@@ -38,13 +38,11 @@ public class Delivery {
 	private String regStatus;
 	@Column(exist = false)
 	private String name;
-<<<<<<< HEAD
+
 	@Column(exist = false)
 	private SendingReceiving sendingReceiving; // 조인해서 가져올 SendingReceiving 객체
 	@Column(exist = false)
 	private Payment payment; // 조인해서 가져올 Payment 객체
-=======
->>>>>>> stash
 
 	// 포맷 날짜 받을 변수
 	private String formatCreatedAt;

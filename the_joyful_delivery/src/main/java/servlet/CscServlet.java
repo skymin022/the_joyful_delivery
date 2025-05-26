@@ -43,7 +43,7 @@ public class CscServlet extends HttpServlet {
 		
 			case "/faq":
 				page = "/page/serv_center/faq.jsp";
-				List<FAQ> faqList = faqService.list();
+				List<FAQ> faqList = faqService.listDesc();
 				
 				request.setAttribute("faqList", faqList);
 				request.getRequestDispatcher(page).forward(request, response);

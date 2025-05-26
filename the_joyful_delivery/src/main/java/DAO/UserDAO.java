@@ -75,15 +75,5 @@ public class UserDAO extends BaseDAOImpl<User> {
 
 	    return rows;
 	}
-<<<<<<< HEAD
-=======
-	
-	// 마이페이지 
-	
-	
-	
-	
-	
->>>>>>> refs/heads/main
 }
 

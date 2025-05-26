@@ -1,5 +1,5 @@
-]<%@page import="org.apache.jasper.tagplugins.jstl.core.ForEach"%>
-<%@page import="DTO.AskDTO"%>
+]<%@page import="DTO.AskDTO"%>
+<%@page import="org.apache.jasper.tagplugins.jstl.core.ForEach"%>
 <%@page import="java.util.List"%>
 <%@ include file="/layout/jstl.jsp" %>
 <%@ include file="/layout/common.jsp" %>

@@ -16,22 +16,17 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
-<<<<<<< HEAD
-=======
+
 import service.DeliveryService;
 import service.DeliveryServiceImpl;
->>>>>>> refs/heads/main
 import service.UserService;
 import service.UserServiceImpl;
 
-<<<<<<< HEAD
 import java.io.IOException;
 import java.io.PrintWriter;
 
 import DAO.UserDAO;
 import DTO.User;
-=======
->>>>>>> refs/heads/main
 
 @WebServlet("/users/*")
 public class UserServlet extends HttpServlet {
@@ -66,8 +61,6 @@ public class UserServlet extends HttpServlet {
 		    out.print("{\"exists\":" + exists + "}");
 		    out.flush();
 		}
-<<<<<<< HEAD
-=======
 		
 		// 로그인한 사용자의 배속 목록 반환 
 //		else if ("/mypage".equals(path)) {
@@ -106,13 +99,8 @@ public class UserServlet extends HttpServlet {
 		    request.setAttribute("deliveries", deliveries);
 		    request.getRequestDispatcher("/page/login/login_list.jsp").forward(request, response);
 		}
-
-
-
 		
->>>>>>> refs/heads/main
 	}
-	
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         
@@ -213,25 +201,5 @@ public class UserServlet extends HttpServlet {
                 request.getRequestDispatcher("/sign_up.jsp").forward(request, response);
             }
         }
-
-<<<<<<< HEAD
-<<<<<<< HEAD
-        
-    }
-=======
-
-	}
-        
-    
->>>>>>> refs/heads/main
-
-
-<<<<<<< HEAD
-}
-=======
-
->>>>>>> refs/heads/main
-=======
 	}
 }
->>>>>>> stash

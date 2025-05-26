@@ -13,6 +13,19 @@ public class FAQServiceImpl implements FAQService {
 	FAQDAO fd = new FAQDAO();
 	
 	@Override
+	public List<FAQ> listDesc() {
+		List<FAQ> list = null;
+		
+		try {
+			list = fd.listDesc();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		return list;
+	}
+	
+	@Override
 	public List<FAQ> list() {
 		List<FAQ> list = null;
 		
@@ -65,5 +78,7 @@ public class FAQServiceImpl implements FAQService {
 		// TODO Auto-generated method stub
 		return 0;
 	}
+
+
 
 }
