@@ -123,6 +123,7 @@ public class DeliveryServiceImpl implements DeliveryService {
 		}
 		return count;
 	}
+<<<<<<< HEAD
 	
 	// 회원전용 목록
 	@Override
@@ -138,6 +139,8 @@ public class DeliveryServiceImpl implements DeliveryService {
 	}
 
 
+=======
+>>>>>>> stash
 
 
 }

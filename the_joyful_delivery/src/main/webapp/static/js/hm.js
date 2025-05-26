@@ -98,11 +98,10 @@ const Userform = {
         }
         return true;
     },
-<<<<<<< HEAD
-=======
+
 	// 마이페이지 
 	
->>>>>>> refs/heads/main
+
 
 	
 }	

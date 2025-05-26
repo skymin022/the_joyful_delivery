@@ -14,14 +14,13 @@
 		<jsp:include page="/layout/serv_header.jsp" />
 		<%-- [Contents] ######################################################### --%>
 		<div class="contact_container">
-			<h2 class="title">고객센터</h2>
-			<h3>문의하기</h3>
+			<h2 class="title">문의하기</h2>
 			<div class="contact_container il">
-				<form id="form" action="<%= root %>/users" method="post">
+				<form id="form_qna" action="<%= root %>/ask" method="post">
 					<ul class="contact_input_list">
 						<li>
-						 	<label for="pre_pos">문의유형</label>
-						 	<select id="pre_pos" name="pre_pos">
+						 	<label for="qna_type">문의유형</label>
+						 	<select id="qna_type" name="qna_type">
 								<option disabled selected>유형선택</option>
 								<option value="배송문의">배송문의</option>
 								<option value="결제관련문의">결제관련문의</option>
@@ -32,7 +31,7 @@
 						</li>
 						<li>
 						 	<label for="c_title">제목</label>
-					  	 	<input class="check_trim" id="c_title" name="c_title" type="text" title="받는분의 이름을 입력해주세요." placeholder="제목을 입력해 주세요.">
+					  	 	<input class="check_title" id="c_title" name="c_title" type="text" title="제목" placeholder="제목을 입력해 주세요.">
 						</li>
 						<li>
 						 	<label for="c_content">문의내용</label>

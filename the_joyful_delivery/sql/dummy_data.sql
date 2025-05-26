@@ -300,6 +300,10 @@ INSERT INTO region_name (del_idx, created_at, status) VALUES
 (98, '2024-08-06 09:55:00', '서울 중구'),
 (99, '2024-08-07 11:30:00', '광주 서구'),
 (100, '2024-08-08 13:05:00', '부산 해운대구');
+<<<<<<< HEAD
+=======
+
+>>>>>>> stash
 
 
 INSERT INTO payment (d_idx, p_card, p_amount)

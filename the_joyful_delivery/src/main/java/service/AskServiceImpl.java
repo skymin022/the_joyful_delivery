@@ -1,28 +1,47 @@
 package service;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import com.alohaclass.jdbc.dto.PageInfo;
 
+import DAO.AskDAO;
+import DTO.AskDTO;
 import DTO.Delivery;
+import servlet.AskServlet;
 
 public class AskServiceImpl implements AskService {
 
+	AskDAO askDao = new AskDAO();
+	
 	@Override
-	public List<Delivery> list() {
-		// TODO Auto-generated method stub
-		return null;
+	public List<AskDTO> list() {
+		List<AskDTO> list = null;
+		
+		try {
+			list = askDao.list();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		return list;
 	}
 
 	@Override
-	public List<Delivery> listBy(Map<String, Object> fields) {
-		// TODO Auto-generated method stub
-		return null;
+	public List<AskDTO> listBy(Map<String, Object> fields) {
+		List<AskDTO> list = null;
+		
+		try {
+			list = askDao.listBy(fields);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return list;
 	}
 
 	@Override
-	public PageInfo<Delivery> page() {
+	public PageInfo<AskDTO> page() {
 		// TODO Auto-generated method stub
 		return null;
 	}
@@ -34,19 +53,27 @@ public class AskServiceImpl implements AskService {
 	}
 
 	@Override
-	public int insert(AskService askService) {
-		// TODO Auto-generated method stub
+	public int insert(AskDTO askDto) {
+		int result = 0;
+		try {
+			result = askDao.insert(askDto);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		if (result > 0) {
+			return 0;
+		}
 		return 0;
 	}
 
 	@Override
-	public Delivery insertKey(AskService askService) {
+	public Delivery insertKey(AskDTO AskDto) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public int update(AskService askService) {
+	public int update(AskDTO AskDto) {
 		// TODO Auto-generated method stub
 		return 0;
 	}
@@ -62,5 +89,14 @@ public class AskServiceImpl implements AskService {
 		// TODO Auto-generated method stub
 		return 0;
 	}
+
+	@Override
+	public int getFilterOptions(Map<String, String> filterOptions) {
+		
+		Map<String, String> qnaFilter = new HashMap<String, String>();
+		return 0;
+	}
+	
+	
 
 }
