@@ -8,6 +8,7 @@ import java.util.Map;
 
 import com.alohaclass.jdbc.dto.Page;
 import com.alohaclass.jdbc.dto.PageInfo;
+import com.google.gson.Gson;
 
 import DTO.Delivery;
 import DTO.Driver;
@@ -37,6 +38,11 @@ public class AdminServlet extends HttpServlet {
     private DriverService driverService = new DriverServiceImpl();
     
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		
+		User role = (User) request.getSession().getAttribute("loginUser");
+		if(role.getRoleIdx() != 2) {
+			response.sendRedirect(request.getContextPath() + "/index");
+		}
 		String path = request.getPathInfo();
 		System.out.println("요청된 추가 경로 : " + path);
 		String page = "";				// forward 로 이동할 경로
@@ -158,11 +164,61 @@ public class AdminServlet extends HttpServlet {
 				
 				page = "/page/admin/admin_driver.jsp";
 				request.getRequestDispatcher(page).forward(request, response);
+				
+			// 모달에 데이터 전송
+			case "/user/modal":
+				int idx = Integer.parseInt(request.getParameter("idx"));
+				response.setContentType("application/json; charset=utf-8");
+//				int idx = Integer.parseInt(request.getParameter("idx"));
+				Gson gson = new Gson();
+				Map<String, Object> where = new HashMap<>();
+				where.put("idx", idx);
+				try {
+					List<User> list = userService.listBy(where);
+					String json = gson.toJson(list);
+					response.getWriter().write(json);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
 			default: break;
 		} 
 	}
 	
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		doGet(request, response);
+		String root = request.getContextPath();
+		String path = request.getPathInfo();
+		String page = "";
+		
+		switch(path) {
+			case "/user/update":
+				int idx = Integer.parseInt(request.getParameter("idx"));
+				String username = request.getParameter("username");
+				String id = request.getParameter("id");
+				String email = request.getParameter("email");
+				String p_number = request.getParameter("p_number");
+				String address = request.getParameter("address");
+				String birth = request.getParameter("birth");
+				
+				// 유저 객체 빌드 패턴으로 생성
+				User user = User.builder()
+							    .idx(idx)
+							    .roleIdx(1)
+							    .username(username)
+							    .id(id)
+							    .email(email)
+							    .pNumber(p_number)
+							    .address(address)
+							    .birth(birth)
+							    .build();
+				
+				int result = userService.update(user);
+				page = root + "/page/admin/update_form.jsp";
+				if(result != 0) {
+					System.out.println("유저 정보 업데이트됨.");
+					response.sendRedirect(page);
+				}
+				
+			break;
+		}
 	}
 }

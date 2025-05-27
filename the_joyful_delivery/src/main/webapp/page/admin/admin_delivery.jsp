@@ -53,7 +53,7 @@
 					<li><input name="where" id="status"    value="status"     type="radio" <%=where.equals("status") ? "checked" : ""%>/><label for="status">배송상태</label></li>
 				</ul>
 				<div class="line"></div>
-				<div style="position: relative;">
+				<div>
 					<input type="text" name="where_txt" value="<%=request.getParameter("where_txt") != null ? request.getParameter("where_txt") : "" %>">
 					<button class="ad_search_icon"><img src="<%=root%>/static/img/search.png" alt="돋보기 이미지"/></button>
 				</div>
