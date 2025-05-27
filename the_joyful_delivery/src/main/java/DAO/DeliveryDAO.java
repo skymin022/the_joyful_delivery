@@ -2,6 +2,7 @@ package DAO;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import com.alohaclass.jdbc.dao.BaseDAOImpl;
 
@@ -231,6 +232,37 @@ public class DeliveryDAO extends BaseDAOImpl<Delivery> {
 		}
 		return list;
 	}
+	
+	
+	// 운송장번호(del_idx)로 배송상태 단건 조회
+    public Delivery findByDelIdx(int delIdx) {
+        Delivery delivery = null;
+        String sql = "SELECT d.keyword, sr.s_name, sr.r_name, sr.r_address, r.created_at, r.status " +
+                     "FROM deliveries d " +
+                     "INNER JOIN sending_and_receiving sr ON d.sr_idx = sr.idx " +
+                     "INNER JOIN region_name r ON d.idx = r.del_idx " +
+                     "WHERE d.idx = ? " +
+                     "ORDER BY r.created_at DESC LIMIT 1";
+        try {
+            psmt = con.prepareStatement(sql);
+            psmt.setInt(1, delIdx);
+            rs = psmt.executeQuery();
+            if (rs.next()) {
+                delivery = new Delivery();
+                delivery.setKeyword(rs.getString("keyword"));
+                SendingReceiving sr = new SendingReceiving();
+                sr.setSName(rs.getString("s_name"));
+                sr.setRName(rs.getString("r_name"));
+                sr.setRAddress(rs.getString("r_address"));
+                delivery.setSendingReceiving(sr);
+                delivery.setCreatedAt(rs.getTimestamp("created_at"));
+                delivery.setRegStatus(rs.getString("status"));
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return delivery;
+    }
 }	
 	
 

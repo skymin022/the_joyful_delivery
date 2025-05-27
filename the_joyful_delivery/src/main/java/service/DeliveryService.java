@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Map;
 
 import com.alohaclass.jdbc.dto.PageInfo;
+
 import DTO.Delivery;
 
 public interface DeliveryService {
@@ -26,4 +27,15 @@ public interface DeliveryService {
 	
 	// 회원전용 택배 조회
 	public List<Delivery> listByUserId(String loginId);
+	
+	// 로그 추적 
+	Delivery findByDelIdx(int delIdx);
+	
+	
+	
+
+	
+	
+	
+	
 }

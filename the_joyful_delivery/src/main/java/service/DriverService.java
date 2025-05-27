@@ -11,7 +11,7 @@ public interface DriverService {
 	// C.R.U.D
 	public List<Driver> list();
 	public List<Driver> listBy(Map<String, Object> fields);
-	public PageInfo<Driver> page();
+	public PageInfo<Driver> page(String keyword, List<String> columList);
 	public Driver select(int no);
 	public int insert(Driver driver);
 	public Driver insertKey(Driver driver);

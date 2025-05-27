@@ -198,6 +198,23 @@ document.addEventListener("DOMContentLoaded", function() {
 			this.value = this.value.replace(/[^a-zA-Z가-힣]+/g, '');
 		})
 	}
+	
+	const checkRadio = document.querySelector('#check[value="check_answer"]');
+	if(checkRadio) {
+		checkRadio.addEventListener("change", function() {
+			if(this.checked) {
+				document.querySelector('input[type="text"]').placeholder = '0 = N, 1 = Y'
+			}
+		})
+	}
+	
+	const cancleModal = document.getElementById("cancle_modal")
+	if(cancleModal) {
+		cancleModal.addEventListener("click", function() {
+			parent.document.querySelector("iframe").style.display = 'none'
+		})
+	}
+	
 }) 
 
 $(function() {

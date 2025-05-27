@@ -8,6 +8,7 @@ import java.util.Map;
 
 import com.alohaclass.jdbc.dto.Page;
 import com.alohaclass.jdbc.dto.PageInfo;
+import com.google.gson.Gson;
 
 import DTO.Delivery;
 import DTO.Driver;
@@ -37,6 +38,11 @@ public class AdminServlet extends HttpServlet {
     private DriverService driverService = new DriverServiceImpl();
     
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		
+		User role = (User) request.getSession().getAttribute("loginUser");
+		if(role.getRoleIdx() != 2) {
+			response.sendRedirect(request.getContextPath() + "/index");
+		}
 		String path = request.getPathInfo();
 		System.out.println("요청된 추가 경로 : " + path);
 		String page = "";				// forward 로 이동할 경로
@@ -61,6 +67,9 @@ public class AdminServlet extends HttpServlet {
 				column = request.getParameter("where"); 			// 컬럼
 
 				if(whereTxt != null || column != null) {
+				whereTxt = request.getParameter("where_txt"); 	// 조건 검색어
+				column = request.getParameter("where"); 		// 컬럼
+				if(whereTxt != "" && whereTxt != null && column != null) {
 					System.out.println(column + " LIKE %" + whereTxt + "%");
 					List<String> columnList = new ArrayList<>();
 					columnList.add(column);
@@ -82,7 +91,7 @@ public class AdminServlet extends HttpServlet {
 				page = "/page/admin/admin_user.jsp";
 				request.getRequestDispatcher(page).forward(request, response);
 				break;
-				
+				}
 			// 어드민 택배관리 페이지
 			case "/delivery":
 				whereTxt= request.getParameter("where_txt");	// 조건 검색어
@@ -96,6 +105,7 @@ public class AdminServlet extends HttpServlet {
 				if(whereTxt == null || column == null) {
 					deliveries = delService.regJoinList(pageCut, (currentPage-1) * pageCut);
 					size = (int)Math.ceil( delService.joinCount() / (double)pageCut);
+					System.out.println(currentPage - 1);
 					endPage = Math.min(startPage + blockSize - 1, size - 1);
 					System.out.println("총 페이지 수 : " + size);
 				} 
@@ -118,20 +128,62 @@ public class AdminServlet extends HttpServlet {
 				
 			// 어드민 문의 페이지
 			case "/inquiry":
-				page = "/page/admin/admin_inq.jsp";
-				List<Inquiry> inquiries = inqService.list();
+				whereTxt = request.getParameter("where_txt"); // 조건 값
+				column = request.getParameter("where"); 	  // 조건 컬럼
 				
-				request.setAttribute("inquiries", inquiries);
+				if(whereTxt != "" && whereTxt != null && column != null) {
+					List<String> columnList = new ArrayList<>();
+					columnList.add(column);
+					
+					PageInfo<Inquiry> inquiryInfo = inqService.page(whereTxt, columnList);
+					List<Inquiry> inquiryList = inquiryInfo.getList();
+					request.setAttribute("list", inquiryList);
+				} else {
+					System.out.println("else 로 넘어옴");
+					List<Inquiry> inquiryList = inqService.list();
+					request.setAttribute("list", inquiryList);
+				}
+				
+				page = "/page/admin/admin_inq.jsp";
 				request.getRequestDispatcher(page).forward(request, response);
 				break;
 				
 			// 어드민 기사관리 페이지
 			case "/driver":
-				page = "/page/admin/admin_driver.jsp";
-				List<Driver> drivers = driverService.list();
+				whereTxt = request.getParameter("where_txt"); // 조건 값
+				column = request.getParameter("where"); 	  // 조건 컬럼
 				
-				request.setAttribute("drivers", drivers);
+				if(whereTxt != "" && whereTxt != null && column != null) {
+					List<String> columnList = new ArrayList<>();
+					columnList.add(column);
+					
+					PageInfo<Driver> inquiryInfo = driverService.page(whereTxt, columnList);
+					List<Driver> inquiryList = inquiryInfo.getList();
+					request.setAttribute("list", inquiryList);
+				} else {
+					System.out.println("else 로 넘어옴");
+					List<Driver> inquiryList = driverService.list();
+					request.setAttribute("list", inquiryList);
+				}
+				
+				page = "/page/admin/admin_driver.jsp";
 				request.getRequestDispatcher(page).forward(request, response);
+				
+			// 모달에 데이터 전송
+			case "/user/modal":
+				int idx = Integer.parseInt(request.getParameter("idx"));
+				response.setContentType("application/json; charset=utf-8");
+//				int idx = Integer.parseInt(request.getParameter("idx"));
+				Gson gson = new Gson();
+				Map<String, Object> where = new HashMap<>();
+				where.put("idx", idx);
+				try {
+					List<User> list = userService.listBy(where);
+					String json = gson.toJson(list);
+					response.getWriter().write(json);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
 			default: break;
 		} 
 	}
@@ -142,5 +194,40 @@ public class AdminServlet extends HttpServlet {
 		
 		
 		doGet(request, response);
+		String root = request.getContextPath();
+		String path = request.getPathInfo();
+		String page = "";
+		
+		switch(path) {
+			case "/user/update":
+				int idx = Integer.parseInt(request.getParameter("idx"));
+				String username = request.getParameter("username");
+				String id = request.getParameter("id");
+				String email = request.getParameter("email");
+				String p_number = request.getParameter("p_number");
+				String address = request.getParameter("address");
+				String birth = request.getParameter("birth");
+				
+				// 유저 객체 빌드 패턴으로 생성
+				User user = User.builder()
+							    .idx(idx)
+							    .roleIdx(1)
+							    .username(username)
+							    .id(id)
+							    .email(email)
+							    .pNumber(p_number)
+							    .address(address)
+							    .birth(birth)
+							    .build();
+				
+				int result = userService.update(user);
+				page = root + "/page/admin/update_form.jsp";
+				if(result != 0) {
+					System.out.println("유저 정보 업데이트됨.");
+					response.sendRedirect(page);
+				}
+				
+			break;
+		}
 	}
 }

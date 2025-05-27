@@ -53,6 +53,9 @@
 		                        <input type="checkbox" name="autologin" id="autologin">
 		                        <label for="autologin">자동 로그인</label>
 		                    </div>
+		                    <div class="find-box">
+							<a href="<%= root %>/page/login/find_id_pw.jsp">아이디/비밀번호 찾기</a>
+							</div>
 		                    <div>
 		                        <button type="submit" class="btn" id="login_btn" >로그인</button>
 		                    </div>

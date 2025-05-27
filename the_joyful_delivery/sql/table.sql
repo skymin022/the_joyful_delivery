@@ -44,7 +44,7 @@ CREATE TABLE `faq` (
 	`content`	TEXT	NOT NULL,
 	`created_at`	TIMESTAMP	NOT NULL	DEFAULT CURRENT_TIMESTAMP,
 	`updated_at`	TIMESTAMP	NOT NULL	DEFAULT CURRENT_TIMESTAMP,
-	PRIMARY KEY (`idx`)
+	 PRIMARY KEY (`idx`)
 );
 
 CREATE TABLE `sending_and_receiving` (

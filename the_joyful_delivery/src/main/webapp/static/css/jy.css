@@ -24,7 +24,7 @@ input[type="number"]::-webkit-inner-spin-button {
 	width: 412px;
 	height: 55px;
 	border-radius: 30px;
-	border: 0.5px solid rgba(0, 0, 0, 0.25);;
+	border: 0.5px solid rgba(0, 0, 0, 0.25);
 	padding-left: 30px;
 	font-size: 19px;
 	outline: none;
@@ -350,6 +350,10 @@ input[type="number"]::-webkit-inner-spin-button {
 	display: flex;
 	align-items: center;
 	padding: 0 40px;
+	position: relative;
+}
+.ad_search div:last-child {
+    position: relative;
 }
 .ad_search input[type="text"] {
 	width: 670px; height: 60px;
@@ -425,6 +429,7 @@ td {
 			 그래서 border-top으로 하면
 			 맨 위 헤드라인의 밑줄을 덮어서 검은색이 회색으로바뀜
 	 */
+	cursor: pointer;
 	border-bottom: 1px solid rgba(0,0,0,0.2);
 }
 .adm_tbody tr:last-child {

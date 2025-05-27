@@ -21,14 +21,14 @@
         <%-- [Contents] ######################################################### --%>
         <main>
 			<div class="container">
-				<form action="<%= root %>/users/sign_up" onsubmit="return Userform.validateSignUpForm()" name="sign_up" method="post">
+				<form action="<%= root %>/users/sign_up" onsubmit="return Userform.validateSignUpForm();" name="sign_up" method="post">
 					<div class="login-box">
 						<div class="sign-up-box">
 							<div class="left-box">
 								<div class="sign-up">sign-up</div>
 									<h2>welcome, customer</h2>
 									<h3>Enter your personal details and start <br> FAST delivery Service with us</h3>
-									<input type="submit" class="btn1" value="회원가입" />
+									<button type="submit" class="btn1">회원가입</button>
 								</div>
 							    <div class="right-box">
 									<ul>
