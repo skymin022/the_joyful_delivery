@@ -27,12 +27,12 @@
 			        <div class="container">
 			            <div class="main-content">
 			                <div class="tap">
-			                    <span class="tab part1">배송 상태</span>
-			                    <span class="tab part2 active">회원정보 수정</span>
+			                    <span class="tab part1" id="deliveryTab">배송 상태</span>
+    							<span class="tab part2 active">회원정보 수정</span>
 			                </div>
 			
 			                <div class="update-container">
-								<form action="<%= root %>/users/update" method="post" name="update_form" onsubmit="return Userform.validateUpdateForm();">
+								<form action="<%= root %>/users/update" id="updateForm" method="post" name="update_form" onsubmit="return Userform.validateUpdateForm();">
 								    <input type="hidden" name="idx" value="${loginUser.idx}" />
 								    <div class="form-row">
 								        <label>아이디</label>
@@ -142,6 +142,11 @@
 	        }
 	    }).open();
 	}
+	document.getElementById("deliveryTab").addEventListener("click", function() {
+	    window.location.href = "http://localhost:8080/the_joyful_delivery/users/mypage-jsp";
+	});
+	
+	
 	</script>
 </body>
 </html>

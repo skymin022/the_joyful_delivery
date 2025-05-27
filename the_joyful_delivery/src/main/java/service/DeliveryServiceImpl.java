@@ -1,6 +1,5 @@
 package service;
 
-import java.sql.Connection;
 import java.util.List;
 import java.util.Map;
 
@@ -138,12 +137,14 @@ public class DeliveryServiceImpl implements DeliveryService {
 		return list;
 	}
 
+	// 로그 
+	private DeliveryDAO deliveryDAO = new DeliveryDAO();
 
-	@Override
-	public void updateStatus(String id, String status) throws Exception {
-		// TODO Auto-generated method stub
-		
-	}
+    @Override
+    public Delivery findByDelIdx(int delIdx) {
+        return deliveryDAO.findByDelIdx(delIdx);
+    }
+
 
 
 
