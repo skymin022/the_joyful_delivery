@@ -73,15 +73,13 @@
 					<tr>
 						<td><%= inquiry.getIdx() %></td>
 						<td><%= inquiry.getUserNo() %></td>
-						<td><%= inquiry.getTitle() %></td>
-						<td><%= inquiry.getCreatedAt() %></td>
 						<td>
 							<a href="#" class="open_answer" 
-							   data-idx="<%= inquiry.getIdx() %>"
+							   data-idx="<%= inquiry.getUserNo() %>"
 							   data-title="<%= inquiry.getTitle() %>"
 							   data-date="<%= inquiry.getCreatedAt() %>"
 							   data-content="<%= inquiry.getContent() %>">
-								<%= inquiry.getContent() %>
+								<%= inquiry.getTitle() %>
 							</a>
 						</td>
 						<td><%= inquiry.getCreatedAt() %></td>
@@ -142,6 +140,7 @@
 		                <form class="answer_form" action="<%= root %>/ask/myqna" method="post">
 		                	<p class="answer_label">답변하기</p>
 		                	<textarea class="adm_answer" name="adm_answer" rows="15" cols="30" placeholder="답변을 작성해 주세요."></textarea>
+		                	<input type="hidden" name="idx" class="inquiry_idx" />
 		                	<div class="answer_button_wrap">
 			                	<button class="close" type="button">닫기</button>
 			                	<button class="put_answer" type="submit">답변하기</button>

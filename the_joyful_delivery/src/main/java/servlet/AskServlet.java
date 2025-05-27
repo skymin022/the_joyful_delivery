@@ -82,47 +82,60 @@ public class AskServlet extends HttpServlet {
 		// 세션에서 유저넘버 받아오기
         HttpSession session = request.getSession();
         User user = (User)session.getAttribute("loginUser");
+        String path = request.getPathInfo();
         int idx = user.getIdx();
         System.out.println("user" + user);
         
-		String path = request.getPathInfo();
-		
-		
         // 한글 처리
         request.setCharacterEncoding("UTF-8");
-        
-        // 폼에서 넘어온 값 받기
-        String type = request.getParameter("qna_type");
-        String title = request.getParameter("c_title");
-        String content = request.getParameter("c_content");
-        
-        // 넘어온 값 객체 생성
-        AskDTO askDto = AskDTO.builder()
-        					  .userNo(idx)
-        					  .title(title)
-        					  .content(content)
-        					  .type(type)
-        					  .build();
-        askService.insert(askDto);	  
-
-        Map<String, Object> qna = new HashMap<String, Object>();
-        qna.put("user_no", idx);
-        
-        // 문의하기 -> 내문의사항
-        String page = "";
-        List<AskDTO> askList = askService.listBy(qna); 
-        System.out.println("asklist" + askList);
-        // 넘길 값 저장
-        request.setAttribute("qna_type", type); //배송유형
-        request.setAttribute("c_title", title);  //문의제목
-        request.setAttribute("c_content", content);  //문의내용
-        
-        // 결과 페이지로 포워딩
-        page = "/page/serv_center/myqna.jsp";
-        request.setAttribute("askList", askList);
-        RequestDispatcher dispatcher = request.getRequestDispatcher(page);
-        dispatcher.forward(request, response);
 		
+		
+        switch (path) {
+		case "/myqna": {
+			// 폼에서 넘어온 값 받기
+			String type = request.getParameter("qna_type");
+			String title = request.getParameter("c_title");
+			String content = request.getParameter("c_content");
+			
+			// 넘어온 값 객체 생성
+			AskDTO askDto = AskDTO.builder()
+					.userNo(idx)
+					.title(title)
+					.content(content)
+					.type(type)
+					.build();
+			askService.insert(askDto);	  
+			
+			Map<String, Object> qna = new HashMap<String, Object>();
+			qna.put("user_no", idx);
+			
+			// 문의하기 -> 내문의사항
+			String page = "";
+			List<AskDTO> askList = askService.listBy(qna); 
+			System.out.println("asklist" + askList);
+			// 넘길 값 저장
+			request.setAttribute("qna_type", type); //배송유형
+			request.setAttribute("c_title", title);  //문의제목
+			request.setAttribute("c_content", content);  //문의내용
+			
+			// 결과 페이지로 포워딩
+			page = "/page/serv_center/myqna.jsp";
+			request.setAttribute("askList", askList);
+			RequestDispatcher dispatcher = request.getRequestDispatcher(page);
+			dispatcher.forward(request, response);
+			
+			
+		}
+		default: break;
+		
+		}
+		
+        
+        
+        String answer = request.getParameter("adm_answer");
+//        AskService.update(idx, answer);
+        
+        
 //		doGet(request, response);
 	}
 

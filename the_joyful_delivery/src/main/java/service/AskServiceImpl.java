@@ -74,7 +74,15 @@ public class AskServiceImpl implements AskService {
 
 	@Override
 	public int update(AskDTO askDto) {
-		// TODO Auto-generated method stub
+		int result = 0;
+		try {
+			result = askDao.update(askDto);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		if (result > 0) {
+			return 0;
+		}
 		return 0;
 	}
 
