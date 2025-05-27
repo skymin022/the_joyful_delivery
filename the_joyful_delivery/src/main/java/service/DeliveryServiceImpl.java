@@ -140,9 +140,13 @@ public class DeliveryServiceImpl implements DeliveryService {
 
 
 	@Override
-	public Delivery getDeliveryByIdx(int idx) throws Exception {
-		try (Connection con = .getConnection()) {
-            DeliveryDAO dao = new DeliveryDAO(con);
-            return dao.selectDeliveryByIdx(idx);
+	public void updateStatus(String id, String status) throws Exception {
+		// TODO Auto-generated method stub
+		
 	}
+
+
+
 }
+
+

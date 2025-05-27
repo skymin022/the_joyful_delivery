@@ -2,8 +2,6 @@ package servlet;
 
 import java.io.IOException;
 
-import DTO.Delivery;
-import jakarta.servlet.RequestDispatcher;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
@@ -20,26 +18,21 @@ public class DeliveryStatusServlet extends HttpServlet {
 	 private DeliveryService deliveryService = new DeliveryServiceImpl();
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		String idxStr = request.getParameter("idx");
-        if (idxStr == null) {
-        	response.sendError(HttpServletResponse.SC_BAD_REQUEST, "배송 idx가 필요합니다.");
-            return;
-        }
-        try {
-            int idx = Integer.parseInt(idxStr);
-            Delivery delivery = deliveryService.getDeliveryByIdx(idx);
-            if (delivery == null) {
-            	response.sendError(HttpServletResponse.SC_NOT_FOUND, "배송 정보를 찾을 수 없습니다.");
-                return;
-            }
-            request.setAttribute("delivery", delivery);
-            RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/views/deliveryStatus.jsp");
-            rd.forward(request, response);
-        } catch (Exception e) {
-            e.printStackTrace();
-            response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, "서버 오류");
-        }
-    }
+
+//	        int page = 1;
+//	        int size = 10;
+//	        if (request.getParameter("page") != null) {
+//	            page = Integer.parseInt(request.getParameter("page"));
+//	        }
+//	        try {
+//	            PageInfo<Delivery> pageInfo = deliveryService.getPaginatedDeliveries(page);
+//	            request.setAttribute("pageInfo", pageInfo);
+//	            request.getRequestDispatcher("/WEB-INF/views/delivery/list.jsp").forward(request, response);
+//	        } catch (Exception e) {
+//	            throw new ServletException("배송 목록 조회 실패", e);
+//	        }
+	    }
+    
 		
 		
 	
