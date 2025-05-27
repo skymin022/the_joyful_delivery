@@ -81,9 +81,11 @@
 							   data-title="<%= inquiry.getTitle() %>"
 							   data-date="<%= inquiry.getCreatedAt() %>"
 							   data-content="<%= inquiry.getContent() %>">
-							   <%= inquiry.isCheckAnswer() ? "Y" : "N" %>
+								<%= inquiry.getContent() %>
 							</a>
 						</td>
+						<td><%= inquiry.getCreatedAt() %></td>
+						<td><%= inquiry.isCheckAnswer() ? "Y" : "N" %></td>
 					</tr>
 					<% } %>
 				</tbody>
@@ -127,15 +129,17 @@
 		            <div class="card">
 		                <h1>고객 문의 사항</h1>
 		                <div class="qna_data_wrap">
-			                <p class="idx p_idx"></p>
-				                <div class="data_inner_wrap">
-				                	<p>
+				                <div class="data_inner_wrap1">
+					                <p class="idx p_idx"></p>
+					                <p> 번 고객님</p>
+				                </div>
+				                <div class="data_inner_wrap2">
 									<p class="title p_title"></p>
 									<p class="date p_date"></p>
 				                </div>
 							<p class="content p_content"></p>
 		                </div>
-		                <form class="answer_form" action="<%= root %>/ask" method="post">
+		                <form class="answer_form" action="<%= root %>/ask/myqna" method="post">
 		                	<p class="answer_label">답변하기</p>
 		                	<textarea class="adm_answer" name="adm_answer" rows="15" cols="30" placeholder="답변을 작성해 주세요."></textarea>
 		                	<div class="answer_button_wrap">

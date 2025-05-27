@@ -72,14 +72,16 @@ document.addEventListener('DOMContentLoaded', function() {
       modal.querySelector('p.date').innerText = date;
       modal.querySelector('p.content').innerText = content;
 
-      modal.classList.remove('close');
+	  // 모달 열기
+	  modal.classList.add('active');
+
     });
   });
 
   // 닫기 버튼
   document.querySelectorAll('.close').forEach(function(btn) {
     btn.addEventListener('click', function() {
-      document.getElementById('modal').classList.add('close');
+      document.getElementById('modal').classList.remove('active');
     });
   });
 });
