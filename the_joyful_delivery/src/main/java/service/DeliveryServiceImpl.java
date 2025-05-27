@@ -1,6 +1,5 @@
 package service;
 
-import java.sql.Connection;
 import java.util.List;
 import java.util.Map;
 
@@ -142,7 +141,7 @@ public class DeliveryServiceImpl implements DeliveryService {
 	private DeliveryDAO deliveryDAO = new DeliveryDAO();
 
     @Override
-    public Delivery findByDelIdx(int delIdx) {
+    public Delivery findByDelIdx(Long delIdx) {
         return deliveryDAO.findByDelIdx(delIdx);
     }
 

@@ -85,6 +85,7 @@ public class UserServiceImpl implements UserService {
 	@Override
 	public int update(User user) {
 		int result = 0;
+		
 		try {
 			result = userDAO.update(user);
 		} catch (Exception e) {

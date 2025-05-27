@@ -16,7 +16,7 @@ import lombok.NoArgsConstructor;
 @Builder
 public class Payment {
     private int idx;	  // 결제 idx
-    private int dIdx;     // 배송idx
+    private Long dIdx;     // 배송idx
     private String pCard; // 결제 카드
     private int pAmount;  // 결제 금액
     private Date pDate;   // 결제 날짜

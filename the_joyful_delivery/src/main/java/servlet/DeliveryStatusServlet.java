@@ -23,7 +23,7 @@ public class DeliveryStatusServlet extends HttpServlet {
         Delivery delivery = null;
         if (delIdxParam != null && !delIdxParam.trim().isEmpty()) {
             try {
-                int delIdx = Integer.parseInt(delIdxParam.trim());
+            	Long delIdx = Long.parseLong(delIdxParam.trim());
                 delivery = deliveryService.findByDelIdx(delIdx);
             } catch (NumberFormatException e) {
                 // 운송장번호가 숫자가 아닐 경우

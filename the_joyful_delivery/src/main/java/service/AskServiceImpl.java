@@ -47,7 +47,7 @@ public class AskServiceImpl implements AskService {
 	}
 
 	@Override
-	public AskDTO select(int no) {
+	public Delivery select(int no) {
 		// TODO Auto-generated method stub
 		return null;
 	}
@@ -67,13 +67,13 @@ public class AskServiceImpl implements AskService {
 	}
 
 	@Override
-	public AskDTO insertKey(AskDTO askDto) {
+	public Delivery insertKey(AskDTO AskDto) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public int update(AskDTO askDto) {
+	public int update(AskDTO AskDto) {
 		// TODO Auto-generated method stub
 		return 0;
 	}
