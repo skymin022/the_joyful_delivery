@@ -32,7 +32,7 @@
 			      </div>
 		        </div>
 			    <div class="notice_wrap">
-			    	<a href="<%= root %>//page/serv_center/announcement.jsp" class="notice"> 
+			    	<a href="<%= root %>/serv_center/announcement" class="notice"> 
 				    	<p>공지사항</p>
 			    	</a>
 			    	<%
@@ -52,7 +52,7 @@
 			    	<div class="service_wrap">
 						<ul class="service_list">
 						  <li>
-						  	<a href="<%=root%>/page/serv_center/faq.jsp">
+						  	<a href="<%=root%>serv_center/faq">
 							  	<span>
 							  		<img src="<%= root %>/static/img/headphone.png" alt="" >
 							  		<p>자주하는 질문<br>(FAQ)</p>

@@ -61,25 +61,7 @@ public class UserServlet extends HttpServlet {
 		    out.flush();
 		}
 		
-		// 로그인한 사용자의 배속 목록 반환 
-//		else if ("/mypage".equals(path)) {
-//		    HttpSession session = request.getSession(false);
-//		    response.setContentType("application/json;charset=UTF-8");
-//
-//		    if (session == null || session.getAttribute("loginId") == null) {
-//		        response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
-//		        return;
-//		    }
-//
-//		    String loginId = (String) session.getAttribute("loginId");
-//		    System.out.println("[/mypage] 로그인 아이디로 배송 조회: " + loginId);
-//
-//		    List<Map<String, Object>> deliveries = deliveryService.getDeliveryDetailsByUserId(loginId);
-//
-//		    Gson gson = new Gson();
-//		    String json = gson.toJson(deliveries);
-//		    response.getWriter().print(json);
-//		}
+
 		else if ("/mypage-jsp".equals(path)) {
 		    HttpSession session = request.getSession(false);
 		    // 로그인 체크
