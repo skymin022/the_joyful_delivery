@@ -20,7 +20,7 @@ public interface UserService {
 	
 	// 로그인 
 	boolean login(User user);
-	User selectUserById(String id);
+	User selectUserById(String id); // loginUser
 	boolean insertUser(User user);
     boolean isUserIdDuplicate(String id); // 아이디 중복 검사
     

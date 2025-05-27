@@ -6,10 +6,8 @@
 // 현재 페이지의 파일명 구하기
 const currentPage = window.location.pathname;
 
-
 if (currentPage.includes("sign_up.jsp") || currentPage.includes("login_list_update.jsp")) {
     window.Userform = {
-
         // 회원가입 유효성 검사
         validateSignUpForm: function () {
             const id = document.getElementById("id");
@@ -163,8 +161,6 @@ if (currentPage.includes("sign_up.jsp") || currentPage.includes("login_list_upda
 
     };
 }
-
-
 
 
 	

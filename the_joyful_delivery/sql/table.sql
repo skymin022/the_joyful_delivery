@@ -122,6 +122,8 @@ CREATE TABLE `inquiries` (
     `content` TEXT NOT NULL,
     `created_at` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
     `check_answer` BOOLEAN NOT NULL DEFAULT FALSE,
+    `type` VARCHAR(45) NOT NULL,
+    `adm_answer` TEXT NOT NULL,
     PRIMARY KEY (`idx`)
 );
 
