@@ -6,8 +6,9 @@
 // 현재 페이지의 파일명 구하기
 const currentPage = window.location.pathname;
 
+
 if (currentPage.includes("sign_up.jsp") || currentPage.includes("login_list_update.jsp")) {
-    const Userform = {
+    window.Userform = {
 
         // 회원가입 유효성 검사
         validateSignUpForm: function () {
@@ -178,6 +179,38 @@ function confirmLogout() {
 }
 
 document.addEventListener("DOMContentLoaded", function () {
+	
+	
+	if (currentPage.includes("login.jsp")) {
+	// 아이디 찾기
+	    document.getElementById('findIdBtn')?.addEventListener('click', function(e) {
+	        e.preventDefault();
+	        const username = document.getElementById('findId_username').value.trim();
+	        const email = document.getElementById('findId_email').value.trim();
+	        if (!username || !email) {
+	            alert('이름과 이메일을 입력하세요.');
+	            return;
+	        }
+	        document.getElementById('findIdForm').submit();
+	    });
+
+	    // 비밀번호 찾기
+	    document.getElementById('findPwBtn')?.addEventListener('click', function(e) {
+	        e.preventDefault();
+	        const id = document.getElementById('findPw_id').value.trim();
+	        const username = document.getElementById('findPw_username').value.trim();
+	        const email = document.getElementById('findPw_email').value.trim();
+	        if (!id || !username || !email) {
+	            alert('아이디, 이름, 이메일을 모두 입력하세요.');
+	            return;
+	        }
+	        document.getElementById('findPwForm').submit();
+	    });
+	
+	}
+	
+	
+	
 	
 	// 임시 
 	// 회원정보 수정 

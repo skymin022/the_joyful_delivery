@@ -150,5 +150,15 @@ public class UserServiceImpl implements UserService {
 		return userDAO.select(id.trim()) != null;
 	}
 
+	// 아이디 비밀번호 찾기 
+	@Override
+    public String findIdByNameAndEmail(String username, String email) {
+        return userDAO.findIdByNameAndEmail(username, email);
+    }
+
+    @Override
+    public String findPwByIdNameEmail(String id, String username, String email) {
+        return userDAO.findPwByIdNameEmail(id, username, email);
+    }
 
 }

@@ -265,6 +265,30 @@ public class UserServlet extends HttpServlet {
             }
         }
 
-
+        // 아이디 비밀번호 찾기 
+        else if ("/find".equals(path)) {
+        	String mode = request.getParameter("mode"); // "id" 또는 "pw"
+        	String result = null;
+        	
+        	if ("id".equals(mode)) {
+        		String username = request.getParameter("username");
+        		String email = request.getParameter("email");
+        		result = userService.findIdByNameAndEmail(username, email);
+        		request.setAttribute("findResult", result != null ? "아이디: " + result : "일치하는 회원이 없습니다.");
+        	} else if ("pw".equals(mode)) {
+        		String id = request.getParameter("id");
+        		String username = request.getParameter("username");
+        		String email = request.getParameter("email");
+        		result = userService.findPwByIdNameEmail(id, username, email);
+        		request.setAttribute("findResult", result != null ? "비밀번호: " + result : "일치하는 회원이 없습니다.");
+        	}
+        	request.getRequestDispatcher("/page/login/find_id_pw.jsp").forward(request, response);
+        	
+        }
+        
+	    
+		
+        
+        
 	}
 }
