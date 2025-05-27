@@ -16,7 +16,7 @@
 		<div class="container">
 			<h2 class="title">배송조회</h2>
 			<!-- TODO: 배송조회 servlet 으로 action 연결 -->
-			<form id="form" action="<%=root%>/">
+			<form id="form" action="<%=root%>/DeliveryStatusServlet" method="get">
 				<div class="input_area">
 					<input class="input_sear d" name="del_idx" type="number" placeholder="운송장번호" title="운송장번호를 입력해주세요.">
 					<button class="search_icon"><img src="<%=root%>/static/img/search.png" alt="돋보기 이미지"/></button>

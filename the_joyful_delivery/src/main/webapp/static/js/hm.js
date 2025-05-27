@@ -164,6 +164,8 @@ if (currentPage.includes("sign_up.jsp") || currentPage.includes("login_list_upda
 }
 
 
+
+
 	
 
 
@@ -177,8 +179,80 @@ function confirmLogout() {
 
 document.addEventListener("DOMContentLoaded", function () {
 	
-	
+	// 임시 
+	// 회원정보 수정 
 
+	if (currentPage.includes("login_list_update.jsp")) {
+	    const Userform = {
+	        // 회원정보 수정 유효성 검사
+	        validateUpdateForm: function () {
+	            // input id는 실제 jsp의 input에 맞게 수정하세요!
+	            const password = document.getElementById("password");
+	            const passwordCheck = document.getElementById("passwordcheck");
+	            const phone = document.getElementById("p_number");
+	            const email1 = document.getElementById("email1");
+	            const email2 = document.getElementById("email2");
+	            const address = document.getElementById("address");
+
+	            // 정규식
+	            const pwRegex = /^(?=.*[A-Za-z])(?=.*\d)(?=.*[!@#$%^&*])[A-Za-z\d!@#$%^&*]{8,}$/;
+	            const phoneRegex = /^\d{11}$/;
+	            const emailRegex = /^[a-zA-Z0-9._%+-]+$/;
+
+	            // 필수 입력값 체크 (변경하고자 하는 항목만 검사)
+	            if (password && password.value.trim()) {
+	                if (!pwRegex.test(password.value)) {
+	                    alert("비밀번호는 특수문자, 영문, 숫자를 포함해 8자 이상이어야 합니다.");
+	                    password.focus();
+	                    return false;
+	                }
+	                if (passwordCheck && passwordCheck.value !== password.value) {
+	                    alert("비밀번호가 일치하지 않습니다.");
+	                    passwordCheck.focus();
+	                    return false;
+	                }
+	            }
+	            if (phone && !phone.disabled && phone.value.trim()) {
+	                if (!phoneRegex.test(phone.value)) {
+	                    alert("연락처는 숫자만 포함하여 11자리를 입력해주세요.");
+	                    phone.focus();
+	                    return false;
+	                }
+	            }
+	            if (email1 && !email1.disabled && email1.value.trim()) {
+	                if (!emailRegex.test(email1.value)) {
+	                    alert("이메일 아이디는 영문, 숫자, 일부 특수문자(., _, %, +, -)만 입력 가능합니다.");
+	                    email1.focus();
+	                    return false;
+	                }
+	            }
+	            if (email2 && !email2.disabled && email2.value.trim()) {
+	                if (!emailRegex.test(email2.value)) {
+	                    alert("이메일 도메인은 영문, 숫자, 일부 특수문자(., _, %, +, -)만 입력 가능합니다.");
+	                    email2.focus();
+	                    return false;
+	                }
+	            }
+	            if (address && !address.disabled && !address.value.trim()) {
+	                alert("주소를 입력해주세요.");
+	                address.focus();
+	                return false;
+	            }
+	            // 모든 유효성 검사 통과
+	            return true;
+	        }
+	    };
+
+	    // 폼 제출 시 유효성 검사 연결
+	    document.getElementById("updateForm").onsubmit = function(e) {
+	        if (!Userform.validateUpdateForm()) {
+	            e.preventDefault();
+	        }
+	    };
+	}
+	
+	
+	// 임시 
 
 	// 로그인 페이지
     const id_input = document.getElementById("id");

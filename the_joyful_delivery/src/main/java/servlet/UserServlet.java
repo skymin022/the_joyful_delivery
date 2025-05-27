@@ -258,7 +258,7 @@ public class UserServlet extends HttpServlet {
                 refreshedUser.setPassword(null); // 비밀번호 감춤 
                 session.setAttribute("loginUser", refreshedUser);
 
-                response.sendRedirect(request.getContextPath() + "/index.jsp");
+                response.sendRedirect(request.getContextPath() + "/index");
             } else {
                 request.setAttribute("error", "업데이트 실패");
                 request.getRequestDispatcher("/page/login/login_list_update.jsp").forward(request, response);
