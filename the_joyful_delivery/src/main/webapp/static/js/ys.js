@@ -71,6 +71,7 @@ document.addEventListener('DOMContentLoaded', function() {
       modal.querySelector('p.title').innerText = title;
       modal.querySelector('p.date').innerText = date;
       modal.querySelector('p.content').innerText = content;
+	  modal.querySelector('.inquiry_idx').value = idx;
 
 	  // 모달 열기
 	  modal.classList.add('active');

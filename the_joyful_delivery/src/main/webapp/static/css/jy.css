@@ -325,8 +325,6 @@ input[type="number"]::-webkit-inner-spin-button {
 
 .adm_bottom_page {
 	background-color: white;
-	position: absolute;
-	top: 886px;
 	margin-top: 80px;
 	margin-bottom: 60px;
 	width: 1500px;
