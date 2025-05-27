@@ -22,19 +22,19 @@
 			      <span><img src="<%= root %>/static/img/btn_search.png" alt="송장입력창"></span>
 			    </div>
 			    <div class="booking_box_wrap">
-			      <div class="booking_box">
-			        <div><p>택배<br>예약하기</p></div>
-			        <span><img src="<%= root %>/static/img/box_white.png" alt="택배박스" ></span>
-			      </div>
+					<a href="<%= root %>/page/delivery/delivery_rec1.jsp" class="booking_box">
+					  <p>택배<br>예약하기</p>
+					  <span><img src="<%= root %>/static/img/box_white.png" alt="택배박스" ></span>
+					</a>
 			      <div class="info_how">
 			        <div><p>이용안내</p></div>
 			        <span><img src="<%= root %>/static/img/box_white.png" alt="택배박스" ></span>
 			      </div>
 		        </div>
 			    <div class="notice_wrap">
-			    	<div class="notice">
+			    	<a href="<%= root %>//page/serv_center/announcement.jsp" class="notice"> 
 				    	<p>공지사항</p>
-			    	</div>
+			    	</a>
 			    	<%
 			    		List<Announcement> list = (List)request.getAttribute("list");
 			    		for(Announcement anno : list) {
@@ -52,7 +52,7 @@
 			    	<div class="service_wrap">
 						<ul class="service_list">
 						  <li>
-						  	<a href="<%=root%>/page/serv_center/customer_sc.jsp">
+						  	<a href="<%=root%>/page/serv_center/faq.jsp">
 							  	<span>
 							  		<img src="<%= root %>/static/img/headphone.png" alt="" >
 							  		<p>자주하는 질문<br>(FAQ)</p>
