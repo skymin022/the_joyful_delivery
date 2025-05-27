@@ -51,7 +51,6 @@ public class DeliveryDAO extends BaseDAOImpl<Delivery> {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		System.out.println(list);
 		return list;
 	}
 
@@ -245,7 +244,6 @@ public class DeliveryDAO extends BaseDAOImpl<Delivery> {
             psmt = con.prepareStatement(sql);
             psmt.setLong(1, delIdx);
             rs = psmt.executeQuery();
-            
             if (rs.next()) {
                 delivery = new Delivery();
                 delivery.setKeyword(rs.getString("keyword"));
@@ -256,8 +254,6 @@ public class DeliveryDAO extends BaseDAOImpl<Delivery> {
                 delivery.setSendingReceiving(sr);
                 delivery.setCreatedAt(rs.getTimestamp("created_at"));
                 delivery.setRegStatus(rs.getString("status"));
-                
-                System.out.println(delivery);
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -265,8 +261,6 @@ public class DeliveryDAO extends BaseDAOImpl<Delivery> {
         return delivery;
     }
 }	
-	
-
 
 
 

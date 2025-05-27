@@ -5,7 +5,6 @@
 <%
     Delivery delivery = (Delivery) request.getAttribute("delivery");
     SendingReceiving sr = (delivery != null) ? delivery.getSendingReceiving() : null;
-
 %>
 <!DOCTYPE html>
 <html>
@@ -17,7 +16,6 @@
 	<link rel="stylesheet" type="text/css" href="<%= root %>/static/css/delivery_status.css">
 </head>
 <body>
-<<<<<<< HEAD
 <jsp:include page="/layout/header.jsp" />
 <main>
 	<div class=container>
@@ -56,31 +54,5 @@
 </main>
 <jsp:include page="/layout/footer.jsp" />
 <jsp:include page="/layout/script.jsp" />
-    <div class="wrapper">
-        <jsp:include page="/layout/header.jsp" />
-<!--         <div class="delivery-status-box"> -->
-<!--             <div class="icon-area"> -->
-<%--                 <img src="<%=request.getContextPath()%>/static/img/delivery.png" alt="택배 이미지" /> --%>
-<!--             </div> -->
-<!--             <ul class="info-list"> -->
-<%--                 <li><span>예약명</span><span><%= delivery.getReserName() %></span></li> --%>
-<%--                 <li><span>보내는 분</span><span><%= delivery.getSendingReceiving().getSName() %></span></li> --%>
-<%--                 <li><span>받는 분</span><span><%= delivery.getSendingReceiving().getRName() %></span></li> --%>
-<%--                 <li><span>배송지점</span><span><%= delivery.getSendingReceiving().getRAddress() %></span></li> --%>
-<!--             </ul> -->
-<!--             <hr /> -->
-<!--             <ul class="log-list"> -->
-<%--                 <% for (DeliveryLogDTO log : delivery.getLogs()) { %> --%>
-<%--                     <li><%= log.getTime() %> [<%= log.getLocation() %>] <%= log.getStatus() %></li> --%>
-<%--                 <% } %> --%>
-<!--             </ul> -->
-<!--             <div class="btn-area"> -->
-<%--                 <a href="<%=request.getContextPath()%>/main">메인으로</a> --%>
-<!--             </div> -->
-<!--         </div> -->
-        <jsp:include page="/layout/footer.jsp" />
-    </div>
-    <jsp:include page="/layout/script.jsp" />
->>>>>>> stash
 </body>
 </html>

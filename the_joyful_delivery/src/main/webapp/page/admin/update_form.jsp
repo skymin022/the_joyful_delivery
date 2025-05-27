@@ -13,7 +13,7 @@
 			background-color: #fff;
 		}
 		.update_modal {
-			padding: 10px;
+			padding: 20px;
 			display: flex;
 			flex-direction: column;
 			position: relative;

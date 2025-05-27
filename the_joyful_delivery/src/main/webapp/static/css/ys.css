@@ -776,8 +776,6 @@ footer .line {
 	background-color: var(--sub-color1);
 	border-radius: 10px;
 	padding: 0 10px;
-	width: 130px;
-	text-align: center;
 }
 .qna_container button {
 	border: none;

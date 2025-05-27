@@ -16,7 +16,7 @@
 		<div class="contact_container">
 			<h2 class="title">문의하기</h2>
 			<div class="contact_container il">
-				<form id="form_qna" action="<%= root %>/ask/myqna" method="post">
+				<form id="form_qna" action="<%= root %>/ask" method="post">
 					<ul class="contact_input_list">
 						<li>
 						 	<label for="qna_type">문의유형</label>

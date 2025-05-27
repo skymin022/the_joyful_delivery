@@ -14,9 +14,9 @@ public interface AskService {
 		public List<AskDTO> list();
 		public List<AskDTO> listBy(Map<String, Object> fields);
 		public PageInfo<AskDTO> page();
-		public AskDTO select(int no);
-		public int insert(AskDTO askDto);
-		public AskDTO insertKey(AskDTO askDto);
+		public Delivery select(int no);
+		public int insert(AskDTO AskDto);
+		public Delivery insertKey(AskDTO AskDto);
 		public int update(AskDTO AskDto);
 		public int delete(int no);
 		int count() throws Exception;
