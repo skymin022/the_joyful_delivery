@@ -143,17 +143,17 @@ public class DeliveryServiceImpl implements DeliveryService {
 		return list;
 	}
 
-	// 로그 
-	private DeliveryDAO deliveryDAO = new DeliveryDAO();
-
     @Override
-    public Delivery findByDelIdx(int delIdx) {
-        return deliveryDAO.findByDelIdx(delIdx);
+    public Delivery findByDelIdx(Long delIdx) {
+    	Delivery delivery = null;
+    	try {
+    		delivery = delDao.findByDelIdx(delIdx);
+    		System.out.println(delivery);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+    	return delivery;
     }
-
-
-
-
 }
 
 

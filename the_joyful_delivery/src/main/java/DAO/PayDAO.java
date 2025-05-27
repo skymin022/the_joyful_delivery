@@ -20,7 +20,7 @@ public class PayDAO extends BaseDAOImpl<Payment> {
 	        psmt = con.prepareStatement(sql);
 
 	        psmt.setInt(1, dto.getIdx());
-	        psmt.setInt(2, dto.getDIdx());
+	        psmt.setLong(2, dto.getDIdx());
 
 	        int result = psmt.executeUpdate(); // ✅ 이게 정답
 	        return result == 1;
