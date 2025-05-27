@@ -89,8 +89,13 @@ public class DeliveryServiceImpl implements DeliveryService {
 
 	@Override
 	public int insert(Delivery Delivery) {
-		// TODO Auto-generated method stub
-		return 0;
+		int result = 0;
+		try {
+			result = delDao.insert(Delivery);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return result;
 	}
 
 	@Override

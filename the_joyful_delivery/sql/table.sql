@@ -15,6 +15,8 @@
 -- 계정 : mini_team1		비번 : 123456	    스키마 : delivery
 -- 19행 부터 끝까지 복사 후 workbench 에 붙여넣기 후 ctrl + shift + enter 
 
+SET FOREIGN_KEY_CHECKS = 0;
+
 -- 테이블 생성
 -- 1. 기존 테이블 삭제
 DROP TABLE IF EXISTS copy_of_inquiries;
@@ -49,6 +51,7 @@ CREATE TABLE `faq` (
 
 CREATE TABLE `sending_and_receiving` (
     `idx` BIGINT NOT NULL AUTO_INCREMENT,
+    `del_idx` BIGINT NOT NULL UNIQUE,
     `s_name` VARCHAR(100) NOT NULL,
     `s_number` VARCHAR(100) NOT NULL,
     `s_address` VARCHAR(200) NOT NULL,
@@ -84,7 +87,6 @@ CREATE TABLE `deliveries` (
     `idx` BIGINT NOT NULL AUTO_INCREMENT,
     `user_idx` BIGINT NULL COMMENT 'index',
     `driver_idx` BIGINT NULL,
-    `sr_idx` BIGINT NOT NULL,
     `keyword` VARCHAR(100) NOT NULL,
     `status` ENUM('배송중', '배송완료', '픽업전') NOT NULL,
     `value` INT NOT NULL,
@@ -92,6 +94,7 @@ CREATE TABLE `deliveries` (
     `created_at` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
     `reser_name` VARCHAR(200) NOT NULL,
     `success` BOOLEAN NOT NULL DEFAULT FALSE,
+    `request` VARCHAR(50) NOT NULL DEFAULT '요청없음',
     PRIMARY KEY (`idx`)
 );
 
@@ -176,11 +179,13 @@ ALTER TABLE `deliveries`
     ON DELETE CASCADE ON UPDATE CASCADE,
     ADD CONSTRAINT `FK_deliveries_driver_idx`
     FOREIGN KEY (`driver_idx`) REFERENCES `drivers`(`idx`)
-    ON DELETE CASCADE ON UPDATE CASCADE,
-    ADD CONSTRAINT `FK_deliveries_sr_idx`
-    FOREIGN KEY (`sr_idx`) REFERENCES `sending_and_receiving`(`idx`)
     ON DELETE CASCADE ON UPDATE CASCADE;
-
+    
+ALTER TABLE `sending_and_receiving`
+	ADD CONSTRAINT `FK_sar_del_idx`
+	FOREIGN KEY (`del_idx`) REFERENCES `deliveries`(`idx`)
+    ON DELETE CASCADE ON UPDATE CASCADE;
+    
 ALTER TABLE `region_name`
     ADD CONSTRAINT `FK_region_name_del_idx`
     FOREIGN KEY (`del_idx`) REFERENCES `deliveries`(`idx`)
@@ -190,3 +195,5 @@ ALTER TABLE `payment`
     ADD CONSTRAINT `FK_payment_d_idx`
     FOREIGN KEY (`d_idx`) REFERENCES `deliveries`(`idx`)
     ON DELETE CASCADE ON UPDATE CASCADE;
+
+SET FOREIGN_KEY_CHECKS = 1;
