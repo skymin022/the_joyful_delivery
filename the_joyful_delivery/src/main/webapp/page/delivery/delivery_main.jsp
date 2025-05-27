@@ -28,6 +28,7 @@
 					<img alt="택배 이미지" src="<%=root%>/static/img/delivery.png">
 				</div>
 				<p>로그인 시 더욱 간편하게 여러 운송장을 조회할 수 있습니다.</p>
+				<p>로그인 이후 마이페이지에서 확인해주세요</p>
 				<div class="btn_area">
 					<a href="<%=root%>/page/login/login.jsp">로그인</a>
 				</div>
