@@ -75,5 +75,6 @@ public class UserDAO extends BaseDAOImpl<User> {
 
 	    return rows;
 	}
+
 }
 

@@ -312,6 +312,7 @@ input[type="number"]::-webkit-inner-spin-button {
 	margin-top: 20px;
 	margin-bottom: 60px;
 	width: 100%;
+	border-radius: 20px;
 }
 
 .bottom_page ul {
@@ -326,6 +327,8 @@ input[type="number"]::-webkit-inner-spin-button {
 	background-color: white;
 	position: absolute;
 	top: 886px;
+	margin-top: 80px;
+	margin-bottom: 60px;
 	width: 1500px;
 	border-radius: 20px;
 }
@@ -441,4 +444,112 @@ td {
 }
 .admin_table + .bottom_page ul {
 	justify-content: space-evenly;
+}
+
+/* admin 문의 답변 페이지 */
+
+#modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 100;
+    display: none;
+}
+
+#modal:not(.close) {
+  display: block;
+}
+
+.close {
+  display: block;
+}
+
+#modal .inner { 
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+   
+}
+
+#modal .card {
+    background-color: white;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    width: 400px;
+    text-align: center;
+    position:relative;
+}
+
+#modal .card h1 {
+    margin-bottom: 20px;
+    font-size: 24px;
+    color: rgba(2, 76, 170, 1);
+}
+
+#modal .card p {
+    font-size: 16px;
+    color: var(--text-color);
+}
+
+.qna_data_wrap {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	width: 100%;
+}
+#modal .card .p_idx {
+	margin-bottom: 10px;
+}
+
+.data_inner_wrap{
+	display: flex;
+	justify-content: space-between;
+	gap: 60px;
+}
+
+#modal .card .p_title {
+	margin: 0;
+}
+#modal .card .p_content {
+	display: inline-block;
+	border: 1px solid black;
+}
+
+.answer_form .answer_label {
+	text-align: left;
+}
+
+.answer_form textarea {
+	width: 360px;
+	height: 140px;
+	border: 1px solid #D9D9D9;
+	border-radius: 10px;
+	padding-top : 20px;
+	padding-left: 20px;
+}
+.answer_form textarea:focus {
+	outline: 1px solid var(--sub-color2);
+}
+
+.answer_button_wrap {
+	display: flex;
+	justify-content: space-around;
+	width: 100%;
+}
+	
+#modal button.put_answer {}
+
+#modal button.close {
+    background-color: black;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
 }
