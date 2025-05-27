@@ -32,7 +32,7 @@
 						for(FAQ faq : list) {
 					%>
 						<li>
-							<img class="icon_img" alt="깃발이미지" src="<%=root%>/static/img/Megaphone.png">
+							<img class="icon_img" alt="깃발이미지" src="<%=root%>/static/img/flags.png">
 							<p class="bor_txt">택배서비스</p>
 							<p><%=faq.getTitle() %></p>
 							<button type="button" class="dropdown">

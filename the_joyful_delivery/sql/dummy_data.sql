@@ -323,7 +323,6 @@ INSERT INTO region_name (del_idx, created_at, status) VALUES
 (99, '2024-08-07 11:30:00', '광주 서구'),
 (100, '2024-08-08 13:05:00', '부산 해운대구');
 
-
 INSERT INTO payment (d_idx, p_card, p_amount)
 VALUES
 (1, '1234-1234-1234-1234', 15000),

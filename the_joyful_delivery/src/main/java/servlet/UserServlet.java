@@ -46,7 +46,7 @@ public class UserServlet extends HttpServlet {
 	            session.invalidate();
 	        }
 	        // 로그아웃 후 메인 페이지로 리다이렉트
-	        response.sendRedirect(request.getContextPath() + "/index.jsp");
+	        response.sendRedirect(request.getContextPath() + "/index");
 	    }
 		
 		// 회원가입 시 - 아이디 중복 검사 
@@ -135,7 +135,7 @@ public class UserServlet extends HttpServlet {
                 if (roleIdx == 1) {
                     // 일반 사용자 페이지
                 	System.out.println(request.getContextPath());
-                    response.sendRedirect(request.getContextPath() + "/index.jsp");
+                    response.sendRedirect(request.getContextPath() + "/index");
                 } else if (roleIdx == 2) {
                     // 관리자 페이지
                     response.sendRedirect(request.getContextPath() + "/admin/user");

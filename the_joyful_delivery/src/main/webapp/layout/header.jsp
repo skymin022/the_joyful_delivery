@@ -79,7 +79,7 @@
 					<ul class="offcanvas_ul">
 						<li><a href="#">공지사항</a></li>
 						<li><a href="<%= root %>/page/delivery/delivery_main.jsp">배송조회하기</a></li>
-						<li><a href="<%= root %>/page/serv_center/customer_sc.jsp">고객센터</a></li>
+						<li><a href="<%= root %>/serv_center/faq">고객센터</a></li>
 						<li><a href="<%= root %>/page/login/login.jsp">문의하기</a></li>
 					</ul>
 				</nav>

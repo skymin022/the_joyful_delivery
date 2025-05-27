@@ -27,7 +27,7 @@
 				<ul>
 					<c:forEach var="anno" items="${list }">
 						<li>
-							<img alt="깃발이미지" src="<%=root%>/static/img/flags.png">
+							<img class="icon_img" alt="공지사항 아이콘" src="<%=root%>/static/img/Megaphone.png">
 							<p class="bor_txt">택배서비스</p>
 							<p class="ann_title">${anno.title}</p>
 							<span class="date1">${anno.createdAt}</span>
