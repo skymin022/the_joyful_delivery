@@ -44,7 +44,7 @@
 					<li><input name="where" id="drivNum"  value="number" type="radio" <%=where.equals("number") ? "checked" : ""%>/><label for="drivNum">기사연락처</label></li>
 				</ul>
 				<div class="line"></div>
-				<div style="position: relative;">
+				<div>
 					<input type="text" name="where_txt" value="<%=request.getParameter("where_txt") != null ? request.getParameter("where_txt") : "" %>"/>
 					<button class="ad_search_icon"><img src="<%=root%>/static/img/search.png" alt="돋보기 이미지"/></button>
 				</div>

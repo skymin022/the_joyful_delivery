@@ -39,6 +39,7 @@ body {
 			</div>
 		</header>
 		<%-- [Contents] ######################################################### --%>
+		
 		<form action="<%=root%>/admin/user">
 			<div class="ad_search">
 				<ul>
@@ -58,7 +59,7 @@ body {
 						type="radio" <%=where.equals("birth") ? "checked" : ""%>/><label for="userBir">생년월일</label></li>
 				</ul>
 				<div class="line"></div>
-				<div style="position: relative;">
+				<div>
 					<input type="text" name="where_txt" value="<%=request.getParameter("where_txt") != null ? request.getParameter("where_txt") : "" %>"/>
 					<button class="ad_search_icon">
 						<img src="<%=root%>/static/img/search.png" alt="돋보기 이미지" />
@@ -83,7 +84,7 @@ body {
 				</thead>
 				<tbody class="adm_tbody">
 					<c:forEach var="user" items="${users}">
-						<tr class="adm_tbody_tr">
+						<tr class="adm_tbody_tr" onclick="receiveFromFetch(${user.idx})">
 							<td>${user.idx}</td>
 							<td>${user.username}</td>
 							<td>${user.id}</td>
@@ -117,5 +118,20 @@ body {
 		<%-- [Contents] ######################################################### --%>
 		<jsp:include page="/layout/script.jsp" />
 	</div>
+	<button onclick="receiveFromFetch()">12312</button>
+	<iframe scrolling="no" src="<%=root%>/page/admin/update_form.jsp" class=""></iframe>
+	<!-- 비동기로 모달에 전달할 데이터 가져오기 -->
+	<script type="text/javascript">
+		function receiveFromFetch(idx) {
+			fetch('/the_joyful_delivery/admin/user/modal?idx='+idx)
+				.then(res => res.json())
+				.then(data => {
+					const iframe = document.querySelector("iframe")
+					iframe.contentWindow.postMessage(data, "*")
+					iframe.style.display = 'block';
+					console.log(data)
+			});
+		}
+	</script>
 </body>
 </html>

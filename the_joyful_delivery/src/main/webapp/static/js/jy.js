@@ -207,6 +207,14 @@ document.addEventListener("DOMContentLoaded", function() {
 			}
 		})
 	}
+	
+	const cancleModal = document.getElementById("cancle_modal")
+	if(cancleModal) {
+		cancleModal.addEventListener("click", function() {
+			parent.document.querySelector("iframe").style.display = 'none'
+		})
+	}
+	
 }) 
 
 $(function() {
