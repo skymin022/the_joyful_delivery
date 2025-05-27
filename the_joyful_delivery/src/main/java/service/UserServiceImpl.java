@@ -82,6 +82,16 @@ public class UserServiceImpl implements UserService {
 		return null;
 	}
 
+	@Override
+	public int update(User user) {
+		int result = 0;
+		try {
+			result = userDAO.update(user);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return result;
+	}
 
 	@Override
 	public int delete(int no) {
@@ -150,11 +160,5 @@ public class UserServiceImpl implements UserService {
     public String findPwByIdNameEmail(String id, String username, String email) {
         return userDAO.findPwByIdNameEmail(id, username, email);
     }
-
-	@Override
-	public int update(User user) {
-		// TODO Auto-generated method stub
-		return 0;
-	}
 
 }
