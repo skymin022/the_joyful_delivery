@@ -3,10 +3,12 @@ package service;
 import java.util.List;
 import java.util.Map;
 
+import com.alohaclass.jdbc.dto.Page;
 import com.alohaclass.jdbc.dto.PageInfo;
 
 import DAO.DriverDAO;
 import DTO.Driver;
+import DTO.Inquiry;
 
 public class DriverServiceImpl implements DriverService {
 	
@@ -31,9 +33,17 @@ public class DriverServiceImpl implements DriverService {
 	}
 
 	@Override
-	public PageInfo<Driver> page() {
-		// TODO Auto-generated method stub
-		return null;
+	public PageInfo<Driver> page(String keyword, List<String> columList) {
+		PageInfo<Driver> pageInfo = null; 
+		try {
+			Page pageObj = new Page(1, 10);
+			pageInfo = driverDao.page(pageObj, keyword, columList);
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		return pageInfo;
 	}
 
 	@Override

@@ -11,7 +11,7 @@ public interface InquiryService {
 	// C.R.U.D
 	public List<Inquiry> list();
 	public List<Inquiry> listBy(Map<String, Object> fields);
-	public PageInfo<Inquiry> page();
+	public PageInfo<Inquiry> page(String keyword, List<String> columList);
 	public Inquiry select(int no);
 	public int insert(Inquiry inquiry);
 	public Inquiry insertKey(Inquiry inquiry);

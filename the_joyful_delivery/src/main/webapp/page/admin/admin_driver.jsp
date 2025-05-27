@@ -2,6 +2,12 @@
 <%@ include file="/layout/common.jsp" %>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%
+	String where = "";
+	if(request.getParameter("where") != null) {
+		where = request.getParameter("where");
+	}
+%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -30,16 +36,16 @@
 			</div>
 		</header>
 		<%-- [Contents] ######################################################### --%>
-		<form action="<%=root%>/admin/delivery">
+		<form action="<%=root%>/admin/driver">
 			<div class="ad_search">
 				<ul>     
-					<li><input name="where" id="comName"   value="comName"   type="radio"/><label for="comName">기사번호</label></li>
-					<li><input name="where" id="drivName" value="drivName" type="radio"/><label for="drivName">기사이름</label></li>
-					<li><input name="where" id="drivNum" value="drivNum" type="radio"/><label for="drivNum">기사연락처</label></li>
+					<li><input name="where" id="comName"  value="idx"    type="radio" <%=where.equals("idx") ? "checked" : ""%>/><label for="comName">기사번호</label></li>
+					<li><input name="where" id="drivName" value="name"   type="radio" <%=where.equals("name") ? "checked" : ""%>/><label for="drivName">기사이름</label></li>
+					<li><input name="where" id="drivNum"  value="number" type="radio" <%=where.equals("number") ? "checked" : ""%>/><label for="drivNum">기사연락처</label></li>
 				</ul>
 				<div class="line"></div>
 				<div style="position: relative;">
-					<input type="text" name="where_txt">
+					<input type="text" name="where_txt" value="<%=request.getParameter("where_txt") != null ? request.getParameter("where_txt") : "" %>"/>
 					<button class="ad_search_icon"><img src="<%=root%>/static/img/search.png" alt="돋보기 이미지"/></button>
 				</div>
 			</div>		
@@ -54,11 +60,11 @@
 					</tr>
 				</thead>
 				<tbody class="adm_tbody">
-					<c:forEach var="driver" items="${drivers }">
+					<c:forEach var="list" items="${list }">
 					<tr>
-						<td>${driver.idx}</td>
-						<td>${driver.name }</td>
-						<td>${driver.number }</td>
+						<td>${list.idx}</td>
+						<td>${list.name }</td>
+						<td>${list.number }</td>
 					</tr>
 					</c:forEach>
 				</tbody>
