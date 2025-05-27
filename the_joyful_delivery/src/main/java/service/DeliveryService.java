@@ -29,7 +29,7 @@ public interface DeliveryService {
 	public List<Delivery> listByUserId(String loginId);
 	
 	// 로그 추적 
-	Delivery findByDelIdx(int delIdx);
+	Delivery findByDelIdx(Long delIdx);
 	
 	
 	

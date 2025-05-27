@@ -90,8 +90,13 @@ public class DeliveryServiceImpl implements DeliveryService {
 
 	@Override
 	public int insert(Delivery Delivery) {
-		// TODO Auto-generated method stub
-		return 0;
+		int result = 0;
+		try {
+			result = delDao.insert(Delivery);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return result;
 	}
 
 	@Override
@@ -138,17 +143,17 @@ public class DeliveryServiceImpl implements DeliveryService {
 		return list;
 	}
 
-	// 로그 
-	private DeliveryDAO deliveryDAO = new DeliveryDAO();
-
     @Override
-    public Delivery findByDelIdx(int delIdx) {
-        return deliveryDAO.findByDelIdx(delIdx);
+    public Delivery findByDelIdx(Long delIdx) {
+    	Delivery delivery = null;
+    	try {
+    		delivery = delDao.findByDelIdx(delIdx);
+    		System.out.println(delivery);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+    	return delivery;
     }
-
-
-
-
 }
 
 
