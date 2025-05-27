@@ -31,7 +31,7 @@
 							<li><a href="<%= root %>/page/login/sign_up.jsp">회원가입</a></li>
 						<% } else { %>
 							<li><a href="<%= root %>/users/mypage-jsp">마이페이지</a></li>
-							<li><a href="<%= root %>/users/logout">로그아웃</a></li>
+							<li><a href="javascript:void(0);" onclick="confirmLogout()">로그아웃</a></li>
 						<% } %>
 					</ul>
 				</div>
@@ -70,7 +70,7 @@
 							<li><a href="<%= root %>/page/login/sign_up.jsp">회원가입</a></li>
 						<% } else { %>
 							<li><a href="<%= root %>/users/mypage-jsp">마이페이지</a></li>
-							<li><a href="<%= root %>/logout">로그아웃</a></li>
+							<li><a href="javascript:void(0);" onclick="confirmLogout()">로그아웃</a></li>
 						<% } %>
 					</ul>
 				</div>

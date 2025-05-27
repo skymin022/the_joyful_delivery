@@ -65,32 +65,20 @@
                                  <div class="no-data">등록된 배송 내역이 없습니다.</div>
                               </c:if>	
 							 <c:forEach var="delivery" items="${deliveries}">
-								 <div class="row-box" id="row-box">
-                                 	<div class="row">
-                                 		<input type="hidden" name="idx" value="${delivery.payment.idx}" />
-                                 		<input type="hidden" name="pCard" value="${delivery.payment.PCard}" />
-                                 		<input type="hidden" name="pAmount" value="${delivery.payment.PAmount}" />
-                                 		<input type="hidden" name="pDate" value="${delivery.payment.PDate}" />
-                                 	    <div class="col number">
-                                     	    <span class="number-text">${delivery.idx}</span>
-                                 	    </div>
-                                 	    <div class="col delivery-info">
-                                 	        <span class="delivery-text">${delivery.value}</span>
-                                 	    </div>
-                                 	    <div class="col sender-info">
-                                 	        <span class="sender-text">${delivery.sendingReceiving.SName} / ${delivery.sendingReceiving.SAddress}</span>
-                                 	    </div>
-                                 	    <div class="col receiver-info">
-                                 	        <span class="receiver-text">${delivery.sendingReceiving.RName} / ${delivery.sendingReceiving.RAddress}</span>
-                                 	    </div>
-                                 	    <div class="col payment-type">
-                                 	        <span class="payment-text">${delivery.prePos}</span>
-                                 	    </div>
-                                 	    <div class="col status">
-                                 	        <span class="status-text">${delivery.status}</span>
-                                 	    </div>
-                                 	</div>
-								 </div>
+								<div class="row-box row-content" onclick="...">
+								    <input type="hidden" name="idx" value="${delivery.payment.idx}" />
+								    <input type="hidden" name="pCard" value="${delivery.payment.PCard}" />
+								    <input type="hidden" name="pAmount" value="${delivery.payment.PAmount}" />
+								    <input type="hidden" name="pDate" value="${delivery.payment.PDate}" />
+								
+								    <div>${delivery.idx}</div>
+								    <div>${delivery.value}</div>
+								    <div>${delivery.sendingReceiving.SName} / ${delivery.sendingReceiving.SAddress}</div>
+								    <div>${delivery.sendingReceiving.RName} / ${delivery.sendingReceiving.RAddress}</div>
+								    <div>${delivery.prePos}</div>
+								    <div>${delivery.status}</div>
+								</div>
+	
 							 </c:forEach>
 
 						</div>
@@ -123,44 +111,7 @@
 		<jsp:include page="/layout/script.jsp" />
 		
 		<script>
-			// 탭 클릭 이벤트
-            document.querySelectorAll('.tab').forEach(tab => {
-                tab.addEventListener('click', function() {
-                    document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
-                    this.classList.add('active');
-                    const part = this.classList.contains('part1') ? 'part1' : 'part2';
-                    document.querySelector('.table-and-detail').className = `table-and-detail ${part}`;
-                });
-            });
 
-            // 행 클릭 이벤트
-            document.querySelectorAll('.row-box').forEach(row => {
-                row.addEventListener('click', function() {
-                    const idx = this.querySelector('input[name="idx"]').value;
-                    const card = this.querySelector('input[name="pCard"]').value;
-                    const amount = this.querySelector('input[name="pAmount"]').value;
-                    const date = this.querySelector('input[name="pDate"]').value;
-
-                    document.getElementById('payment-idx').value = idx;
-                    document.getElementById('payment-card').value = card;
-                    document.getElementById('payment-amount').value = amount;
-                    document.getElementById('payment-date').value = date;
-                });
-            });
-            
-            // 최초에 첫 행을 상세정보에 출력
-            const firstRow = document.querySelector('.row-box');
-            if (firstRow) {
-                const idx = firstRow.querySelector('input[name="idx"]').value;
-                const card = firstRow.querySelector('input[name="pCard"]').value;
-                const amount = firstRow.querySelector('input[name="pAmount"]').value;
-                const date = firstRow.querySelector('input[name="pDate"]').value;
-
-                document.getElementById('payment-idx').value = idx;
-                document.getElementById('payment-card').value = card;
-                document.getElementById('payment-amount').value = amount;
-                document.getElementById('payment-date').value = date;
-            }
 		</script>
 	</div>
 </body>

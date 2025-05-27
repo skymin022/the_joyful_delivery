@@ -200,6 +200,71 @@ public class UserServlet extends HttpServlet {
                 request.setAttribute("error", "서버 오류 발생: " + e.getMessage());
                 request.getRequestDispatcher("/sign_up.jsp").forward(request, response);
             }
+
+            
+                        
+        } // 회원가입 끝 
+
+        // 마이페이지 - 회원정보 수정 
+        else if ("/update".equals(path)) {
+            HttpSession session = request.getSession(false);
+            if (session == null || session.getAttribute("loginId") == null) {
+                response.sendRedirect(request.getContextPath() + "/page/login/login.jsp");
+                return;
+            }
+
+            String p_number = request.getParameter("p_number");
+            String id = request.getParameter("id");
+            if (id == null || id.trim().isEmpty()) {
+                System.out.println("ID가 비어 있습니다.");
+                // 처리 중단
+            }
+            
+            // idx 파라미터 받아오기
+            int idx = Integer.parseInt(request.getParameter("idx"));  //
+
+
+            String password = request.getParameter("password");
+            String email1 = request.getParameter("email1");
+            String email2 = request.getParameter("email2");
+            String email = email1 + "@" + email2;
+
+            System.out.println("[UserServlet POST] path: " + path);
+            String address = request.getParameter("address");
+            String addressDetail = request.getParameter("address_detail");
+            
+            // 두 주소를 합쳐서 하나의 문자열로 만든다 (공백 한 칸 추가)
+            String fullAddress = address;
+            if(addressDetail != null && !addressDetail.trim().isEmpty()) {
+                fullAddress += " " + addressDetail.trim();
+            }
+            
+            User updatedUser = User.builder()
+            		.idx(idx)
+            	    .id(id)
+            	    .password(password)
+            	    .email(email)
+            	    .address(fullAddress)
+            	    .pNumber(p_number)
+            	    .build();
+            // 로그 추적 
+            System.out.println("업데이트 객체 : " + updatedUser);
+
+            int result = userService.update(updatedUser);
+            System.out.println("결과" + result);
+            if (result > 0) {
+                // 세션에 최신 정보 갱신
+                User refreshedUser = userService.selectUserById(id);
+                refreshedUser.setPassword(null); // 비밀번호 감춤 
+                session.setAttribute("loginUser", refreshedUser);
+
+                response.sendRedirect(request.getContextPath() + "/index.jsp");
+            } else {
+                request.setAttribute("error", "업데이트 실패");
+                request.getRequestDispatcher("/page/login/login_list_update.jsp").forward(request, response);
+            }
         }
+
+
 	}
 }

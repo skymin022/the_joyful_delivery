@@ -2,6 +2,7 @@ package DAO;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import com.alohaclass.jdbc.dao.BaseDAOImpl;
 
@@ -231,6 +232,13 @@ public class DeliveryDAO extends BaseDAOImpl<Delivery> {
 		}
 		return list;
 	}
+	
+	
+	// 배송 현황 
+    // 배송 상태별 목록 조회 예시
+    public List<Delivery> listByStatus(String status) throws Exception {
+        return listBy(Map.of("status", status));
+    }
 }	
 
 

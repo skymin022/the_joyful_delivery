@@ -26,4 +26,11 @@ public interface DeliveryService {
 	
 	// 회원전용 택배 조회
 	public List<Delivery> listByUserId(String loginId);
+	
+	
+	// 배송 상태 변경 
+	public void updateStatus(String id, String status) throws Exception;
+	
+	
+	
 }

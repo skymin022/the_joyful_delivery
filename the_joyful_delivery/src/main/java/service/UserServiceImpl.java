@@ -84,8 +84,13 @@ public class UserServiceImpl implements UserService {
 
 	@Override
 	public int update(User user) {
-		// TODO Auto-generated method stub
-		return 0;
+		int result = 0;
+		try {
+			result = userDAO.update(user);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return result;
 	}
 
 	@Override

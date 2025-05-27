@@ -1,4 +1,4 @@
-package DTO;
+ package DTO;
 
 
 import java.text.SimpleDateFormat;
@@ -43,6 +43,9 @@ public class Delivery {
 	private SendingReceiving sendingReceiving; // 조인해서 가져올 SendingReceiving 객체
 	@Column(exist = false)
 	private Payment payment; // 조인해서 가져올 Payment 객체
+	
+	@Column(exist = false)
+	private RegionName regionName; // 조인해서 가져올 region_name 객체 
 
 	// 포맷 날짜 받을 변수
 	private String formatCreatedAt;

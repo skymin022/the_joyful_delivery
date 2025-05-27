@@ -1,5 +1,6 @@
 package service;
 
+import java.sql.Connection;
 import java.util.List;
 import java.util.Map;
 
@@ -136,4 +137,16 @@ public class DeliveryServiceImpl implements DeliveryService {
 		}
 		return list;
 	}
+
+
+	@Override
+	public void updateStatus(String id, String status) throws Exception {
+		// TODO Auto-generated method stub
+		
+	}
+
+
+
 }
+
+
