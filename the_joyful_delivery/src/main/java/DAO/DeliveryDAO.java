@@ -35,10 +35,9 @@ public class DeliveryDAO extends BaseDAOImpl<Delivery> {
 			
 			while(rs.next()) {
 				Delivery delivery = new Delivery();
-				delivery.setIdx(rs.getInt("idx"));
+				delivery.setIdx(rs.getLong("idx"));
 				delivery.setUserIdx(rs.getInt("user_idx"));
 				delivery.setDriverIdx(rs.getInt("driver_idx"));
-				delivery.setSrIdx(rs.getInt("sr_idx"));
 				delivery.setKeyword(rs.getString("keyword"));
 				delivery.setValue(rs.getInt("value"));
 				delivery.setPrePos(rs.getString("pre_pos"));
@@ -109,10 +108,9 @@ public class DeliveryDAO extends BaseDAOImpl<Delivery> {
 		
 			while(rs.next()) {
 				Delivery delivery = new Delivery();
-				delivery.setIdx(rs.getInt("idx"));
+				delivery.setIdx(rs.getLong("idx"));
 				delivery.setUserIdx(rs.getInt("user_idx"));
 				delivery.setDriverIdx(rs.getInt("driver_idx"));
-				delivery.setSrIdx(rs.getInt("sr_idx"));
 				delivery.setKeyword(rs.getString("keyword"));
 				delivery.setValue(rs.getInt("value"));
 				delivery.setPrePos(rs.getString("pre_pos"));
@@ -184,7 +182,7 @@ public class DeliveryDAO extends BaseDAOImpl<Delivery> {
 		           + "        p.p_date "
 		           + " FROM deliveries d "
 		           + " INNER JOIN drivers dr ON d.driver_idx = dr.idx "
-		           + " INNER JOIN sending_and_receiving sr ON d.sr_idx = sr.idx "
+		           + " INNER JOIN sending_and_receiving sr ON d.idx = sr.del_idx "
 		           + " LEFT JOIN payment p ON d.idx = p.d_idx "
 		           + " WHERE d.user_idx = (SELECT idx FROM users WHERE id = ?) "
 		           + " ORDER BY d.created_at DESC";
@@ -196,10 +194,9 @@ public class DeliveryDAO extends BaseDAOImpl<Delivery> {
 			
 			while(rs.next()) {
 				Delivery delivery = new Delivery();
-				delivery.setIdx(rs.getInt("idx"));
+				delivery.setIdx(rs.getLong("idx"));
 				delivery.setUserIdx(rs.getInt("user_idx"));
 				delivery.setDriverIdx(rs.getInt("driver_idx"));
-				delivery.setSrIdx(rs.getInt("sr_idx"));
 				delivery.setKeyword(rs.getString("keyword"));
 				delivery.setValue(rs.getInt("value"));
 				delivery.setPrePos(rs.getString("pre_pos"));
@@ -219,7 +216,7 @@ public class DeliveryDAO extends BaseDAOImpl<Delivery> {
 				// 결제 정보 설정
 				Payment payment = new Payment();
 				payment.setIdx(rs.getInt("p_idx"));
-				payment.setDIdx(rs.getInt("idx"));
+				payment.setDIdx(rs.getLong("idx"));
 				payment.setPCard(rs.getString("p_card"));
 				payment.setPAmount(rs.getInt("p_amount"));
 				payment.setPDate(rs.getDate("p_date"));
@@ -235,17 +232,17 @@ public class DeliveryDAO extends BaseDAOImpl<Delivery> {
 	
 	
 	// 운송장번호(del_idx)로 배송상태 단건 조회
-    public Delivery findByDelIdx(int delIdx) {
+    public Delivery findByDelIdx(Long delIdx) {
         Delivery delivery = null;
         String sql = "SELECT d.keyword, sr.s_name, sr.r_name, sr.r_address, r.created_at, r.status " +
                      "FROM deliveries d " +
-                     "INNER JOIN sending_and_receiving sr ON d.sr_idx = sr.idx " +
+                     "INNER JOIN sending_and_receiving sr ON d.idx = sr.del_idx " +
                      "INNER JOIN region_name r ON d.idx = r.del_idx " +
                      "WHERE d.idx = ? " +
                      "ORDER BY r.created_at DESC LIMIT 1";
         try {
             psmt = con.prepareStatement(sql);
-            psmt.setInt(1, delIdx);
+            psmt.setLong(1, delIdx);
             rs = psmt.executeQuery();
             if (rs.next()) {
                 delivery = new Delivery();

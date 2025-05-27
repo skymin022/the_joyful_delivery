@@ -21,7 +21,7 @@ import lombok.NoArgsConstructor;
 public class Delivery {
 	
 	@Pk
-	private int idx;
+	private Long idx;
 	private int userIdx;
 	private int driverIdx;
 	private int srIdx;

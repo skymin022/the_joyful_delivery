@@ -141,7 +141,7 @@ public class DeliveryServiceImpl implements DeliveryService {
 	private DeliveryDAO deliveryDAO = new DeliveryDAO();
 
     @Override
-    public Delivery findByDelIdx(int delIdx) {
+    public Delivery findByDelIdx(Long delIdx) {
         return deliveryDAO.findByDelIdx(delIdx);
     }
 
