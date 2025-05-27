@@ -56,9 +56,9 @@ public class AdminServlet extends HttpServlet {
 		switch(path) {
 			// 어드민 유저관리 페이지
 			case "/user":
-				whereTxt = request.getParameter("where_txt"); // 조건 검색어
-				column = request.getParameter("where"); 			// 컬럼
-				if(whereTxt != null || column != null) {
+				whereTxt = request.getParameter("where_txt"); 	// 조건 검색어
+				column = request.getParameter("where"); 		// 컬럼
+				if(whereTxt != "" && whereTxt != null && column != null) {
 					System.out.println(column + " LIKE %" + whereTxt + "%");
 					List<String> columnList = new ArrayList<>();
 					columnList.add(column);
@@ -92,7 +92,7 @@ public class AdminServlet extends HttpServlet {
 				List<Delivery> deliveries = null;
 				// 필터링 없을 때
 				if(whereTxt == null || column == null) {
-					deliveries = delService.regJoinList(pageCut, (currentPage-1) * 5);
+					deliveries = delService.regJoinList(pageCut, (currentPage-1) * pageCut);
 					System.out.println(currentPage - 1);
 					size = (int)Math.ceil( delService.joinCount() / pageCut);
 					endPage = Math.min(startPage + blockSize - 1, size - 1);
@@ -100,7 +100,7 @@ public class AdminServlet extends HttpServlet {
 				} 
 				// 필터링 있을 때
 				else {
-					deliveries = delService.regJoinList(column, whereTxt, pageCut, (currentPage-1) * 5);
+					deliveries = delService.regJoinList(column, whereTxt, pageCut, (currentPage-1) * pageCut);
 					size = (int)Math.ceil( delService.filterJoinCount(column, whereTxt) / pageCut);
 					endPage = Math.min(startPage + blockSize - 1, size - 1);
 					System.out.println("총 행의 개수 : " + size);
@@ -118,19 +118,45 @@ public class AdminServlet extends HttpServlet {
 				
 			// 어드민 문의 페이지
 			case "/inquiry":
-				page = "/page/admin/admin_inq.jsp";
-				List<Inquiry> inquiries = inqService.list();
+				whereTxt = request.getParameter("where_txt"); // 조건 값
+				column = request.getParameter("where"); 	  // 조건 컬럼
 				
-				request.setAttribute("inquiries", inquiries);
+				if(whereTxt != "" && whereTxt != null && column != null) {
+					List<String> columnList = new ArrayList<>();
+					columnList.add(column);
+					
+					PageInfo<Inquiry> inquiryInfo = inqService.page(whereTxt, columnList);
+					List<Inquiry> inquiryList = inquiryInfo.getList();
+					request.setAttribute("list", inquiryList);
+				} else {
+					System.out.println("else 로 넘어옴");
+					List<Inquiry> inquiryList = inqService.list();
+					request.setAttribute("list", inquiryList);
+				}
+				
+				page = "/page/admin/admin_inq.jsp";
 				request.getRequestDispatcher(page).forward(request, response);
 				break;
 				
 			// 어드민 기사관리 페이지
 			case "/driver":
-				page = "/page/admin/admin_driver.jsp";
-				List<Driver> drivers = driverService.list();
+				whereTxt = request.getParameter("where_txt"); // 조건 값
+				column = request.getParameter("where"); 	  // 조건 컬럼
 				
-				request.setAttribute("drivers", drivers);
+				if(whereTxt != "" && whereTxt != null && column != null) {
+					List<String> columnList = new ArrayList<>();
+					columnList.add(column);
+					
+					PageInfo<Driver> inquiryInfo = driverService.page(whereTxt, columnList);
+					List<Driver> inquiryList = inquiryInfo.getList();
+					request.setAttribute("list", inquiryList);
+				} else {
+					System.out.println("else 로 넘어옴");
+					List<Driver> inquiryList = driverService.list();
+					request.setAttribute("list", inquiryList);
+				}
+				
+				page = "/page/admin/admin_driver.jsp";
 				request.getRequestDispatcher(page).forward(request, response);
 			default: break;
 		} 

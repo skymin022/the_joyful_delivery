@@ -4,6 +4,12 @@
 <%@ include file="/layout/common.jsp"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+<%
+	String where = "";
+	if(request.getParameter("where") != null) {
+		where = request.getParameter("where");
+	}
+%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -37,23 +43,23 @@ body {
 			<div class="ad_search">
 				<ul>
 					<li><input name="where" id="userNo" value="idx" type="radio" /><label
-						for="userNo">회원번호</label></li>
+						for="userNo" <%=where.equals("idx") ? "checked" : ""%>>회원번호</label></li>
 					<li><input name="where" id="userName" value="username"
-						type="radio" /><label for="userName">이름</label></li>
+						type="radio" <%=where.equals("username") ? "checked" : ""%>/><label for="userName">이름</label></li>
 					<li><input name="where" id="userId" value="ID" type="radio" /><label
 						for="userId">아이디</label></li>
 					<li><input name="where" id="userEma" value="email"
-						type="radio" /><label for="userEma">이메일</label></li>
+						type="radio" <%=where.equals("email") ? "checked" : ""%>/><label for="userEma">이메일</label></li>
 					<li><input name="where" id="userPho" value="p_number"
-						type="radio" /><label for="userPho">전화번호</label></li>
+						type="radio" <%=where.equals("p_number") ? "checked" : ""%>/><label for="userPho">전화번호</label></li>
 					<li><input name="where" id="userAdd" value="address"
-						type="radio" /><label for="userAdd">주소</label></li>
+						type="radio" <%=where.equals("address") ? "checked" : ""%>/><label for="userAdd">주소</label></li>
 					<li><input name="where" id="userBir" value="birth"
-						type="radio" /><label for="userBir">생년월일</label></li>
+						type="radio" <%=where.equals("birth") ? "checked" : ""%>/><label for="userBir">생년월일</label></li>
 				</ul>
 				<div class="line"></div>
 				<div style="position: relative;">
-					<input type="text" name="where_txt">
+					<input type="text" name="where_txt" value="<%=request.getParameter("where_txt") != null ? request.getParameter("where_txt") : "" %>"/>
 					<button class="ad_search_icon">
 						<img src="<%=root%>/static/img/search.png" alt="돋보기 이미지" />
 					</button>
