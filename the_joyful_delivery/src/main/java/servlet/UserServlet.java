@@ -285,6 +285,8 @@ public class UserServlet extends HttpServlet {
         	request.getRequestDispatcher("/page/login/find_id_pw.jsp").forward(request, response);
         	
         }
+
+        
         
 	    
 		
