@@ -66,9 +66,6 @@ public class AdminServlet extends HttpServlet {
 				whereTxt = request.getParameter("where_txt"); 		// 조건 검색어
 				column = request.getParameter("where"); 			// 컬럼
 
-				if(whereTxt != null || column != null) {
-				whereTxt = request.getParameter("where_txt"); 	// 조건 검색어
-				column = request.getParameter("where"); 		// 컬럼
 				if(whereTxt != "" && whereTxt != null && column != null) {
 					System.out.println(column + " LIKE %" + whereTxt + "%");
 					List<String> columnList = new ArrayList<>();
@@ -90,9 +87,9 @@ public class AdminServlet extends HttpServlet {
 				
 				page = "/page/admin/admin_user.jsp";
 				request.getRequestDispatcher(page).forward(request, response);
-				break;
-				}
+			break;
 			// 어드민 택배관리 페이지
+			
 			case "/delivery":
 				whereTxt= request.getParameter("where_txt");	// 조건 검색어
 				column = request.getParameter("where");			// 컬럼
