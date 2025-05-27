@@ -17,6 +17,8 @@
 
 -- 테이블 생성
 -- 1. 기존 테이블 삭제
+SET FOREIGN_KEY_CHECKS = 0;
+
 DROP TABLE IF EXISTS copy_of_inquiries;
 DROP TABLE IF EXISTS inquiries;
 DROP TABLE IF EXISTS region_name;
@@ -49,6 +51,7 @@ CREATE TABLE `faq` (
 
 CREATE TABLE `sending_and_receiving` (
     `idx` BIGINT NOT NULL AUTO_INCREMENT,
+    `del_idx` BIGINT NOT NULL UNIQUE,
     `s_name` VARCHAR(100) NOT NULL,
     `s_number` VARCHAR(100) NOT NULL,
     `s_address` VARCHAR(200) NOT NULL,
@@ -84,7 +87,6 @@ CREATE TABLE `deliveries` (
     `idx` BIGINT NOT NULL AUTO_INCREMENT,
     `user_idx` BIGINT NULL COMMENT 'index',
     `driver_idx` BIGINT NULL,
-    `sr_idx` BIGINT NOT NULL,
     `keyword` VARCHAR(100) NOT NULL,
     `status` ENUM('배송중', '배송완료', '픽업전') NOT NULL,
     `value` INT NOT NULL,
@@ -176,9 +178,11 @@ ALTER TABLE `deliveries`
     ON DELETE CASCADE ON UPDATE CASCADE,
     ADD CONSTRAINT `FK_deliveries_driver_idx`
     FOREIGN KEY (`driver_idx`) REFERENCES `drivers`(`idx`)
-    ON DELETE CASCADE ON UPDATE CASCADE,
-    ADD CONSTRAINT `FK_deliveries_sr_idx`
-    FOREIGN KEY (`sr_idx`) REFERENCES `sending_and_receiving`(`idx`)
+    ON DELETE CASCADE ON UPDATE CASCADE;
+    
+ALTER TABLE `sending_and_receiving` 
+    ADD CONSTRAINT `FK_sar_del_idx`
+    FOREIGN KEY (`del_idx`) REFERENCES `deliveries`(`idx`)
     ON DELETE CASCADE ON UPDATE CASCADE;
 
 ALTER TABLE `region_name`
@@ -190,3 +194,5 @@ ALTER TABLE `payment`
     ADD CONSTRAINT `FK_payment_d_idx`
     FOREIGN KEY (`d_idx`) REFERENCES `deliveries`(`idx`)
     ON DELETE CASCADE ON UPDATE CASCADE;
+    
+SET FOREIGN_KEY_CHECKS = 1;
