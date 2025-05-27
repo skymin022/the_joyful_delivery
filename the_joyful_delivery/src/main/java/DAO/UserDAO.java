@@ -110,8 +110,37 @@ public class UserDAO extends BaseDAOImpl<User> {
             e.printStackTrace();
         }
         return foundPw;
-    }
-	
-
 
 }
+
+}
+	// 마이페이지 - 회원정보 수정
+//	public int update(User user) {
+//		int result = 0;
+//		String sql = "UPDATE users SET password = ?, email = ?, address = ?, p_number = ? WHERE idx = ?";
+//		try {
+//			psmt = con.prepareStatement(sql);
+//			psmt.setString(1, user.getPassword());
+//			psmt.setString(2, user.getEmail());
+//			psmt.setString(3, user.getAddress());
+//			psmt.setString(4, user.getPNumber());
+//			psmt.setInt(5, user.getIdx());
+//
+//			System.out.println("[UserDAO] 업데이트 요청 값:");
+//			System.out.println("idx: " + user.getIdx());
+//			System.out.println("PW: " + user.getPassword());
+//			System.out.println("Email: " + user.getEmail());
+//			System.out.println("Address: " + user.getAddress());
+//			System.out.println("Phone: " + user.getPNumber());
+//
+//			
+//			result = psmt.executeUpdate();
+//			System.out.println("[UserDAO] 회원정보 업데이트 성공");
+//		} catch (Exception e) {
+//			e.printStackTrace();
+//			System.err.println("[UserDAO] 회원정보 업데이트 중 오류 발생");
+//		}
+//		return result;
+//	}
+
+
