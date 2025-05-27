@@ -7,73 +7,80 @@ import com.alohaclass.jdbc.dto.PageInfo;
 
 import DAO.PayDAO;
 import DTO.Delivery;
-
 import DTO.Payment;
 
 public class PayServiceImpl implements payService {
 
-    private PayDAO payDAO = new PayDAO();  // DAO 객체 생성 (의존성 주입 사용 가능)
-
+    private PayDAO payDAO = new PayDAO();  // DAO 객체 생성 (필요시 DI 적용)
     
+    // TODO: orderDAO, deliveryDAO 등이 있으면 같이 선언 필요
+    
+    @Override
+    public List<Payment> list() {
+        // TODO: 전체 결제 목록 조회 구현
+        return null;
+    }
 
-	@Override
-	public List<Payment> list() {
-		// TODO Auto-generated method stub
-		return null;
-	}
+    @Override
+    public List<Payment> listBy(Map<String, Object> fields) {
+        // TODO: 조건에 따른 결제 목록 조회 구현
+        return null;
+    }
 
-	@Override
-	public List<Payment> listBy(Map<String, Object> fields) {
-		// TODO Auto-generated method stub
-		return null;
-	}
+    @Override
+    public PageInfo<Payment> page() {
+        // TODO: 페이징 처리 구현
+        return null;
+    }
 
-	@Override
-	public PageInfo<Payment> page() {
-		// TODO Auto-generated method stub
-		return null;
-	}
+    @Override
+    public Payment select(int no) {
+        // TODO: 결제번호로 결제 정보 조회 구현
+        return null;
+    }
 
-	@Override
-	public Payment select(int no) {
-		// TODO Auto-generated method stub
-		return null;
-	}
+   
+    @Override
+    public int insert(Payment payment, Payment order, Delivery delivery) throws Exception {
+        int result = 0;
+        try {
+            // 결제 정보 저장
+            result = payDAO.insert(payment);
 
-	@Override
-	public int insert(Payment payment, Payment order, Delivery delivery) {
-		int result = 0;
-		try {
-			result = payDAO.insert(payment);
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		
-		return 0;
-	}
+            // TODO: 주문 정보 저장
+            // if(orderDAO != null) orderDAO.insert(order);
 
-	@Override
-	public Payment insertKey(Payment payment, Payment order, Delivery delivery) {
-		// TODO Auto-generated method stub
-		return null;
-	}
+            // TODO: 배송 정보 저장
+            // if(deliveryDAO != null) deliveryDAO.insert(delivery);
 
-	@Override
-	public int update(Payment payment) {
-		// TODO Auto-generated method stub
-		return 0;
-	}
+        } catch (Exception e) {
+            e.printStackTrace();
+            throw e; // 예외를 호출자에게 던지기
+        }
+        return result;
+    }
 
-	@Override
-	public int delete(int no) {
-		// TODO Auto-generated method stub
-		return 0;
-	}
+    @Override
+    public Payment insertKey(Payment payment, Payment order, Delivery delivery) {
+        // TODO
+        return null;
+    }
 
-	@Override
-	public boolean processPayment(Payment payDTO) throws Exception {
-		// TODO Auto-generated method stub
-		return false;
-	}
+    @Override
+    public int update(Payment payment) {
+        // TODO
+        return 0;
+    }
+
+    @Override
+    public int delete(int no) {
+        // TODO
+        return 0;
+    }
+
+    @Override
+    public boolean processPayment(Payment payDTO) throws Exception {
+        // TODO
+        return false;
+    }
 }
