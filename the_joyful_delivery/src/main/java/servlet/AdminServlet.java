@@ -215,6 +215,7 @@ public class AdminServlet extends HttpServlet {
 				page = root + "/page/admin/update_form.jsp";
 				if(result != 0) {
 					System.out.println("유저 정보 업데이트됨.");
+					response.getWriter().print(123);
 					response.sendRedirect(page);
 				}
 				
