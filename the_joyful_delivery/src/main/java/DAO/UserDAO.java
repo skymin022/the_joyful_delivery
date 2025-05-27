@@ -75,33 +75,43 @@ public class UserDAO extends BaseDAOImpl<User> {
 	}
 
 
-	// 마이페이지 - 회원정보 수정
-//	public int update(User user) {
-//		int result = 0;
-//		String sql = "UPDATE users SET password = ?, email = ?, address = ?, p_number = ? WHERE idx = ?";
-//		try {
-//			psmt = con.prepareStatement(sql);
-//			psmt.setString(1, user.getPassword());
-//			psmt.setString(2, user.getEmail());
-//			psmt.setString(3, user.getAddress());
-//			psmt.setString(4, user.getPNumber());
-//			psmt.setInt(5, user.getIdx());
-//
-//			System.out.println("[UserDAO] 업데이트 요청 값:");
-//			System.out.println("idx: " + user.getIdx());
-//			System.out.println("PW: " + user.getPassword());
-//			System.out.println("Email: " + user.getEmail());
-//			System.out.println("Address: " + user.getAddress());
-//			System.out.println("Phone: " + user.getPNumber());
-//
-//			
-//			result = psmt.executeUpdate();
-//			System.out.println("[UserDAO] 회원정보 업데이트 성공");
-//		} catch (Exception e) {
-//			e.printStackTrace();
-//			System.err.println("[UserDAO] 회원정보 업데이트 중 오류 발생");
-//		}
-//		return result;
-//	}
+	// 아이디 찾기: 이름, 이메일로 아이디 조회
+    public String findIdByNameAndEmail(String username, String email) {
+        String foundId = null;
+        String sql = "SELECT ID FROM users WHERE username = ? AND email = ?";
+        try {
+            psmt = con.prepareStatement(sql);
+            psmt.setString(1, username);
+            psmt.setString(2, email);
+            rs = psmt.executeQuery();
+            if (rs.next()) {
+                foundId = rs.getString("ID");
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return foundId;
+    }
+
+    // 비밀번호 찾기: 아이디, 이름, 이메일로 비밀번호 조회 (실제 서비스에서는 임시 비번 발급/메일 발송 권장)
+    public String findPwByIdNameEmail(String id, String username, String email) {
+        String foundPw = null;
+        String sql = "SELECT password FROM users WHERE ID = ? AND username = ? AND email = ?";
+        try {
+            psmt = con.prepareStatement(sql);
+            psmt.setString(1, id);
+            psmt.setString(2, username);
+            psmt.setString(3, email);
+            rs = psmt.executeQuery();
+            if (rs.next()) {
+                foundPw = rs.getString("password");
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return foundPw;
+    }
+	
+
 
 }

@@ -24,4 +24,7 @@ public interface UserService {
 	boolean insertUser(User user);
     boolean isUserIdDuplicate(String id); // 아이디 중복 검사
     
+    // 아이디 비밀번호 찾기
+    String findIdByNameAndEmail(String username, String email);
+    String findPwByIdNameEmail(String id, String username, String email);
 }
