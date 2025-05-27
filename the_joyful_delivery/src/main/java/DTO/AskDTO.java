@@ -25,5 +25,5 @@ public class AskDTO {
 	private Date createdAt;
 	private int checkAnswer;
 	private String type;
-
+	private	String admAnswer;
 }
