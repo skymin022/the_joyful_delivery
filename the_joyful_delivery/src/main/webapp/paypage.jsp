@@ -1,10 +1,18 @@
+<%@page import="DTO.SAR"%>
+<%@page import="DTO.Delivery"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%
+	Delivery delivery = (Delivery)request.getAttribute("delivery");
+	SAR sar = (SAR)request.getAttribute("sar");
+%>
 <!DOCTYPE html>
 <html lang="ko">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>결제 페이지</title>
+  <title>project💻 - ALOHA CLASS🌴</title>
+  <jsp:include page="/layout/meta.jsp" />
+  <jsp:include page="/layout/link.jsp" />
   <link rel="stylesheet" href="<%=request.getContextPath()%>/static/css/reset.css" />
   <link rel="stylesheet" href="<%=request.getContextPath()%>/static/css/checkout.css" />
   <style>
@@ -211,33 +219,17 @@
   </style>
 </head>
 <body>
-<header>
-  <div class="logo-area">
-    <img src="<%=request.getContextPath()%>/static/img/logo.png" alt="로고" />
-    <div class="nav-links">
-      <a href="#">배송 조회</a>
-      <a href="#">고객센터</a>
-    </div>
-  </div>
-  <div class="header-right">
-    <img src="<%=request.getContextPath()%>/static/img/ico_social_instagram_1.png" alt="인스타그램" />
-    <img src="<%=request.getContextPath()%>/static/img/ico_social_youtube.png" alt="유튜브" />
-    <img src="<%=request.getContextPath()%>/static/img/ico_social_kakaotalk.png" alt="카카오톡" />
-    <a href="#">로그인</a>
-    <a href="#">회원가입</a>
-  </div>
-</header>
-
+<jsp:include page="/layout/header.jsp" />
 <div class="card-container">
   <!-- 주문/송장 카드 -->
   <div class="card item-card">
     <div class="form-group">
       <label for="order-number">주문 번호</label>
-      <input type="text" id="order-number" name="orderNumber" />
+      <input value="<%=delivery.getIdx() %>" type="text" id="order-number" name="orderNumber" />
     </div>
     <div class="form-group">
       <label for="tracking-number">송장 번호</label>
-      <input type="text" id="tracking-number" name="trackingNumber" />
+      <input value="<%=delivery.getIdx() %>" type="text" id="tracking-number" name="trackingNumber" />
     </div>
     <h4 class="item-title">물품 목록</h4>
     <div class="item-image"></div>
@@ -292,15 +284,15 @@
     </div>
     <div class="form-group">
       <label for="sender-name">배송자 이름</label>
-      <input type="text" id="sender-name" name="senderName" placeholder="이름을 입력하세요">
+      <input value="<%=sar.getSName() %>" type="text" id="sender-name" name="senderName" placeholder="이름을 입력하세요">
     </div>
     <div class="form-group">
       <label for="password">송장 번호</label>
-      <input type="password" id="password" name="invoiceNumber" placeholder="ex)송장번호">
+      <input value="<%=delivery.getIdx() %>" type="password" id="password" name="invoiceNumber" placeholder="ex)송장번호">
     </div>
     <div class="form-group">
       <label for="phone">핸드폰 번호</label>
-      <input type="tel" id="phone" name="phone" placeholder="010-0000-0000">
+      <input value="<%=sar.getSNumber() %>" type="tel" id="phone" name="phone" placeholder="010-0000-0000">
     </div>
     <div class="form-group">
       <label for="email">E-mail</label>
@@ -308,16 +300,12 @@
     </div>
     <div class="form-group">
       <label for="receiver-name">받는 분 이름</label>
-      <input type="text" id="receiver-name" name="receiverName" placeholder="이름 입력">
+      <input value="<%=sar.getRName() %>" type="text" id="receiver-name" name="receiverName" placeholder="이름 입력">
     </div>
     <div class="form-group">
       <label for="address">받는 분 주소</label>
-      <input type="text" id="address" name="address" placeholder="주소 입력">
+      <input value="<%=sar.getRAddress() %>" type="text" id="address" name="address" placeholder="주소 입력">
     </div>
-    <div class="form-group">
-      <input type="text" id="address-detail" name="addressDetail" placeholder="상세 주소 입력">
-    </div>
-    <div class="divider"></div>
   </div>
 </div>
 
