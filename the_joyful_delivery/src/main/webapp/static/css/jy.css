@@ -587,3 +587,8 @@ iframe {
     border-radius: 5px;
     cursor: pointer;
 }
+
+/* index 페이지 */ 
+.notice_wrap {
+	cursor: pointer;
+}
