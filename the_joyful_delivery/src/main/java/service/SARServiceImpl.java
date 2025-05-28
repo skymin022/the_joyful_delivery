@@ -70,11 +70,4 @@ public class SARServiceImpl implements SARService {
 		// TODO Auto-generated method stub
 		return 0;
 	}
-
-	@Override
-	public List<SAR> top3Anno() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
 }

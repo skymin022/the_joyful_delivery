@@ -88,6 +88,15 @@ public class DeliveryServlet extends HttpServlet {
 					String s_number = (String) hs.getAttribute("s_number");
 					String s_address =(String) hs.getAttribute("s_address");
 					
+					// 유저 정보를 제외한 나머지 session 값 삭제
+					Enumeration<String> attributes = hs.getAttributeNames();
+					while (attributes.hasMoreElements()) {
+					    String name = attributes.nextElement();
+					    if (!"loginUser".equals(name)) {
+					        hs.removeAttribute(name);
+					    }
+					}
+					
 					User user = (User)hs.getAttribute("loginUser");
 					int user_idx = user.getIdx();							// 유저 idx 추출
 					long del_idx = (long)(Math.random()*99999999999l) + 1;	// 송장번호 랜덤
@@ -101,35 +110,22 @@ public class DeliveryServlet extends HttpServlet {
 												.prePos(pre_pos).reserName(reser_name)
 												.request(_request).build();
 					
-					int result1 = deliveryService.insert(delivery);	
-					if(result1 != 0) {
-						SAR sar = SAR.builder().delIdx(del_idx)
-									 .rName(r_name).rNumber(r_number).rAddress(r_address)
-									 .sName(s_name).sNumber(s_number).sAddress(s_address).build();
-						int result2 = sarService.insert(sar);
-						
-						if(result2 != 0) System.out.println("택배 등록 최종 성공.");
-					}
+					SAR sar = SAR.builder().delIdx(del_idx)
+								 .rName(r_name).rNumber(r_number).rAddress(r_address)
+								 .sName(s_name).sNumber(s_number).sAddress(s_address).build();
 					
-					Enumeration<String> attributes = hs.getAttributeNames();
-
-					// 유저 정보를 제외한 나머지 session 값 삭제
-					while (attributes.hasMoreElements()) {
-					    String name = attributes.nextElement();
-					    if (!"loginUser".equals(name)) {
-					        hs.removeAttribute(name);
-					    }
-					}
+					request.setAttribute("delivery", delivery);
+					request.setAttribute("sar", sar);
+					
+					// 다음페이지로 이동
+					request.getRequestDispatcher("/paypage").forward(request, response);
 					
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
-				// 다음페이지로 이동
-				response.sendRedirect(root + "/paypage.jsp");
 				break;
 				
 				default : break;
 		}
 	}
-
 }

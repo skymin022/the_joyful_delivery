@@ -5,8 +5,7 @@
 <%@ include file="/layout/common.jsp" %>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<% List<AskDTO> askList = (List)request.getAttribute("askList"); %>
-
+<% List<AskDTO> list = (List)request.getAttribute("askList"); %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -24,7 +23,7 @@
 			<!-- TODO: form태그 만들기 -->
 			<div class="qna_container">
 				<ul>
-				<% for(AskDTO askDto : askList) {%>
+				<% for(AskDTO askDto : list) {%>
 					<li>
 						<img alt="사람이미지" src="<%=root%>/static/img/person.png">
 						<p class="bor_txt"><%= askDto.getType() %></p>
@@ -41,9 +40,9 @@
 							<p>관리자 : </p>
 							<p><%= askDto.getCreatedAt() %></p>
 						</div>
-							<% if(askDto.getAdmAnswer() != null) { %>
+							<% if(askDto.getCheckAnswer() == 1) { %>
 							<p class="admin_answer">
-							<%= askDto.getAdmAnswer() %>
+							<%-- <% ??????.getAnswer() %> --%>
 							</p>
 							<% } else { %>
 								<p class="admin_answer">아직 답변이 등록되지 않았습니다.</p>
