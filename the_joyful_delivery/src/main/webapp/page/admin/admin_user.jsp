@@ -118,7 +118,6 @@ body {
 		<%-- [Contents] ######################################################### --%>
 		<jsp:include page="/layout/script.jsp" />
 	</div>
-	<button onclick="receiveFromFetch()">12312</button>
 	<iframe scrolling="no" src="<%=root%>/page/admin/update_form.jsp" class=""></iframe>
 	<!-- 비동기로 모달에 전달할 데이터 가져오기 -->
 	<script type="text/javascript">
@@ -130,6 +129,9 @@ body {
 					iframe.contentWindow.postMessage(data, "*")
 					iframe.style.display = 'block';
 					console.log(data)
+		        })
+				.catch(error => {
+		           console.log('유저목록 불러오기 실패')
 			});
 		}
 	</script>

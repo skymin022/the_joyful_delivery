@@ -73,7 +73,15 @@
 					<tr>
 						<td><%= inquiry.getIdx() %></td>
 						<td><%= inquiry.getUserNo() %></td>
-						<td><%= inquiry.getTitle() %></td>
+						<td>
+							<a href="#" class="open_answer" 
+							   data-idx="<%= inquiry.getUserNo() %>"
+							   data-title="<%= inquiry.getTitle() %>"
+							   data-date="<%= inquiry.getCreatedAt() %>"
+							   data-content="<%= inquiry.getContent() %>">
+								<%= inquiry.getTitle() %>
+							</a>
+						</td>
 						<td><%= inquiry.getCreatedAt() %></td>
 						<td><%= inquiry.isCheckAnswer() ? "Y" : "N" %></td>
 					</tr>
@@ -114,6 +122,33 @@
 					</li>
 				 </ul>
 			 </div>
+			 <div id="modal">
+		        <div class="inner">
+		            <div class="card">
+		                <h1>고객 문의 사항</h1>
+		                <div class="qna_data_wrap">
+				                <div class="data_inner_wrap1">
+					                <p class="idx p_idx"></p>
+					                <p> 번 고객님</p>
+				                </div>
+				                <div class="data_inner_wrap2">
+									<p class="title p_title"></p>
+									<p class="date p_date"></p>
+				                </div>
+							<p class="content p_content"></p>
+		                </div>
+		                <form class="answer_form" action="<%= root %>/ask/myqna" method="post">
+		                	<p class="answer_label">답변하기</p>
+		                	<textarea class="adm_answer" name="adm_answer" rows="15" cols="30" placeholder="답변을 작성해 주세요."></textarea>
+		                	<input type="hidden" name="idx" class="inquiry_idx" />
+		                	<div class="answer_button_wrap">
+			                	<button class="close" type="button">닫기</button>
+			                	<button class="put_answer" type="submit">답변하기</button>
+		                	</div>
+		                </form>
+		            </div>
+		        </div>
+		    </div>
 		<%-- [Contents] ######################################################### --%>
 		<jsp:include page="/layout/script.jsp" />
 	</div>

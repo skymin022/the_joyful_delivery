@@ -9,6 +9,7 @@ import java.io.IOException;
 
 // 로그인 후 접근 가능한 페이지 경로에 맞게 urlPatterns 수정
 @WebFilter(urlPatterns = {
+		"/ask/myqna",
 	"/users/mypage-jsp",    // 마이페이지 JSP 직접 접근 보호
 	"/users/mypage.jsp",    // 
     "/page/order/*",     // 예시: 주문/배송 관련 페이지

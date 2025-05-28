@@ -1,6 +1,7 @@
 /**
  * 
  */
+/* ========================================================= 이미지 슬라이드 */
 // 문서 준비 이벤트
 document.addEventListener("DOMContentLoaded", (e) => {
   // 이미지 3장
@@ -51,3 +52,40 @@ document.addEventListener("DOMContentLoaded", (e) => {
   // 3초마다 슬라이드
   setInterval( slide, delay )
 })
+/* ========================================================= 이미지 슬라이드 */
+
+/* ========================================================= 관리자 답변 팝업창 */
+
+document.addEventListener('DOMContentLoaded', function() {
+  document.querySelectorAll('.open_answer').forEach(function(link) {
+    link.addEventListener('click', function(e) {
+      e.preventDefault();
+      const idx = this.dataset.idx;
+      const title = this.dataset.title;
+      const date = this.dataset.date;
+      const content = this.dataset.content;
+
+      // 모달 안에 데이터 채우기
+      const modal = document.getElementById('modal');
+      modal.querySelector('p.idx').innerText = idx;
+      modal.querySelector('p.title').innerText = title;
+      modal.querySelector('p.date').innerText = date;
+      modal.querySelector('p.content').innerText = content;
+	  modal.querySelector('.inquiry_idx').value = idx;
+
+	  // 모달 열기
+	  modal.classList.add('active');
+
+    });
+  });
+
+  // 닫기 버튼
+  document.querySelectorAll('.close').forEach(function(btn) {
+    btn.addEventListener('click', function() {
+      document.getElementById('modal').classList.remove('active');
+    });
+  });
+});
+
+
+/* ========================================================= 관리자 답변 팝업창 */
