@@ -17,7 +17,7 @@
 			<h2 class="title">택배접수</h2>
 			<h3>받는 분</h3>
 			<div class="sm_container il">
-				<form id="form" action="<%=root %>/delivery/reservation3" method="post">
+				<form id="form" action="" method="post">
 					<ul class="input_list">
 						<li>
 						 	<label for="r_name">이름</label>
@@ -30,10 +30,12 @@
 						<li>
 						 	<label for="r_address">주소</label>
 						 	<input id="r_address" name="r_address" type="text" placeholder="기본주소" title="주소를 입력해주세요.">
+						 	<label for="r_address"> </label>
+						 	<input id="r_address2" name="r_address2" type="text" placeholder="상세주소" title="상세주소를 입력해주세요.">
 						</li>
 						<li>
-						 	<label for="request">요청사항</label>
-					  	 	<input id="request" name="request" type="text" title="요청사항을 입력해주세요." placeholder="배송 요청사항" maxlength="11">
+						 	<label for="r_number">요청사항</label>
+					  	 	<input id="r_number" name="r_req" type="text" title="요청사항을 입력해주세요." placeholder="배송 요청사항" maxlength="11">
 						</li>
 						<li>
 						 	<label for="pre_pos">지불방법</label>

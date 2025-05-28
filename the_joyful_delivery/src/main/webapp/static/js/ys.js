@@ -1,7 +1,6 @@
 /**
  * 
  */
-/* ========================================================= 이미지 슬라이드 */
 // 문서 준비 이벤트
 document.addEventListener("DOMContentLoaded", (e) => {
   // 이미지 3장
@@ -89,3 +88,4 @@ document.addEventListener('DOMContentLoaded', function() {
 
 
 /* ========================================================= 관리자 답변 팝업창 */
+

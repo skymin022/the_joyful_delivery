@@ -17,7 +17,7 @@
 			<h2 class="title">택배접수</h2>
 			<h3>물품정보</h3>
 			<div class="sm_container il">
-				<form id="form" action="<%=root %>/delivery/reservation1" method="post">
+				<form id="form" action="" method="post">
 					<ul class="input_list">
 						<li>
 						 	<label for="keyword">품목</label>
@@ -54,8 +54,8 @@
 					  	 	</p>
 						</li>
 						<li>
-						 	<label for="reser_name">예약명</label>
-						 	<input id="reser_name" name="reser_name" type="text" placeholder="예약명">
+						 	<label for="reserv">예약명</label>
+						 	<input id="reserv" name="reserv" type="text" placeholder="예약명">
 						</li>
 					</ul>
 					<button id="next_btn" type="submit">다음으로</button>
