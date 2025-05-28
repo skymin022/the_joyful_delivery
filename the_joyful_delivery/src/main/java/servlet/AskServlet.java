@@ -16,7 +16,6 @@ import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import service.AskService;
 import service.AskServiceImpl;
-import service.InquiryServiceImpl;
 import service.UserService;
 import service.UserServiceImpl;
 

@@ -22,10 +22,19 @@
 			      <span><img src="<%= root %>/static/img/btn_search.png" alt="송장입력창"></span>
 			    </div>
 			    <div class="booking_box_wrap">
+<<<<<<< HEAD
 					<a href="<%= root %>/page/delivery/delivery_rec1.jsp" class="booking_box">
 					  <p>택배<br>예약하기</p>
 					  <span><img src="<%= root %>/static/img/box_white.png" alt="택배박스" ></span>
 					</a>
+=======
+			      <a href="<%=root%>/page/delivery/delivery_rec1.jsp">
+				      <div class="booking_box">
+				        <p>택배<br>예약하기</p>
+				        <span><img src="<%= root %>/static/img/box_white.png" alt="택배박스" ></span>
+				      </div>
+			      </a>
+>>>>>>> refs/heads/main
 			      <div class="info_how">
 			        <div><p>이용안내</p></div>
 			        <span><img src="<%= root %>/static/img/box_white.png" alt="택배박스" ></span>

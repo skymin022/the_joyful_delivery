@@ -189,19 +189,35 @@ document.addEventListener("DOMContentLoaded", function() {
 		})
 	}
 	
-	const checkRadio = document.querySelector('#check[value="check_answer"]');
-	if(checkRadio) {
-		checkRadio.addEventListener("change", function() {
-			if(this.checked) {
-				document.querySelector('input[type="text"]').placeholder = '0 = N, 1 = Y'
-			}
+	// placeholder 조작
+	const checkRadio = document.querySelectorAll('input[name="where"]');
+	if(checkRadio != null) {
+		checkRadio.forEach(function(i) {
+			i.addEventListener("change", function() {
+				if(document.querySelector('#check[value="check_answer"]').checked)
+					document.querySelector('input[type="text"]').placeholder = '0 = N, 1 = Y'
+				else
+					document.querySelector('input[type="text"]').placeholder = ''
+			})
 		})
 	}
 	
+	// 모달창 닫기
 	const cancleModal = document.getElementById("cancle_modal")
 	if(cancleModal) {
 		cancleModal.addEventListener("click", function() {
 			parent.document.querySelector("iframe").style.display = 'none'
+		})
+	}
+	
+	// 폼 제출 하면 알림창 띄우고 display none
+	const fetForm = document.getElementById('fetForm')
+	if(fetForm) {
+		fetForm.addEventListener("submit", function(e) {
+			e.preventDefault()
+			parent.document.querySelector("iframe").style.display = 'none'
+			alert("회원정보 수정 완료")
+			e.target.submit()
 		})
 	}
 	

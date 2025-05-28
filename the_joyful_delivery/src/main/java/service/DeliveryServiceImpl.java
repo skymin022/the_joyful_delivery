@@ -1,6 +1,5 @@
 package service;
 
-import java.sql.Connection;
 import java.util.List;
 import java.util.Map;
 
@@ -90,13 +89,8 @@ public class DeliveryServiceImpl implements DeliveryService {
 
 	@Override
 	public int insert(Delivery Delivery) {
-		int result = 0;
-		try {
-			result = delDao.insert(Delivery);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		return result;
+		// TODO Auto-generated method stub
+		return 0;
 	}
 
 	@Override
@@ -143,17 +137,17 @@ public class DeliveryServiceImpl implements DeliveryService {
 		return list;
 	}
 
+	// 로그 
+	private DeliveryDAO deliveryDAO = new DeliveryDAO();
+
     @Override
     public Delivery findByDelIdx(Long delIdx) {
-    	Delivery delivery = null;
-    	try {
-    		delivery = delDao.findByDelIdx(delIdx);
-    		System.out.println(delivery);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-    	return delivery;
+        return deliveryDAO.findByDelIdx(delIdx);
     }
+
+
+
+
 }
 
 

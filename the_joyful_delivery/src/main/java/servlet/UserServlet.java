@@ -69,7 +69,9 @@ public class UserServlet extends HttpServlet {
 		    request.setAttribute("deliveries", deliveries);
 		    request.getRequestDispatcher("/page/login/login_list.jsp").forward(request, response);
 		}
+		
 	}
+
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         
 		// 로그인 로직 
@@ -254,5 +256,11 @@ public class UserServlet extends HttpServlet {
         	
         }
 
+        
+        
+	    
+		
+        
+        
 	}
 }

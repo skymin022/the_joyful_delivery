@@ -312,7 +312,6 @@ input[type="number"]::-webkit-inner-spin-button {
 	margin-top: 20px;
 	margin-bottom: 60px;
 	width: 100%;
-	border-radius: 20px;
 }
 
 .bottom_page ul {
@@ -327,6 +326,7 @@ input[type="number"]::-webkit-inner-spin-button {
 	background-color: white;
 	margin-top: 80px;
 	margin-bottom: 60px;
+
 	width: 1500px;
 	border-radius: 20px;
 }
@@ -447,6 +447,19 @@ td {
 }
 .admin_table + .bottom_page ul {
 	justify-content: space-evenly;
+}
+
+/* iframe 모달 */ 
+iframe {
+	border: 1px solid var(--place-hol);
+	border-radius: 10px;
+	position: fixed;
+	left: 50%; top: 50%;
+	transform: translate(-50%, -50%);
+	width: 300px;
+	height: 320px;
+	box-shadow: 5px 5px 5px rgba(0,0,0,0.25);
+	display: none;
 }
 
 /* admin 문의 답변 페이지 */

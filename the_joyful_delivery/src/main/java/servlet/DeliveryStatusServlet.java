@@ -23,10 +23,10 @@ public class DeliveryStatusServlet extends HttpServlet {
         Delivery delivery = null;
         if (delIdxParam != null && !delIdxParam.trim().isEmpty()) {
             try {
-                Long delIdx = Long.parseLong(delIdxParam.trim());
+            	Long delIdx = Long.parseLong(delIdxParam.trim());
                 delivery = deliveryService.findByDelIdx(delIdx);
             } catch (NumberFormatException e) {
-                e.printStackTrace();
+                // 운송장번호가 숫자가 아닐 경우
             }
         }
         request.setAttribute("delivery", delivery);

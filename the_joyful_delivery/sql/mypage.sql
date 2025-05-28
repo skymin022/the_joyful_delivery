@@ -18,4 +18,4 @@ SELECT
     d.pre_pos AS 선불_후불,
     d.status AS 배송_상태
 FROM deliveries d
-JOIN sending_and_receiving sr ON d.idx = sr.del_idx;
+JOIN sending_and_receiving sr ON d.sr_idx = sr.sr_idx;

@@ -33,8 +33,8 @@
 					<li><a href="<%= root %>/serv_center/faq">자주묻는질문</a></li>
 					<li><a href="<%= root %>/serv_center/announcement">공지사항</a></li>
 					<c:if test="${ not empty loginUser}">
-						<li><a href="<%= root %>/ask/contact">문의하기</a></li>
-						<li><a href="<%= root %>/ask/myqna">내문의사항</a></li>
+						<li><a href="<%= root %>/page/serv_center/contact.jsp">문의하기</a></li>
+						<li><a href="<%= root %>/page/serv_center/myqna.jsp">내문의사항</a></li>
 	            	</c:if>
 				</ul>
 				<ul class="header_down_2">
