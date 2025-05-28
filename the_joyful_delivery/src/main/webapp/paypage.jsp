@@ -331,6 +331,19 @@
   document.getElementById("cancel-button").addEventListener("click", function () {
     window.location.href = "<%=request.getContextPath()%>/CheckoutPage.jsp?type=direct#여기";
   });
+  document.getElementById("confirm-button").addEventListener("click", function (e) {
+	  e.preventDefault(); // submit 막고 JS 처리
+
+	  const contextPath = "<%=request.getContextPath()%>";
+	  const isSuccess = Math.random() < 0.5; // 50% 확률
+
+	  if (isSuccess) {
+	    window.location.href = contextPath + "/paysuccess.jsp";
+	  } else {
+	    window.location.href = contextPath + "/payfail.jsp";
+	  }
+	});
+
   
   function validateForm() {
 	    const cardNumber = document.getElementById("cardNumber").value.trim();

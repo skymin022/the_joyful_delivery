@@ -3,9 +3,7 @@ package servlet;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.List;
-import java.util.Map;
 
-import com.google.gson.Gson;
 
 import DAO.UserDAO;
 import DTO.Delivery;
@@ -21,11 +19,7 @@ import service.DeliveryService;
 import service.DeliveryServiceImpl;
 import service.UserService;
 import service.UserServiceImpl;
-import java.io.IOException;
-import java.io.PrintWriter;
 
-import DAO.UserDAO;
-import DTO.User;
 
 @WebServlet("/users/*")
 public class UserServlet extends HttpServlet {
@@ -61,15 +55,10 @@ public class UserServlet extends HttpServlet {
 		    out.flush();
 		}
 		
-
+		// mypage- 목록 조회
 		else if ("/mypage-jsp".equals(path)) {
 		    HttpSession session = request.getSession(false);
-		    // 로그인 체크
-		    // TODO: 로그인 필터로 전환
-		    if (session == null || session.getAttribute("loginId") == null) {
-		        response.sendRedirect(request.getContextPath() + "/page/login/login.jsp");
-		        return;
-		    }
+
 
 		    String loginId = (String) session.getAttribute("loginId");
 		    System.out.println("[/mypage-jsp] JSP용 배송 목록 조회. 로그인 아이디: " + loginId);
@@ -161,7 +150,7 @@ public class UserServlet extends HttpServlet {
                     return;
                 }
 
-                // 회원가입 처리도 service 통해 위임하는 것이 이상적이나, DAO 직접 사용해도 무방
+                
                 UserDAO userDAO = new UserDAO();
                 int result = userDAO.insert(user);
 
