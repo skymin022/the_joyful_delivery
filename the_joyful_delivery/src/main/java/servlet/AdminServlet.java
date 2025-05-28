@@ -122,64 +122,65 @@ public class AdminServlet extends HttpServlet {
 				request.getRequestDispatcher(page).forward(request, response);
 				break;
 				
-			// 어드민 문의 페이지
-			case "/inquiry":
-				whereTxt = request.getParameter("where_txt"); // 조건 값
-				column = request.getParameter("where"); 	  // 조건 컬럼
-				
-				if(whereTxt != "" && whereTxt != null && column != null) {
-					List<String> columnList = new ArrayList<>();
-					columnList.add(column);
+				// 어드민 문의 페이지
+				case "/inquiry":
+					whereTxt = request.getParameter("where_txt"); // 조건 값
+					column = request.getParameter("where"); 	  // 조건 컬럼
 					
-					PageInfo<Inquiry> inquiryInfo = inqService.page(whereTxt, columnList);
-					List<Inquiry> inquiryList = inquiryInfo.getList();
-					request.setAttribute("list", inquiryList);
-				} else {
-					System.out.println("else 로 넘어옴");
-					List<Inquiry> inquiryList = inqService.list();
-					request.setAttribute("list", inquiryList);
-				}
-				
-				page = "/page/admin/admin_inq.jsp";
-				request.getRequestDispatcher(page).forward(request, response);
+					if(whereTxt != "" && whereTxt != null && column != null) {
+						List<String> columnList = new ArrayList<>();
+						columnList.add(column);
+						
+						PageInfo<Inquiry> inquiryInfo = inqService.page(whereTxt, columnList);
+						List<Inquiry> inquiryList = inquiryInfo.getList();
+						request.setAttribute("list", inquiryList);
+					} else {
+						System.out.println("else 로 넘어옴");
+						List<Inquiry> inquiryList = inqService.list();
+						request.setAttribute("list", inquiryList);
+					}
+					
+					page = "/page/admin/admin_inq.jsp";
+					request.getRequestDispatcher(page).forward(request, response);
 				break;
 				
-			// 어드민 기사관리 페이지
-			case "/driver":
-				whereTxt = request.getParameter("where_txt"); // 조건 값
-				column = request.getParameter("where"); 	  // 조건 컬럼
-				
-				if(whereTxt != "" && whereTxt != null && column != null) {
-					List<String> columnList = new ArrayList<>();
-					columnList.add(column);
+				// 어드민 기사관리 페이지
+				case "/driver":
+					whereTxt = request.getParameter("where_txt"); // 조건 값
+					column = request.getParameter("where"); 	  // 조건 컬럼
 					
-					PageInfo<Driver> inquiryInfo = driverService.page(whereTxt, columnList);
-					List<Driver> inquiryList = inquiryInfo.getList();
-					request.setAttribute("list", inquiryList);
-				} else {
-					System.out.println("else 로 넘어옴");
-					List<Driver> inquiryList = driverService.list();
-					request.setAttribute("list", inquiryList);
-				}
+					if(whereTxt != "" && whereTxt != null && column != null) {
+						List<String> columnList = new ArrayList<>();
+						columnList.add(column);
+						
+						PageInfo<Driver> inquiryInfo = driverService.page(whereTxt, columnList);
+						List<Driver> inquiryList = inquiryInfo.getList();
+						request.setAttribute("list", inquiryList);
+					} else {
+						System.out.println("else 로 넘어옴");
+						List<Driver> inquiryList = driverService.list();
+						request.setAttribute("list", inquiryList);
+					}
+					
+					page = "/page/admin/admin_driver.jsp";
+					request.getRequestDispatcher(page).forward(request, response);
+				break;
 				
-				page = "/page/admin/admin_driver.jsp";
-				request.getRequestDispatcher(page).forward(request, response);
-				
-			// 모달에 데이터 전송
-			case "/user/modal":
-				int idx = Integer.parseInt(request.getParameter("idx"));
-				response.setContentType("application/json; charset=utf-8");
-//				int idx = Integer.parseInt(request.getParameter("idx"));
-				Gson gson = new Gson();
-				Map<String, Object> where = new HashMap<>();
-				where.put("idx", idx);
-				try {
-					List<User> list = userService.listBy(where);
-					String json = gson.toJson(list);
-					response.getWriter().write(json);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
+				// 모달에 데이터 전송
+				case "/user/modal":
+					int idx = Integer.parseInt(request.getParameter("idx"));
+					response.setContentType("application/json; charset=utf-8");
+					Gson gson = new Gson();
+					Map<String, Object> where = new HashMap<>();
+					where.put("idx", idx);
+					try {
+						List<User> list = userService.listBy(where);
+						String json = gson.toJson(list);
+						response.getWriter().write(json);
+					} catch (Exception e) {
+						e.printStackTrace();
+					}
+				break;
 			default: break;
 		} 
 	}
@@ -215,6 +216,7 @@ public class AdminServlet extends HttpServlet {
 				page = root + "/page/admin/update_form.jsp";
 				if(result != 0) {
 					System.out.println("유저 정보 업데이트됨.");
+					response.getWriter().print(123);
 					response.sendRedirect(page);
 				}
 				

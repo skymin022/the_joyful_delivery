@@ -149,8 +149,6 @@
 		            </div>
 		        </div>
 		    </div>
-=======
->>>>>>> refs/heads/main
 		<%-- [Contents] ######################################################### --%>
 		<jsp:include page="/layout/script.jsp" />
 	</div>

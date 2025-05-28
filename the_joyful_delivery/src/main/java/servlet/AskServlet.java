@@ -22,7 +22,7 @@ import service.UserServiceImpl;
 /**
  * Servlet implementation class AskServlet
  */
-@WebServlet("/ask")
+@WebServlet("/ask/*")
 public class AskServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
@@ -30,11 +30,48 @@ public class AskServlet extends HttpServlet {
 	private AskService askService = new AskServiceImpl();
 	
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		String path = request.getPathInfo();
+		String root = request.getContextPath();
 		
-		
+		// 세션에서 유저넘버 받아오기
+        HttpSession session = request.getSession();
+        User user = (User)session.getAttribute("loginUser");
         
+        if (user == null) {
+            response.sendRedirect(root + "/login.jsp"); // 로그인 페이지 경로로 수정 필요
+            return;
+        }
+        
+        int idx = user.getIdx();
+        System.out.println("user" + user);
 		
-		response.getWriter().append("Served at: ").append(request.getContextPath());
+		Map<String, Object> qna = new HashMap<String, Object>();
+		qna.put("user_no", idx);
+		
+		// 문의하기 -> 내문의사항
+		String page = "";
+		
+        switch(path) {
+		
+		case "/contact": 
+			page = "/page/serv_center/contact.jsp";
+			
+			request.getRequestDispatcher(page).forward(request, response);
+			break;
+	
+		case "/myqna":
+			page = "/page/serv_center/myqna.jsp";
+			List<AskDTO> askList = askService.listBy(qna);
+			System.out.println("asklist" + askList);
+			// 결과 페이지로 포워딩
+			request.setAttribute("askList", askList);
+	        RequestDispatcher dispatcher = request.getRequestDispatcher(page);
+	        dispatcher.forward(request, response);
+			break;
+			
+		default: break;
+	}
+//		response.getWriter().append("Served at: ").append(request.getContextPath());
 	}
 
 	/**
@@ -48,14 +85,8 @@ public class AskServlet extends HttpServlet {
         int idx = user.getIdx();
         System.out.println("user" + user);
         
-		
-		
         // 한글 처리
         request.setCharacterEncoding("UTF-8");
-
-        
-        
-        
 		
 		
         switch (path) {
