@@ -23,7 +23,7 @@
 			    </div>
 			    <div class="booking_box_wrap">
 			      <div class="booking_box">
-			        <div><p>택배<br>예약하기</p></div>
+			        <a href="<%=root%>/page/delivery/delivery_rec1.jsp"><p>택배<br>예약하기</p></a>
 			        <span><img src="<%= root %>/static/img/box_white.png" alt="택배박스" ></span>
 			      </div>
 			      <div class="info_how">
