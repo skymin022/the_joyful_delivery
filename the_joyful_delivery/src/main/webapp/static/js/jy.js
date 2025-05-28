@@ -77,9 +77,9 @@ document.addEventListener("DOMContentLoaded", function() {
 				input_val.focus()
 				return false;
 			}
-			if(document.getElementById("reserv").value === "") {
+			if(document.getElementById("reser_name").value === "") {
 				alert("예약명을 입력해주세요.")
-				document.getElementById("reserv").focus()
+				document.getElementById("reser_name").focus()
 				return false;
 			}
 			document.getElementById("form").submit()
@@ -106,11 +106,6 @@ document.addEventListener("DOMContentLoaded", function() {
 				document.getElementById("s_address").focus()
 				return false;
 			}
-			if(document.getElementById("s_address2").value === '') {
-				alert("상세주소를 입력해주세요.")
-				document.getElementById("s_address2").focus()
-				return false;
-			}
 			document.getElementById("form").submit()
 		});
 	}
@@ -133,11 +128,6 @@ document.addEventListener("DOMContentLoaded", function() {
 				if(document.getElementById("r_address").value === '') {
 					alert("주소를 입력해주세요.")
 					document.getElementById("r_address").focus()
-					return false;
-				}
-				if(document.getElementById("r_address2").value === '') {
-					alert("상세주소를 입력해주세요.")
-					document.getElementById("r_address2").focus()
 					return false;
 				}
 				if(document.getElementById("pre_pos").value === '지불 방법 선택') {

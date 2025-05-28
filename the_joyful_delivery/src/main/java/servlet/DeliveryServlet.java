@@ -125,7 +125,7 @@ public class DeliveryServlet extends HttpServlet {
 					e.printStackTrace();
 				}
 				// 다음페이지로 이동
-				response.sendRedirect(root + "/paypage.jsp");
+				response.sendRedirect(root + "/paypage");
 				break;
 				
 				default : break;
