@@ -1,59 +1,68 @@
-<%@ include file="/layout/jstl.jsp" %>
-<%@ include file="/layout/common.jsp" %>
+<%@ include file="/layout/jstl.jsp"%>
+<%@ include file="/layout/common.jsp"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+	pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
 <head>
-	<title>project💻 - ALOHA CLASS🌴</title>
-	<jsp:include page="/layout/meta.jsp" />
-	<jsp:include page="/layout/link.jsp" />
-	<style type="text/css">
-		body {
-			background-color: #fff;
-		}
-		.update_modal {
-			padding: 20px;
-			display: flex;
-			flex-direction: column;
-			position: relative;
-			height: 350px;
-		}
-		.update_modal button {
-			width: 50px;
-			height: 30px;
-			border: none;
-			border-radius: 5px;
-			background-color: var(--sub-color2);
-			color: #fff;
-		}
-		.update_modal button + button {
-			background-color: var(--place-hol);
-		}
-		.update_modal ul div + div {
-			margin-top: 10px;
-		}
-		.update_modal .btn_area2 {
-			display: block;
-			margin-top: auto;
-			margin-bottom: 10px;
-			text-align: center;
-		}
-		.update_modal div {
-			display: flex;
-			justify-content: space-between;
-		}
-	</style>
+<title>project💻 - ALOHA CLASS🌴</title>
+<jsp:include page="/layout/meta.jsp" />
+<jsp:include page="/layout/link.jsp" />
+<style type="text/css">
+body {
+	background-color: #fff;
+}
+
+.update_modal {
+	padding: 20px;
+	display: flex;
+	flex-direction: column;
+	position: relative;
+	height: 320px;
+}
+
+.update_modal button {
+	width: 49%;
+	height: 30px;
+	border: none;
+	border-radius: 5px;
+	background-color: var(--sub-color2);
+	color: #fff;
+}
+
+.update_modal button+button {
+	background-color: var(--place-hol);
+}
+
+.update_modal ul div+div {
+	margin-top: 5px;
+}
+.update_modal ul input[type="text"] {
+	padding-left: 10px;
+}
+
+.update_modal .btn_area2 {
+	display: block;
+	margin-top: auto;
+	margin-bottom: 10px;
+	text-align: center;
+}
+
+.update_modal div {
+	display: flex;
+	justify-content: space-between;
+}
+</style>
 </head>
 <body>
 	<%-- [Contents] ######################################################### --%>
-	<form action="<%=root %>/admin/user/update" method="post">
+	<form id="fetForm" action="<%=root%>/admin/user/update" method="post">
 		<div class="update_modal">
 			<ul>
 				<li><h1 style="margin: auto auto;">정보수정 완료</h1></li>
 			</ul>
 			<div class="btn_area2">
-				<button type="submit">수정</button>
+				<button type="submit" onclick="cancleModal(event)">수정</button>
 				<button type="button" id="cancle_modal">취소</button>
 			</div>
 		</div>
