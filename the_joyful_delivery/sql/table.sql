@@ -94,6 +94,7 @@ CREATE TABLE `deliveries` (
     `created_at` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
     `reser_name` VARCHAR(200) NOT NULL,
     `success` BOOLEAN NOT NULL DEFAULT FALSE,
+    `requset` VARCHAR(50) NOT NULL DEFAULT '요청사항 없음',
     PRIMARY KEY (`idx`)
 );
 
