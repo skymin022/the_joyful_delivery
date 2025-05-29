@@ -51,6 +51,7 @@
 	justify-content: center;
 	align-items: center;
 	padding: 60px 20px;
+	height: 620px;
 }
 
 .success-card {
