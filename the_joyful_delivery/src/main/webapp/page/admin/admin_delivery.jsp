@@ -81,7 +81,7 @@
 					      <td>${del.name}</td>
 					      <td>${del.formatCreatedAt}</td>
 					      <td>${del.regStatus}</td>
-					      <td>${del.value}만원</td>
+					      <td>${del.value}</td>
 					      <td>${del.prePos}</td>
 					      <td>${del.status}</td>
 					    </tr>

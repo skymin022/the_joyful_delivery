@@ -3,37 +3,61 @@ package servlet;
 import java.io.IOException;
 
 import DTO.Delivery;
+import DTO.Payment;
 import DTO.SAR;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
 import service.DeliveryService;
 import service.DeliveryServiceImpl;
+import service.PayService;
+import service.PayServiceImpl;
+import service.SARService;
+import service.SARServiceImpl;
 
-@WebServlet("/paypage")
+@WebServlet("/paypage/*")
 public class PayServlet extends HttpServlet {
 	
 	DeliveryService delService = new DeliveryServiceImpl();
+	SARService sarService = new SARServiceImpl();
+	PayService payService = new PayServiceImpl();
 	
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        String root = request.getContextPath();
-    	String path = request.getPathInfo();
     	
-    	Delivery delivery = (Delivery)request.getAttribute("delivery");
-    	SAR sar = (SAR)request.getAttribute("sar");
-    	
-    	request.setAttribute("delivery", delivery);
-    	request.setAttribute("sar", sar);
-    	
-    	request.getRequestDispatcher("/paypage.jsp").forward(request, response);
     }
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) 
             throws ServletException, IOException {
-        doGet(request, response); // POST 요청도 GET 처리
+    	HttpSession session = request.getSession();
+    	String root = request.getContextPath();
+    	String path = request.getPathInfo();
+    	
+    	
+    	if(path.equals("/insert")) {
+    		Delivery delivery = (Delivery)session.getAttribute("delivery"); 
+    		SAR sar = (SAR)session.getAttribute("sar"); 
+    		
+    		String cardNumber = request.getParameter("cardNumber");
+        	int price = Integer.parseInt(request.getParameter("price"));
+    		
+    		int result = delService.insert(delivery);
+    		if(result != 0) {
+    			int result2 = sarService.insert(sar);
+    			if(result2 != 0) {
+    				Payment payment = Payment.builder().dIdx(delivery.getIdx()).pAmount(price).pCard(cardNumber).build();
+    				payService.insert(payment);
+    				
+    				System.out.println("배송정보 등록 완료.");
+    				response.sendRedirect(root + "/paysuccess.jsp");
+    			} 
+    		} else {
+    			response.sendRedirect(root + "/payfail.jsp");
+    		}
+    	}
     }
 }

@@ -97,28 +97,44 @@ public class DeliveryServlet extends HttpServlet {
 					    }
 					}
 					
-					User user = (User)hs.getAttribute("loginUser");
-					int user_idx = user.getIdx();							// 유저 idx 추출
+					User user = null;
+					if(hs.getAttribute("loginUser") != null) 
+						user =(User)hs.getAttribute("loginUser");
+					
 					long del_idx = (long)(Math.random()*99999999999l) + 1;	// 송장번호 랜덤
 					int driver_idx = (int)(Math.random()*10)+1;				// 택배기사 배정
-					//TODO: 택배기사 랜덤으로 지정
 					
-					Delivery delivery = Delivery.builder()
-												.idx(del_idx).userIdx(user_idx)
-												.driverIdx(driver_idx)
-												.keyword(keyword).value(value)
-												.prePos(pre_pos).reserName(reser_name)
-												.request(_request).build();
+					Delivery delivery = null;
+					if(user != null) {
+						Integer user_idx = user.getIdx();							// 유저 idx 추출
+						delivery = Delivery.builder()
+								.idx(del_idx).userIdx(user_idx)
+								.driverIdx(driver_idx)
+								.keyword(keyword).value(value)
+								.prePos(pre_pos).reserName(reser_name)
+								.request(_request).build();
+					} else {
+						// 비회원 배송 예약
+						delivery = Delivery.builder()
+								.idx(del_idx).userIdx(null)
+								.driverIdx(driver_idx)
+								.keyword(keyword).value(value)
+								.prePos(pre_pos).reserName(reser_name)
+								.request(_request).build();
+					}
 					
 					SAR sar = SAR.builder().delIdx(del_idx)
 								 .rName(r_name).rNumber(r_number).rAddress(r_address)
 								 .sName(s_name).sNumber(s_number).sAddress(s_address).build();
 					
-					request.setAttribute("delivery", delivery);
-					request.setAttribute("sar", sar);
+					System.out.println("Delivery 객체 : " + delivery);
+					System.out.println("SAR 객체 : " + sar);
+					
+					hs.setAttribute("delivery", delivery);
+					hs.setAttribute("sar", sar);
 					
 					// 다음페이지로 이동
-					request.getRequestDispatcher("/paypage").forward(request, response);
+					request.getRequestDispatcher("/paypage.jsp").forward(request, response);
 					
 				} catch (Exception e) {
 					e.printStackTrace();
