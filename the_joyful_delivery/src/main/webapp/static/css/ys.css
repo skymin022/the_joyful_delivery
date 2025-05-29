@@ -774,8 +774,10 @@ footer .line {
 }
 .qna_container > ul > li .bor_txt {
 	background-color: var(--sub-color1);
-	border-radius: 10px;
-	padding: 0 10px;
+    border-radius: 10px;
+    padding: 0 10px;
+    width: 130px;
+    text-align: center;
 }
 .qna_container button {
 	border: none;
