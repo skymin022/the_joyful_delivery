@@ -24,6 +24,10 @@
 				    </div>
 			    </form>
 			    <div class="booking_box_wrap">
+					<a href="<%= root %>/page/delivery/delivery_rec1.jsp" class="booking_box">
+					  <p>택배<br>예약하기</p>
+					  <span><img src="<%= root %>/static/img/box_white.png" alt="택배박스" ></span>
+					</a>
 			      <a href="<%= root %>/page/delivery/delivery_rec1.jsp" class="booking_box">
 			        <div><p>택배<br>접수하기</p></div>
 			        <span><img src="<%= root %>/static/img/box_white.png" alt="택배박스" ></span>
@@ -34,6 +38,16 @@
 			      </div>
 		        </div>
 			    <div class="notice_wrap">
+			    	<a href="<%= root %>/serv_center/announcement" class="notice"> 
+				    	<p>공지사항</p>
+			    	</a>
+			    	<%
+			    		List<Announcement> list = (List)request.getAttribute("list");
+			    		for(Announcement anno : list) {
+			    	%>
+				    	<div class="anno_line">
+					    	<p class="title1"><%=anno.getTitle() %></p>
+					    	<p class="title_date"><%=anno.getCreatedAt() %></p>
 			    	<a href="<%=root%>/serv_center/announcement">
 				    	<div class="notice">
 					    	<p>공지사항</p>
@@ -56,9 +70,7 @@
 			    	<div class="service_wrap">
 						<ul class="service_list">
 						  <li>
-
-						  	<a href="<%= root %>/serv_center/faq">
-
+						  	<a href="<%=root%>serv_center/faq">
 							  	<span>
 							  		<img src="<%= root %>/static/img/headphone.png" alt="" >
 							  		<p>자주하는 질문<br>(FAQ)</p>

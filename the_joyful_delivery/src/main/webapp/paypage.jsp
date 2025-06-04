@@ -370,10 +370,6 @@ input[name="price"] {
 	</footer>
 
 	<script>
-  document.getElementById("cancel-button").addEventListener("click", function () {
-    window.location.href = "<%=request.getContextPath()%>
-		/CheckoutPage.jsp?type=direct#여기";
-						});
 
 		function validateForm() {
 			const cardNumber = document.getElementById("cardNumber").value
