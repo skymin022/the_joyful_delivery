@@ -122,8 +122,6 @@ public class AskServlet extends HttpServlet {
 			request.setAttribute("askList", askList);
 			RequestDispatcher dispatcher = request.getRequestDispatcher(page);
 			dispatcher.forward(request, response);
-			
-			
 		}
 		default: break;
 		

@@ -60,10 +60,7 @@ public class AskServiceImpl implements AskService {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		if (result > 0) {
-			return 0;
-		}
-		return 0;
+		return result;
 	}
 
 	@Override
@@ -75,15 +72,13 @@ public class AskServiceImpl implements AskService {
 	@Override
 	public int update(AskDTO askDto) {
 		int result = 0;
+		
 		try {
 			result = askDao.update(askDto);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		if (result > 0) {
-			return 0;
-		}
-		return 0;
+		return result;
 	}
 
 	@Override
