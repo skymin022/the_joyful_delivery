@@ -17,10 +17,12 @@
 		<%-- [Contents] ######################################################### --%>
 		<div class="main_container">
 			<div class="main_left">
-			    <div class="input_delivery_no">
-			      <input type="text" placeholder="운송장 번호를 입력해 주세요." />
-			      <span><img src="<%= root %>/static/img/btn_search.png" alt="송장입력창"></span>
-			    </div>
+				<form action="<%=root%>/DeliveryStatusServlet">
+				    <div class="input_delivery_no">
+				      <input name="del_idx" type="text" placeholder="운송장 번호를 입력해 주세요." />
+				      <span><button style="border:none; background-color: inherit;" type="submit" ><img src="<%= root %>/static/img/btn_search.png" alt="송장입력창"></button></span>
+				    </div>
+			    </form>
 			    <div class="booking_box_wrap">
 			      <a href="<%= root %>/page/delivery/delivery_rec1.jsp" class="booking_box">
 			        <div><p>택배<br>접수하기</p></div>
@@ -32,18 +34,20 @@
 			      </div>
 		        </div>
 			    <div class="notice_wrap">
-			    	<div class="notice">
-				    	<p>공지사항</p>
-			    	</div>
-			    	<%
-			    		List<Announcement> list = (List)request.getAttribute("list");
-			    		for(Announcement anno : list) {
-			    	%>
-				    	<div class="anno_line">
-					    	<p class="title1"><%=anno.getTitle() %></p>
-					    	<p class="title_date"><%=anno.getCreatedAt() %></p>
+			    	<a href="<%=root%>/serv_center/announcement">
+				    	<div class="notice">
+					    	<p>공지사항</p>
 				    	</div>
-			    	<%} %>
+				    	<%
+				    		List<Announcement> list = (List)request.getAttribute("list");
+				    		for(Announcement anno : list) {
+				    	%>
+					    	<div class="anno_line">
+						    	<p class="title1"><%=anno.getTitle() %></p>
+						    	<p class="title_date"><%=anno.getCreatedAt() %></p>
+					    	</div>
+				    	<%} %>
+			    	</a>
 			    </div>
 			    <div class="customer_service">
 			    	<div class="serv_center">
@@ -52,7 +56,9 @@
 			    	<div class="service_wrap">
 						<ul class="service_list">
 						  <li>
+
 						  	<a href="<%= root %>/serv_center/faq">
+
 							  	<span>
 							  		<img src="<%= root %>/static/img/headphone.png" alt="" >
 							  		<p>자주하는 질문<br>(FAQ)</p>
@@ -70,7 +76,7 @@
 			          	  </li>
 				          <li><span class="line"></span></li>
 				          <li>
-					          <a href="">
+					          <a href="<%=root%>/users/mypage-jsp">
 						          <span>
 								  	  <img src="<%= root %>/static/img/cashbill.png" alt="" >
 								  	  <p>결제내역<br>조회</p>

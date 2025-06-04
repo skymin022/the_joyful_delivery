@@ -10,10 +10,9 @@ import DTO.Delivery;
 
 import DTO.Payment;
 
-public class PayServiceImpl implements payService {
+public class PayServiceImpl implements PayService {
 
     private PayDAO payDAO = new PayDAO();  // DAO 객체 생성 (의존성 주입 사용 가능)
-
     
 
 	@Override
@@ -41,7 +40,7 @@ public class PayServiceImpl implements payService {
 	}
 
 	@Override
-	public int insert(Payment payment, Payment order, Delivery delivery) {
+	public int insert(Payment payment) {
 		int result = 0;
 		try {
 			result = payDAO.insert(payment);
@@ -49,8 +48,7 @@ public class PayServiceImpl implements payService {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
-		return 0;
+		return result;
 	}
 
 	@Override
