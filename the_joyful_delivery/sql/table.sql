@@ -5,7 +5,7 @@
 -- users 				- 사용자 정보 테이블
 -- reimbursement 		- 피해 보상 정보 테이블
 -- payment 				- 결제 정보 테이블
--- copy_of_inquiries 	- 문의 답변 복사본 테이블
+-- comments 	- 문의 답변 복사본 테이블
 -- region_name 			- 지역명 테이블
 -- charge 				- 요금 관련 체크 테이블
 -- deliveries 			- 배송 정보 테이블
@@ -19,7 +19,7 @@
 -- 1. 기존 테이블 삭제
 SET FOREIGN_KEY_CHECKS = 0;
 
-DROP TABLE IF EXISTS copy_of_inquiries;
+DROP TABLE IF EXISTS comments;
 DROP TABLE IF EXISTS inquiries;
 DROP TABLE IF EXISTS region_name;
 DROP TABLE IF EXISTS payment;
@@ -94,7 +94,7 @@ CREATE TABLE `deliveries` (
     `created_at` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
     `reser_name` VARCHAR(200) NOT NULL,
     `success` BOOLEAN NOT NULL DEFAULT FALSE,
-    `requset` VARCHAR(50) NOT NULL DEFAULT '요청사항 없음',
+    `request` VARCHAR(50) NOT NULL DEFAULT '요청사항 없음',
     PRIMARY KEY (`idx`)
 );
 
@@ -122,15 +122,12 @@ CREATE TABLE `inquiries` (
     `content` TEXT NOT NULL,
     `created_at` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
     `check_answer` BOOLEAN NOT NULL DEFAULT FALSE,
-<<<<<<< HEAD
     `type` VARCHAR(45) NOT NULL DEFAULT "유형",
     `adm_answer` TEXT NOT NULL,
-=======
->>>>>>> refs/heads/main
     PRIMARY KEY (`idx`)
 );
 
-CREATE TABLE `copy_of_inquiries` (
+CREATE TABLE `comments` (
     `idx` BIGINT NOT NULL AUTO_INCREMENT,
     `inquiry_idx` BIGINT NOT NULL,
     `content` TEXT NOT NULL,
@@ -173,8 +170,8 @@ ALTER TABLE `inquiries`
     FOREIGN KEY (`user_no`) REFERENCES `users`(`idx`)
     ON DELETE CASCADE ON UPDATE CASCADE;
 
-ALTER TABLE `copy_of_inquiries`
-    ADD CONSTRAINT `FK_copy_inquiries_inquiry_idx`
+ALTER TABLE `comments`
+    ADD CONSTRAINT `FK_inquiries_inquiry_idx`
     FOREIGN KEY (`inquiry_idx`) REFERENCES `inquiries`(`idx`)
     ON DELETE CASCADE ON UPDATE CASCADE;
 

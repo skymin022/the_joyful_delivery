@@ -47,7 +47,7 @@
                 <%-- 실제 로그가 여러 건이면 여기에 forEach로 출력 --%>
             </ul>
         <% } %>
-        <button class="track-btn" onclick="location.href='<%=request.getContextPath()%>/index.jsp'">메인으로</button>
+        <button class="track-btn" onclick="location.href='<%=request.getContextPath()%>/index'">메인으로</button>
     </div>
 	
 	</div>

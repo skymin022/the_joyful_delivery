@@ -17,24 +17,21 @@
 		<%-- [Contents] ######################################################### --%>
 		<div class="main_container">
 			<div class="main_left">
-			    <div class="input_delivery_no">
-			      <input type="text" placeholder="운송장 번호를 입력해 주세요." />
-			      <span><img src="<%= root %>/static/img/btn_search.png" alt="송장입력창"></span>
-			    </div>
+				<form action="<%=root%>/DeliveryStatusServlet">
+				    <div class="input_delivery_no">
+				      <input name="del_idx" type="text" placeholder="운송장 번호를 입력해 주세요." />
+				      <span><button style="border:none; background-color: inherit;" type="submit" ><img src="<%= root %>/static/img/btn_search.png" alt="송장입력창"></button></span>
+				    </div>
+			    </form>
 			    <div class="booking_box_wrap">
-<<<<<<< HEAD
 					<a href="<%= root %>/page/delivery/delivery_rec1.jsp" class="booking_box">
 					  <p>택배<br>예약하기</p>
 					  <span><img src="<%= root %>/static/img/box_white.png" alt="택배박스" ></span>
 					</a>
-=======
-			      <a href="<%=root%>/page/delivery/delivery_rec1.jsp">
-				      <div class="booking_box">
-				        <p>택배<br>예약하기</p>
-				        <span><img src="<%= root %>/static/img/box_white.png" alt="택배박스" ></span>
-				      </div>
+			      <a href="<%= root %>/page/delivery/delivery_rec1.jsp" class="booking_box">
+			        <div><p>택배<br>접수하기</p></div>
+			        <span><img src="<%= root %>/static/img/box_white.png" alt="택배박스" ></span>
 			      </a>
->>>>>>> refs/heads/main
 			      <div class="info_how">
 			        <div><p>이용안내</p></div>
 			        <span><img src="<%= root %>/static/img/box_white.png" alt="택배박스" ></span>
@@ -51,8 +48,20 @@
 				    	<div class="anno_line">
 					    	<p class="title1"><%=anno.getTitle() %></p>
 					    	<p class="title_date"><%=anno.getCreatedAt() %></p>
+			    	<a href="<%=root%>/serv_center/announcement">
+				    	<div class="notice">
+					    	<p>공지사항</p>
 				    	</div>
-			    	<%} %>
+				    	<%
+				    		List<Announcement> list = (List)request.getAttribute("list");
+				    		for(Announcement anno : list) {
+				    	%>
+					    	<div class="anno_line">
+						    	<p class="title1"><%=anno.getTitle() %></p>
+						    	<p class="title_date"><%=anno.getCreatedAt() %></p>
+					    	</div>
+				    	<%} %>
+			    	</a>
 			    </div>
 			    <div class="customer_service">
 			    	<div class="serv_center">
@@ -79,7 +88,7 @@
 			          	  </li>
 				          <li><span class="line"></span></li>
 				          <li>
-					          <a href="">
+					          <a href="<%=root%>/users/mypage-jsp">
 						          <span>
 								  	  <img src="<%= root %>/static/img/cashbill.png" alt="" >
 								  	  <p>결제내역<br>조회</p>

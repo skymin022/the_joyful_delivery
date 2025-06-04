@@ -22,7 +22,7 @@ public class Delivery {
 	
 	@Pk
 	private Long idx;
-	private int userIdx;
+	private Integer userIdx;
 	private int driverIdx;
 	private int srIdx;
 	private String keyword;

@@ -88,4 +88,3 @@ document.addEventListener('DOMContentLoaded', function() {
 });
 
 
-/* ========================================================= 관리자 답변 팝업창 */

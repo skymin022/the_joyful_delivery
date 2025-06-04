@@ -38,7 +38,7 @@ public class AskServlet extends HttpServlet {
         User user = (User)session.getAttribute("loginUser");
         
         if (user == null) {
-            response.sendRedirect(root + "/login.jsp"); // 로그인 페이지 경로로 수정 필요
+            response.sendRedirect(root + "/page/login/login.jsp"); // 로그인 페이지 경로로 수정 필요
             return;
         }
         
@@ -122,8 +122,6 @@ public class AskServlet extends HttpServlet {
 			request.setAttribute("askList", askList);
 			RequestDispatcher dispatcher = request.getRequestDispatcher(page);
 			dispatcher.forward(request, response);
-			
-			
 		}
 		default: break;
 		
