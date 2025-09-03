@@ -42,6 +42,11 @@
 - 데이터 무결성을 위한 유효성 검사와 보안 처리(세션/쿠키 관리)
 - UI/UX를 고려한 단계별 예약 및 모달 창 기반 관리자 답변 시스템
 
+<details>
+  <summary><h2>개발 기간</h2></summary>
+ 
+  ![Image](https://github.com/user-attachments/assets/f222ba97-f429-4eb6-acab-ebe53ebbecb7)
+</details>
 
 <details>
   <summary><h2>요구사항 정의서</h2></summary>
@@ -50,21 +55,13 @@
 </details>
 
 <details>
-  <summary><h2>요구사항 정의서</h2></summary>
- 
-  ![Image](https://github.com/user-attachments/assets/f222ba97-f429-4eb6-acab-ebe53ebbecb7)
-</details>
-
-<details>
-  <summary><h2>요구사항 정의서</h2></summary>
+  <summary><h2>기능 정의서</h2></summary>
  
   ![Image](https://github.com/user-attachments/assets/ac56ce7b-122c-4bc9-bd0f-572e77c554e3)
-
 </details>
 
-
 <details>
-  <summary><h2>요구사항 정의서</h2></summary>
+  <summary><h2>테이블 구성</h2></summary>
  
   ![Image](https://github.com/user-attachments/assets/967e9854-e6cc-49c4-a840-c61d692b26f6)
 </details>
