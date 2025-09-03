@@ -78,6 +78,22 @@
  ![Image](https://github.com/user-attachments/assets/d121884e-bda8-47b1-8c86-95fdf0f8f8c2)
 </details>
 
+<details>
+ <summary><h3>관리자 기능</h3></summary>
+
+![Image](https://github.com/user-attachments/assets/5d275c9d-e5be-4b1f-ac62-3dd78b961344)
+![Image](https://github.com/user-attachments/assets/bedd8f38-8bac-4965-be30-06814292ee44)
+![Image](https://github.com/user-attachments/assets/5f4cd3df-cc63-48c8-b5d5-a2dc3562c093)
+![Image](https://github.com/user-attachments/assets/161c940e-949d-47d6-ac64-f321a4cc543f)
+![Image](https://github.com/user-attachments/assets/bc0ebd01-005a-42c4-a56e-bb2ed81bd023)
+</details>
+
+<details>
+ <summary><h3>향후 및 계획</h3></summary>
+
+![Image](https://github.com/user-attachments/assets/e6344c87-5999-47b3-8eee-6660240af795)
+</details>
+
 ## 택배 조회 관리 시스템 
 ![Image](https://github.com/user-attachments/assets/eba0cf71-a297-4370-b885-8408d371c7c3)
 ![Image](https://github.com/user-attachments/assets/3acfc971-6ef5-4fc6-9ac7-095373b23b58)
@@ -87,10 +103,6 @@
 ![Image](https://github.com/user-attachments/assets/7c66937f-da19-4a1c-a40e-243d727d211b)
 ![Image](https://github.com/user-attachments/assets/64391d8b-d28d-46a0-8986-ca044bf5f84e)
 ![Image](https://github.com/user-attachments/assets/2cb9b691-c7b2-4684-a0f6-0cbba88d7111)
-![Image](https://github.com/user-attachments/assets/5d275c9d-e5be-4b1f-ac62-3dd78b961344)
-![Image](https://github.com/user-attachments/assets/bedd8f38-8bac-4965-be30-06814292ee44)
-![Image](https://github.com/user-attachments/assets/5f4cd3df-cc63-48c8-b5d5-a2dc3562c093)
-![Image](https://github.com/user-attachments/assets/161c940e-949d-47d6-ac64-f321a4cc543f)
-![Image](https://github.com/user-attachments/assets/bc0ebd01-005a-42c4-a56e-bb2ed81bd023)
-![Image](https://github.com/user-attachments/assets/e6344c87-5999-47b3-8eee-6660240af795)
+
+
 ![Image](https://github.com/user-attachments/assets/dede77a9-90fd-4f46-8db8-757aaf703b3d)
