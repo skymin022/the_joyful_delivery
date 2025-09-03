@@ -42,6 +42,13 @@
 - 데이터 무결성을 위한 유효성 검사와 보안 처리(세션/쿠키 관리)
 - UI/UX를 고려한 단계별 예약 및 모달 창 기반 관리자 답변 시스템
 
+
+<details>
+  <summary>클릭해서 열기</summary>
+  
+  ![Image](https://github.com/user-attachments/assets/eba0cf71-a297-4370-b885-8408d371c7c3)
+</details>
+
 ## 택배 조회 관리 시스템 
 ![Image](https://github.com/user-attachments/assets/eba0cf71-a297-4370-b885-8408d371c7c3)
 ![Image](https://github.com/user-attachments/assets/3acfc971-6ef5-4fc6-9ac7-095373b23b58)
