@@ -43,6 +43,12 @@
 - UI/UX를 고려한 단계별 예약 및 모달 창 기반 관리자 답변 시스템
 
 <details>
+  <summary><h3>팀원 구성</h3></summary>
+ 
+  ![Image](https://github.com/user-attachments/assets/f222ba97-f429-4eb6-acab-ebe53ebbecb7)
+</details>
+
+<details>
   <summary><h3>개발 기간</h3></summary>
  
   ![Image](https://github.com/user-attachments/assets/f222ba97-f429-4eb6-acab-ebe53ebbecb7)
@@ -89,7 +95,7 @@
 </details>
 
 <details>
- <summary><h3>향후 및 계획</h3></summary>
+ <summary><h3>결론 및 향후 계획</h3></summary>
 
 ![Image](https://github.com/user-attachments/assets/e6344c87-5999-47b3-8eee-6660240af795)
 </details>
