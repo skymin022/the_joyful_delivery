@@ -44,9 +44,9 @@
 
 
 <details>
-  <summary>클릭해서 열기</summary>
-  
-  ![Image](https://github.com/user-attachments/assets/eba0cf71-a297-4370-b885-8408d371c7c3)
+  <h3>클릭해서 열기</h3>
+ 
+  ![Image](https://github.com/user-attachments/assets/161c940e-949d-47d6-ac64-f321a4cc543f)
 </details>
 
 ## 택배 조회 관리 시스템 
