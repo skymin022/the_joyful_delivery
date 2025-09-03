@@ -44,7 +44,7 @@
 
 
 <details>
-  <summary> ##클릭해서 열기 </summary>
+  <summary><h2>요구사항 정의서</h2></summary>
  
   ![Image](https://github.com/user-attachments/assets/161c940e-949d-47d6-ac64-f321a4cc543f)
 </details>
