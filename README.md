@@ -44,7 +44,7 @@
 
 
 <details>
-  <h3>클릭해서 열기</h3>
+  <summary><h3>클릭해서 열기</h3></summary>
  
   ![Image](https://github.com/user-attachments/assets/161c940e-949d-47d6-ac64-f321a4cc543f)
 </details>
