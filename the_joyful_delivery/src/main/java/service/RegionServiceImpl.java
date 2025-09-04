@@ -44,8 +44,13 @@ public class RegionServiceImpl implements RegionService {
 
 	@Override
 	public int insert(RegionName regionName) {
-		// TODO Auto-generated method stub
-		return 0;
+		int result = 0;
+		try {
+			result = rnDao.insert(regionName);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return result;
 	}
 
 	@Override

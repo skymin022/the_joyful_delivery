@@ -233,6 +233,7 @@ public class DeliveryDAO extends BaseDAOImpl<Delivery> {
 	
 	// 운송장번호(del_idx)로 배송상태 단건 조회
     public Delivery findByDelIdx(Long delIdx) {
+    	System.out.println(delIdx);
         Delivery delivery = null;
         String sql = "SELECT d.keyword, sr.s_name, sr.r_name, sr.r_address, r.created_at, r.status " +
                      "FROM deliveries d " +

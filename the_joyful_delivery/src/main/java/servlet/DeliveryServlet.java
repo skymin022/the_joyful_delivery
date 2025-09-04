@@ -89,13 +89,13 @@ public class DeliveryServlet extends HttpServlet {
 					String s_address =(String) hs.getAttribute("s_address");
 					
 					// 유저 정보를 제외한 나머지 session 값 삭제
-					Enumeration<String> attributes = hs.getAttributeNames();
-					while (attributes.hasMoreElements()) {
-					    String name = attributes.nextElement();
-					    if (!"loginUser".equals(name)) {
-					        hs.removeAttribute(name);
-					    }
-					}
+//					Enumeration<String> attributes = hs.getAttributeNames();
+//					while (attributes.hasMoreElements()) {
+//					    String name = attributes.nextElement();
+//					    if (!"loginUser".equals(name)) {
+//					        hs.removeAttribute(name);
+//					    }
+//					}
 					
 					User user = null;
 					if(hs.getAttribute("loginUser") != null) 
